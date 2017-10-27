@@ -1,0 +1,74 @@
+spatialEco_0.1-1
+=================
+
+* Fixed bug in logistic.regression where autocovariance function did not recognize the specified variable
+* Added an automatic all-neighbour minimum distance for autocovariance in logistic.regression function
+* Added function "csi" for cosine similarity index and angular similarity index
+* Added function "local.min.max" for finding local minimum and maximum values in a numeric vector
+* Added function "outliers" for identifying outliers using modified z-score
+
+spatialEco_0.1-2
+=================
+* Added function "kl.divergence" for the Kullback-Leibler divergence (relative entropy) metric
+* Added function "loess.boot" for bootstraping a loess regression, with associated print and plot functions
+* Added function "loess.ci" for calculating a confidence intervel for a loess regression, with associated print and plot functions
+* Added function "raster.vol" for generating percent volume from a raster
+* Added function "tpi" for calculating the topographic position index 
+* Added function "concordance" that performs a concordance/disconcordance (C-statistic) test on binomial models.
+* Added argument in "o.ring" for inhomogeneous (TRUE/FALSE) to account for different point processes
+
+spatialEco_0.1-3
+=================
+* Added function "gaussian.kernel" Creates a Gaussian Kernel of specified size and sigma   
+* Added function "tri" Implementation of the Riley et al (1999) Terrain Ruggedness Index
+* Added function "sample.poly" for creating samples for each polygon in a SpatialPolygons class object
+* Added function "similarity" implementing row imputation to identify "k" ecological similar observations 
+* Added function "dispersion" for calculating the dispersion ("rarity") of targets associated with ecological planning units 
+* Added function "shannons" for calculating the Shannon's diversity index 
+* Added function "insert.values" for inserting new values into a vector at specified positions
+* Bug fix in "land.metrics" that addressed error when more than one class was present
+* Bug fix in "land.metrics" that addressed trace error
+* Enhancement to "land.metrics" function now accepts multiple classes
+
+spatialEco_0.0.1-4
+=================
+* Added function to identify daymet tiles from sp, raster, extent or coordinates
+* Added function for point download of DAYMET climate data
+* Added function for distance lagged sampling
+* Enhancement to sp.an.omit that allows for removal of columns with NA's
+
+spatialEco_0.1-5
+=================
+* Added function "rasterCorrelation" for calculating "pearson" or "spearman" correlations or "covariance" between two rasters within a specified moving window.
+* Added function "mwCorr" for calculating Dutilleul's modified t-test between two rasters within a specified moving window.  
+* Added function "polyPerimeter" for calculating polygon perimeters 
+* Bug fix in "stratired.random" function.
+
+spatialEco_0.1-6
+================= 
+* Added function "raster.mds" for calculating a focal multidimensional scaling 
+* Added function  "rasterZscore" for calculating cell-level modified z-scores (not memory safe)
+* Added function  "sobel" for calculating the Sobel-Feldman isotropic image gradient operator (intensity and direction)
+* Enhancement to "raster.entropy" for recognizing continuous verses nominal data in deriving entropy. Also allows for global or local definition of entropy constant. 
+
+spatialEco_0.1-7
+================= 
+* Bug fix in "download.daymet" function to account for change in HTML structure on the ORNL website
+* Added function "hli" for calculating the Heat Load Index 
+* Added function "sar" for calculating Surface Area Ratio 
+* Added function "curvature" for calculating Surface Curvature 
+* Added function "srr" for calculating Surface Relief Ratio
+* Added function "dissection" for calculating the Dissection coefficent 
+* Added function "raster.gaussian.smooth" for applying a Gaussian smoothing kernel to a raster 
+* Added function "raster.transformation" for applying statistical transformations to a raster 
+* Added function "raster.invert" for inverting the values in a raster 
+* Added function "raster.moments" for calculating a variety of focal statistical moments on a raster 
+* Added function "trasp" for calculating the Solar-radiation Aspect Index 
+* Modified function "trig.trans" and changed to "sa.trans" for calculating slope, aspect transformations and interactions 
+
+spatialEco_0.1-8
+=================
+* Changed the "point.in.poly" function so that it retains columns contaning all NA's
+* Added added optional poly.id argument to "point.in.poly" function so a specific column can be define from the SpatialPolygonsDataFrame object  
+*
+ 
