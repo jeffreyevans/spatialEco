@@ -123,7 +123,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. 
 
 
-**Bugs**: Bug reports or suggestions for the `spatialEco` package should be directed to <jeffrey_evans@tnc.org>.
+**Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.
 
 **To install and load `spatialEco` in R use install.packages() to download curent stable release from CRAN** 
 
