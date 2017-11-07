@@ -43,7 +43,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. The function is a smoothing interpolator at the point observation(s) level using a distance-weighted mean.   
 
-           insert.values - Inserts new values into a vector at specified positions   
+          insert.values - Inserts new values into a vector at specified positions   
 
           kl.divergence - Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical component distributions. Divergence is calculated as: int [f(x) (log f(x) - log g(x)) dx] for distributions with densities f() and g().       
 
