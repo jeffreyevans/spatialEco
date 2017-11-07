@@ -1,4 +1,5 @@
 # spatialEco
+
 spatialEco R package with utilities to support spatial data manipulation, query, sampling
     and modelling. Functions include models for species population density, download
     utilities for climate and global deforestation spatial products, spatial
@@ -120,3 +121,11 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in a point sample.      
 
           zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. 
+
+
+**Bugs**: Bug reports or suggestions for the `spatialEco` package should be directed to <jeffrey_evans@tnc.org>.
+
+**To install and load `spatialEco` in R use install.packages() to download curent stable release from CRAN** 
+
+**or, for the development version, run the following (requires the devtools package):**
+`devtools::install_github("jeffreyevans/spatialEco")`
