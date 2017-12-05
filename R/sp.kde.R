@@ -27,10 +27,10 @@
 #'                   scale.factor = 10000  )
 #'  
 #'  # Plot results
+#'  par(mfrow=c(1,2))
 #'    plot(cadmium.kde, main="weighted kde")
 #'      points(meuse, pch=20, col="red")
-#'    dev.new()	
-#'    plot(cadmium.kde, main="Unweighted kde")
+#'    plot(pt.kde, main="Unweighted kde")
 #'      points(meuse, pch=20, col="red") 
 #'  
 #'  # Using existing raster
@@ -38,15 +38,16 @@
 #'  coordinates(meuse.grid) = ~x+y
 #'  proj4string(meuse.grid) <- CRS("+init=epsg:28992")
 #'  gridded(meuse.grid) = TRUE
+#'  meuse.grid <- raster(meuse.grid)
 #'  
 #'  cadmium.kde <- sp.kde(x = meuse, y = meuse$cadmium, newdata = meuse.grid, bw = 1000, 
 #'                        standardize = TRUE, scale.factor = 10000  )
 #'    plot(cadmium.kde, main="weighted kde")
 #'      points(meuse, pch=20, cex=0.5, col="red")
-#'	
-#' 
+#'
 #' @export
 sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(missing(bw)){ 
     bw <- c(MASS::bandwidth.nrd(x), MASS::bandwidth.nrd(y))
   } else {
@@ -78,7 +79,7 @@ sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
 	    	}
         }	
 	    if( class(newdata) == "RasterLayer") { 
-	      ext <- as.vector(raster::extent(ext))
+	      ext <- as.vector(raster::extent(newdata))
           if(missing(n)) {		  
 		    n = c(raster::nrow(newdata), raster::ncol(newdata)) 
 		  } else {
@@ -119,7 +120,6 @@ sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
 	        ( sum(w) * h[1] * h[2] )
       return(list(x = gx, y = gy, z = z))
     }
-	
   if(!missing(y)) {
     cat("\n","calculating weighted kde","\n")
     k  <- fhat(sp::coordinates(x)[,1], sp::coordinates(x)[,2], w = y, 
@@ -130,11 +130,9 @@ sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
 	                 n = n, lims = as.vector(raster::extent(newdata)) )
   }
 	if( !missing(scale.factor)) { k$z <- k$z * scale.factor }	
-	if( standardize == TRUE ) {
-	  k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z))  
-	}		
+	if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }		
     kde.est <- raster::raster(sp::SpatialPixelsDataFrame(sp::SpatialPoints(expand.grid(k$x, k$y)), 
 	                          data.frame(kde = as.vector(array(k$z,length(k$z))))))							
-    sp::proj4string(kde.est) <- sp::proj4string(x)  
+        sp::proj4string(kde.est) <- sp::proj4string(x)  
   return( kde.est )  
 }  
