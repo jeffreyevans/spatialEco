@@ -11,7 +11,7 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
-#' @references Pateiro-López & Rodríguez-Casal (2009) Generalizing the Convex Hull of a Sample: The R Package alphahull. Journal of Statistical Software 34(5):1-28 http://www.jstatsoft.org/v34/i05/paper
+#' @references Pateiro-Lopez & Rodriguez-Casal (2009) Generalizing the Convex Hull of a Sample: The R Package alphahull. Journal of Statistical Software 34(5):1-28 http://www.jstatsoft.org/v34/i05/paper
 #'                                                                    
 #' @examples 
 #'   library(sp)
@@ -31,6 +31,7 @@
 #'
 #' @export convexHull
 convexHull <- function(x, alpha = 250000)	{
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if (!inherits(x, "SpatialPointsDataFrame") |  !inherits(x, "SpatialPoints") ) 
       stop(deparse(substitute(x)), " x must be a sp Points object")
     a <- alphahull::ashape(sp::coordinates(x), alpha = alpha)
