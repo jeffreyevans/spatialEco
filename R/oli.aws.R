@@ -41,11 +41,12 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @example
-#' # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20% cloud cover    
-#' ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), cloud.cover = 20) )
-#'
+#' @examples
 #' \dontrun{
+#' # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20% cloud cover    
+#' ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), 
+#'                           cloud.cover = 20) )
+#'
 #' # Download query images from query  
 #'   for( i in 1:length(p126r59.oli$download_url)) {
 #'     oli.url <- p126r59.oli$download_url[i]
@@ -53,7 +54,7 @@
 #'   }
 #' }
 #'
-#' @export query.aws.oli 
+#' @export
 oli.asw <- function(path, row, dates, cloud.cover = 10, processing) {
     aws.url <- "http://landsat-pds.s3.amazonaws.com/scene_list.gz"
 	if( missing(path) ) stop("Must specify landsat path")
