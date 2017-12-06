@@ -39,7 +39,7 @@ raster.downscale <- function(x, y, p = NULL, n = NULL, filename = FALSE,
 	if(!class(y) == "RasterLayer") stop( "y is not a raster object")
 	  if(!class(x) == "RasterLayer" & !class(x) == "RasterStack" & !class(x) == "RasterBrick")
 	        stop( "x is not a raster object")  		
-	    x <- stack(x)
+	    x <- raster::stack(x)
     if(is.null(p) & is.null(n)) {
 	  warning("Population is being used and may cause memory issues")
 	    sub.samp <- raster::rasterToPoints(y, spatial=TRUE)
@@ -50,8 +50,8 @@ raster.downscale <- function(x, y, p = NULL, n = NULL, filename = FALSE,
 	}	  
 	sub.samp@data <- data.frame(sub.samp@data, raster::extract(x, sub.samp) )
 	  names(sub.samp@data) <- c("y", names(x))
-	    sub.samp <- na.omit(sub.samp@data)	  
-    rrr <- MASS::rlm(as.formula(paste(names(sub.samp)[1], ".", sep=" ~ ")), 
+	    sub.samp <- stats::na.omit(sub.samp@data)	  
+    rrr <- MASS::rlm(stats::as.formula(paste(names(sub.samp)[1], ".", sep=" ~ ")), 
                      data=sub.samp, scale.est="Huber", psi=MASS::psi.hampel, init="lts")
     if(scatter == TRUE) { graphics::plot(sub.samp[,2], sub.samp[,1], pch=20, cex=0.50,
 		                                 xlab=names(sub.samp)[2], ylab="y") }				
@@ -60,10 +60,10 @@ raster.downscale <- function(x, y, p = NULL, n = NULL, filename = FALSE,
 	                  overwrite=TRUE, ...)
       print(paste("Raster written to", filename, sep=": "))	
         return(list(model = rrr, MRE = round(mean(rrr$residuals), digits=4), 
-               AIC = round(AIC(rrr), digits=4)))			  
+               AIC = round(stats::AIC(rrr), digits=4)))			  
 	} else {
 	  r <- raster::predict(x, rrr, na.rm=TRUE, progress='window')
 	    return(list(downscale = r, model = rrr, MSE = round(mean(rrr$residuals), digits=4), 
-               AIC = round(AIC(rrr), digits=4)))		
+               AIC = round(stats::AIC(rrr), digits=4)))		
 	}
 }
