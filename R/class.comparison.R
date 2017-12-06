@@ -128,9 +128,9 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
           results[["kappa"]] <- append(results[["kappa"]], round(cohen.d(x.var, y.var),4))
         } else if( stat == "t.test") {
           if(length(x.var) > 2) {		
-            results[["t.test"]] <- append(results[["t.test"]], round(t.test(x.var, y.var, 
+            results[["t.test"]] <- append(results[["t.test"]], round(stats::t.test(x.var, y.var, 
 			                              paired = TRUE)$statistic, 4))	  
-	        results[["p.value"]] <- append(results[["p.value"]], round(t.test(x.var, y.var, 
+	        results[["p.value"]] <- append(results[["p.value"]], round(stats::t.test(x.var, y.var, 
 			                               paired = TRUE)$p.value,4))
           } else { 
             results[["t.test"]] <- append(results[["t.test"]], NA)	  
@@ -139,9 +139,9 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
 	    } else if(stat == "both") { 
           results[["kappa"]] <- append(results[["kappa"]], round(cohen.d(x.var, y.var),4))
           if(length(x.var) > 2) {		
-            results[["t.test"]] <- append(results[["t.test"]], round(t.test(x.var, y.var, 
+            results[["t.test"]] <- append(results[["t.test"]], round(stats::t.test(x.var, y.var, 
 			                              paired = TRUE)$statistic, 4))	  
-	        results[["p.value"]] <- append(results[["p.value"]], round(t.test(x.var, y.var, 
+	        results[["p.value"]] <- append(results[["p.value"]], round(stats::t.test(x.var, y.var, 
 			                               paired = TRUE)$p.value,4))							                   
           } else { 
             results[["t.test"]] <- append(results[["t.test"]], NA)	  
@@ -173,9 +173,9 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
           results[["kappa"]] <- append(results[["kappa"]], round(cohen.d(x.var, y.var),4))
         } else if( stat == "t.test") {
           if(length(x.var) > 2) {		
-            results[["t.test"]] <- append(results[["t.test"]], round(t.test(x.var, y.var, 
+            results[["t.test"]] <- append(results[["t.test"]], round(stats::t.test(x.var, y.var, 
 			                              paired = TRUE)$statistic, 4))	  
-	        results[["p.value"]] <- append(results[["p.value"]], round(t.test(x.var, y.var, 
+	        results[["p.value"]] <- append(results[["p.value"]], round(stats::t.test(x.var, y.var, 
 			                               paired = TRUE)$p.value,4))
           } else { 
             results[["t.test"]] <- append(results[["t.test"]], NA)	  
@@ -184,9 +184,9 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
 	    } else if(stat == "both") { 
           results[["kappa"]] <- append(results[["kappa"]], round(cohen.d(x.var, y.var),4))
           if(length(x.var) > 2) {		
-            results[["t.test"]] <- append(results[["t.test"]], round(t.test(x.var, y.var, 
+            results[["t.test"]] <- append(results[["t.test"]], round(stats::t.test(x.var, y.var, 
 			                              paired = TRUE)$statistic, 4))	  
-	        results[["p.value"]] <- append(results[["p.value"]], round(t.test(x.var, y.var, 
+	        results[["p.value"]] <- append(results[["p.value"]], round(stats::t.test(x.var, y.var, 
 			                               paired = TRUE)$p.value,4))							                   
           } else { 
             results[["t.test"]] <- append(results[["t.test"]], NA)	  
@@ -202,7 +202,7 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
     } else {	
       e <- as(raster::extent(x), "SpatialPolygons")  
 	  s <- sp::spsample(e, n = n,  type = "hexagonal")
-	    s <- SpatialPointsDataFrame(s, data.frame(ID=1:length(s)))
+	    s <- sp::SpatialPointsDataFrame(s, data.frame(ID=1:length(s)))
 	  r.ids <- raster::extract(raster::raster(x), s, method='simple', buffer=d,  
 	                           small=TRUE, cellnumbers=TRUE) 
 		names(r.ids) <- 1:length(r.ids) 			 
@@ -229,9 +229,9 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
           results[["kappa"]] <- append(results[["kappa"]], round(cohen.d(x.var, y.var),4))
         } else if( stat == "t.test") {
           if(length(x.var) > 2) {		
-            results[["t.test"]] <- append(results[["t.test"]], round(t.test(x.var, y.var, 
+            results[["t.test"]] <- append(results[["t.test"]], round(stats::t.test(x.var, y.var, 
 			                              paired = TRUE)$statistic, 4))	  
-	        results[["p.value"]] <- append(results[["p.value"]], round(t.test(x.var, y.var, 
+	        results[["p.value"]] <- append(results[["p.value"]], round(stats::t.test(x.var, y.var, 
 			                               paired = TRUE)$p.value,4))
           } else { 
             results[["t.test"]] <- append(results[["t.test"]], NA)	  
@@ -240,9 +240,9 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
 	    } else if(stat == "both") { 
           results[["kappa"]] <- append(results[["kappa"]], round(cohen.d(x.var, y.var),4))
           if(length(x.var) > 2) {		
-            results[["t.test"]] <- append(results[["t.test"]], round(t.test(x.var, y.var, 
+            results[["t.test"]] <- append(results[["t.test"]], round(stats::t.test(x.var, y.var, 
 			                              paired = TRUE)$statistic, 4))	  
-	        results[["p.value"]] <- append(results[["p.value"]], round(t.test(x.var, y.var, 
+	        results[["p.value"]] <- append(results[["p.value"]], round(stats::t.test(x.var, y.var, 
 			                               paired = TRUE)$p.value,4))							                   
           } else { 
             results[["t.test"]] <- append(results[["t.test"]], NA)	  
