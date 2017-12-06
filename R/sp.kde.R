@@ -9,11 +9,12 @@
 #' @param standardize   Standardize results to 0-1 (FALSE/TRUE)
 #' @param scale.factor  Optional numeric scaling factor for the KDE (eg., 10000), to account for small estimate values
 #'
-#' @return  Raster class object with kernel density estimate
+#' @return  Raster class object containing kernel density estimate 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #'  library(sp)
 #'    data(meuse)
 #'    coordinates(meuse) <- ~x+y
@@ -34,6 +35,7 @@
 #'      points(meuse, pch=20, col="red") 
 #'  
 #'  # Using existing raster
+#'  library(raster)
 #'  data(meuse.grid)
 #'  coordinates(meuse.grid) = ~x+y
 #'  proj4string(meuse.grid) <- CRS("+init=epsg:28992")
@@ -44,6 +46,7 @@
 #'                        standardize = TRUE, scale.factor = 10000  )
 #'    plot(cadmium.kde, main="weighted kde")
 #'      points(meuse, pch=20, cex=0.5, col="red")
+#' }
 #'
 #' @export
 sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
@@ -116,7 +119,7 @@ sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
           ax <- outer(gx, x, "-") / h[1]
         ay <- outer(gy, y, "-") / h[2]
       z <- ( matrix(rep(w, n[1]), nrow = n[1], ncol = nx, byrow = TRUE) * 
-             matrix(dnorm(ax), n[1], nx) ) %*% t(matrix(dnorm(ay), n[2], nx)) /
+             matrix(stats::dnorm(ax), n[1], nx) ) %*% t(matrix(stats::dnorm(ay), n[2], nx)) /
 	        ( sum(w) * h[1] * h[2] )
       return(list(x = gx, y = gy, z = z))
     }
