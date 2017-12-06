@@ -7,7 +7,7 @@
 #'
 #' @return A SpatialPoints or SpatialPointsDataFrame  
 #' 
-#' @note Same functionality as the ESRI ArcGIS Erase Point tool
+#' @note Provides the same functionality as the ESRI ArcGIS Erase Point tool
 #'
 #' @author Jeffrey S. Evans    <jeffrey_evans<at>tnc.org>
 #'
@@ -15,21 +15,24 @@
 #' require(sp)
 #' data(meuse)
 #' coordinates(meuse) = ~x+y
-#' poly <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(Polygon(cbind(c(180042, 180545, 
-#'             180553, 180314, 179955, 179142, 179437, 179524, 179979, 180042), c(332373, 332026, 
-#' 			   331426, 330889, 330683, 331133, 331623, 332152, 332357, 332373)))),'1'))), 
-#' 			   data.frame(row.names=c('1'), PIDS=1)) 
+#' poly <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(
+#'             Polygon(cbind(c(180042, 180545, 180553, 180314, 179955,
+#'             179142, 179437, 179524, 179979, 180042), c(332373, 332026,
+#' 			   331426, 330889, 330683, 331133, 331623, 332152, 332357,
+#'             332373)))),'1'))), data.frame(row.names=c('1'), PIDS=1))
 #'
-#' meuse.erase <- erase.point(meuse, poly) 								 
+#' meuse.erase <- erase.point(meuse, poly)
 #' 
 #' par(mfrow=c(1,2))
-#'   plot(meuse,pch=20)
-#'     plot(poly,add=T)
-#'   plot(meuse.erase,pch=20)
-#'     plot(poly,add=T)
+#'   plot(poly,)
+#'     points(meuse, pch=20)
+#'   plot(poly)
+#'     points(meuse.erase, pch=20)
 #'
 #' @export
 erase.point <- function(y, x, inside = TRUE) {
+    #if(class(y) == "sf") {y <- as(y, "Spatial")}
+	#if(class(x) == "sf") {x <- as(x, "Spatial")}
     if (!inherits(y, "SpatialPointsDataFrame") | !inherits(y, "SpatialPoints")) 
         stop("y must be a SpatialPoints or SpatialPointsDataFrame")
 	if (!inherits(x, "SpatialPolygonsDataFrame") | !inherits(x, "SpatialPolygons")) 
