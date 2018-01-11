@@ -14,20 +14,28 @@
 #' @references Pateiro-Lopez & Rodriguez-Casal (2009) Generalizing the Convex Hull of a Sample: The R Package alphahull. Journal of Statistical Software 34(5):1-28 http://www.jstatsoft.org/v34/i05/paper
 #'                                                                    
 #' @examples 
-#'   library(sp)
-#'   data(meuse)
-#'    coordinates(meuse) = ~x+y
-#'   a <- convexHull(meuse, alpha=100000)
-#'     plot(a)
-#'       points(meuse, pch=19)
-#'   # Test multiple alpha values
-#'    par(mfcol=c(2,2))
-#'      for (a in c(500, 1500, 5000, 100000)) {
-#'	    ch <- convexHull(meuse, alpha = a)
-#'        plot(ch)
-#'         points(meuse, pch=19)
-#'           title( paste0("alpha=", a))		 
-#'      }
+#'  library(sp)
+#'  data(meuse)
+#'   coordinates(meuse) = ~x+y
+#'  a <- convexHull(meuse, alpha=100000)
+#'    plot(a)
+#'      points(meuse, pch=19)
+#'  
+#'  # Convert SpatialLinesDataFrame to SpatialPolygonsDataFrame
+#'  library(sf)
+#'  a <- sf::st_as_sf(a) 
+#'  a <- sf::st_polygonize(a)
+#'  class( a <- as(a, "Spatial") )
+#'    plot(a)
+#'  
+#'  # Test multiple alpha values
+#'   par(mfcol=c(2,2))
+#'     for (a in c(500, 1500, 5000, 100000)) {
+#'     ch <- convexHull(meuse, alpha = a)
+#'       plot(ch)
+#'        points(meuse, pch=19)
+#'          title( paste0("alpha=", a))		 
+#'     }
 #'
 #' @export convexHull
 convexHull <- function(x, alpha = 250000)	{
