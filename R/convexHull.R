@@ -8,6 +8,7 @@
 #' @return SpatialPolygons object  
 #'
 #' @note This method provides flexibility over traditional convex functions in that the the alpha parameter can be adjusted to relax or increase tension between boundary-edge points
+#' @note Due to licensing constraints associated with the alphahull package, this function is not available in the CRAN release.  
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
