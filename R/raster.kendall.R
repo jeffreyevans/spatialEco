@@ -1,5 +1,5 @@
-#' @title Kendall's trend with continuity correction for raster time-series 
-#' @description Calculates a nonparametric statistic for a monotonic trend based on Kendall's tau statistic
+#' @title Kendall's tau trend with continuity correction for raster time-series 
+#' @description Calculates a nonparametric statistic for a monotonic trend based on Kendall's tau statistic and the Theil-Sen slope modification
 #'
 #' @param x             A rasterStack object with at least 5 layers
 #' @param intercept     (FALSE/TRUE) return a raster with the pixel-wise intercept values 
@@ -18,7 +18,7 @@
 #'   \item Kendall's tau (two-sided test, reject null at 0) (if tau = TRUE) 
 #' }
 #'
-#' @details
+#' @details This function implements Kendall's nonparametric test for a monotonic trend using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate the slope and related confidence intervals.  
 #' 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
@@ -29,16 +29,15 @@
 #'
 #' @examples
 #' \dontrun{
-#'   library(raster)
-#'     download.file("https://s3.amazonaws.com/rpackages/lai.year.tif", mode = "wb", 
-#'                   destfile="lai.year.tif", method="libcurl")
-#'     lai <- stack("lai.year.tif")
-#'      lai <- crop(lai, extent(101.3342, 101.8076, 0.3613907, 0.8505167) )
-#'     
-#'     # Calculate trend slope with p-value and confidence level(s)
-#'     lai.trend <- raster.kendall(lai, p.value=TRUE, confidence=TRUE)
-#'       names(lai.trend) <- c("slope","p.value","LCI","UCI")
-#'         plot(lai.trend)
+#'  library(raster)
+#'  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
+#'                  system.file("external/rlogo.grd", package="raster"),
+#'  			    system.file("external/rlogo.grd", package="raster")) 
+#'  
+#'  # Calculate trend slope with p-value and confidence level(s)
+#'  logo.trend <- raster.kendall(r.logo, p.value=TRUE, confidence=TRUE)
+#'    names(logo.trend) <- c("slope","p.value","LCI","UCI")
+#'      plot(logo.trend)
 #' }
 #'
 #' @seealso \code{\link[EnvStats]{kendallTrendTest}} for model details

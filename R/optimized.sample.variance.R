@@ -7,7 +7,7 @@
 #'
 #' @return A data.frame with "idx" representing the index of the original vector and "y" is the value of the sampled data
 #'
-#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> based on code from Barry Rowlingson. 
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
 #'  library(sp)
@@ -26,7 +26,7 @@
 #'    plot(meuse[max.sv$idx,], col="red", add=TRUE, pch=19)
 #'      plot(meuse[min.sv$idx,], col="blue", add=TRUE, pch=19)
 #'  	  box()
-#'      legend("topleft", legend=c("population","maximized var", "minimized var"), 
+#'      legend("topleft", legend=c("population","maximized variance", "minimized variance"), 
 #'             col=c("grey","red","blue"), pch=c(19,19,19))
 #'	
 #' \dontrun{
@@ -46,7 +46,7 @@
 #'    plot(max.sv, col="blue", add=TRUE, pch=19)
 #'    plot(min.sv, col="red", add=TRUE, pch=19)
 #'    box()
-#'  legend("topleft", legend=c("maximized var", "minimized var"), 
+#'  legend("topleft", legend=c("maximized variance", "minimized variance"), 
 #'         col=c("red","blue"), pch=c(19,19))									   
 #'  
 #'  }  
