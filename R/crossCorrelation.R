@@ -117,14 +117,15 @@ crossCorrelation <- function(x, y, coords = NULL, w = NULL, k = 1000, dist.funct
           diag(w) <- 0 
         w <- w / sum(w) 
     } else if (dist.function == "neg.exponent") { 
-        message("Calculating spatial weights matrix using negative exponent")  
-      w <- w / sum(w)
-        for(i in 1:nrow(w)) {
-          for(j in 1:nrow(w)) {
-            w[i,j] <- exp( (-2 * w[i,j]) ) / sum(w) / (nrow(w) * (nrow(w) + 1))
-          }
-        }  
-      diag(w) <- 0
+        message("Calculating spatial weights matrix using negative exponent")   
+	  diag(W) <- NA 
+	  mu <- mean(W, na.rm=TRUE)
+      for(i in 1:nrow(W)) {
+        for(j in 1:nrow(W)) {
+          W[i,j] <- round(exp( (-2 * W[i,j]) / mu ),6)
+        }
+      }  
+      diag(W) <- 0
     } else {
       stop("Not a valid matrix option")
     }
