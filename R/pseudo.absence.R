@@ -60,7 +60,8 @@
 #'    proj4string(meuse.grid) <- CRS("+init=epsg:28992")
 #'    gridded(meuse.grid) = TRUE
 #'    r <- raster(meuse.grid)
-#'   
+#'
+#'    # Using a raster mask   
 #'    pa <- pseudo.absence(meuse, n=100, window='hull', KDE=TRUE, Mask = r, 
 #'                         sigma='Diggle', s=50) 
 #'      col.br <- colorRampPalette(c('blue','yellow'))
@@ -98,11 +99,16 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
     if (is.null(p)) p <- 1e-09
       a <- 10000
       options(warn = -1)
-      raster.as.im <- function(im) {
-                        spatstat::as.im(as.matrix(im)[nrow(im):1, ], 
-	                                    xrange = sp::bbox(im)[1, ], 
-	  				                    yrange = sp::bbox(im)[2, ])
-      }
+    raster.as.im <- function(im) {
+	  r <- raster::res(im)
+      orig <- bbox(im)[, 1] + 0.5 * r
+      dm <- dim(im)[2:1]
+        xx <- unname(orig[1] + cumsum(c(0, rep(r[1], dm[1] - 1))))
+        yy <- unname(orig[2] + cumsum(c(0, rep(r[2], dm[2] - 1))))
+      return(spatstat::im(matrix(raster::values(im), ncol = dm[1], 
+             nrow = dm[2], byrow = TRUE)[dm[2]:1, ], 
+             xcol = xx, yrow = yy))
+    }
 	  
 	if (is.null(Mask)) {
       if (window == "hull") {
@@ -185,7 +191,7 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
                   bw = sigma
                 } else {
 	              stop("Not a valid bandwidth option")
-                }          
+                }  		
       den <- raster(spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, 
                                    adjust = gradient, diggle = edge)) * a
 
