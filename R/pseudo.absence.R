@@ -50,51 +50,60 @@
 #' @references
 #' Warton, D.i., and L.C. Shepherd (2010) Poisson Point Process Models Solve the Pseudo-Absence Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
 #'
-#' @examples 
-#' library(sp)
-#' data(meuse)
-#'   coordinates(meuse) = ~x+y    
+#' @examples
+#'  library(raster) 
+#'  library(sp)
+#'  data(meuse)
+#'  data(meuse.grid)
+#'    coordinates(meuse) = ~x+y   
+#'    coordinates(meuse.grid) = ~x+y
+#'    proj4string(meuse.grid) <- CRS("+init=epsg:28992")
+#'    gridded(meuse.grid) = TRUE
+#'    r <- raster(meuse.grid)
+#'   
+#'    pa <- pseudo.absence(meuse, n=100, window='hull', KDE=TRUE, Mask = r, 
+#'                         sigma='Diggle', s=50) 
+#'      col.br <- colorRampPalette(c('blue','yellow'))
+#'        plot(pa$kde, col=col.br(10))
+#'          plot(meuse, pch=20, cex=1, add=TRUE)
+#'            plot(pa$sample, col='red', pch=20, cex=1, add=TRUE)
+#'              legend('top', legend=c('Presence', 'Pseudo-absence'), 
+#'                     pch=c(20,20),col=c('black','red'))
+#'
+#'  # With clustered data
+#'  library(sp)
+#'  library(spatstat)
+#'  data(bei)
+#'    trees <- as(bei, 'SpatialPoints')
+#'      trees <- SpatialPointsDataFrame(coordinates(trees), 
+#'                          data.frame(ID=1:length(trees))) 
+#'        trees.abs <- pseudo.absence(trees, n=100, window='extent', KDE=TRUE)
+#'  
+#'  col.br <- colorRampPalette(c('blue','yellow'))
+#'    plot(trees.abs$kde, col=col.br(10))
+#'     plot(trees, pch=20, cex=0.50, add=TRUE)
+#'        plot(trees.abs$sample, col='red', pch=20, cex=1, add=TRUE)
+#'          legend('top', legend=c('Presence', 'Pseudo-absence'), 
+#'                 pch=c(20,20),col=c('black','red'))
 #'      
-#' pa <- pseudo.absence(meuse, n=100, window='hull', KDE=TRUE, sigma='Diggle', s=50)
-#'   col.br <- colorRampPalette(c('blue','yellow'))
-#'     plot(pa$kde, col=col.br(10))
-#'       plot(meuse, pch=20, cex=1, add=TRUE)
-#'         plot(pa$sample, col='red', pch=20, cex=1, add=TRUE)
-#'           legend('top', legend=c('Presence', 'Pseudo-absence'), 
-#'                  pch=c(20,20),col=c('black','red'))
-#'
-#' # With clustered data
-#' library(sp)
-#' library(spatstat)
-#' data(bei)
-#'   trees <- as(bei, 'SpatialPoints')
-#'     trees <- SpatialPointsDataFrame(coordinates(trees), 
-#'                         data.frame(ID=1:length(trees))) 
-#'       trees.abs <- pseudo.absence(trees, n=100, window='extent', KDE=TRUE)
-#'
-#' col.br <- colorRampPalette(c('blue','yellow'))
-#'   plot(trees.abs$kde, col=col.br(10))
-#'    plot(trees, pch=20, cex=0.50, add=TRUE)
-#'       plot(trees.abs$sample, col='red', pch=20, cex=1, add=TRUE)
-#'         legend('top', legend=c('Presence', 'Pseudo-absence'), 
-#'                pch=c(20,20),col=c('black','red'))
-#'     
 #' @export     
-pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma = "Scott", wts = NULL, KDE = FALSE, 
-    gradient = 1, p = NULL, edge = FALSE) {
+pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma = "Scott", wts = NULL, 
+                           KDE = FALSE, gradient = 1, p = NULL, edge = FALSE) {
     if (!class(x) == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
         stop(deparse(substitute(x)), " MUST BE A sp POINTS OBJECT")
     if (!is.null(Mask)) {
         if (!class(Mask) == "RasterLayer") 
             stop(deparse(substitute(Mask)), " MUST BE A RasterLayer OBJECT")
     }
-    if (is.null(p)) 
-        p <- 1e-09
-    a <- 10000
-    options(warn = -1)
-    raster.as.im <- function(im) {
-      spatstat::as.im(as.matrix(im)[nrow(im):1, ], xrange = sp::bbox(im)[1, ], yrange = sp::bbox(im)[2, ])
-    }
+    if (is.null(p)) p <- 1e-09
+      a <- 10000
+      options(warn = -1)
+      raster.as.im <- function(im) {
+                        spatstat::as.im(as.matrix(im)[nrow(im):1, ], 
+	                                    xrange = sp::bbox(im)[1, ], 
+	  				                    yrange = sp::bbox(im)[2, ])
+      }
+	  
 	if (is.null(Mask)) {
       if (window == "hull") {
         win <- spatstat::convexhull.xy(sp::coordinates(x))
@@ -109,6 +118,7 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
         win <- raster.as.im(Mask)
         win <- spatstat::as.mask(win, eps = raster::res(Mask)[1])
     }
+	
   x.ppp <- spatstat::as.ppp(sp::coordinates(x), win)
 	
     bw.Scott <- function(X) {
@@ -157,46 +167,36 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
             lam <- spatstat::density.ppp(X, sigma = si)
             cv[i] <- sum(log(lamx)) - spatstat::integral.im(lam)
         }
-        result <- spatstat::bw.optim(cv, sigma, iopt = which.max(cv), criterion = "Likelihood Cross-Validation")
-        return(result)
+      result <- spatstat::bw.optim(cv, sigma, iopt = which.max(cv), criterion = "Likelihood Cross-Validation")
+    return(result)
     }
+	
     if (sigma == "Diggle") {
         bw <- spatstat::bw.diggle(x.ppp)
-        den <- spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge)
-    } else {
-        if (sigma == "Scott") {
-            bw <- bw.Scott(x.ppp)
-            den <- spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge)
-        } else {
-            if (sigma == "Stoyan") {
-                bw <- bw.Stoyan(x.ppp)
-                den <- spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge)
-            } else {
-                if (sigma == "geometry") {
-                  bw <- bw.geometry(x.ppp)
-                  den <- spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge)
+      } else if(sigma == "Scott") { 
+          bw <- bw.Scott(x.ppp)
+        } else if(sigma == "Stoyan") {
+            bw <- bw.Stoyan(x.ppp)
+          } else if(sigma == "geometry") {
+              bw <- bw.geometry(x.ppp)
+            } else if(sigma == "likelihood") {
+                bw <- bw.likelihood(x.ppp)
+              } else if(is.numeric(sigma)) {
+                  bw = sigma
                 } else {
-                  if (sigma == "likelihood") {
-                    bw <- bw.likelihood(x.ppp)
-                    den <- spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge)
-                  } else {
-                    if (is.numeric(sigma)) {
-                      den <- spatstat::density.ppp(x.ppp, weights = wts, sigma = sigma, adjust = gradient, diggle = edge)
-                    }
-                  }
-                }
-            }
-        }
-    }
-    den <- raster::raster(den) * a
-    den <- 1 - (den/raster::maxValue(den))
-    den[den <= p] <- p
-    den.sp <- raster::rasterToPoints(den, spatial=TRUE)
-      names(den.sp@data)[1] <- "KDE"
-    den.sp <- den.sp[sample(1:nrow(den.sp@data), size = n, prob = den.sp@data$KDE), ]
+	              stop("Not a valid bandwidth option")
+                }          
+      den <- raster(spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, 
+                                   adjust = gradient, diggle = edge)) * a
+
+      den <- 1 - (den/raster::maxValue(den))
+      den[den <= p] <- p
+      den.sp <- raster::rasterToPoints(den, spatial=TRUE)
+        names(den.sp@data)[1] <- "KDE"
+      den.sp <- den.sp[sample(1:nrow(den.sp@data), size = n, prob = den.sp@data$KDE), ]
     if (KDE == TRUE) {
-        return(list(sample = den.sp, kde = den, sigma = bw))
+      return(list(sample = den.sp, kde = den, sigma = bw))
     } else {
-        return(list(sample = den.sp), sigma = bw)
+      return(list(sample = den.sp), sigma = bw)
     }
-} 
+}
