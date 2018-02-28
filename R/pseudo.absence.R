@@ -203,6 +203,6 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
     if (KDE == TRUE) {
       return(list(sample = den.sp, kde = den, sigma = bw))
     } else {
-      return(list(sample = den.sp), sigma = bw)
+      return(list(sample = den.sp, sigma = bw))
     }
 }
