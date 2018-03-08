@@ -12,7 +12,7 @@ gaussian.kernel(sigma = 2, n = 5)
 \item{n}{size of symmetrical kernel (defaults to 5x5)}
 }
 \value{
-matrix of gaussian distribution
+Symmetrical (NxN) matrix of a Gaussian distribution
 }
 \description{
 Creates a Gaussian Kernel of specified size and sigma
@@ -20,7 +20,7 @@ Creates a Gaussian Kernel of specified size and sigma
 \examples{
   par(mfrow=c(2,2))
   persp(gaussian.kernel(sigma=1, n=27), theta = 135, phi = 30, col = "grey", 
-           ltheta = -120, shade = 0.6, border=NA )
+        ltheta = -120, shade = 0.6, border=NA )
   persp(gaussian.kernel(sigma=2, n=27), theta = 135, phi = 30, col = "grey", 
         ltheta = -120, shade = 0.6, border=NA )		
   persp(gaussian.kernel(sigma=3, n=27), theta = 135, phi = 30, col = "grey", 
@@ -28,9 +28,6 @@ Creates a Gaussian Kernel of specified size and sigma
   persp(gaussian.kernel(sigma=4, n=27), theta = 135, phi = 30, col = "grey", 
         ltheta = -120, shade = 0.6, border=NA )					
 		
-}
-\references{
-Riley, S.J., S.D. DeGloria and R. Elliot (1999) A terrain ruggedness index that quantifies topographic heterogeneity, Intermountain Journal of Sciences 5(1-4):23-27.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

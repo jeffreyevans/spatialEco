@@ -56,34 +56,42 @@ Available bandwidth selection methods are:
 Note; resulting bandwidth can vary widely by method. the 'diggle' method is intended for selecting bandwidth representing 2nd order spatial variation whereas the 'scott' method will represent 1st order trend. the 'geometry' approach will also represent 1st order trend. for large datasets, caution should be used with the 2nd order 'likelihood' approach, as it is slow and computationally expensive. finally, the 'stoyan' method will produce very strong 2nd order results.
 }
 \examples{
-library(sp)
-data(meuse)
-  coordinates(meuse) = ~x+y    
+ library(raster) 
+ library(sp)
+ data(meuse)
+ data(meuse.grid)
+   coordinates(meuse) = ~x+y   
+   coordinates(meuse.grid) = ~x+y
+   proj4string(meuse.grid) <- CRS("+init=epsg:28992")
+   gridded(meuse.grid) = TRUE
+   r <- raster(meuse.grid)
+
+   # Using a raster mask   
+   pa <- pseudo.absence(meuse, n=100, window='hull', KDE=TRUE, Mask = r, 
+                        sigma='Diggle', s=50) 
+     col.br <- colorRampPalette(c('blue','yellow'))
+       plot(pa$kde, col=col.br(10))
+         plot(meuse, pch=20, cex=1, add=TRUE)
+           plot(pa$sample, col='red', pch=20, cex=1, add=TRUE)
+             legend('top', legend=c('Presence', 'Pseudo-absence'), 
+                    pch=c(20,20),col=c('black','red'))
+
+ # With clustered data
+ library(sp)
+ library(spatstat)
+ data(bei)
+   trees <- as(bei, 'SpatialPoints')
+     trees <- SpatialPointsDataFrame(coordinates(trees), 
+                         data.frame(ID=1:length(trees))) 
+       trees.abs <- pseudo.absence(trees, n=100, window='extent', KDE=TRUE)
+ 
+ col.br <- colorRampPalette(c('blue','yellow'))
+   plot(trees.abs$kde, col=col.br(10))
+    plot(trees, pch=20, cex=0.50, add=TRUE)
+       plot(trees.abs$sample, col='red', pch=20, cex=1, add=TRUE)
+         legend('top', legend=c('Presence', 'Pseudo-absence'), 
+                pch=c(20,20),col=c('black','red'))
      
-pa <- pseudo.absence(meuse, n=100, window='hull', KDE=TRUE, sigma='Diggle', s=50)
-  col.br <- colorRampPalette(c('blue','yellow'))
-    plot(pa$kde, col=col.br(10))
-      plot(meuse, pch=20, cex=1, add=TRUE)
-        plot(pa$sample, col='red', pch=20, cex=1, add=TRUE)
-          legend('top', legend=c('Presence', 'Pseudo-absence'), 
-                 pch=c(20,20),col=c('black','red'))
-
-# With clustered data
-library(sp)
-library(spatstat)
-data(bei)
-  trees <- as(bei, 'SpatialPoints')
-    trees <- SpatialPointsDataFrame(coordinates(trees), 
-                        data.frame(ID=1:length(trees))) 
-      trees.abs <- pseudo.absence(trees, n=100, window='extent', KDE=TRUE)
-
-col.br <- colorRampPalette(c('blue','yellow'))
-  plot(trees.abs$kde, col=col.br(10))
-   plot(trees, pch=20, cex=0.50, add=TRUE)
-      plot(trees.abs$sample, col='red', pch=20, cex=1, add=TRUE)
-        legend('top', legend=c('Presence', 'Pseudo-absence'), 
-               pch=c(20,20),col=c('black','red'))
-    
 }
 \references{
 Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order intensity of a spatial point process. Journal of the Royal Statistical Society, series B 51, 81-92.

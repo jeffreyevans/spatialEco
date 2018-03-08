@@ -14,7 +14,7 @@ separability(x, y, plot = FALSE, cols = c("red", "blue"),
 
 \item{plot}{plot separability (TRUE/FALSE)}
 
-\item{cols}{colours for plot (must be equal to number of classes)}
+\item{cols}{colors for plot (must be equal to number of classes)}
 
 \item{clabs}{labels for two classes}
 
@@ -23,18 +23,18 @@ separability(x, y, plot = FALSE, cols = c("red", "blue"),
 \value{
 A data.frame with the following separability metrics:
 
-B  Bhattacharryya distance statistic
+B    Bhattacharryya distance statistic
 
-JM  Jeffries-Matusita distance statistic
+JM    Jeffries-Matusita distance statistic
 
-M  M-Statistic
+M    M-Statistic
 
-D  Divergence index
+D    Divergence index
 
-TD  Transformed Divergence index
+TD   Transformed Divergence index
 }
 \description{
-Calculates variety of univariate or multivariate separability metrics for two class samples
+Calculates variety of two-class sample separability metrics
 }
 \note{
 M-Statistic (Kaufman & Remer 1994) - This is a measure of the difference of the distributional peaks. A large M-statistic indicates good separation between the two classes as within-class variance is 
@@ -63,7 +63,7 @@ Anderson, M. J., & Clements, A. (2000) Resolving environmental disputes: a stati
 
 Bhattacharyya, A. (1943) On a measure of divergence between two statistical populations defined by their probability distributions'. Bulletin of the Calcutta Mathematical Society 35:99-109
 
-Bruzzone, L., F. Roli, S.B. Serpico (1995) An extenstion to multiclass cases of the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and Machine Intelligence 33:1318-1321
+Bruzzone, L., F. Roli, S.B. Serpico (1995) An extension to multiclass cases of the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and Machine Intelligence 33:1318-1321
 
 Du, H., C.I. Chang, H. Ren, F.M. D'Amico, J. O. Jensen, J., (2004) New Hyperspectral Discrimination Measure for Spectral Characterization. Optical Engineering 43(8):1777-1786.
 

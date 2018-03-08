@@ -73,8 +73,10 @@ representing the polygons ID.
  pts.poly.dup <-  point.in.poly(pts, polys)
    head(pts.poly.dup@data)
    
- # Should throw error due to lack of attributes  
- pts.poly <- point.in.poly(pts, polys, duplicate = FALSE) 
+\dontrun{
+ # **** Should throw error due to lack of attributes ****  
+   pts.poly <- point.in.poly(pts, polys, duplicate = FALSE) 
+}
  
  # Coerce to sp class objects
  x <- as(pts, "Spatial")

@@ -45,6 +45,11 @@ require(cluster)
 \references{
 Theodoridis, S. & K. Koutroumbas(2006) Pattern Recognition 3rd ed.
 }
+\seealso{
+\code{\link[cluster]{pam}} for details on Partitioning Around Medoids (PAM)
+
+\code{\link[cluster]{clara}} for details on Clustering Large Applications (clara)
+}
 \author{
 Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 }

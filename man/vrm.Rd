@@ -22,7 +22,7 @@ raster class object or raster written to disk
 Implementation of the Sappington et al., (2007) vector ruggedness measure
 }
 \note{
-This funtion measures terrain ruggedness by calculating the vector ruggedness measure
+This function measures terrain ruggedness by calculating the vector ruggedness measure
 }
 \examples{
  library(raster)
@@ -33,7 +33,7 @@ This funtion measures terrain ruggedness by calculating the vector ruggedness me
 
 }
 \references{
-Sappington, J.M., K.M. Longshore, D.B. Thomson (2007). Quantifiying Landscape Ruggedness for Animal Habitat Anaysis: A case Study Using Bighorn Sheep inthe Mojave Desert. Journal of Wildlife Management. 71(5):1419-1426
+Sappington, J.M., K.M. Longshore, D.B. Thomson (2007). Quantifying Landscape Ruggedness for Animal Habitat Analysis: A case Study Using Bighorn Sheep inthe Mojave Desert. Journal of Wildlife Management. 71(5):1419-1426
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

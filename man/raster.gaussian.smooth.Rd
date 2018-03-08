@@ -35,10 +35,10 @@ This is a simple wrapper for the focal function, returning local statistical mom
    r <- focal(r, focalWeight(r, 150, "Gauss") )
  
  # Calculate Gaussian smoothing with sigma(s) = 1-4
- g1 <- raster.gaussian.smooth(r, sigma=1, n=11)
- g2 <- raster.gaussian.smooth(r, sigma=2, n=11)
- g3 <- raster.gaussian.smooth(r, sigma=3, n=11)
- g4 <- raster.gaussian.smooth(r, sigma=4, n=11)
+ g1 <- raster.gaussian.smooth(r, sigma=1, nc=11)
+ g2 <- raster.gaussian.smooth(r, sigma=2, nc=11)
+ g3 <- raster.gaussian.smooth(r, sigma=3, nc=11)
+ g4 <- raster.gaussian.smooth(r, sigma=4, nc=11)
 
 par(mfrow=c(2,2)) 
   plot(g1, main="Gaussian smoothing sigma = 1") 
