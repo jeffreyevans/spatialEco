@@ -26,15 +26,16 @@
 #'    plot(meuse[max.sv$idx,], col="red", add=TRUE, pch=19)
 #'      plot(meuse[min.sv$idx,], col="blue", add=TRUE, pch=19)
 #'  	  box()
-#'      legend("topleft", legend=c("population","maximized variance", "minimized variance"), 
-#'             col=c("grey","red","blue"), pch=c(19,19,19))
+#'      legend("topleft", legend=c("population","maximized variance", 
+#'             "minimized variance"), col=c("grey","red","blue"),  
+#'             pch=c(19,19,19))
 #'	
 #' \dontrun{
 #'  # Raster example (not memory safe) 
 #'  library(raster)
 #'    r <- raster(system.file("external/test.grd", package="raster"))
 #'   
-#'  # Calculate optimal sample variance and coerce to SpatialPointDataFrame using xyFromCell 
+#' # Calculate optimal sample variance and coerce to SpatialPointDataFrame using xyFromCell
 #'      ( min.sv <- optimized.sample.variance(getValues(r), n, type="minimized") )
 #'       min.sv <- sp::SpatialPointsDataFrame(xyFromCell(r, min.sv[,"idx"], 
 #'                                            spatial=TRUE), data=min.sv) 
@@ -46,9 +47,8 @@
 #'    plot(max.sv, col="blue", add=TRUE, pch=19)
 #'    plot(min.sv, col="red", add=TRUE, pch=19)
 #'    box()
-#'  legend("topleft", legend=c("maximized variance", "minimized variance"), 
-#'         col=c("red","blue"), pch=c(19,19))									   
-#'  
+#'  legend("topleft", legend=c("maximized variance", "minimized variance"),
+#'         col=c("red","blue"), pch=c(19,19))
 #'  }  
 #'  
 #' @export  
@@ -56,7 +56,7 @@ optimized.sample.variance <- function(x, n, type = "maximized") {
   if(!is.numeric(x)) stop("x is not a numeric vector")
     non.na.idx <- which(!is.na(x))
       if(length(non.na.idx) != length(x)) {
-	    x <- na.omit(x)
+	    x <- stats::na.omit(x)
 	    names(x) <- non.na.idx
 	  } else {
         names(x) <- 1:length(x) 
@@ -76,6 +76,6 @@ optimized.sample.variance <- function(x, n, type = "maximized") {
         x[opt] <- NA
       mean.y <- mean(y, na.rm=TRUE)
       }
-    cat("\n", paste0(type, " sample variance"), var(y), "\n")
+    cat("\n", paste0(type, " sample variance"), stats::var(y), "\n")
   return( data.frame(idx=idx,y=y) )
 }

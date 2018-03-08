@@ -1,27 +1,39 @@
 #' @title Summary of spatial cross correlation
 #' @description summary method for class "cross.cor"
-#' @param x    Object of class cross.cor
-#' @param ...  Ignored
+#' @param object    Object of class cross.cor
+#' @param ...       Ignored
 #'
 #' @method summary cross.cor
 #'
 #' @export
-summary.cross.cor <- function(x, ...) {
-  if(any(names(x)=="summary")) {
+summary.cross.cor <- function(object, ...) {
+  if(!is.null(object$nsim)) {
   cat("Moran's-I under randomization assumptions...", "\n")
-    cat("    First-order Moran's-I: ", x$summary$I, "\n")
-	cat("    Mean(I): ", x$summary$meanI, "\n")
-	cat("    STDV(I): ", x$summary$stdI, "\n")
-  	cat("    p-value (2-sided): ", x$summary$p, "\n")
-	cat("\n", "Summary statistics of local partial cross-correlation", "\n")
-      print(summary(x$lisa))
-	cat("\n", "Counts of cluster types")
-	  print(table(x$cluster))
+    cat("  First-order Moran's-I: ", object$I, "\n")
+  	cat("  First-order p-value: ", object$global.p, "\n")
+	cat("", "\n") 
+  cat("Chen's SCI under randomization assumptions...", "\n")
+	cat("\n", "Summary statistics of local partial cross-correlation [xy]", "\n")
+      print( summary(object$SCI[,1]) )
+        cat("\n", "", "\n")  
+  	cat("  p-value based on 2-tailed t-test: ", object$local.p, "\n")	
+    cat("  p-value based on 2-tailed t-test observations above/below CI: ", object$range.p, "\n")	
+    if( exists(object$clusters) )
+	  cat("\n", "Counts of cluster types")
+	    print(table(object$cluster))
   } else {
-    cat("First-order Moran's-I: ", x$I, "\n")
-    cat("\n", "Summary statistics of local partial cross-correlation", "\n")
-      print(summary(x$lisa))
-  	cat("\n", "Counts of cluster types")
-  	  print(table(x$cluster))
+  cat("Moran's-I...", "\n")
+      cat("  First-order Moran's-I: ", object$I, "\n")
+  	  cat("  First-order p-value: ", object$global.p, "\n")
+	  cat("", "\n") 
+  cat("Chen's SCI under randomization assumptions...", "\n")
+	cat("\n", "Summary statistics of local partial cross-correlation [xy]", "\n")
+      print( summary(object$SCI[,1]) )
+	    cat("\n", "", "\n") 
+  	cat("    non-simulated second-order p-value based on 2-tailed t-test: ", object$t.test, "\n")
+	cat("    p-value based on 2-tailed t-test observations above/below CI: ", object$p, "\n")	
+    if( exists(object$clusters) )
+	  cat("\n", "Counts of cluster types")
+	    print(table(object$cluster))
   }
 }

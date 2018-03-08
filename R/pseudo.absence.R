@@ -101,13 +101,13 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
       options(warn = -1)
     raster.as.im <- function(im) {
 	  r <- raster::res(im)
-      orig <- bbox(im)[, 1] + 0.5 * r
+      orig <- sp::bbox(im)[, 1] + 0.5 * r
       dm <- dim(im)[2:1]
         xx <- unname(orig[1] + cumsum(c(0, rep(r[1], dm[1] - 1))))
         yy <- unname(orig[2] + cumsum(c(0, rep(r[2], dm[2] - 1))))
       return(spatstat::im(matrix(raster::values(im), ncol = dm[1], 
              nrow = dm[2], byrow = TRUE)[dm[2]:1, ], 
-             xcol = xx, yrow = yy))
+		     xcol = xx, yrow = yy))
     }
 	  
 	if (is.null(Mask)) {
@@ -192,7 +192,7 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
                 } else {
 	              stop("Not a valid bandwidth option")
                 }  		
-      den <- raster(spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, 
+      den <- raster::raster(spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, 
                                    adjust = gradient, diggle = edge)) * a
 
       den <- 1 - (den/raster::maxValue(den))
@@ -203,6 +203,6 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
     if (KDE == TRUE) {
       return(list(sample = den.sp, kde = den, sigma = bw))
     } else {
-      return(list(sample = den.sp, sigma = bw))
+      return(list(sample = den.sp, sigma = bw) )
     }
 }

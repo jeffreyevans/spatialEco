@@ -1,11 +1,11 @@
 #' @title Class breaks
 #' @description Finds class breaks in a distribution
 #'
-#' @param x
-#' @param n
+#' @param x     A vector to find breaks for
+#' @param n     Number of breaks
 #' @param type  Statistic used to find breaks c("equal", "quantile", "std", "geometric")
 #'
-#' @return A vector contaning class break values the length is n+1 to allow for specification of ranges
+#' @return A vector containing class break values the length is n+1 to allow for specification of ranges
 #'
 #' @note The robust std method uses sqrt(sum(x^2)/(n-1)) to center the data before deriving "pretty" breaks.
 #'
@@ -39,7 +39,7 @@ classBreaks <- function(x, n, type = c("equal", "quantile", "std", "geometric") 
   if(type[1] == "equal") { 
     return( seq(min(x), max(x), length.out=(n+1)) )
   } else if(type[1] == "quantile") {	
-    return( c(quantile(x=x, probs=seq(0,1,1/10))) )
+    return( c(stats::quantile(x=x, probs=seq(0,1,1/10))) )
   } else if(type[1] == "std") {
     svar <- scale(x)
     return( c((pretty(x = svar, n = n) * attr(svar, "scaled:scale")) + 

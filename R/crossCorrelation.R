@@ -1,206 +1,226 @@
 #' @title Spatial cross correlation
-#' @description Calculates spatial partial cross-correlation using local Moran's-I (LISA)
+#' @description Calculates univariate or bivariate spatial cross-correlation using local Moran's-I (LISA), following Chen (2015)
 #'
-#' @parm x               Vector of x response variables
-#' @parm y               Vector of y response variables
-#' @parm coords          A matrix of coordinates corresponding to [x,y], only used if k = NULL
-#' @parm w               Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)], if not defined then a default method is used
-#' @parm k               Number of simulations for calculating permutation distribution under the null hypothesis of no spatial autocorrelation (k=1000, default)
-#' @parm dist.function   ("inv.power", "neg.exponent") If w = NULL, the default method for deriving spatial weights matrix, options are: inverse power or negative exponent    
-#' @parm scale.matrix    (TRUE/FALSE) rescale spatial weights matrix so rows sum to 1, not used if w = NULL  
-#' @parm scale.partial   (TRUE/FALSE) rescale partial spatial autocorrelation statistics [-1 - 1]
-#' @parm alpha = 0.05    confidence interval (default is 95%)
-#' @parm return.sims     (FALSE/TRUE) Return randomizations vector n = k
+#' @param x               Vector of x response variables
+#' @param y               Vector of y response variables, if not specified the univariate statistic is returned
+#' @param coords          A matrix of coordinates corresponding to [x,y], only used if k = NULL. Can also be an sp object with relevant x,y coordinate slot (ie., points or polygons)
+#' @param w               Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)], if not defined then a default method is used
+#' @param type            c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) or Global Spatial cross-correlation Index (GSCI)
+#' @param k               Number of simulations for calculating permutation distribution under the null hypothesis of no spatial autocorrelation (k=1000, default)
+#' @param dist.function   ("inv.power", "neg.exponent") If w = NULL, the default method for deriving spatial weights matrix, options are: inverse power or negative exponent    
+#' @param scale.partial   (TRUE/FALSE) rescale partial spatial autocorrelation statistics [-1 - 1]
+#' @param scale.xy        (TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that they are already scaled following Chen (2015) 
+#' @param scale.matrix    (TRUE/FALSE) If a neighbor/distance matrix is passed, should it be scaled
+#' @param alpha = 0.05    confidence interval (default is 95 pct)
+#' @param clust           (FALSE/TRUE) Return approximated lisa clusters
+#' @param return.sims     (FALSE/TRUE) Return randomizations vector n = k
 #'
-#' @return vectors (length of x) containing:
-#' \itemize{  
-#'   \item {lisa} {local partial spatial correlation statistic}
-#'   \item {cluster} {Cluster values indicating juxtaposition: "low/low", "low/high", "high/high", "high/low"}
+#' @return When not simulated k=0, a list containing:
+#' \itemize{
+#'   \item {I} {Global autocorrelation statistic}
+#'   \item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
+#'   \item {nsim} {value of NULL to represent p values were derived from observed data (k=0)}
+#'   \item {p} {Probability based observations above/below confidence interval}
+#'   \item {t.test} {Probability based on t-test}
+#'   \item {clusters} {If "clust" argument TRUE, vector representing LISA clusters}
 #' }
 #'
-#' @return \strong{when simulated, a data.frame containing}
-#' \itemize{  
-#'   \item {I} {Global partial correlation}
-#'   \item {meanI} {Mean I}
-#'   \item {stdI} {Standard Deviation of I}
-#'   \item {zI} {Z-score of I}
-#'   \item {p1} {Probability based on observed}
-#'   \item {p} {Probability based on simulated}
+#' @return when simulated (k>0), a list containing: 
+#' \itemize{
+#'   \item {I} {Global autocorrelation statistic}
+#'   \item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
+#'   \item {nsim} {value representing number of simulations}
+#'   \item {global.p} {p-value of global autocorrelation statistic}
+#'   \item {local.p} {Probability based simulated data using successful rejection of t-test}
+#'   \item {range.p} {Probability based on range of probabilities resulting from paired t-test}
+#'   \item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
 #' }
 #'
 #' @references Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 #'
-#'@examples
-#'  library(sp)
-#'  library(spdep)
+#' @examples
+#'   library(sp)
+#'   library(spdep)
 #'    
-#'  data(meuse)
-#'    coordinates(meuse) <- ~x+y  
+#'   data(meuse)
+#'     coordinates(meuse) <- ~x+y  
 #'  
-#'  #### Providing a neighbor contiguity spatial weights matrix
-#'  all.linked <- max(unlist(nbdists(knn2nb(knearneigh(coordinates(meuse))), 
-#'                    coordinates(meuse))))  
-#'  nb <- nb2listw(dnearneigh(meuse, 0, all.linked), style = "B", zero.policy = T)  
-#'    Wij <- as.matrix( as(nb, "symmetricMatrix") ) 	
-#'  ( I <- crossCorrelation(meuse$elev, meuse$copper, w=Wij, k=500) )
-#'    meuse$lisa <- I$lisa
-#'    meuse$lisa.clust <- as.factor(I$cluster)
-#'      spplot(meuse, "lisa")
-#'      spplot(meuse, "lisa.clust") 
-#'	  
-#'  #### Using a default spatial weights matrix method (inverse power function)
-#'  ( I <- crossCorrelation(meuse$elev, meuse$copper, coords = coordinates(meuse), k=500) )
-#'    meuse$lisa <- I$lisa
-#'    meuse$lisa.clust <- as.factor(I$cluster)
-#'      spplot(meuse, "lisa")
-#'      spplot(meuse, "lisa.clust")	  
-#'	   	  
-#'  	
-#' \dontrun{	
-#'  #### Simulate autocorrelated random normal variates using the eigen-decomposition
-#'  ####   requires ncf package
-#'  x=expand.grid(1:20, 1:20)[,1]
-#'  y=expand.grid(1:20, 1:20)[,2]
-#'  sdat <- data.frame(x =x,y=y,
-#'                    z1=ncf::rmvn.spa(x=x, y=y, p=2, method="exp"),
-#'                    z2=ncf::rmvn.spa(x=x, y=y, p=2, method="exp"))  
-#'  coordinates(sdat) <- ~x+y
-#'  all.linked <- max(unlist(nbdists(knn2nb(knearneigh(coordinates(sdat))), 
-#'                    coordinates(sdat))))
-#'  nb <- nb2listw(dnearneigh(sdat, 0, all.linked), style = "B", zero.policy = T)  
-#'    Wij <- as.matrix( as(nb, "symmetricMatrix") ) 
-#'  
-#'  ( I <- crossCorrelation(sdat$z1, sdat$z2, w=Wij, k=1000) )
-#'  dat$lisa <- I$lisa
-#'  dat$lisa.clust <- as.factor(I$cluster)
-#'    spplot(dat, "lisa")
-#'    spplot(dat, "lisa.clust")    
-#'    
-#'  #### 1st order polygon contingency example 
-#'  ####   requires UScensus2000tract package
-#'  library(sp)
-#'  library(spdep)
-#'  library(UScensus2000tract)
-#'  
-#'  data(oregon.tract)
-#'  nb <- nb2listw(poly2nb(oregon.tract), style = "B", zero.policy = T)
-#'    Wij <- as.matrix( as(nb, "symmetricMatrix") )
-#'  
-#'  X = oregon.tract$white
-#'  Y = oregon.tract$black  
-#'    
-#'  # Simulated bivariate lisa
-#'  I <- crossCorrelation(X, Y, w=Wij, k=1000)
-#'  oregon.tract$lisa <- I$lisa
-#'  oregon.tract$lisa.clust <- as.factor(I$cluster)
-#'    spplot(oregon.tract, "lisa")
-#'    spplot(oregon.tract, "lisa.clust")
-#'  
+#'   #### Providing a neighbor contiguity spatial weights matrix
+#'   all.linked <- max(unlist(nbdists(knn2nb(knearneigh(coordinates(meuse))), 
+#'                     coordinates(meuse))))  
+#'   nb <- nb2listw(dnearneigh(meuse, 0, all.linked), style = "B", zero.policy = TRUE)  
+#'     Wij <- as.matrix( as(nb, "symmetricMatrix") ) 	
+#'    ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
+#'                            clust=TRUE, k=99) )
+#'     meuse$lisa <-  I$SCI[,"lsci.xy"]
+#'     meuse$lisa.clust <- as.factor(I$cluster)
+#'       spplot(meuse, "lisa")
+#'       spplot(meuse, "lisa.clust") 
+#'	   
+#'   #### Using a default spatial weights matrix method (inverse power function)
+#'   ( I <- crossCorrelation(meuse$zinc, meuse$copper, coords = coordinates(meuse), 
+#'                           clust = TRUE, k=99) )
+#'     meuse$lisa <- I$SCI[,"lsci.xy"]
+#'     meuse$lisa.clust <- as.factor(I$cluster)
+#'       spplot(meuse, "lisa")
+#'       spplot(meuse, "lisa.clust")	  
+#'	
+#' @examples    	    	
+#' \dontrun{
+#'   #### Simulate spatially autocorrelated random normal variables 
+#'   ####   using eigen-decomposition, requires ncf package
+#'   library(sp)
+#'   library(ncf)
+#'   x=expand.grid(1:20, 1:20)[,1]
+#'   y=expand.grid(1:20, 1:20)[,2]
+#'   sdat <- data.frame(x =x,y=y,
+#'                     z1=ncf::rmvn.spa(x=x, y=y, p=2, method="exp"),
+#'                     z2=ncf::rmvn.spa(x=x, y=y, p=2, method="exp"))  
+#'   coordinates(sdat) <- ~x+y
+#'   ( I <- crossCorrelation(sdat$z1, sdat$z2, coords=coordinates(sdat), 
+#'                           k=9999, clust = TRUE) )
+#'     sdat$lisa <- I$SCI[,"lsci.xy"]
+#'     sdat$lisa.clust <- as.factor(I$cluster)
+#'       spplot(sdat, "lisa")
+#'       spplot(sdat, "lisa.clust")    
+#'     
+#'   #### 1st order polygon contingency example 
+#'   ####   requires UScensus2000tract package
+#'   library(sp)
+#'   library(spdep)
+#'   library(UScensus2000tract)
+#'   
+#'   data(oregon.tract)
+#'   nb <- nb2listw(poly2nb(oregon.tract), style = "B", zero.policy = TRUE
+#'     Wij <- as.matrix( as(nb, "symmetricMatrix") )
+#'   
+#'   X = oregon.tract$white
+#'   Y = oregon.tract$black  
+#'     
+#'   # Simulated bivariate lisa
+#'   I <- crossCorrelation(X, Y, w=Wij, k=999)
+#'   oregon.tract$lisa <-I$SCI[,"lsci.xy"]
+#'   oregon.tract$lisa.clust <- as.factor(I$cluster)
+#'     spplot(oregon.tract, "lisa")
+#'     spplot(oregon.tract, "lisa.clust")   
 #' } 
 #' 
 #' @exportClass cross.cor
 #' @export
-crossCorrelation <- function(x, y, coords = NULL, w = NULL, k = 1000, dist.function = "inv.power", 
-                             scale.matrix = TRUE, scale.partial = TRUE, alpha = 0.05, 
-							 return.sims = FALSE) {
-    if(length(y) != length(x)) stop("[X,Y] are not equal")
-      if( length(which(is.na(x))) != 0 | length(which(is.na(y))) != 0) 
-	    stop("NA's not permitted in [X,Y]")
-          if( k == 0) warning("Permutation is not being run, estimated p will be based on observed")		  
-	n <- length(x)
+crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI","GSCI"), k = 1000, 
+                             dist.function = "inv.power", scale.partial = TRUE, scale.matrix = TRUE,  
+                             scale.xy = TRUE, alpha = 0.05, clust = FALSE, return.sims = FALSE) {
+	if(missing(x)) stop("x must be specified")
+    if(is.null(y)) y = x						 
+      if(length(y) != length(x)) stop("[X,Y] are not equal")
+        if( length(which(is.na(x))) != 0 | length(which(is.na(y))) != 0) 
+	      stop("NA's not permitted in [X,Y]")
+            if( k == 0) warning("Permutation is not being run, estimated p will be based on observed")
+	          if(scale.xy == FALSE) warning("It is assumed that x,v vectors are already scaled") 		
+    type = type[1]		  
+	  n <- length(x)
   if( is.null(w) ) {
     if( is.null(coords) ) stop("If no Wij matrix is provided, a coordinates matrix is required")
-    w <- sp::spDists( coords ) 
+      w <- sp::spDists( coords ) 
     if( dist.function == "inv.power" ) {
       message("Calculating spatial weights matrix using inverse power function")
 	    w <- 1 / w
           diag(w) <- 0 
         w <- w / sum(w) 
     } else if (dist.function == "neg.exponent") { 
-        message("Calculating spatial weights matrix using negative exponent")   
-	  diag(W) <- NA 
-	  mu <- mean(W, na.rm=TRUE)
-      for(i in 1:nrow(W)) {
-        for(j in 1:nrow(W)) {
-          W[i,j] <- round(exp( (-2 * W[i,j]) / mu ),6)
+      message("Calculating spatial weights matrix using negative exponent")    
+	  diag(w) <- NA 
+	  mu <- mean(w, na.rm=TRUE)
+      for(i in 1:nrow(w)) {
+        for(j in 1:nrow(w)) {
+		 w[i,j] <- round(exp( (-2 * w[i,j]) / mu ),6)
         }
       }  
-      diag(W) <- 0
+      diag(w) <- 0
     } else {
       stop("Not a valid matrix option")
     }
   } else {
     if(!class(w) == "matrix") stop("Spatial weights must be in matrix form")					   
-      if(ncol(w) != length(x) | nrow(w) != length(x)) stop("Spatial weights matrix must be symmetrical")		   
+      if(ncol(w) != length(x) | nrow(w) != length(x)) stop("Spatial weights matrix must be symmetrical and match x")		   
         w[which(is.na(w))] <- 0
           if(scale.matrix) {
             if(sum(w) > 0) { w <- as.matrix(w / rowSums(w))}
           }
-  }  
-   newx <- ( x - mean(x) )
-   newy <- ( y - mean(y) )
-   sumw <- sum(w)
-   s3 <- sum(w * t(w))
-     s4 <- sum(w * w)
-         s5 <- sum(w %*% w)
-       s6 <- sum(t(w) %*% w + w %*% t(w))
-     s1 <- s4 + s3
-    s2 <- 2 * s5 + s6
-    morani <- t(newx) %*% w %*% newy
-      pm <- (w %*% newy) * newx
-      varx <- sum(newx * newx)/n
-      vary <- sum(newy * newy)/n
-      denom <- sumw * sqrt(varx * vary)
-    morani <- morani / denom
-      pm <- pm / denom
-      corxy <- cor(newx, newy)
-      mxy <- sum(newx * newy)/n
-      mxy2 <- sum(newx^2 * newy^2) / n
-    Emorani <-  - corxy/(n - 1)
-      term1 <- 2 * (sumw^2 - s2 + s1)
-      term1 <- term1 + (2 * s3 - 2 * s5) * (n - 3) + s3 * (n - 2) * (n - 3)
-      term1 <- (term1 * mxy^2 * n)
-      term2 <- 6 * (sumw^2 - s2 + s1) + (4 * s1 - 2 * s2) * (n - 3)
-      term2 <- term2 + s1 * (n - 2) * (n - 3)
-      term2 <-  - term2 * mxy2
-      term3 <- n * (sumw^2 - s2 + s1 + (2 * s4 - s6) * (n - 3) + s4 * (n - 2) * (n - 3))
-      term3 <- term3 * varx * vary
-    Vmorani <- term1 + term2 + term3
-    Vmorani <- Vmorani / ((n - 1) * (n - 2) * (n - 3) * sumw^2 * varx * vary)
-    Vmorani <- Vmorani - (mxy^2 / (varx * vary)) / (n - 1)^2
-      sdr <- sqrt(Vmorani)
-    z2 <- (morani - Emorani) / sdr
-      if(scale.partial) {
-      	dp <- (max(pm) + min(pm)) / 2
-      	pm <- (pm - dp) / (max(pm) - dp)
+  } 
+  if( scale.xy ){  
+    x <- ( x - mean(x) ) / ( stats::sd(x) * sqrt((length(x)-1)/length(x)) )
+    y <- ( y - mean(y) ) / ( stats::sd(y) * sqrt((length(y)-1)/length(y)) )
+  } 
+  
+  #### Local and global cross-correlation statistics ####
+  SCI <- function(x,y,W,type.cc, scale.cc) {
+      if( type.cc == "LSCI" ) {
+      # The lsci.xy is empirically the same as Anselin's LISA
+      lsci.xy = as.numeric( x*y%*%W )
+      lsci.yx = as.numeric( y*x%*%W )
+        if(scale.cc) {
+          lsci.xy <- (lsci.xy - min(lsci.xy)) * (1 - -1) / (max(lsci.xy) - min(lsci.xy)) + -1
+          lsci.yx <- (lsci.yx - min(lsci.yx)) * (1 - -1) / (max(lsci.yx) - min(lsci.yx)) + -1
+        }	
+        return(data.frame(lsci.xy = lsci.xy, lsci.yx = lsci.yx))		  
+      } 
+      if( type.cc == "GSCI" ) {
+        # The lsci.xy is empirically the same as Anselin's LISA
+        gsci.xy = as.numeric( x*W%*%y )
+        gsci.yx = as.numeric( y*W%*%x )                                      	
+          if(scale.cc) {
+              gsci.xy <- (gsci.xy - min(gsci.xy)) * (1 - -1) / (max(gsci.xy) - min(gsci.xy)) + -1
+  	    	    gsci.yx <- (gsci.yx - min(gsci.yx)) * (1 - -1) / (max(gsci.yx) - min(gsci.yx)) + -1
+          }
+        return(sci=data.frame(gsci.xy = gsci.xy, gsci.yx = gsci.yx))		
       }
-   if(k > 0) {
-   	cat("\n ( Computing Permutation Distribution )\n")
-    newy.sim <- matrix(newy[sample(1:n, size = n * k, replace = TRUE)], 
-		               nrow = n, ncol = k) 					   
-	isim <- apply(newy.sim, MARGIN=2, function(j) t(newx[sample(1:length(newx))]) %*% w %*% j / denom )
-   	    prob1 <- length( isim[isim > as.numeric(morani)]) / k
-   	  prob2 <- 1 - prob1
-   	prob <- 2 * min(prob1, prob2)
-	prob.inv <- c(alpha / 2, 1 - alpha / 2)
-      clust <- as.character( interaction(newx > 0, w %*% newy > 0) ) 
-        clust <- gsub("TRUE", "High", clust)
-        clust <- gsub("FALSE", "Low", clust)
-    p.inv <- stats::quantile(isim, prob = prob.inv)	
-      sig <-  pm < p.inv[1]  |  pm > p.inv[2] 	    
-        clust[sig == 0] <- "Not significant"
-	results <- list(lisa = as.numeric(pm), cluster = clust,  
-	                summary = data.frame(I=round(morani, 6), 
-	                meanI=round(Emorani, 6), stdI=round(sdr, 6), zI=round(z2, 6),
-	                p1=round(2 * (1 - stats::pnorm(abs(z2))), 6), p=round(prob, 6)))
-	  if(return.sims) { results$simulated.I <-  msim }			
-	class(results) <- c("cross.cor","list") 
-   } else {
-      clust <- as.character( interaction(newx > 0, w %*% newy > 0) ) 
-        clust <- gsub("TRUE", "High", clust)
-        clust <- gsub("FALSE", "Low", clust)   
-    results <- list(lisa = as.numeric(pm), I = round(morani, 6), cluster = clust)
+  }
+  global.i <- as.numeric((x%*%w%*%y)/(length(x) - 1))
+    if(type == "LSCI") { tstat = "lsci.xy" } else { tstat = "gsci.xy" }  
+      sci.results <- SCI(x=x,y=y,W=w,type.cc=type,scale.cc=scale.partial)   
+      if(clust) {     
+	    lisa.clust <- as.character( interaction(x > 0, w %*% y > 0) ) 
+          lisa.clust <- gsub("TRUE", "High", lisa.clust)
+            lisa.clust <- gsub("FALSE", "Low", lisa.clust)
+	  }  
+	    probs <- c(alpha / 2, 1 - alpha / 2)   
+    if(k > 0) {
+     cat("\n ( Computing Permutation Distribution )\n")
+	 # Global Moran's-I p-value
+       y.sim <- matrix(y[sample(1:n, size = n * k, replace = TRUE)], 
+       		        nrow = n, ncol = k) 	
+       isim <- apply(y.sim, MARGIN=2, function(j) t(x[sample(1:length(x))]) %*% w %*% j /
+	                (length(x) - 1) )
+       ( global.p <- sum( abs(isim) > abs( global.i ) ) / length(isim) ) 	 
+
+       # Local Moran's-I p-value	   
+        y.sim <- matrix(y[sample(1:n, size = n * k, replace = TRUE)], 
+                        nrow = n, ncol = k) 	
+        isim <- apply(y.sim, MARGIN=2, function(j) {
+             SCI(t(x[sample(1:length(x))]), j, W=w,type.cc=type,scale.cc=scale.partial)[,tstat] } )
+		ttest.p <- round(apply(isim, 2, function(j) stats::t.test(sci.results[,tstat], y = j,
+                          alternative = "two.sided", paired = TRUE, 
+		 				  conf.level = 1-alpha)$p.value),6)
+		p <- length( ttest.p[ttest.p > alpha] ) / length(ttest.p)							  
+        p1 <- 2 * min(length(ttest.p[ttest.p > alpha]) / k, 
+	                 length(ttest.p[ttest.p < alpha]) / k )	
+	  results <- list(I=global.i, SCI=sci.results, nsim = k,  
+                      global.p=global.p, local.p=p, range.p=p1)
+                        if(clust) { results$clusters <- lisa.clust }					  
+	                      if(return.sims) { results$simulated.I <- isim }
+	    class(results) <- c("cross.cor","list") 
+    } else {
+     ttest.p <- round(stats::t.test(sci.results[,tstat], conf.level = 1-alpha)$p.value,6)
+     #ci <- t.test(sci.results[,tstat], conf.level = 1-alpha)$conf.int
+     ci <- stats::quantile(sci.results[,tstat], probs=probs)
+     tstat <- sci.results[,tstat]
+       p <- 2 * min(length(tstat[tstat >= ci[2]]) / length(tstat), 
+	                length(tstat[tstat <= ci[1]]) / length(tstat) )
+	  results <- list(I=global.i, SCI=sci.results, nsim = NULL,
+                      p=p, t.test=ttest.p)
+	    if(clust) { results$clusters <- lisa.clust }				  			  
 	class(results) <- c("cross.cor","list")
-   }
+    }
   return( invisible(results) )  
 }

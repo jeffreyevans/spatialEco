@@ -61,8 +61,10 @@
 #'  pts.poly.dup <-  point.in.poly(pts, polys)
 #'    head(pts.poly.dup@data)
 #'    
-#'  # Should throw error due to lack of attributes  
-#'  pts.poly <- point.in.poly(pts, polys, duplicate = FALSE) 
+#' \dontrun{
+#'  # **** Should throw error due to lack of attributes ****  
+#'    pts.poly <- point.in.poly(pts, polys, duplicate = FALSE) 
+#' }
 #'  
 #'  # Coerce to sp class objects
 #'  x <- as(pts, "Spatial")
@@ -81,7 +83,7 @@
 #'  # Count points in each polygon
 #'  tapply(pts.poly.dup$IDS.x, pts.poly.dup$IDS.y, FUN=length)      
 #'
-#' @import sf 
+#' @import sf
 #' @export
 point.in.poly <- function(x, y, sp = TRUE, duplicate = TRUE, ...) {
   if(!any(class(x)[1] == c("SpatialPoints", "SpatialPointsDataFrame", "sf"))) {
@@ -98,7 +100,7 @@ point.in.poly <- function(x, y, sp = TRUE, duplicate = TRUE, ...) {
 	    y <- as(y, "Spatial")
 		  if(dim(y@data)[2] == 0) stop("There are no attributes associated with polygons")
 	  }
-      o <- over(x, y, returnList = TRUE)
+      o <- sp::over(x, y, returnList = TRUE)
       m <- max(unlist(lapply(o, nrow)))
         ids <- row.names(y)
           xy <- data.frame(t(sapply(1:length(o), 
@@ -119,7 +121,8 @@ point.in.poly <- function(x, y, sp = TRUE, duplicate = TRUE, ...) {
   if(dim(x)[2] == 1) x$pt.ids <- 1:nrow(x)	
     if(dim(y)[2] == 1) y$poly.ids <- 1:nrow(y)	  
       o <- sf::st_join(x, y, ...)
-  if( sp ) o <- as(o, "Spatial")
+   if( sp ) o <- as(o, "Spatial")
+  # if( sp ) o <- sf::as_Spatial(o)
   return( o ) 
   } 
 }

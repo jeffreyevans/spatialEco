@@ -4,16 +4,16 @@
 #' @param x          SpatalPointsDataFrame or SpatalPolgonsDataFrame class object 
 #' @param y          raster class object 
 #' @param bkgd       Background value (will be ignored)
-#' @param metrics    Numeric index of desired metric (see available metrics)
+#' @param metrics    Numeric index or name(s) of desired metric (see available metrics)
 #' @param bw         Buffer distance (ignored if x is SpatalPolgonsDataFrame) 
-#' @param latlon     Is raster data in lat-long (TRUE/FALSE)
-#' @param echo       Plot raster subsets and echo object ID at each iteration (TRUE | FALSE)
+#' @param latlon     (FALSE/TRUE) Is raster data in lat-long 
+#' @param echo       (FALSE/TRUE) Print object ID at each iteration 
 #'
 #' @return If multiple classes are evaluated a list object with a data.frame for each class containing specified metrics in columns. The data.frame is ordered and shares the same row.names as the input feature class and can be directly joined to the @@data slot. For single class problems a data.frame object is returned.   
 #'
 #' @details The following metrics are available: 
 #'  \itemize{ 
-#'   \item  class - a particular patch type from the original input matrix (mat).
+#'   \item  class - (always included) particular patch type from the original input matrix.
 #'   \item  n.patches - the number of patches of a particular patch type or in a class.
 #'   \item  total.area - the sum of the areas (m2) of all patches of the corresponding patch type.
 #'   \item  prop.landscape - the proportion of the total landscape represented by this class
@@ -83,7 +83,8 @@
 #' @seealso \code{\link[SDMTools]{ClassStat}}
 #'
 #' @export 
-land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 1000, latlon = FALSE, echo = TRUE) {
+land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 1000, 
+                         latlon = FALSE, echo = TRUE) {
     # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame") & !inherits(x, "SpatialPolygonsDataFrame")) 
         stop("MUST BE sp SpatialPointsDataFrame OR SpatialPolygonsDataFrame CLASS OBJECT")
