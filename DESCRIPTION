@@ -1,8 +1,8 @@
 Package: spatialEco
 Type: Package
-Title: Spatial Analysis and Modelling
+Title: Spatial Analysis and Modelling Utilities
 Version: 1.1-0
-Date: 2018-02-08
+Date: 2018-03-05
 Authors@R: c(person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
              role = c("aut", "cre")), person(family="Ram", given="Karthik", role = "ctb") )
 Description: Utilities to support spatial data manipulation, query, sampling
@@ -13,7 +13,7 @@ Description: Utilities to support spatial data manipulation, query, sampling
     auto-logistic model, sampling models, cluster optimization, statistical
     exploratory tools and raster-based metrics.
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.3.0)
 Imports:
     sp,
 	sf,
@@ -30,8 +30,8 @@ Imports:
     yaImpute,
 	SpatialPack,
 	MASS,
-	rgdal,
 	EnvStats,
+	maptools,
     methods
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3
