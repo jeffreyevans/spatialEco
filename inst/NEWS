@@ -83,7 +83,8 @@ spatialEco_1.0-0
 spatialEco_1.1-0
 =================
 * Fixed bug in "pseudo.absence" that was throwing an error when a raster class mask was defined 
-* Fixed the "point.in.poly" function so that polygon attributes are added to the points, also added support for sf classes
+* Fixed bug in "land.metrics" that was producing incorrect class enumeration
+* Feature Enhancement and bug fix in "point.in.poly" function so that polygon attributes are added to the points, also added support for sf classes
 * Added function "raster.kendall" Calculates Kendall's tau trend with continuity correction for raster time-series 
 * Added function "optimized.sample.variance" Draws an optimal sample that minimizes or maximizes the sample variance 
 * Added function "fuzzySum" Calculates the fuzzy sum of a vector
