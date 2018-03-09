@@ -58,7 +58,14 @@ morans.plot <- function(x, y = NULL, coords = NULL,
         if(length(y) != length(x)) stop("[X,Y] are not equal")
           if( length(which(is.na(x))) != 0 | length(which(is.na(y))) != 0) 
 	        stop("NA's not permitted in [X,Y]")	
-    dots <- as.list(match.call(expand.dots = TRUE)[-1])			
+    dots <- as.list(match.call(expand.dots = TRUE)[-1])
+	if ( !is.null(dots[["x"]]) ) dots[["x"]] <- NULL
+		if ( !is.null(dots[["y"]]) ) dots[["y"]] <- NULL
+			if ( !is.null(dots[["coords"]]) ) dots[["coords"]] <- NULL
+				if ( !is.null(dots[["type.ac"]]) ) dots[["type.ac"]] <- NULL
+					if ( !is.null(dots[["dist.function"]]) ) dots[["dist.function"]] <- NULL
+						if ( !is.null(dots[["scale.xy"]]) ) dots[["scale.xy"]] <- NULL
+							if ( !is.null(dots[["scale.morans"]]) ) dots[["scale.morans"]] <- NULL
 	if(scale.xy == FALSE) warning("It is assumed that [x,y] vectors are already scaled")
       type.ac = type.ac[1]			  
     if( scale.xy ){
