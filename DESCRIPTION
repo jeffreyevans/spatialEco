@@ -16,22 +16,23 @@ Depends:
     R (>= 3.3.0)
 Imports:
     sp,
-	sf,
+    sf,
     raster,
     spatstat,
     cluster,
     spdep,
     SDMTools,
-	readr,
+    readr,
     RCurl,
     rgeos,
     RANN,
     rms,
     yaImpute,
-	SpatialPack,
-	MASS,
-	EnvStats,
-	maptools,
+    SpatialPack,
+    MASS,
+    EnvStats,
+    maptools,
+    alphahull,
     methods
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3
