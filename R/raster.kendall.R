@@ -11,14 +11,16 @@
 #' @return Depending on arguments, a raster layer or rasterBrick object containing:
 #' \itemize{
 #'   \item {raster layer 1} {slope for trend, always returned}
-#'   \item {raster layer 2} {intercept for trend if intercept TRUE}
-#'   \item {raster layer 3} {p value for trend fit if p.value TRUE}
-#'   \item {raster layer 4} {lower confidence level at 95 pct, if confidence TRUE}
-#'   \item {raster layer 5} {upper confidence level at 95 pct, if confidence TRUE}
-#'   \item {raster layer 6} {Kendall's tau two-sided test, reject null at 0, if tau TRUE}
+#'   \item {raster layer 2} {Kendall's tau two-sided test, if tau TRUE}
+#'   \item {raster layer 3} {intercept for trend if intercept TRUE}
+#'   \item {raster layer 4} {p value for trend fit if p.value TRUE}
+#'   \item {raster layer 5} {Z value for trend fit if z.value TRUE, }
+#'   \item {raster layer 6} {lower confidence level at 95 pct, if confidence TRUE}
+#'   \item {raster layer 7} {upper confidence level at 95 pct, if confidence TRUE}
 #' }
 #'
 #' @details This function implements Kendall's nonparametric test for a monotonic trend using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate the slope and related confidence intervals.  
+#' @details Critical values are Z > 1.96 represents a significant increasing trend and a Z < −1.96 a significant decreasing trend (p < 0.05). The null hypothesis can be rejected if Tau = 0. 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -34,8 +36,9 @@
 #'  			    system.file("external/rlogo.grd", package="raster")) 
 #'  
 #'  # Calculate trend slope with p-value and confidence level(s)
-#'  logo.trend <- raster.kendall(r.logo, p.value=TRUE, confidence=TRUE)
-#'    names(logo.trend) <- c("slope","p.value","LCI","UCI")
+#'  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE, 
+#'                               z.value = FALSE, confidence = TRUE)
+#'    names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
 #'      plot(logo.trend)
 #' }
 #'
@@ -43,28 +46,30 @@
 #' @seealso \code{\link[raster]{overlay}} for available ... arguments
 #'
 #' @export
-raster.kendall <- function(x, intercept = FALSE, p.value = FALSE,   
-                           confidence = FALSE, tau = FALSE, ...) {
+raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,    
+                           z.value = FALSE, confidence = FALSE,  ...) {
   if(!any(class(x) %in% c("RasterBrick","RasterStack"))) stop("x is not a raster stack or brick object")
     if( raster::nlayers(x) < 5) stop("Too few layers (n<5) to calculate a trend")
-  trend.slope <- function(y, p.value.pass = p.value, tau.pass = tau, confidence.pass = confidence,
-                          intercept.pass = intercept) {
+  trend.slope <- function(y, p.value.pass = p.value, z.pass = z.value, tau.pass = tau, 
+                          confidence.pass = confidence, intercept.pass = intercept) {
     options(warn=-1)
     fit <- EnvStats::kendallTrendTest(y ~ 1)
       fit.results <- fit$estimate[2]
+	    if(tau.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }
+		  if(intercept.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[3]) }  
         if(p.value.pass == TRUE) { fit.results <- c(fit.results, fit$p.value) } 
-  	      if(confidence.pass == TRUE) { 
-		    ci <- unlist(fit$interval["limits"])
-		      if( length(ci) == 2) { 
-		        fit.results <- c(fit.results, ci)
-              } else {
-                fit.results <- c(fit.results, c(NA,NA))
-              }			  
-		  }
-        if(intercept.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[3]) }  
-		  if(tau.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }  
+		  if(z.pass == TRUE) { fit.results <- c(fit.results, fit$statistic) }
+  	       if(confidence.pass == TRUE) { 
+		     ci <- unlist(fit$interval["limits"])
+		       if( length(ci) == 2) { 
+		         fit.results <- c(fit.results, ci)
+               } else {
+                 fit.results <- c(fit.results, c(NA,NA))
+               }			  
+		   }   		  
     return( fit.results )
   }
     options(warn=0)
   return( raster::overlay(x, fun=trend.slope, ...) )
 }
+
