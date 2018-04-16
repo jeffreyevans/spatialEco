@@ -4,11 +4,11 @@
 #' @param x             A raster layer class object
 #' @param derivative    Type of derivative c("slope", "aspect", "plan.curvature", "prof.curvature")   
 #' @param method        Method for calculating derivative c("zevenbergen", "evans", "shary","moore")
-#' @param radinas      (FALSE/TRUE) transform slope or aspect to radian units
-#' @param edge         (FALSE/TRUE) Perform edge correction
-#' @param ...           Additional argumnets passed to focal for writting rasters
+#' @param radians      (FALSE/TRUE) transform slope or aspect to radian units
+#' @param edge         (FALSE/TRUE) Perform edge correction (results in raster one cell smaller than original)
+#' @param ...           Additional arguments passed to focal (for writing rasters to disk)
 #' 
-#' @return A raster layer class object of the specified deriative
+#' @return A raster layer class object of the specified derivative
 #'
 #' @notes
 #' Cell (vector) bracket indexing: z1=m[1], z2=m[2], z3=m[3], z4=m[4], z5=m[5] z6=m[6], z7=m[7], z8=m[8], z9=m[9] where; m represents a vector n=9 representing the values of a 3x3 window  
@@ -45,10 +45,10 @@ terrain.attributes <- function(x, derivative = c("slope", "aspect", "plan.curvat
 	        cat("Calculating", derivative, "\n")
 		if(radians == TRUE) {
           if(derivative != "slope" & derivative != "aspect") {
-            warning("Radian transformation not applied to curvature")		  
+            message("Radians transformation not applied to curvature derivatives")		  
 		  }	
         }		  
-    flst <- list(method = method[1], derivative = derivative, res = res(x)[1])	
+    flst <- list(method = method[1], derivative = derivative, res = raster::res(x)[1])	
     terrain.method <- function(m, method = unlist(flst[1]), derivative = unlist(flst[2]), 
 	                           res = unlist(flst[3]) ) {
       if( method == "evans") {	
@@ -80,10 +80,10 @@ terrain.attributes <- function(x, derivative = c("slope", "aspect", "plan.curvat
             s=(m[3]+m[7]-m[1]-m[9])/(4*(res^2))
           tx=(m[2]+m[8]-2*m[5])/(res^2)
         } else { stop("not a valid method") }
-		terrain <- c(atan(sqrt(p^2+q^2)),
+		terrain <- round(c(atan(sqrt(p^2+q^2)),
     	             180-atan2(q,p)+90*(p/abs(p)),
     	             -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),
-    	             -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3) )
+    	             -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3)),6)
 		  names(terrain) <- c("slope","aspect","plan.curvature","profile.curvature")
 		if(radians == TRUE) {
           if(derivative != "slope" | derivative != "aspect")		  
@@ -93,11 +93,12 @@ terrain.attributes <- function(x, derivative = c("slope", "aspect", "plan.curvat
     } 
 	if(edge == TRUE) {
       e <- as.vector(extent(x))
-      return( crop(focal(x, w=matrix(1,nrow=3,ncol=3), 
-                   fun = terrain.method, pad=TRUE, padValue=0),
-                   y=c(e[1]+res,e[2]-res,e[3]+res,e[4]-res), ...) )
+      return( raster::crop(raster::focal(x, w=matrix(1,nrow=3,ncol=3), 
+                           fun = terrain.method, pad=TRUE, padValue=0),
+                           y=c(e[1] + raster::res(x)[1], e[2] - raster::res(x)[1],
+						   e[3] + raster::res(x)[1], e[4] - raster::res(x)[1]), ...) )
     } else {
-      return( focal(x, w=matrix(1,nrow=3,ncol=3), fun = terrain.method, 
-	                pad = TRUE, padValue = 0, ...) )
+      return( raster::focal(x, w=matrix(1,nrow=3,ncol=3), fun = terrain.method, 
+	                        pad = TRUE, padValue = 0, ...) )
     }
 }
