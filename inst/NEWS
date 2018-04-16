@@ -91,3 +91,10 @@ spatialEco_1.1-0
 * Added function "remove.holes" Removes all holes (null geometry) in polygon sp class objects  
 * Added function "winsorize" Removes extreme outliers using a winsorization transformation
 * Added function "crossCorrelation" Calculates the partial spatial cross-correlation function 
+
+spatialEco_1.1-1
+=================
+* Modified function "raster.kendall" to return Z-value raster
+* Added function terrain.attributes that calculates slope, aspect, planform and profile curvature(s). 
+* Added function smooth.time.series for imputing NA or smoothing time-series raster data. 
+
