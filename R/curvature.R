@@ -38,7 +38,7 @@
 #'
 #'   m.crv <- curvature(elev, type="mcnab")
 #'   b.crv <- curvature(elev, type="bolstad")
-#'   t.crb <- curvature(elev, type="total")
+#'   t.crv <- curvature(elev, type="total")
 #'     par(mfrow=c(2,2))
 #'       plot(t.crv, main="Total curvature") 
 #'       plot(m.crv, main="McNab curvature") 
