@@ -53,10 +53,21 @@
 #'   \item  patch.cohesion.index - measures the physical connectedness of the corresponding patch type.
 #'  }
 #' 
-#' @note Modifications to the function incorporate multi-class metrics by fetching the unique values of the raster and creating a list object containing a data.frame for each class. Unfortunately, retrieving unique values is a very slow function.    
-#' @note depends: sp, raster, rgeos, SDMTools 
+#' @notes Modifications to the function incorporate multi-class metrics by fetching the unique values 
+#'        of the raster and creating a list object containing a data.frame for each class. Unfortunately, 
+#'        retrieving unique values is a very slow function.  
+#'  
+#' @notes It is critical to note that if using polygon units that, the resulting metric represents the spatial 
+#'        pattern within each unique aggregate unit and not a metric of the unit itself. That is to say, a 
+#'        metric such as fractal dimension represents the fractal dimension of the pattern within the unit and 
+#'        not of the unit.   
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
+#'
+#' @seealso \code{\link[spatialEco]{focal.lmetrics}}
+#' @seealso \code{\link[SDMTools]{ConnCompLabel}}
+#' @seealso \code{\link[SDMTools]{PatchStat}} 
+#' @seealso \code{\link[SDMTools]{ClassStat}}
 #'
 #' @examples 
 #'  library(raster)
@@ -77,12 +88,7 @@
 #'  # Pull metrics associated with class "0"
 #'  all.class[["0"]]
 #'
-#' @seealso \code{\link[spatialEco]{focal.lmetrics}}
-#' @seealso \code{\link[SDMTools]{ConnCompLabel}}
-#' @seealso \code{\link[SDMTools]{PatchStat}} 
-#' @seealso \code{\link[SDMTools]{ClassStat}}
-#'
-#' @export 
+#' @export
 land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 1000, 
                          latlon = FALSE, echo = TRUE) {
     # if(class(x) == "sf") { x <- as(x, "Spatial") }
