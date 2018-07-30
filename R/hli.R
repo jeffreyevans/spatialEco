@@ -24,26 +24,26 @@ hli <- function(x) {
     if (is.na(sp::proj4string(x))) stop("Projection must be defined")
     if (length(grep("longlat", sp::proj4string(x))) <= 0) {
 	  geo.prj = "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-      e <- as(raster::extent(x), "SpatialPolygons") 
-      e <- sp::spTransform(e, geo.prj )
+      e <- as(raster::extent(x), "SpatialPolygons")
+        proj4string(e) <- proj4string(x)	  
+          e <- sp::spTransform(e, geo.prj )
 	  l = sp::coordinates(e)[2]
 	  if(l < 0) stop("Not currently supported for southern latitudes") 
-	  l = l * 0.017453293
     } else {
       e <- as(raster::extent(x), "SpatialPolygons")  
 	  l = sp::coordinates(e)[2]
 	  if(l < 0) stop("Not currently supported for southern latitudes") 
-	  l = l * 0.017453293
     }
+  l = l * 0.017453293	
   cl = cos(l)
   sl = sin(l)
-  tmp1 <- raster::terrain(x, opt="slope", unit="degrees") * 0.017453293              
-  tmp2 <- raster::terrain(x, opt="aspect", unit="degrees") * 0.017453293   
-  tmp3 <- raster::calc(tmp2, fun=function(x) { abs(3.141593 - abs(x - 3.926991)) } )       
-  tmp4 <- raster::calc(tmp1, fun=cos)
-  tmp5 <- raster::calc(tmp1, fun=sin)
-  tmp6 <- raster::calc(tmp3, fun=cos)
-  tmp7 <- raster::calc(tmp3, fun=sin)
+    tmp1 <- raster::terrain(x, opt="slope", unit="degrees") * 0.017453293              
+      tmp2 <- raster::terrain(x, opt="aspect", unit="degrees") * 0.017453293   
+        tmp3 <- raster::calc(tmp2, fun=function(x) { abs(3.141593 - abs(x - 3.926991)) } )       
+          tmp4 <- raster::calc(tmp1, fun=cos)
+        tmp5 <- raster::calc(tmp1, fun=sin)
+      tmp6 <- raster::calc(tmp3, fun=cos)
+    tmp7 <- raster::calc(tmp3, fun=sin)
   return( exp( -1.467 +  1.582 * cl * tmp4  - 1.5 * tmp6 * tmp5 * sl - 0.262 * 
               sl * tmp5  + 0.607 * tmp7 * tmp5) )
- } 
+ }
