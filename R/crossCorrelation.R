@@ -1,17 +1,25 @@
 #' @title Spatial cross correlation
-#' @description Calculates univariate or bivariate spatial cross-correlation using local Moran's-I (LISA), following Chen (2015)
+#' @description Calculates univariate or bivariate spatial cross-correlation using local 
+#'              Moran's-I (LISA), following Chen (2015)
 #'
 #' @param x               Vector of x response variables
-#' @param y               Vector of y response variables, if not specified the univariate statistic is returned
-#' @param coords          A matrix of coordinates corresponding to [x,y], only used if k = NULL. Can also be an sp object with relevant x,y coordinate slot (ie., points or polygons)
-#' @param w               Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)], if not defined then a default method is used
-#' @param type            c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) or Global Spatial cross-correlation Index (GSCI)
-#' @param k               Number of simulations for calculating permutation distribution under the null hypothesis of no spatial autocorrelation (k=1000, default)
-#' @param dist.function   ("inv.power", "neg.exponent") If w = NULL, the default method for deriving spatial weights matrix, options are: inverse power or negative exponent    
-#' @param scale.partial   (TRUE/FALSE) rescale partial spatial autocorrelation statistics [-1 - 1]
-#' @param scale.xy        (TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that they are already scaled following Chen (2015) 
-#' @param scale.matrix    (TRUE/FALSE) If a neighbor/distance matrix is passed, should it be scaled
-#' @param alpha = 0.05    confidence interval (default is 95 pct)
+#' @param y               Vector of y response variables, if not specified the univariate 
+#'                          statistic is returned
+#' @param coords          A matrix of coordinates corresponding to [x,y], only used if k = NULL. 
+#'                          Can also be an sp object with relevant x,y coordinate slot (ie., points or polygons)
+#' @param w               Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)] and be symmetrical.
+#'                          If w is not defined then a default method is used.
+#' @param type            c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) or 
+#'                          Global Spatial cross-correlation Index (GSCI)
+#' @param k               Number of simulations for calculating permutation distribution under the 
+#'                          null hypothesis of no spatial autocorrelation (k=1000, default)
+#' @param dist.function   ("inv.power", "neg.exponent") If w = NULL, the default method for deriving 
+#'                          spatial weights matrix, options are: inverse power or negative exponent    
+#' @param scale.xy        (TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that they are 
+#'                          already scaled following Chen (2015) 
+#' @param scale.partial   (FALSE/TRUE) rescale partial spatial autocorrelation statistics [-1 - 1]
+#' @param scale.matrix    (FALSE/TRUE) If a neighbor/distance matrix is passed, should it be scaled using [w/sum(w)]?
+#' @param alpha = 0.05     confidence interval (default is 95 pct)
 #' @param clust           (FALSE/TRUE) Return approximated lisa clusters
 #' @param return.sims     (FALSE/TRUE) Return randomizations vector n = k
 #'
@@ -36,7 +44,8 @@
 #'   \item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
 #' }
 #'
-#' @references Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
+#' @references Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
+#'             PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 #'
 #' @examples
 #'   library(sp)
@@ -107,9 +116,9 @@
 #' 
 #' @exportClass cross.cor
 #' @export
-crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI","GSCI"), k = 1000, 
-                             dist.function = "inv.power", scale.partial = TRUE, scale.matrix = TRUE,  
-                             scale.xy = TRUE, alpha = 0.05, clust = FALSE, return.sims = FALSE) {
+crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI", "GSCI"), k = 1000, 
+                             dist.function = "inv.power", scale.xy = TRUE, scale.partial = FALSE, 
+							 scale.matrix = FALSE, alpha = 0.05, clust = FALSE, return.sims = FALSE) {
 	if(missing(x)) stop("x must be specified")
     if(is.null(y)) y = x						 
       if(length(y) != length(x)) stop("[X,Y] are not equal")
@@ -145,7 +154,7 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
       if(ncol(w) != length(x) | nrow(w) != length(x)) stop("Spatial weights matrix must be symmetrical and match x")		   
         w[which(is.na(w))] <- 0
           if(scale.matrix) {
-            if(sum(w) > 0) { w <- as.matrix(w / rowSums(w))}
+            if(sum(w) > 0) { w <- as.matrix(w / sum(w))}
           }
   } 
   if( scale.xy ){  
@@ -153,38 +162,41 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
     y <- ( y - mean(y) ) / ( stats::sd(y) * sqrt((length(y)-1)/length(y)) )
   } 
   
-  #### Local and global cross-correlation statistics ####
-  SCI <- function(x,y,W,type.cc, scale.cc) {
-      if( type.cc == "LSCI" ) {
-      # The lsci.xy is empirically the same as Anselin's LISA
-      lsci.xy = as.numeric( x*y%*%W )
-      lsci.yx = as.numeric( y*x%*%W )
-        if(scale.cc) {
-          lsci.xy <- (lsci.xy - min(lsci.xy)) * (1 - -1) / (max(lsci.xy) - min(lsci.xy)) + -1
-          lsci.yx <- (lsci.yx - min(lsci.yx)) * (1 - -1) / (max(lsci.yx) - min(lsci.yx)) + -1
-        }	
-        return(data.frame(lsci.xy = lsci.xy, lsci.yx = lsci.yx))		  
-      } 
-      if( type.cc == "GSCI" ) {
-        # The lsci.xy is empirically the same as Anselin's LISA
-        gsci.xy = as.numeric( x*W%*%y )
-        gsci.yx = as.numeric( y*W%*%x )                                      	
-          if(scale.cc) {
-              gsci.xy <- (gsci.xy - min(gsci.xy)) * (1 - -1) / (max(gsci.xy) - min(gsci.xy)) + -1
-  	    	    gsci.yx <- (gsci.yx - min(gsci.yx)) * (1 - -1) / (max(gsci.yx) - min(gsci.yx)) + -1
-          }
-        return(sci=data.frame(gsci.xy = gsci.xy, gsci.yx = gsci.yx))		
-      }
+  #### Local and global cross-correlation statistics function ####
+  SCI <- function(x, y, W, type.cc, scale.cc) {
+    if( type.cc == "LSCI" ) {
+	# local spatial crosscorrelation index (chen's LSCIs)
+	# The lsci.xy is empirically the same as Anselin's LISA
+    lsci.xy = as.numeric( x*y%*%W )
+    lsci.yx = as.numeric( y*x%*%W )
+	  if(scale.cc) {
+        lsci.xy <- (lsci.xy - min(lsci.xy)) * (1 - -1) / (max(lsci.xy) - min(lsci.xy)) + -1
+        lsci.yx <- (lsci.yx - min(lsci.yx)) * (1 - -1) / (max(lsci.yx) - min(lsci.yx)) + -1
+      }	
+	sci =  data.frame(lsci.xy = lsci.xy, lsci.yx = lsci.yx)  
+    } 
+    if( type.cc == "GSCI" ) {
+	# The global spatial crosscorrelation index (chen's SCI)
+      gsci.xy = as.numeric( x*W%*%y ) / ( length(x) - 1 )
+      gsci.yx = as.numeric( y*W%*%x ) / ( length(x) - 1 )
+	    if(scale.cc) {
+         gsci.xy <- (gsci.xy - min(gsci.xy)) * (1 - -1) / (max(gsci.xy) - min(gsci.xy)) + -1
+  	     gsci.yx <- (gsci.yx - min(gsci.yx)) * (1 - -1) / (max(gsci.yx) - min(gsci.yx)) + -1
+        }
+      sci = data.frame(gsci.xy = gsci.xy, gsci.yx = gsci.yx)	  
+    }
+    return(sci)	
   }
-  global.i <- as.numeric((x%*%w%*%y)/(length(x) - 1))
+  
+  global.i <- as.numeric(x%*%w%*%y) / (length(x) - 1) 
     if(type == "LSCI") { tstat = "lsci.xy" } else { tstat = "gsci.xy" }  
-      sci.results <- SCI(x=x,y=y,W=w,type.cc=type,scale.cc=scale.partial)   
+      sci.results <- SCI(x = x,  y = y,W = w, type.cc = type, scale.cc = scale.partial)   
       if(clust) {     
 	    lisa.clust <- as.character( interaction(x > 0, w %*% y > 0) ) 
           lisa.clust <- gsub("TRUE", "High", lisa.clust)
             lisa.clust <- gsub("FALSE", "Low", lisa.clust)
 	  }  
-	    probs <- c(alpha / 2, 1 - alpha / 2)   
+	  probs <- c(alpha / 2, 1 - alpha / 2)   
     if(k > 0) {
      cat("\n ( Computing Permutation Distribution )\n")
 	 # Global Moran's-I p-value
@@ -198,7 +210,7 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
         y.sim <- matrix(y[sample(1:n, size = n * k, replace = TRUE)], 
                         nrow = n, ncol = k) 	
         isim <- apply(y.sim, MARGIN=2, function(j) {
-             SCI(t(x[sample(1:length(x))]), j, W=w,type.cc=type,scale.cc=scale.partial)[,tstat] } )
+             SCI(as.numeric(t(x[sample(1:length(x))])), j, W=w,type.cc=type,scale.cc=scale.partial)[,tstat] } )
 		ttest.p <- round(apply(isim, 2, function(j) stats::t.test(sci.results[,tstat], y = j,
                           alternative = "two.sided", paired = TRUE, 
 		 				  conf.level = 1-alpha)$p.value),6)
