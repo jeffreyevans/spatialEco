@@ -1,12 +1,12 @@
 #' @title Dutilleul moving window bivariate raster correlation 
-#' @description A bivarate raster corrlation using Dutilleul's modified t-test
+#' @description A bivarate raster correlation using Dutilleul's modified t-test
 #'       
 #' @param x               x raster for correlation, SpatialPixelsDataFrame or SpatialGridDataFrame object    
 #' @param y               y raster for correlation, SpatialPixelsDataFrame or SpatialGridDataFrame object 
 #' @param x.idx           Index for the column in the x raster object  
 #' @param y.idx           Index for the column in the y raster object  
 #' @param d               Distance for finding neighbors
-#' @param sub.sample      Should a subsampling approach be employed (TRUE/FALSE)  
+#' @param sub.sample      Should a sub-sampling approach be employed (TRUE/FALSE)  
 #' @param type            If sub.sample = TRUE, what type of sample (random  or hexagon)
 #' @param p               If sub.sample = TRUE, what proportion of population should be sampled
 #' @param size            Fixed sample size               
@@ -20,13 +20,18 @@
 #' \item   moran.y     Moran's-I for y  
 #'  } 
 #'
-#' @note This function provides a bivariate moving window correlation using the modified t-test to account for spatial autocorrelation. Point based subsampling is provided for computation tractability.  The hexagon sampling is recommended as it it good at capturing spatial process that includes nonstationarity and anistropy.    
+#' @note This function provides a bivariate moving window correlation using the modified t-test to account for 
+#'         spatial autocorrelation. Point based subsampling is provided for computation tractability.  
+#'         The hexagon sampling is recommended as it it good at capturing spatial process that includes 
+#'         nonstationarity and anistropy.    
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
 #' @references
-#' Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the correlation between two spatial processes. Biometrics 45:123-134.
-#' Dutilleul, P. (1993), Modifying the t test for assessing the correlation between two spatial processes. Biometrics 49:305-314. 
+#' Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the correlation between two 
+#'   spatial processes. Biometrics 45:123-134.
+#' Dutilleul, P. (1993), Modifying the t test for assessing the correlation between two spatial processes. 
+#'   Biometrics 49:305-314. 
 #' 
 #' @examples
 #' \dontrun{
@@ -53,13 +58,13 @@
 #' G2@data <- as.data.frame(G2@data[,-2])
 #' G2@data[,1] <- G2@data[,1]
 #' 
-#' corr <- raster.modifed.ttest(G1, G2)	  
-#' corr.hex <- raster.modifed.ttest(G1, G2, sub.sample = TRUE)	
-#' corr.rand <- raster.modifed.ttest(G1, G2, sub.sample = TRUE, type = "random")	
-#' 
+#' corr <- raster.modifed.ttest(G1, G2)
+#'   plot(raster::raster(corr,1))
+#'   
+#' corr.rand <- raster.modifed.ttest(G1, G2, sub.sample = TRUE, type = "random")	 
 #' corr.hex <- raster.modifed.ttest(G1, G2, sub.sample = TRUE, d = 500, size = 1000)	
 #'   head(corr.hex@data)
-#'   bubble(corr.hex, "corr")
+#'     bubble(corr.hex, "corr") 
 #' }
 #' 
 #' @export
@@ -79,20 +84,17 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
   if(sub.sample == FALSE) { 	
     spatial.corr <- data.frame()
       for(i in 1:length(nb)) {
-        if( ncol(x) > 1) {
-           x.var <- x@data[nb[[i]],][x.idx][,1]
-	     } else {
-	       x.var <- x@data[nb[[i]],]   
-	    }
-      if( ncol(y) > 1) {
-         y.var <- y@data[nb[[i]],][y.idx][,1]
-	   } else {
-	     y.var <- y@data[nb[[i]],]   
-	    }		
-      spatial.corr <- rbind(spatial.corr, round(unlist(SpatialPack::modified.ttest(x.var, y.var, 
-	                        sp::coordinates(x[nb[[i]],]), nclass = 1)[c(1,2,4,8)]),5))  
+        # x.var <- x@data[nb[[i]],][x.idx][,1]
+		x.var <- x@data[,x.idx][nb[[i]]]
+        # y.var <- y@data[nb[[i]],][y.idx][,1]
+		y.var <- y@data[,y.idx][nb[[i]]]
+      sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
+	                                    nclass = 1)		
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= sc$Fstat,  
+		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
+							  moran.y = sc$imoran[2]),5))  
       }
-      names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
+	  names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
       s <- x    
       s@data <- spatial.corr
     } else {
@@ -102,25 +104,21 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
 	  } else {
 	    n = round(nrow(x) * p, 0)
 	  } 
-	  
     if(type == "random") {
 	  rs <- sample(1:length(nb), n)
       spatial.corr <- data.frame()	  
       for(i in 1:length(rs)) {
-        if( ncol(x) > 1) {
-           x.var <- x@data[nb[[rs[i]]],][x.idx][,1]
-	     } else {
-	       x.var <- x@data[nb[[rs[i]]],]   
-	    }
-      if( ncol(y) > 1) {
-         y.var <- y@data[nb[[rs[i]]],][x.idx][,1]
-	   } else {
-	     y.var <- y@data[nb[[rs[i]]],]   
-	    }		
-      spatial.corr <- rbind(spatial.corr, round(unlist(SpatialPack::modified.ttest(x.var, y.var, 
-	                        sp::coordinates(x[nb[[rs[i]]],]), nclass = 1)[c(1,2,4,8)]),5))  
+        #x.var <- x@data[nb[[rs[i]]],][x.idx][,1]
+		x.var <- x@data[,x.idx][nb[[i]]]
+        # y.var <- y@data[nb[[rs[i]]],][x.idx][,1]
+		y.var <- y@data[,y.idx][nb[[i]]]
+      sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
+	                                    nclass = 1)		
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= sc$Fstat,  
+		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
+							  moran.y = sc$imoran[2]),5)) 
       }
-      names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
+	  names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
       s <- x[rs,]    
       s@data <- spatial.corr
       s <- as(s, "SpatialPointsDataFrame")
@@ -147,11 +145,14 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
 	    cdat <- data.frame(xvar = raster::raster(x)[r.ids[[i]]], 
 		                   yvar = raster::raster(y)[r.ids[[i]]], 
 	                       raster::xyFromCell(raster::raster(x), 
-						   r.ids[[i]]) )  
-	       spatial.corr <- rbind(spatial.corr, round(unlist(SpatialPack::modified.ttest(cdat[,1], 
-		                         cdat[,2], cdat[,3:4], nclass = 1)[c(1,2,4,8)]),5)) 
-	  }
-	  names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
+						   r.ids[[i]]) )  						   
+	sc <- SpatialPack::modified.ttest(cdat[,1], 
+		                         cdat[,2], cdat[,3:4], nclass = 1)
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= sc$Fstat,  
+		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
+							  moran.y = sc$imoran[2]),5)) 
+      }
+	    names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
 	  s <- s[as.numeric(names(r.ids)),] 
       s <- sp::SpatialPointsDataFrame(s,  spatial.corr) 
 	} 	
