@@ -33,6 +33,7 @@ Imports:
     EnvStats,
     maptools,
     alphahull,
+    zoo,
     methods
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3
