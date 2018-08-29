@@ -14,7 +14,7 @@
 #' @return A SpatialPixelsDataFrame or SpatialPointsDataFrame with the following attributes:
 #' \itemize{ 
 #' \item   corr        Correlation 
-#' \item   Fstat       The F-statistic
+#' \item   Fstat       The F-statistic calculated as [degrees of freedom * unscaled F-statistic]
 #' \item   p.value     p-value for the test
 #' \item   moran.x     Moran's-I for x 
 #' \item   moran.y     Moran's-I for y  
@@ -90,7 +90,7 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
 		y.var <- y@data[,y.idx][nb[[i]]]
       sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
 	                                    nclass = 1)		
-        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= sc$Fstat,  
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= (sc$dof * sc$Fstat),  
 		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
 							  moran.y = sc$imoran[2]),5))  
       }
@@ -114,7 +114,7 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
 		y.var <- y@data[,y.idx][nb[[i]]]
       sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
 	                                    nclass = 1)		
-        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= sc$Fstat,  
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= (sc$dof * sc$Fstat),  
 		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
 							  moran.y = sc$imoran[2]),5)) 
       }
@@ -148,7 +148,7 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
 						   r.ids[[i]]) )  						   
 	sc <- SpatialPack::modified.ttest(cdat[,1], 
 		                         cdat[,2], cdat[,3:4], nclass = 1)
-        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= sc$Fstat,  
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat = (sc$dof * sc$Fstat),  
 		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
 							  moran.y = sc$imoran[2]),5)) 
       }
