@@ -94,7 +94,15 @@ spatialEco_1.1-0
 
 spatialEco_1.1-1
 =================
-* Modified function "raster.kendall" to return Z-value raster
-* Added function terrain.attributes that calculates slope, aspect, planform and profile curvature(s). 
+* Added function terrain.attributes for calculating slope, aspect, planform and profile curvature(s) with optional methods. 
 * Added function smooth.time.series for imputing NA or smoothing time-series raster data. 
-
+* Added function "hybrid.kmeans" for clustering using hierarchical clustering to define cluster-centers in k-means 
+* Added function "morans.plot" for  Autocorrelation plot (Anselin 1996), following Chen (2015), aka, Moran's-I plot (univariate or bivariate) 
+* Added function "optimized.sample.variance" for drawing an optimal sample that minimizes or maximizes the sample variance 
+* Added function "swvi" for Senescence weighted MSAVI or MTVI
+* Added function "smooth.time.series" for smoothing pixel-level data in raster time-series and imputing missing (NA) values using LOESS regression
+* Added function "poly.regression" for smoothing data in time-series and imputing missing (NA) values using polynomial regression
+* Added function "sg.smooth" for smoothing time-series data using a Savitzky-Golay filter 
+* Fixed bug in raster.modified.ttest due to changes in output from SpatialPack
+* Modified "crossCorrelation" function to be consistent with Chen (2015) GSCI metric 
+* Modified function "raster.kendall" to return Z-value raster
