@@ -8,7 +8,7 @@
 #' @param lwd Optional line widths (see par, lwd)
 #' @param lx Position of legend (x coordinate or 'topright', 'topleft', 'bottomright', 'bottomleft') 
 #' @param ly Position of legend (y coordinate)
-#' @param ... Additional agruments passed to plot
+#' @param ... Additional arguments passed to plot
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'

@@ -21,7 +21,7 @@
 #' @note DAYMET main website: \url{http://daymet.ornl.gov}
 #' @note Tile index information \url{http://daymet.ornl.gov/datasupport.html}
 #' 
-#' @note Data respotory url: https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles
+#' @note Data respository url: https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles
 #' @note      Path structure: /year/tile_year/file.nc
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>

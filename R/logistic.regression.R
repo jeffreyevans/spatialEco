@@ -7,7 +7,7 @@
 #' @param penalty Apply regression penalty (TRUE/FALSE)
 #' @param autologistic Add auto-logistic term (TRUE/FALSE)  
 #' @param coords Geographic coordinates for auto-logistic model matrix or sp object.
-#' @param bw Distance bandwidth to calculate spatial lags (if empty neighbours result, need to increase bandwith). If not provided it will be calculated automatically based on the minimum distance that includes at least one neighbor.
+#' @param bw Distance bandwidth to calculate spatial lags (if empty neighbours result, need to increase bandwidth). If not provided it will be calculated automatically based on the minimum distance that includes at least one neighbor.
 #' @param type Neighbour weighting scheme (see autocov_dist)
 #' @param style Type of neighbour matrix (Wij), default is mean of neighbours 
 #' @param longlat Are coordinates (coords) in geographic, lat/long (TRUE/FALSE)

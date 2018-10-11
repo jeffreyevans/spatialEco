@@ -8,7 +8,7 @@
 #' @return A vector or an sp class SpatialPoints object of the weighted coordinate centroid      
 #'
 #' @note
-#' THe weighted centroid is calculated as:
+#' The weighted centroid is calculated as:
 #' [Xw]=[X]*[p], [Yw]=[Y]*[p], [sXw]=SUM[Xw], [sYw]=SUM[Yw], [sP]=SUM[p]
 #'    wX=[sXw]/[sP], wY=[sYw]/[sP]    
 #'    where; X=X COORDINATE(S), Y=Y COORDINATE(S), p=WEIGHT 
