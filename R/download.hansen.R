@@ -8,7 +8,7 @@
 #' @return Downloaded Hansen forest loss tif files 
 #'      
 #' @note Project website with 10x10 degree granule index: \url{ http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.1.html }
-#' @note Avaliable products: treecover2000, loss, gain, lossyear, datamask, first, or last
+#' @note Available products: treecover2000, loss, gain, lossyear, datamask, first, or last
 #' @note 'treecover2000' (Tree canopy cover for year 2000) - Tree cover in the year 2000, defined as canopy closure for all vegetation taller than 5m in height. Encoded as a percentage per output grid cell, in the range 0-100.
 #' @note 'loss' (Global forest cover loss 2000-2013) - Forest loss during the period 2000-2013, defined as a stand-replacement disturbance, or a change from a forest to non-forest state. Encoded as either 1 (loss) or 0 (no loss).
 #' @note 'gain' (Global forest cover gain 2000-2012) - Forest gain during the period 2000-2012, defined as the inverse of loss, or a non-forest to forest change entirely within the study period. Encoded as either 1 (gain) or 0 (no gain).
