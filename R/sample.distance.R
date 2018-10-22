@@ -57,26 +57,36 @@ sample.distance <- function(x, n, d, d.max = NULL, replacement = FALSE,
   rs <- sample(1:nrow(x),1) 
     s <- x[rs,]
       if(replacement == FALSE) { x <- x[-rs,] }	
-	  distance = TRUE 
-        for(i in 2:n) {
-          while(distance == TRUE) {	
+	  distance = TRUE
+	  
+        for(i in 2:n) {	
+		  nsamp=0
+          while(distance == TRUE) { 		  
 		    rs <- sample(1:nrow(x),1)
             if(is.null(d.max)) {
               distance <- any(sp::spDistsN1(s, x[rs,], longlat = latlong) < d)
 		    } else {
 		      distance <- any(sp::spDistsN1(s, x[rs,], longlat = latlong) < d) |
 		                  any(sp::spDistsN1(s, x[rs,], longlat = latlong) > d.max)
-		    }		  
+		    }
+                nsamp = nsamp + 1			
+			  if(trace) cat("Sample iteration=", nsamp, "\n")  
+            if(nsamp == nrow(x)) break			
 	      }
 		  if(trace) {
 		    cat("\n","Min distance for", i, "=", min(sp::spDistsN1(s, x[rs,], 
 		       longlat = latlong)), "\n")
             cat(" Max distance for", i, "=", max(sp::spDistsN1(s, x[rs,], 
 		        longlat = latlong)), "\n")
-		  }		
-	        distance = TRUE
+		  }
+        if(nsamp == nrow(x)) {
+		  message(paste0("Warning: sampling cannot converge at n=", d, " returning n=", nrow(s)))
+		  return(s)  
+        }
+	    distance = TRUE
 	      s <- rbind(s, x[rs,])
 	    if(replacement == FALSE) { x <- x[-rs,] } 
-	    }  
+	    } 
+		
   return(s)  
 }
