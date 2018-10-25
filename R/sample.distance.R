@@ -6,6 +6,7 @@
 #' @param d             Minimum sample distance
 #' @param d.max         Maximum sample distance (not used unless specified 
 #' @param replacement  (FALSE/TRUE) sample with or without replacement
+#' @param latlong      (FALSE/TRUE) is the data in a geographic projection (latitude/longitude)
 #' @param trace        (FALSE/TRUE) Print min and max sample distances
 #' 
 #' @return A sp spatial object, of the same class as x containing the random sub-samples 
@@ -15,37 +16,35 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#'   library(spdep)
 #'   library(sp)
-#'   
 #'   data(meuse)
 #'     coordinates(meuse) <- ~ x+y
 #'   
 #'   # Subsample with a 500m minimum sample spread 
-#'   sub.meuse <- sample.distance(meuse, n=10, d=500, trace = TRUE)  
+#'   sub.meuse <- sample.distance(meuse, n = 10, d = 500, trace = TRUE)  
 #'     plot(meuse,pch=19, main="min dist = 500")
 #'       points(sub.meuse, pch=19, col="red") 
-#'
+#'   
 #'   # Check distances	
 #'   dm <- spDists(sub.meuse)
 #'     diag(dm) <- NA
-#'   cat("\n", "Min distance for subsample", min(dm, na.rm=T), "\n")  
-#'   cat("Max distance for subsample", max(dm, na.rm=T), "\n")  
+#'   cat("\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
+#'   cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")  
 #'     
 #' \dontrun{
 #'   # Subsample with a 500m minimum and 3500m maximum sample spread   
-#'   sub.meuse <- sample.distance(meuse, n=10, d=500, d.max=3500)  
+#'   sub.meuse <- sample.distance(meuse, n = 10, d = 500, d.max = 3500)  
 #'     plot(meuse,pch=19, main="min dist = 500, max dist = 3500")
 #'       points(sub.meuse, pch=19, col="red") 
 #'
 #'   # Check distances		
 #'   dm <- spDists(sub.meuse)
 #'     diag(dm) <- NA
-#'   cat("Min distance for subsample", min(dm, na.rm=T), "\n")  
-#'   cat("Max distance for subsample", max(dm, na.rm=T), "\n")    
+#'   cat("Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
+#'   cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")    
 #' }
 #' 
-#' @export	
+#' @export sample.distance	
 sample.distance <- function(x, n, d, d.max = NULL, replacement = FALSE,
                             latlong = FALSE, trace = FALSE) {
   if(missing(x)) stop("Must define a spatial object")
@@ -56,37 +55,33 @@ sample.distance <- function(x, n, d, d.max = NULL, replacement = FALSE,
     message("Note; geographic projection (lat-long) distances must be in kilometers")  
   rs <- sample(1:nrow(x),1) 
     s <- x[rs,]
-      if(replacement == FALSE) { x <- x[-rs,] }	
-	  distance = TRUE
-	  
+      if(replacement == FALSE) { x <- x[-rs,] }
+        deval = TRUE	  
         for(i in 2:n) {	
-		  nsamp=0
-          while(distance == TRUE) { 		  
-		    rs <- sample(1:nrow(x),1)
+          nsamp=0
+          while(deval == TRUE) { 		  
+            rs <- sample(1:nrow(x),1)
+	      pts.dist = sp::spDists(s, x[rs,], longlat = latlong)
             if(is.null(d.max)) {
-              distance <- any(sp::spDistsN1(s, x[rs,], longlat = latlong) < d)
-		    } else {
-		      distance <- any(sp::spDistsN1(s, x[rs,], longlat = latlong) < d) |
-		                  any(sp::spDistsN1(s, x[rs,], longlat = latlong) > d.max)
-		    }
+              deval <- any(pts.dist < d, na.rm = TRUE)
+		} else {
+		  deval <- any(pts.dist < d, na.rm = TRUE) | any(pts.dist > d.max, na.rm = TRUE)
+	        } 
                 nsamp = nsamp + 1			
-			  if(trace) cat("Sample iteration=", nsamp, "\n")  
+		  if(trace) cat("Sample iteration=", nsamp, "\n")  
             if(nsamp == nrow(x)) break			
-	      }
-		  if(trace) {
-		    cat("\n","Min distance for", i, "=", min(sp::spDistsN1(s, x[rs,], 
-		       longlat = latlong)), "\n")
-            cat(" Max distance for", i, "=", max(sp::spDistsN1(s, x[rs,], 
-		        longlat = latlong)), "\n")
-		  }
+	      }  
+		if(trace) {
+		  cat("\n","Min distance for", i, "=", min(pts.dist, na.rm=TRUE), "\n")
+                  cat(" Max distance for", i, "=", max(pts.dist, na.rm=TRUE), "\n")
+		}
         if(nsamp == nrow(x)) {
-		  message(paste0("Warning: sampling cannot converge at n=", d, " returning n=", nrow(s)))
-		  return(s)  
+          message(paste0("Warning: sampling cannot converge at n=", n, " returning n=", nrow(s)))
+            return(s)  
         }
-	    distance = TRUE
-	      s <- rbind(s, x[rs,])
-	    if(replacement == FALSE) { x <- x[-rs,] } 
-	    } 
-		
+	 deval = TRUE
+	   s <- rbind(s, x[rs,])
+	     if(replacement == FALSE) { x <- x[-rs,] } 
+	} 	
   return(s)  
 }
