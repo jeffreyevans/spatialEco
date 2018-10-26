@@ -5,8 +5,7 @@ Version: 1.1-1
 Date: 2018-04-16
 Authors@R: c(person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", role = c("aut", "cre")), person(family="Ram", given="Karthik", role = "ctb") )
 Description: Utilities to support spatial data manipulation, query, sampling and modelling in ecological applications. 
-Depends:
-    R (>= 3.3.0)
+Depends: R (>= 3.3.0)
 Imports:
     sp,
     sf,
