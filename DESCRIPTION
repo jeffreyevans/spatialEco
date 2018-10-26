@@ -4,13 +4,7 @@ Title: Spatial Analysis and Modelling Utilities (development version)
 Version: 1.1-1
 Date: 2018-04-16
 Authors@R: c(person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", role = c("aut", "cre")), person(family="Ram", given="Karthik", role = "ctb") )
-Description: Utilities to support spatial data manipulation, query, sampling
-    and modelling. Functions include models for species population density, download
-    utilities for climate and global deforestation spatial products, spatial
-    smoothing, multivariate separability, point process model for creating pseudo-
-    absences and sub-sampling, polygon and point-distance landscape metrics,
-    auto-logistic model, sampling models, cluster optimization, statistical
-    exploratory tools and raster-based metrics.
+Description: Utilities to support spatial data manipulation, query, sampling and modelling in ecological applications. 
 Depends:
     R (>= 3.3.0)
 Imports:
