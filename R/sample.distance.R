@@ -1,4 +1,4 @@
-#' @title Sample distance
+#' @title Sub-sample distance
 #' @description Minimum, and optional maximum, distance constrained sub-sampling
 #'
 #' @param x             A spatial polygons or points sp object
@@ -21,7 +21,7 @@
 #'     coordinates(meuse) <- ~ x+y
 #'   
 #'   # Subsample with a 500m minimum sample spread 
-#'   sub.meuse <- sample.distance(meuse, n = 10, d = 500, trace = TRUE)  
+#'   sub.meuse <- subsample.distance(meuse, n = 10, d = 500, trace = TRUE)  
 #'     plot(meuse,pch=19, main="min dist = 500")
 #'       points(sub.meuse, pch=19, col="red") 
 #'   
@@ -33,7 +33,7 @@
 #'     
 #' \dontrun{
 #'   # Subsample with a 500m minimum and 3500m maximum sample spread   
-#'   sub.meuse <- sample.distance(meuse, n = 10, d = 500, d.max = 3500)  
+#'   sub.meuse <- subsample.distance(meuse, n = 10, d = 500, d.max = 3500)  
 #'     plot(meuse,pch=19, main="min dist = 500, max dist = 3500")
 #'       points(sub.meuse, pch=19, col="red") 
 #'
@@ -44,8 +44,8 @@
 #'   cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")    
 #' }
 #' 
-#' @export sample.distance	
-sample.distance <- function(x, n, d, d.max = NULL, replacement = FALSE,
+#' @export subsample.distance	
+subsample.distance <- function(x, n, d, d.max = NULL, replacement = FALSE,
                             latlong = FALSE, trace = FALSE) {
   if(missing(x)) stop("Must define a spatial object")
     if(missing(d)) stop("Must define minimum separation distance")
