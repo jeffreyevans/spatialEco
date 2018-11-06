@@ -1,10 +1,12 @@
 #' @title Savitzky-Golay smoothing filter
 #' @description Smoothing of time-series data using Savitzky-Golay convolution smoothing 
 #'
-#' @param x   A vector to be smoothed  
-#' @param f   Filter type (default 4 for quartic, specify 2 for quadratic)  
-#' @param l   Convolution filter length, must be odd number (default 51). Defines degree of smoothing
-#' @param d   First derivative (default 1)
+#' @param x      A vector to be smoothed  
+#' @param f      Filter type (default 4 for quartic, specify 2 for quadratic)  
+#' @param l      Convolution filter length, must be odd number (default 51). Defines degree of smoothing
+#' @param d      First derivative (default 1)
+#' @param na.rm  NA behavior
+#' @param ...    not used
 #'
 #' @return  A vector of the smoothed data equal to length of x. Please note; NA values are retained
 #'
@@ -38,7 +40,7 @@
 #'     lines(sg.smooth(y, l = 10),col="green", lwd=2)
 #'   
 #' @export
-sg.smooth <- function(x, f = 4, l = 51, d = 1) {
+sg.smooth <- function(x, f = 4, l = 51, d = 1, na..rm, ...) {
   na.idx <- which(is.na(x))
     x <- stats::na.omit(x)
   fc <- (l-1)/2                       
