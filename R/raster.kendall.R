@@ -51,7 +51,7 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
   if(!any(class(x) %in% c("RasterBrick","RasterStack"))) stop("x is not a raster stack or brick object")
     if( raster::nlayers(x) < 5) stop("Too few layers (n<5) to calculate a trend")
   trend.slope <- function(y, p.value.pass = p.value, z.pass = z.value, tau.pass = tau, 
-                          confidence.pass = confidence, intercept.pass = intercept) {
+                          confidence.pass = confidence, intercept.pass = intercept, na.rm, ...) {
     options(warn=-1)
     fit <- EnvStats::kendallTrendTest(y ~ 1)
       fit.results <- fit$estimate[2]
