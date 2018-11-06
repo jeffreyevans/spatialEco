@@ -91,14 +91,14 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
 	  return(fit.results)
     }	
 	# autocorrelation correction
-    trend.slope.ac <- function(x, p.value.pass = p.value, z.pass = z.value, 
+    trend.slope.ac <- function(x, p.value.pass = p.value, z.value.pass = z.value, 
 	                           tau.pass = tau, na.rm, ...) {
-	  if(all(is.na(x))){return(NaN)}
-	  z = NULL
-      pval = NULL
-      S = 0
-      var.S = NULL
-      Tau = NULL
+	  if(all(is.na(x))){ return(NA) }
+	    z = NULL
+        pval = NULL
+        S = 0
+        var.S = NULL
+        Tau = NULL
         if (any(is.finite(x) == FALSE)) {
           x <- x[-c(which(is.finite(x) == FALSE))]
         }
@@ -156,9 +156,9 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
     slp1 <- median(W, na.rm = TRUE)
 	  fit.results <- slp1 
 	  if(tau.pass == TRUE) { fit.results <- c(fit.results, Tau) }
-        if(p.value.pass == TRUE) { fit.results <- c(fit.resultst, pval) } 
-          if(z.value.pass == TRUE) { fit.results <- c(fit.resultst, z) } 	
-    return(as.vector(fit.results))
+        if(p.value.pass == TRUE) { fit.results <- c(fit.results, pval) } 
+          if(z.value.pass == TRUE) { fit.results <- c(fit.results, z) } 	
+    return(as.numeric(fit.results))
   }
   if(!autocorrelation) {  
     return( raster::overlay(x, fun=trend.slope, ...) )
