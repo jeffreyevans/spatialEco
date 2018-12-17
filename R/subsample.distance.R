@@ -1,3 +1,4 @@
+#' @title Subsample distances
 #' @description Minimum, and optional maximum, distance constrained sub-sampling
 #'
 #' @param x             A spatial polygons or points sp object
