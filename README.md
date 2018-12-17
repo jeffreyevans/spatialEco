@@ -13,7 +13,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-    Available functions in spatialEco are:
+    Available functions in spatialEco 1.1-1 are:
 
 ​
 
