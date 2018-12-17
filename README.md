@@ -19,12 +19,18 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of population counts.     
 
+          classBreaks - for finding class breaks in a distribution
+          
+          class.comparison - Compares two nominal rasters
+          
           correlogram - Calculates and plots a correlogram (spatially lagged correlations, "pearson", "kendall" or "spearman")
 
           concordance - Performs a concordance/disconcordance (C-statistic) test on binomial models.
 
           conf.interval - Calculates confidence interval for the mean or median of a distribution with unknown population variance
 
+          crossCorrelation - Calculates the partial spatial cross-correlation function
+          
           csi - Calculates the cosine similarity and angular similarity on two vectors or a matrix
 
           daymet.point - Downloads DAYMET climate variables for specified point and timeperiod
@@ -39,13 +45,21 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           download.prism - Batch download of monthly gridded PRISM climate data
 
-          effect.size - Cohen's-d effect size with pooled sd for a control and experimental group   
+          effect.size - Cohen's-d effect size with pooled sd for a control and experimental group 
+          
+          erase.points - Erases points inside or outside a polygon feature class
+          
+          focal.lmetrics - Landscape metrics using a focal window
+          
+          fuzzySum - Calculates the fuzzy sum of a vector
 
           gaussian.kernel - Creates a Gaussian Kernel of specified size and sigma
 
           group.pdf - Creates a probability density plot of y for each group of x           
 
-          hexagons - Create hexagon polygon “fishnet” of defined size and extent.             
+          hexagons - Create hexagon polygon “fishnet” of defined size and extent. 
+          
+          hybrid.kmeans - Clustering using hierarchical clustering to define cluster-centers in k-means 
 
           idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. The function is a smoothing interpolator at the point observation(s) level using a distance-weighted mean.   
 
@@ -65,13 +79,19 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           moments - Calculate statistical moments of a distribution including percentiles, arithmetic-geometric-harmonic means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    
 
-          mwCorr - A bivariate raster correlation using Dutilleul's modified t-test           
+          morans.plot - Autocorrelation plot 
+          
+          mwCorr - (depreciated) A bivariate raster correlation using Dutilleul's modified t-test           
 
-          nni - Calculates the nearest neighbor index (NNI) as a measure of clustering or dispersal               
+          nni - Calculates the nearest neighbor index (NNI) as a measure of clustering or dispersal
+          
+          oli.aws - Download Landsat 8 - OLI from AWS.   
 
           o.ring - Calculates the inhomogeneous O-ring point pattern statistic (Wiegand & Maloney 2004)               
 
-          optimal.k - Find optimal k of k-Medoid partitions using silhouette widths  
+          optimal.k - Find optimal k of k-Medoid partitions using silhouette widths 
+          
+          optimized.sample.variance - Draws an optimal sample that minimizes or maximizes the sample variance 
 
           outliers - Identify outliers using modified Z-score  
 
@@ -84,16 +104,26 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           point.in.poly - Intersects point and polygon feature classes and adds polygon attributes to the points     
 
           polyPerimeter - Calculates the perimeter length(s) for a polygon object
+          
+          poly.regression - smoothing data in time-series and imputing missing (NA) values using polynomial regression
 
           pp.subsample - Generates random subsample based on point process intensity function of the observed data. This is a spatially informed data thinning model that can be used to reduce pseudo-replication or autocorrelation.  
 
           pseudo.absence - Generates pseudo-absence samples based on the spatial intensity function of known species locations. This is akin to distance constrained but is informed by the spatial process of the observed data and is drawn from a probabilistic sample following the intensity function.       
 
+          raster.downscale - Downscale raster to a higher resolution raster using robust regression
+          
           raster.entropy - Calculates entropy on integer raster (i.e., 8 bit 0-255)  
+
+          raster.kendall - Calculates Kendall's tau trend with continuity correction for raster time-series
 
           raster.vol - Calculates a percent volume on a raster or based on the entire raster or a systematic sample
 
           rasterCorrelation - Performs a simple moving window correlation between two rasters
+          
+          raster.modified.ttest - Bivariate moving window correlation using Dutilleul's modified t-test 
+          
+          remove.holes - Removes all holes (null geometry) in polygon sp class objects 
 
           sample.annulus - Creates sample points based on annulus with defined inner and outer radius
 
@@ -103,15 +133,23 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           sampleTransect - Creates random transects from points and generates sample points along each transect
 
-          separability - Calculates variety of univariate or multivariate separability metrics for nominal class samples  
+          separability - Calculates variety of univariate or multivariate separability metrics for nominal class samples
+          
+          sg.smooth - Smoothing time-series data using a Savitzky-Golay filter 
 
           shannons - Calculates Shannon's Diversity Index and Shannon's Evenness Index
 
-          similarity - Uses row imputation to identify "k" ecological similar observations     
+          similarity - Uses row imputation to identify "k" ecological similar observations
+          
+          smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series using LOESS regression
+          
+          sp.kde - A weighted or un-weighted kernel density estimate
 
           sp.na.omit  - Removes row or column NA's in sp object. The standard R na.omit function will not propagate through all slots of an sp class object. This function removes the spatial objects, in all slots, corresponding to NA's in the @data data.frame object.        
 
           stratified.random - Creates a stratified random sample of an sp class object using a factor.
+          
+          swvi - Senescence weighted MSAVI or MTVI
 
           trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y and plots results.       
 
@@ -122,6 +160,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           trig.rtans - The trigonometric Stage (1978) slope * cos(aspect) or slope * sin(aspect)
 
           vrm - Implementation of the Sappington et al., (2007) vector ruggedness measure
+          
+          winsorize - Removes extreme outliers using a winsorization transformation
 
           wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in a point sample.      
 
