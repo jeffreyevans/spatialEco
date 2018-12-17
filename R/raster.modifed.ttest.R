@@ -69,7 +69,7 @@
 #' 
 #' @export
 raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sample = FALSE, 
-                    type = "hexagon", p = 0.10, size = NULL) {
+                                 type = "hexagon", p = 0.10, size = NULL) {
 	if (!sp::gridded(x))
 	  stop(deparse(substitute(x)), " Must be an sp raster object")
     if (!sp::gridded(y)) 
@@ -98,7 +98,6 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
       s <- x    
       s@data <- spatial.corr
     } else {
-	
       if(!is.null(size)) {
         n = size 
 	  } else {
@@ -109,9 +108,9 @@ raster.modifed.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sam
       spatial.corr <- data.frame()	  
       for(i in 1:length(rs)) {
         #x.var <- x@data[nb[[rs[i]]],][x.idx][,1]
-		x.var <- x@data[,x.idx][nb[[i]]]
+	x.var <- x@data[,x.idx][nb[[i]]]
         # y.var <- y@data[nb[[rs[i]]],][x.idx][,1]
-		y.var <- y@data[,y.idx][nb[[i]]]
+	y.var <- y@data[,y.idx][nb[[i]]]
       sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
 	                                    nclass = 1)		
         spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= (sc$dof * sc$Fstat),  
