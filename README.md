@@ -132,5 +132,5 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
 **To install `spatialEco` in R use install.packages() to download curent stable release from CRAN** 
 
-**or, for the development version, run the following (requires the devtools package):**
-`devtools::install_github("jeffreyevans/spatialEco")`
+**or, for the development version, run the following (requires the remotes package):**
+`remotes::install_github("jeffreyevans/spatialEco")`
