@@ -149,6 +149,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           stratified.random - Creates a stratified random sample of an sp class object using a factor.
           
+          subsample.distance - Minimum, and optional maximum, distance constrained sub-sampling
+          
           swvi - Senescence weighted MSAVI or MTVI
 
           trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y and plots results.       
