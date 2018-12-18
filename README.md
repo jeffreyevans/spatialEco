@@ -28,6 +28,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           concordance - Performs a concordance/disconcordance (C-statistic) test on binomial models.
 
           conf.interval - Calculates confidence interval for the mean or median of a distribution with unknown population variance
+          
+          convexHull - Derives a convex hull of points using the alpha hull approach with adjustable tension. Please note that due to licensing reasons, this function is only avalible in the GitHub developement version and not on CRAN.  
 
           crossCorrelation - Calculates the partial spatial cross-correlation function
           
