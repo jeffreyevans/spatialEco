@@ -17,19 +17,24 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
 ​
 
-          breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of population counts.     
+          breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
+                             population counts.     
 
           classBreaks - for finding class breaks in a distribution
           
           class.comparison - Compares two nominal rasters
           
-          correlogram - Calculates and plots a correlogram (spatially lagged correlations, "pearson", "kendall" or "spearman")
+          correlogram - Calculates and plots a correlogram (spatially lagged correlations, "pearson", 
+                        "kendall" or "spearman")
 
           concordance - Performs a concordance/disconcordance (C-statistic) test on binomial models.
 
-          conf.interval - Calculates confidence interval for the mean or median of a distribution with unknown population variance
+          conf.interval - Calculates confidence interval for the mean or median of a distribution with unknown 
+                           population variance
           
-          convexHull - Derives a convex hull of points using the alpha hull approach with adjustable tension. Please note that due to licensing reasons, this function is only avalible in the GitHub developement version and not on CRAN.  
+          convexHull - Derives a convex hull of points using the alpha hull approach with adjustable tension. 
+                       Please note that due to licensing reasons, this function is only avalible in the GitHub 
+                       developement version and not on CRAN.  
 
           crossCorrelation - Calculates the partial spatial cross-correlation function
           
@@ -63,23 +68,32 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           
           hybrid.kmeans - Clustering using hierarchical clustering to define cluster-centers in k-means 
 
-          idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. The function is a smoothing interpolator at the point observation(s) level using a distance-weighted mean.   
+          idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. 
+                          The function is a smoothing interpolator at the point observation(s) level using 
+                          a distance-weighted mean.   
 
           insert.values - Inserts new values into a vector at specified positions   
 
-          kl.divergence - Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical component distributions. Divergence is calculated as: int [f(x) (log f(x) - log g(x)) dx] for distributions with densities f() and g().       
+          kl.divergence - Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical 
+                          component distributions. Divergence is calculated as: int [f(x) (log f(x) - log g(x)) dx]
+                          for distributions with densities f() and g().       
 
-          land.metrics - Calculates a variety of landscape metrics, on binary rasters, for polygons or points with a buffer distance. This is similar to the moving window in Fragstats but, uses either a buffer for each point or a zonal approach with polygons, to derive local metrics. 
+          land.metrics - Calculates a variety of landscape metrics, on binary rasters, for polygons or points with a buffer 
+                         distance. This is similar to the moving window in Fragstats but, uses either a buffer for each 
+                         point or a zonal approach with polygons, to derive local metrics. 
 
-           local.min.max - Calculates the local minimums and maximums in a numeric vector, indicating inflection points in the distribution.   
+          local.min.max - Calculates the local minimums and maximums in a numeric vector, indicating inflection points 
+                          in the distribution.   
 
           loess.boot - Bootstrap of a Local Polynomial Regression (loess)
 
           loess.ci - Calculates a local polynomial regression fit with associated confidence intervals   
 
-          logistic.regression - Performs a logistic (binomial) and autologistic (spatially lagged binomial) regression using maximum likelihood estimation or penalized maximum likelihood estimation.
+          logistic.regression - Performs a logistic (binomial) and autologistic (spatially lagged binomial) regression 
+                                using maximum likelihood estimation or penalized maximum likelihood estimation.
 
-          moments - Calculate statistical moments of a distribution including percentiles, arithmetic-geometric-harmonic means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    
+          moments - Calculate statistical moments of a distribution including percentiles, arithmetic-geometric-harmonic 
+                    means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    
 
           morans.plot - Autocorrelation plot 
           
@@ -97,7 +111,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           outliers - Identify outliers using modified Z-score  
 
-          parea.sample - Creates a systematic or random point sample of polygons where n is based on percent area of each polygon
+          parea.sample - Creates a systematic or random point sample of polygons where n is based on percent area of 
+                         each polygon
 
           plot.effect.size - Plot generic for effect size
 
@@ -109,9 +124,13 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           
           poly.regression - smoothing data in time-series and imputing missing (NA) values using polynomial regression
 
-          pp.subsample - Generates random subsample based on point process intensity function of the observed data. This is a spatially informed data thinning model that can be used to reduce pseudo-replication or autocorrelation.  
+          pp.subsample - Generates random subsample based on point process intensity function of the observed data. 
+                         This is a spatially informed data thinning model that can be used to reduce pseudo-replication 
+                         or autocorrelation.  
 
-          pseudo.absence - Generates pseudo-absence samples based on the spatial intensity function of known species locations. This is akin to distance constrained but is informed by the spatial process of the observed data and is drawn from a probabilistic sample following the intensity function.       
+          pseudo.absence - Generates pseudo-absence samples based on the spatial intensity function of known species locations. 
+                           This is akin to distance constrained but is informed by the spatial process of the observed data 
+                           and is drawn from a probabilistic sample following the intensity function.       
 
           raster.downscale - Downscale raster to a higher resolution raster using robust regression
           
@@ -129,7 +148,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           sample.annulus - Creates sample points based on annulus with defined inner and outer radius
 
-          sample.line - Creates a systematic or random point sample of an sp SpatialLinesDataFrame object based on distance spacing, fixed size or proportional size
+          sample.line - Creates a systematic or random point sample of an sp SpatialLinesDataFrame object based on 
+                        distance spacing, fixed size or proportional size
 
           sample.poly - Creates an equal sample of n for each polygon in an sp Polygon class object
 
@@ -143,11 +163,14 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           similarity - Uses row imputation to identify "k" ecological similar observations
           
-          smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series using LOESS regression
+          smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series using LOESS 
+          regression
           
           sp.kde - A weighted or un-weighted kernel density estimate
 
-          sp.na.omit  - Removes row or column NA's in sp object. The standard R na.omit function will not propagate through all slots of an sp class object. This function removes the spatial objects, in all slots, corresponding to NA's in the @data data.frame object.        
+          sp.na.omit  - Removes row or column NA's in sp object. The standard R na.omit function will not propagate through 
+                        all slots of an sp class object. This function removes the spatial objects, in all slots, corresponding 
+                        to NA's in the @data data.frame object.        
 
           stratified.random - Creates a stratified random sample of an sp class object using a factor.
           
@@ -155,7 +178,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           
           swvi - Senescence weighted MSAVI or MTVI
 
-          trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y and plots results.       
+          trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y 
+          and plots results.       
 
           tpi - Calculates topographic position using mean deviations within specified window  
 
@@ -167,7 +191,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           
           winsorize - Removes extreme outliers using a winsorization transformation
 
-          wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in a point sample.      
+          wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in 
+                        a point sample.      
 
           zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. 
 
