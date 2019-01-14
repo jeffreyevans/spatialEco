@@ -48,8 +48,8 @@
 #'  			      system.file("external/rlogo.grd", package="raster")) 
 #'  
 #'  # Calculate trend slope with p-value and confidence level(s)
-#'  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE, 
-#'                               z.value = TRUE, confidence = TRUE)					   
+#'  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE,
+#'                               z.value = TRUE, confidence = TRUE)
 #'    names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
 #'      plot(logo.trend)
 #'	  	  	  
@@ -60,7 +60,8 @@
 #'
 #' @export
 raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,    
-                           z.value = FALSE, confidence = FALSE,  autocorrelation = FALSE, ...) {
+                           z.value = FALSE, confidence = FALSE,  
+						   autocorrelation = FALSE, ...) {
   if(!any(class(x) %in% c("RasterBrick","RasterStack"))) stop("x is not a raster stack or brick object")
     if( raster::nlayers(x) < 5) stop("Too few layers (n<5) to calculate a trend")
 	  if(autocorrelation) { 
@@ -71,7 +72,16 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
 	  }
   trend.slope <- function(y, p.value.pass = p.value, z.pass = z.value, 
                           tau.pass = tau, confidence.pass = confidence, 
-						  intercept.pass = intercept, na.rm, ...) { 
+						  intercept.pass = intercept, na.rm, ...) { 			  
+	  if( length(y[!is.na(y)]) < 3) {
+	    pass.sum <- 0
+	    if( p.value.pass ) pass.sum = pass.sum + 1
+		  if( z.pass ) pass.sum = pass.sum + 1
+		    if( tau.pass ) pass.sum = pass.sum + 1
+		  if( confidence.pass ) pass.sum = pass.sum + 2
+		if( intercept.pass ) pass.sum = pass.sum + 2
+        fit.results <- c(rep(NA,pass.sum + 1))
+	  } else {
 	  options(warn=-1)
       fit <- EnvStats::kendallTrendTest(y ~ 1)
         fit.results <- fit$estimate[2]
@@ -87,6 +97,7 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
               fit.results <- c(fit.results, c(NA,NA))
             }			  
 	    }
+	  }
         options(warn=0)	  
 	  return(fit.results)
     }	
@@ -111,10 +122,10 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
           V[k] = (x[j] - x[i])/(j - i)
         }
       }
-    slp <- median(V, na.rm = TRUE)
+    slp <- stats::median(V, na.rm = TRUE)
       t1 = 1:length(x)
         xt <- (x[1:n]) - ((slp) * (t1))
-    ro <- acf(xt, lag.max = 1, plot = FALSE)$acf[-1]
+    ro <- stats::acf(xt, lag.max = 1, plot = FALSE)$acf[-1]
       a = 1:(length(xt) - 1)
         b = 2:(length(xt))
           xp <- (xt[b] - (xt[a] * ro))
@@ -143,7 +154,7 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
     } else {
       z = (S + 1)/sqrt(var.S)
     }
-    pval = 2 * pnorm(-abs(z))
+    pval = 2 * stats::pnorm(-abs(z))
       Tau = S/(0.5 * n1 * (n1 - 1))
         W <- rep(NA, n1 * (n1 - 1)/2)
           m = 0
@@ -153,7 +164,7 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
         W[m] = (y[j] - y[i])/(j - i)
       }
     }
-    slp1 <- median(W, na.rm = TRUE)
+    slp1 <- stats::median(W, na.rm = TRUE)
 	  fit.results <- slp1 
 	  if(tau.pass == TRUE) { fit.results <- c(fit.results, Tau) }
         if(p.value.pass == TRUE) { fit.results <- c(fit.results, pval) } 
@@ -161,8 +172,8 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
     return(as.numeric(fit.results))
   }
   if(!autocorrelation) {  
-    return( raster::overlay(x, fun=trend.slope, ...) )
+    return( raster::overlay(x, fun = trend.slope, ...) )
   } else {
-    return( raster::overlay(x, fun=trend.slope.ac, ...) )  
+    return( raster::overlay(x, fun = trend.slope.ac, ...) )  
   }
 }
