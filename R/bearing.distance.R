@@ -17,7 +17,7 @@
 #'
 #' @export
 bearing.distance <- function(x, y, distance, azimuth, EastOfNorth = TRUE) { 
-  radians <- function(a) { a * (pi / 2) / 180 }
+  radians <- function(a) { a * (pi / 180) }
    if(EastOfNorth) {
       pt <- cbind( X = (x + distance * sin(radians(azimuth))), 
                    Y = (y + distance * cos(radians(azimuth)))) 
