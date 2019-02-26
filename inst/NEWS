@@ -106,3 +106,9 @@ spatialEco_1.1-1
 * Fixed bug in raster.modified.ttest due to changes in output from SpatialPack
 * Modified "crossCorrelation" function to be consistent with Chen (2015) GSCI metric 
 * Modified function "raster.kendall" to return Z-value raster
+
+spatialEco_1.1-2
+=================
+* Fixed bug in breeding.density to address change in S4 class indexing
+* Added function "proximity.index" for calculating proximity index on polygon data
+
