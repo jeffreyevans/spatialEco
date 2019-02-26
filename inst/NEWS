@@ -109,6 +109,6 @@ spatialEco_1.1-1
 
 spatialEco_1.1-2
 =================
-* Fixed bug in breeding.density to address change in S4 class indexing
-* Added function "proximity.index" for calculating proximity index on polygon data
+* Fixed bug in breeding.density to address change in S4 class indexing (thank you Jason Carlisle)
+* Added function "proximity.index" for calculating proximity index on polygon data (requested by Kellina Higgins)
 
