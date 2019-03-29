@@ -112,4 +112,4 @@ spatialEco_1.1-2
 * Fixed bug in breeding.density to address change in S4 class indexing (thank you Jason Carlisle)
 * Added function "proximity.index" for calculating proximity index on polygon data (requested by Kellina Higgins)
 * Added function "kendall" for calculating Kendall Tau statistic
-
+* Added function "topo.distance" for correcting straight-line distance for topographic-slope effect
