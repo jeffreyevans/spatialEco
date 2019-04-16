@@ -113,3 +113,4 @@ spatialEco_1.1-2
 * Added function "proximity.index" for calculating proximity index on polygon data (requested by Kellina Higgins)
 * Added function "kendall" for calculating Kendall Tau statistic
 * Added function "topo.distance" for correcting straight-line distance for topographic-slope effect
+* Enhancement to tpi adding option for correction of zero matrix weight values in circular window
