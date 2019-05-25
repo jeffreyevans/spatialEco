@@ -80,8 +80,10 @@ moments <- function(x, plot = FALSE) {
         }
         (nmodes)
     }
-    r <- c(min(x), stats::quantile(x, 0.25), .means(x)[1], .means(x)[2], .means(x)[3], stats::quantile(x, 0.5), stats::quantile(x, 0.75), 
-        max(x), stats::sd(x), stats::var(x), .cv(x), stats::mad(x), .skew(x), .kurt(x), .n.modes(x), .dmode(x))
+    r <- c(min(x), stats::quantile(x, 0.25, na.rm = TRUE), .means(x)[1], .means(x)[2], .means(x)[3], 
+	       stats::quantile(x, 0.5, na.rm = TRUE), stats::quantile(x, 0.75, na.rm = TRUE), 
+           max(x, na.rm = TRUE), stats::sd(x, na.rm = TRUE), stats::var(x, na.rm = TRUE), .cv(x), 
+		   stats::mad(x, na.rm = TRUE), .skew(x), .kurt(x), .n.modes(x), .dmode(x))
     names(r) <- c("min", "25th", "mean", "hmean", "gmean", "median", "75th", "max", "stdv", "var", "cv", "mad", "skew", 
         "kurt", "nmodes", "mode")
     if (plot == TRUE) {
