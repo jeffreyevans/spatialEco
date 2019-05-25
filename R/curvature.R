@@ -72,6 +72,7 @@ curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolsta
             r=(m[4]+m[6]-2*m[5])/(2*(res^2))
             s=(m[3]+m[7]-m[1]-m[9])/(4*(res^2))
           tx=(m[2]+m[8]-2*m[5])/(2*(res^2))
+        } 
       if(type == "planform") {
         return( round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) ) 
       } else if(type == "profile") {
@@ -79,14 +80,11 @@ curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolsta
       } else if(type == "total") {
         return( round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) + 
 		        round( -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3),6 ) ) 
-	   } else {
-	     stop("Not a valid option")
-       }
-    }	   
+	  }
     if(type == "bolstad") {
         return( 10000 * ((x - raster::focal(x, w=m, fun=mean)) / 1000 / 36.2) )  
-      } else {
-          mcnab <- function(x, ...) (((x[5] - x) + (x[5] - x)) / 4) 
+      } else if(type == "mcnab") {
+        mcnab <- function(x, ...) (((x[5] - x) + (x[5] - x)) / 4) 
         return( raster::focal(x, w=m, fun=mcnab, ...) ) 
     } else {  
       return( raster::focal(x, w=m, fun = zt.crv, pad = TRUE,  
