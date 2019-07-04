@@ -102,7 +102,7 @@ land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 10
         "mean.shape.index", "sd.shape.index", "min.shape.index", "max.shape.index", "mean.frac.dim.index", "sd.frac.dim.index", 
         "min.frac.dim.index", "max.frac.dim.index", "total.core.area", "prop.landscape.core", "mean.patch.core.area", 
         "sd.patch.core.area", "min.patch.core.area", "max.patch.core.area", "prop.like.adjacencies", "aggregation.index", 
-        "lanscape.division.index", "splitting.index", "effective.mesh.size", "patch.cohesion.index")
+        "landscape.division.index", "splitting.index", "effective.mesh.size", "patch.cohesion.index")
 			
 	  if(is.numeric(metrics)) { metrics <- mnames[metrics] }
 	    metrics <- unique(c("class", metrics))	
