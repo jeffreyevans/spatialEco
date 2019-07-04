@@ -96,7 +96,7 @@ focal.lmetrics <- function(x, w = 5, bkg = 0, land.value = 1,
         "min.frac.dim.index","max.frac.dim.index","total.core.area",        
         "prop.landscape.core","mean.patch.core.area","sd.patch.core.area",     
         "min.patch.core.area","max.patch.core.area","prop.like.adjacencies",  
-        "aggregation.index","lanscape.division.index","splitting.index",        
+        "aggregation.index","landscape.division.index","splitting.index",        
         "effective.mesh.size","patch.cohesion.index")						  
   m.idx <- which( mnames %in% metric )
     if( length(m.idx) < 1 ) stop("Not a valid landscape metric")
