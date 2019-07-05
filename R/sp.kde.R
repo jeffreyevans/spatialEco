@@ -52,7 +52,9 @@
 sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(missing(bw)){ 
-    bw <- c(MASS::bandwidth.nrd(x), MASS::bandwidth.nrd(y))
+    bw <- c(MASS::bandwidth.nrd(coordinates(x)[,1]), 
+	    MASS::bandwidth.nrd(coordinates(x)[,2]))
+      cat("Using", bw, "for bandwidth", "\n")
   } else {
     bw <- c(bw,bw)
   } 
