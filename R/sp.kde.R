@@ -5,9 +5,10 @@
 #' @param y             Optional values, associated with x coordinates, to be used as weights
 #' @param bw            Distance bandwidth of Gaussian Kernel, must be units of projection
 #' @param newdata       A Rasterlayer, any sp class object or c[xmin,xmax,ymin,ymax] vector to estimate the kde extent
-#' @param n             Number of cells used in creating grid. If not defined a value based on extent or exsiting raster will be used
+#' @param n             Number of cells used in creating grid. If not defined a value based on extent or existing raster will be used
 #' @param standardize   Standardize results to 0-1 (FALSE/TRUE)
 #' @param scale.factor  Optional numeric scaling factor for the KDE (eg., 10000), to account for small estimate values
+#' @param mask          (TRUE/FALSE) mask resulting raster if newdata is provided
 #'
 #' @return  Raster class object containing kernel density estimate 
 #'
@@ -43,18 +44,19 @@
 #'  meuse.grid <- raster(meuse.grid)
 #'  
 #'  cadmium.kde <- sp.kde(x = meuse, y = meuse$cadmium, newdata = meuse.grid, bw = 1000, 
-#'                        standardize = TRUE, scale.factor = 10000  )
+#'                        standardize = TRUE, scale.factor = 10000)
 #'    plot(cadmium.kde, main="weighted kde")
 #'      points(meuse, pch=20, cex=0.5, col="red")
 #' }
 #'
 #' @export
-sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
+sp.kde <- function(x, y, bw, newdata, n, standardize = FALSE, 
+                  scale.factor, mask = TRUE) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(missing(bw)){ 
     bw <- c(MASS::bandwidth.nrd(coordinates(x)[,1]), 
-	    MASS::bandwidth.nrd(coordinates(x)[,2]))
-      cat("Using", bw, "for bandwidth", "\n")
+	        MASS::bandwidth.nrd(coordinates(x)[,2]))
+	  cat("Using", bw, "for bandwidth", "\n")
   } else {
     bw <- c(bw,bw)
   } 
@@ -91,7 +93,7 @@ sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
 			raster::nrow(newdata) <- n/2
 	    	raster::ncol(newdata) <- n/2		  
 		    n = c(n/2,n/2) 
-			warning(paste0("changing raster dimensions to: ", n/2, " - ", n/2))
+			  warning(paste0("changing raster dimensions to: ", n/2, " - ", n/2))
 		  }
 	    }   			
       if( class(newdata) == "SpatialPixelsDataFrame" | class(newdata) == "SpatialGridDataFrame" ) {
@@ -128,16 +130,19 @@ sp.kde = function(x, y, bw, newdata, n, standardize = FALSE, scale.factor) {
   if(!missing(y)) {
     cat("\n","calculating weighted kde","\n")
     k  <- fhat(sp::coordinates(x)[,1], sp::coordinates(x)[,2], w = y, 
-	            h = bw, n = n, lims = as.vector(raster::extent(newdata)) )
+	           h = bw, n = n, lims = as.vector(raster::extent(newdata)) )
 	} else {
 	cat("\n","calculating unweighted kde","\n")
 	k <- MASS::kde2d(sp::coordinates(x)[,1], sp::coordinates(x)[,2], h = bw, 
 	                 n = n, lims = as.vector(raster::extent(newdata)) )
   }
-	if( !missing(scale.factor)) { k$z <- k$z * scale.factor }	
+	if(!missing(scale.factor)) { k$z <- k$z * scale.factor }	
 	if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }		
     kde.est <- raster::raster(sp::SpatialPixelsDataFrame(sp::SpatialPoints(expand.grid(k$x, k$y)), 
-	                          data.frame(kde = as.vector(array(k$z,length(k$z))))))							
-        sp::proj4string(kde.est) <- sp::proj4string(x)  
+	                          data.frame(kde = as.vector(array(k$z,length(k$z))))))
+      if(check.newdata == FALSE & mask == TRUE) {
+	    kde.est <- raster::mask(raster::resample(kde.est, newdata),newdata) 
+	  }
+    sp::proj4string(kde.est) <- sp::proj4string(x)  
   return( kde.est )  
 }  
