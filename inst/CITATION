@@ -5,8 +5,8 @@ spatialEco.ref <- c(
      bibtype = "Manual",
      title = "spatialEco",
      author = person(c("Jeffrey", "S."), "Evans", role = c("aut", "cre")),
-     year = "2017",
-     note = "R package version 0.0.1-7",
+     year = "2019",
+     note = "R package version 1.2-0",
      url = "https://CRAN.R-project.org/package=spatialEco",
      key = "spatialEco-package"
    )
