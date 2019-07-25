@@ -13,11 +13,13 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-    Available functions in spatialEco 1.1-1 are:
+    Available functions in spatialEco 1.2-0 are:
 
 ​
 
-          breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
+          bearing.distance - Calculate new point based on bearing/distance 
+		  
+		  breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
                              population counts.     
 
           classBreaks - for finding class breaks in a distribution
@@ -33,18 +35,24 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                            population variance
           
           convexHull - Derives a convex hull of points using the alpha hull approach with adjustable tension. 
-                       Please note that due to licensing reasons, this function is only avalible in the GitHub 
-                       developement version and not on CRAN.  
+                       Please note that due to licensing reasons, this function is only available in the GitHub 
+                       development version and not on CRAN.  
 
           crossCorrelation - Calculates the partial spatial cross-correlation function
           
           csi - Calculates the cosine similarity and angular similarity on two vectors or a matrix
+
+          curvature - Zevenbergen & Thorne, McNab's or Bolstad's surface (raster) curvature  
 
           daymet.point - Downloads DAYMET climate variables for specified point and timeperiod
 
           daymet.tiles - Returns a vector of DAYMET tile id's within a specified extent
 
           dispersion - Calculates the dispersion ("rarity") of targets associated with planning units
+
+          dissection - Evans (1972) Martonne's modified dissection                                  
+
+          divergence - Kullback-Leibler Divergence (Cross-entropy)                               
 
           download.daymet - Batch download of daily gridded DAYMET climate data    
 
@@ -65,6 +73,10 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           group.pdf - Creates a probability density plot of y for each group of x           
 
           hexagons - Create hexagon polygon “fishnet” of defined size and extent. 
+		  
+		  hli - Heat Load Index
+		  
+          hsp - Hierarchical Slope Position
           
           hybrid.kmeans - Clustering using hierarchical clustering to define cluster-centers in k-means 
 
@@ -72,8 +84,10 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                           The function is a smoothing interpolator at the point observation(s) level using 
                           a distance-weighted mean.   
 
-          insert.values - Inserts new values into a vector at specified positions   
-
+          insert.values - Inserts new values into a vector at specified positions  
+        
+	      kendall - Kendall tau trend with continuity correction for time-series
+		  
           kl.divergence - Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical 
                           component distributions. Divergence is calculated as: int [f(x) (log f(x) - log g(x)) dx]
                           for distributions with densities f() and g().       
@@ -97,8 +111,6 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           morans.plot - Autocorrelation plot 
           
-          mwCorr - (depreciated) A bivariate raster correlation using Dutilleul's modified t-test           
-
           nni - Calculates the nearest neighbor index (NNI) as a measure of clustering or dispersal
           
           oli.aws - Download Landsat 8 - OLI from AWS.   
@@ -128,23 +140,43 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                          This is a spatially informed data thinning model that can be used to reduce pseudo-replication 
                          or autocorrelation.  
 
+          proximity.index - Proximity index for a set of polygons                             
+
           pseudo.absence - Generates pseudo-absence samples based on the spatial intensity function of known species locations. 
                            This is akin to distance constrained but is informed by the spatial process of the observed data 
                            and is drawn from a probabilistic sample following the intensity function.       
+
+          raster.change - Compares two categorical rasters with a variety of statistical options 
+		  
+          raster.deviation - Local deviation from the raster based on specified global statistic or a polynomial trend.                          
 
           raster.downscale - Downscale raster to a higher resolution raster using robust regression
           
           raster.entropy - Calculates entropy on integer raster (i.e., 8 bit 0-255)  
 
+          raster.gaussian.smooth - Applies a Gaussian smoothing kernel to smooth raster.                     
+          
+		  raster.invert - Inverts value of a raster                              
+
           raster.kendall - Calculates Kendall's tau trend with continuity correction for raster time-series
+
+          raster.mds - Multidimensional scaling of raster values within an N x N focal window                                 
+
+          raster.modified.ttest - Bivariate moving window correlation using Dutilleul's modified t-test 
+
+          raster.moments - Calculates focal statistical moments of a raster                              
+
+          raster.transformation - Applies specified statistical transformation to a raster                       
 
           raster.vol - Calculates a percent volume on a raster or based on the entire raster or a systematic sample
 
-          rasterCorrelation - Performs a simple moving window correlation between two rasters
-          
-          raster.modified.ttest - Bivariate moving window correlation using Dutilleul's modified t-test 
-          
+          raster.Zscore - Calculates the modified z-score for all cells in a raster                               
+
+          rasterCorrelation - Performs a simple moving window correlation between two rasters		  
+		  
           remove.holes - Removes all holes (null geometry) in polygon sp class objects 
+
+          sa.trans - Trigonometric transformation of a slope and aspect interaction 
 
           sample.annulus - Creates sample points based on annulus with defined inner and outer radius
 
@@ -163,14 +195,18 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
           similarity - Uses row imputation to identify "k" ecological similar observations
           
-          smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series using LOESS 
-          regression
+          smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series 
+                                using (local polynomial) LOESS regression
           
+		  sobal - Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window  
+		  
           sp.kde - A weighted or un-weighted kernel density estimate
 
           sp.na.omit  - Removes row or column NA's in sp object. The standard R na.omit function will not propagate through 
                         all slots of an sp class object. This function removes the spatial objects, in all slots, corresponding 
                         to NA's in the @data data.frame object.        
+
+          srr - Surface Relief Ratio 
 
           stratified.random - Creates a stratified random sample of an sp class object using a factor.
           
@@ -178,14 +214,16 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           
           swvi - Senescence weighted MSAVI or MTVI
 
-          trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y 
-          and plots results.       
+          topo.distance - Calculates topographic corrected distance for a SpatialLinesDataFrame object  
 
           tpi - Calculates topographic position using mean deviations within specified window  
 
-          tri - Implementation of the Riley et al (1999) Terrain Ruggedness Index
+          trasp - Solar-radiation Aspect Index 
 
-          trig.rtans - The trigonometric Stage (1978) slope * cos(aspect) or slope * sin(aspect)
+          trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y 
+          and plots results.
+
+          tri - Implementation of the Riley et al (1999) Terrain Ruggedness Index
 
           vrm - Implementation of the Sappington et al., (2007) vector ruggedness measure
           
@@ -194,7 +232,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in 
                         a point sample.      
 
-          zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. 
+          zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function.  
 
 
 **Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.
