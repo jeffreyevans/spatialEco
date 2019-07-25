@@ -26,6 +26,7 @@
 #'
 #' @export
 sample.poly <- function(x, n = 10, type = "random", ...) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(!(class(x) == "SpatialPolygonsDataFrame" | class(x) == "SpatialPolygons"))
     stop(deparse(substitute(x)), " MUST BE A sp spatialDataFrame OBJECT")
   sample.list <- sapply(x@polygons, sp::spsample, n = n, type = type, ...)

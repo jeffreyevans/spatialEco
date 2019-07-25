@@ -4,7 +4,7 @@
 #' @param x                A sp point object
 #' @param min.length       Minimum length of transect(s)
 #' @param max.length       Maximum length of transect(s)
-#' @param id               A unique indetification column in x
+#' @param id               A unique identification column in x
 #' @param ...              Additional arguments passed to sample.line 
 #'
 #' @note Function create random direction and length transects and then creates a point sample along each transect. The characteristic of the sample points are defined by arguments passed to the sample.line function
@@ -24,6 +24,7 @@
 #'
 #' @export
 sampleTransect <- function(x, min.length, max.length, id = NULL, ...) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
   tlines <- list()   
   tpoints <- list()
     for(i in 1:nrow(x) ) {

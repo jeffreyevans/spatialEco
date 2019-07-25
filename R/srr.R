@@ -14,12 +14,14 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
 #' @examples 
+#' \dontrun{
 #'   library(raster)
 #'   data(elev)
 #'   r.srr <- srr(elev, s=5)
 #'     plot(r.srr, main="Surface Relief Ratio") 
-#'     
-#' @export
+#'
+#'  }     
+#' @export srr
 srr <- function(x, s = 5, ...) {  
   if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
     if( length(s) == 1) s = c(s[1],s[1])

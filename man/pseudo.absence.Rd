@@ -5,8 +5,8 @@
 \title{Pseudo-absence random samples}
 \usage{
 pseudo.absence(x, n, window = "hull", Mask = NULL, s = NULL,
-  sigma = "Scott", wts = NULL, KDE = FALSE, gradient = 1, p = NULL,
-  edge = FALSE)
+  sigma = "Scott", wts = NULL, KDE = FALSE, gradient = 1,
+  p = NULL, edge = FALSE)
 }
 \arguments{
 \item{x}{An sp class SpatialPointsDataFrame or SpatialPoints object}

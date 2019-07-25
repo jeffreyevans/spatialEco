@@ -1,9 +1,9 @@
 #' @title Local Polynomial Regression
 #' @description Calculates a Local Polynomial Regression for smoothing or imputation of missing data.
 #' 
-#' @param y          Vector to smooth or impute NA vlaues
+#' @param y          Vector to smooth or impute NA values
 #' @param x          Optional x covariate data (must match dimensions of y)
-#' @param s          Smoothing paramter (larger equates to more smoothing)
+#' @param s          Smoothing parameter (larger equates to more smoothing)
 #' @param impute     (FALSE/TRUE) Should NA values be inputed
 #' @param na.only    (FALSE/TRUE) Should only NA values be change in y
 #' @param ci         (FALSE/TRUE) Should confidence intervals be returned

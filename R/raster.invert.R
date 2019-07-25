@@ -11,6 +11,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
 #' @examples 
+#' \dontrun{
 #'   library(raster)
 #'   r <- raster(nrows=500, ncols=500, xmn=571823, xmx=616763, 
 #'               ymn=4423540, ymx=4453690)
@@ -20,8 +21,9 @@
 #'     par(mfrow=c(1,2))
 #'       plot(r, main="original raster")
 #'       plot(r.inv, main="inverted raster") 
-#'     
-#' @export
+#' }     
+#'
+#' @export raster.invert
 raster.invert <- function(x) {  
   if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
     rmax <- raster::cellStats(x, stat = "max", na.rm = TRUE, asSample = FALSE)

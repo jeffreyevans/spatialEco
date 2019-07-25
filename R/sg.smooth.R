@@ -39,7 +39,7 @@
 #'     lines(sg.smooth(y, l = 25),col="blue", lwd=2)
 #'     lines(sg.smooth(y, l = 10),col="green", lwd=2)
 #'   
-#' @export sg.smooth
+#' @export
 sg.smooth <- function(x, f = 4, l = 51, d = 1, na.rm, ...) {
   na.idx <- which(is.na(x))
     x <- stats::na.omit(x)

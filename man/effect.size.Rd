@@ -16,17 +16,23 @@ effect.size(y, x, pooled = TRUE, conf.level = 0.95)
 \item{conf.level}{Specified confidence interval. Default is 0.95}
 }
 \value{
-An effect.size class object with x, y and a data.frame with columns for effect size, lower confidence interval, lower confidence interval. The row names of the data frame represent the levels in y
+An effect.size class object with x, y and a data.frame with columns for effect size, lower 
+        confidence interval, lower confidence interval. The row names of the data frame represent
+        the levels in y
 }
 \description{
 Cohen's-d effect size with pooled sd for a control and experimental group
 }
 \note{
-This implementation will iterate tourhg each class in y and treating a given class as the experimental group and all other classes as a control case. Each class had d and the confidence interval derived. A negative d indicate directionality with same magnitude. The expected range for d is 0 - 3
+This implementation will iterate through each class in y and treating a given class as the 
+      experimental group and all other classes as a control case. Each class had d and the 
+      confidence interval derived. A negative d indicate directionality with same magnitude. 
+      The expected range for d is 0 - 3
 
 d is derived; ( mean(experimental group) - mean(control group) ) / sigma(p)
 
-pooled standard deviation is derived; sqrt(  ( (Ne - 1) * sigma(e)^2 + (Nc - 1) * sigma(c)^2 ) / (Ne + Nc - 2) )   where; Ne, Nc = n of experimental and control groups.
+pooled standard deviation is derived; sqrt(  ( (Ne - 1) * sigma(e)^2 + (Nc - 1) * sigma(c)^2 ) / (Ne + Nc - 2) )   
+        where; Ne, Nc = n of experimental and control groups.
 }
 \examples{
  ( es <- effect.size(iris$Species, iris$Sepal.Length) )
@@ -34,7 +40,8 @@ pooled standard deviation is derived; sqrt(  ( (Ne - 1) * sigma(e)^2 + (Nc - 1) 
 
 }
 \references{
-Cohen, J., (1988) Statistical Power Analysis for the Behavioral Sciences (second ed.). Lawrence Erlbaum Associates.
+Cohen, J., (1988) Statistical Power Analysis for the Behavioral Sciences (second ed.). 
+             Lawrence Erlbaum Associates.
 
 Cohen, J (1992) A power primer. Psychological Bulletin 112(1):155-159
 }

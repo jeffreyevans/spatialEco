@@ -30,8 +30,6 @@ Creates a point sample of polygons where n is based on percent area
 }
 \note{
 This function results in an adaptive sample based on the area of each polygon
-
-Depends: sp,
 }
 \examples{
 require(sp)

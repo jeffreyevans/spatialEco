@@ -8,7 +8,7 @@
 #' @param ... Additional arguments passed to plot 
 #'
 #' @return A list class object with the following components:
-#' for type = 'linear'  y is slope and x is intercept
+#' for type = 'linear'  x is slope and y is intercept
 #' for type = 'exponential', 'logarithmic', or 'polynomial'
 #'   x is original x variable and y is vector of fit regression line
 #'

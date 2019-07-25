@@ -18,6 +18,7 @@
 #'
 #' @export
 polyPerimeter <- function(x) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
       p <- vector()
           for(i in 1:length(x)) {
            px <- as(x[i,], "SpatialLines")

@@ -15,13 +15,15 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
 #' @examples 
+#' \dontrun{
 #'  library(raster)                                                                    
 #'  b <- brick(system.file("external/rlogo.grd", package="raster"))
 #'  x <- b[[1]]
 #'  y <- b[[3]]
 #'  r.cor <- rasterCorrelation(x, y, s = 5, type = "spearman")
 #'  plot(r.cor)
-#'
+#' }
+#' rasterCorrelation
 #' @export
 rasterCorrelation <- function(x, y, s = 3, type = "pearson", file.name = NULL, ...) {
   if (!inherits(x, "RasterLayer")) 

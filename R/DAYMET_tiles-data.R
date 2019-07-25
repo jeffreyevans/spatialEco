@@ -16,5 +16,5 @@
 #' }
 #'
 #'
-#' @source \url{https://daymet.ornl.gov/gridded.html}
+#' @source \url{https://daymet.ornl.gov/}
 NULL

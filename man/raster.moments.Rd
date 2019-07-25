@@ -25,6 +25,7 @@ Calculates focal statistical moments of a raster
 This is a simple wrapper for the focal function, returning local statistical moments
 }
 \examples{
+\dontrun{
   library(raster)
   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
               ymn=4423540, ymx=4453690)
@@ -34,6 +35,7 @@ This is a simple wrapper for the focal function, returning local statistical mom
 
 # Calculate 10th percentile for 3x3 window
 r.p10 <- raster.moments(r, type="quantile", p=0.10) 
+}
 
 }
 \author{

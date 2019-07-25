@@ -41,7 +41,7 @@
 #' # n=1 and reps=10 for sequential numbering of samples 
 #' ssample.ct <- stratified.random(meuse, strata='STRAT', n=1, reps=10, replace=TRUE)
 #' 
-#' # Counts for each full strata (note; 2 strata have only 1 observsation)
+#' # Counts for each full strata (note; 2 strata have only 1 observation)
 #' tapply(meuse@@data$STRAT, meuse@@data$STRAT, length)
 #' 
 #' # Counts for each sampled strata, with replacement

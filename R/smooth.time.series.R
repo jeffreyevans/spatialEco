@@ -9,10 +9,11 @@
 #' @return A raster stack or brick object with imputed NA values or smoothed data.  
 #'
 #' @details  
-#' This function uses a LOESS regression to smooth the time-series (using the smooth.data = TRUE argument).
-#' If the data is smoothed, it will be replaced by a loess estimate of the time-series (estimated distribution at the pixel-level). 
-#' The results can dramatically be effected by the choice of the smoothing parameter (f) so caution is warranted and the effect of this parameter tested.   
-#' Alternately, with smooth.data = FALSE, the function can be used to impute missing pixel data (NA) in raster time-series (stacks/bricks). 
+#' This function uses a LOESS regression to smooth the time-series (using the smooth.data = TRUE argument). 
+#' If the data is smoothed, it will be replaced by a loess estimate of the time-series (estimated distribution 
+#' at the pixel-level). The results can dramatically be effected by the choice of the smoothing parameter (f) 
+#' so caution is warranted and the effect of this parameter tested. Alternately, with smooth.data = FALSE,
+#' the function can be used to impute missing pixel data (NA) in raster time-series (stacks/bricks). 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

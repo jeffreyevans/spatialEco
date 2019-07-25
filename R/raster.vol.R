@@ -14,6 +14,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
+#' \dontrun{
 #' require(raster)
 #'   r <- raster(ncols=100, nrows=100)
 #'     r[] <- runif(ncell(r), 0, 1)
@@ -37,6 +38,7 @@
 #'   #  p30 <- raster.vol(r, p = 0.30, sample = TRUE, spct = 0.20)
 #'   #    plot(r, main="30% volume point sample")
 #'   #    plot(p30, pch=20, cex=0.70, add=TRUE)
+#' }
 #'
 #' @export    	
 raster.vol <- function(x, p = 0.95, sample = FALSE, spct = 0.05) {

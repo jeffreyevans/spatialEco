@@ -19,7 +19,7 @@ raster.transformation(x, trans = "norm", smin = 0, smax = 255)
 raster class object of transformation
 }
 \description{
-Transforms raster to a specified stastical transformation
+Transforms raster to a specified statistical transformation
 }
 \note{
 ("norm") Normalization [0-1]: if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )
@@ -31,6 +31,7 @@ Transforms raster to a specified stastical transformation
  ("sr") Square-root: if min(x) >= 0 sqrt(x)
 }
 \examples{
+\dontrun{
   library(raster)
   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
               ymn=4423540, ymx=4453690)
@@ -46,6 +47,7 @@ r[] <- runif(ncell(r), -1, 1)
    for( i in c("norm", "rstd", "std", "stretch", "nl", "slog", "sr")) {
   try( print( raster.transformation(r, trans = i) ) ) 
    }
+}
 
 }
 \author{

@@ -14,7 +14,7 @@
   \item{yMax}{Maximum y geographic decimal degree coordinate}
 }}
 \source{
-\url{https://daymet.ornl.gov/gridded.html}
+\url{https://daymet.ornl.gov/}
 }
 \description{
 Polygon tile index for DAYMET climate data

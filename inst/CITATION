@@ -7,10 +7,7 @@ spatialEco.ref <- c(
      author = person(c("Jeffrey", "S."), "Evans", role = c("aut", "cre")),
      year = "2019",
      note = "R package version 1.2-0",
-     url = "https://CRAN.R-project.org/package=spatialEco",
+     url = "https://github.com/jeffreyevans/spatialEco",
      key = "spatialEco-package"
    )
 )
-
-# print(spatialEco.ref, style = "citation")
-# toBibtex(spatialEco.ref)

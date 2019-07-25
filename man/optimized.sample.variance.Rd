@@ -14,7 +14,8 @@ optimized.sample.variance(x, n, type = "maximized")
 \item{type}{Type of sample variance optimization c("maximized", "minimized")}
 }
 \value{
-A data.frame with "idx" representing the index of the original vector and "y" is the value of the sampled data
+A data.frame with "idx" representing the index of the original vector and "y" 
+          is the value of the sampled data
 }
 \description{
 Draws an optimal sample that minimizes or maximizes the sample variance

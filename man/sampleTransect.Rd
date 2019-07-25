@@ -13,7 +13,7 @@ sampleTransect(x, min.length, max.length, id = NULL, ...)
 
 \item{max.length}{Maximum length of transect(s)}
 
-\item{id}{A unique indetification column in x}
+\item{id}{A unique identification column in x}
 
 \item{...}{Additional arguments passed to sample.line}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sa.trans.R
 \name{sa.trans}
 \alias{sa.trans}
-\title{Trigonomic transformation of a slope and aspect interaction}
+\title{Trigonometric  transformation of a slope and aspect interaction}
 \usage{
 sa.trans(slope, aspect, type = "cos", slp.units = "degrees",
   asp.units = "degrees")
@@ -22,12 +22,12 @@ sa.trans(slope, aspect, type = "cos", slp.units = "degrees",
 A vector of the modeled value
 }
 \description{
-The trigonomic Stage (1978) [slope * cos(aspect)] or [slope * sin(aspect)]
+The Trigonometric  Stage (1978) [slope * cos(aspect)] or [slope * sin(aspect)]
 }
 \note{
 An a priori assumption of a maximum in the NW quadrant (45 azimuth)
 and a minimum in the SW quadrant can be replaced by an empirically
-determined location of the optimum without repeated caculations of
+determined location of the optimum without repeated calculations of
 the regression fit. In addition it is argued that expressions for
 the effects of aspect should always be considered as terms involving
 an interaction with slope (Stage, 1976)
@@ -38,7 +38,7 @@ out of the -1 to 1 range.
 
 An alternative for slopes with values approaching infinity is
 to take the square root of slope/100 to reduce the range of
-values.By default this model sest all values greater than 100%
+values.By default this model test all values greater than 100%
 to 101% and flat areas (-1) to nodata.
 }
 \examples{

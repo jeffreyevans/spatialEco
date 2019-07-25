@@ -12,10 +12,9 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @references
-#' Shannon, C. E. and W. Weaver (1948) A mathematical theory of communication. The Bell System Technical Journal, 27:379-423.
-#' Simpson, E. H. (1949) Measurement of diversity. Nature 163:688
-#' Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
+#' @references Shannon, C. E. and W. Weaver (1948) A mathematical theory of communication. The Bell System Technical Journal, 27:379-423.
+#' @references Simpson, E. H. (1949) Measurement of diversity. Nature 163:688
+#' @references Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
 #'
 #' @examples
 #' # Using Costa Rican ant diversity data from Roth et al. (1994)

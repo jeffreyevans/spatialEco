@@ -14,6 +14,7 @@ Description: Utilities to support spatial data manipulation, query, sampling
     exploratory tools and raster-based metrics.
 Depends: R (>= 3.4.0)
 Imports:
+    alphahull,
     sp,
 	sf,
     raster,

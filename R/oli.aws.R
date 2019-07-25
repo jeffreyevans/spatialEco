@@ -32,10 +32,10 @@
 #'   \url{https://aws.amazon.com/public-datasets/landsat/}
 #'   \url{https://aws.amazon.com/blogs/aws/start-using-landsat-on-aws/}
 #'
-#' USGS Landsat collections: \url{https://landsat.usgs.gov/landsat-collections}
+#' USGS Landsat collections: \url{https://www.usgs.gov/land-resources/nli/landsat}
 #' Pre-collection processing levels: "L1T", "L1GT", "L1G"
 #' Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
-#'     "L1T" and "L1TP" - Radiomertically calibrated and orthorectified (highest level proessing) 
+#'     "L1T" and "L1TP" - Radiomertically calibrated and orthorectified (highest level processing) 
 #'     "L1GT" and "L1GT" - Radiomertically calibrated and systematic geometric corrections   
 #'     "L1G" and "L1GS" - Radiomertically calibrated with systematic ephemeris correction   
 #'
@@ -74,7 +74,7 @@ oli.asw <- function(path, row, dates, cloud.cover = 10, processing) {
         if(!missing(processing)) {
 	      oli.processing <- oli[oli$processingLevel == processing,]
             if( nrow(oli.processing) == 0) { 
-			  cat("\n", "Processing level", processing, "not avalible, returning other results", "\n")  			  
+			  cat("\n", "Processing level", processing, "not available, returning other results", "\n")  			  
 			} else {
 			  oli <- oli.processing
             }			

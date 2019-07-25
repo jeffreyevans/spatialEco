@@ -3,7 +3,7 @@
 #' 
 #' @param x         SpatialPointsDataFrame object
 #' @param v         Test variable in x@@data
-#' @param dist      Distance of correlation lags, if latlong=TRUE units are in kilometres
+#' @param dist      Distance of correlation lags, if latlong=TRUE units are in kilometers
 #' @param latlong   Coordinates are in latlong (TRUE/FALSE)
 #' @param dmatrix   Should the distance matrix be include in output (TRUE/FALSE)
 #' @param ns        Number of simulations to derive simulation envelope 
@@ -30,6 +30,7 @@
 #' 
 #' @export  
 correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = FALSE, ...) {
+    # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if ((inherits(x, "SpatialPointsDataFrame")) == FALSE) 
         stop("x MUST BE SP SpatialPointsDataFrame OBJECT")
     options(warn = -1)

@@ -29,7 +29,8 @@ conf.level   Confidence level used for confidence interval
 std.error    If std.error = TRUE standard error of distribution
 }
 \description{
-Calculates confidence interval for the mean or median of a distribution with unknown population variance
+Calculates confidence interval for the mean or median of a distribution with 
+             unknown population variance
 }
 \examples{
  x <- runif(100)

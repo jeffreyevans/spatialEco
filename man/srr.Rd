@@ -24,11 +24,13 @@ Describes rugosity in continuous raster surface within a specified window. The i
 (mean(x) - min(x)) / (max(x) - min(x))
 }
 \examples{
+\dontrun{
   library(raster)
   data(elev)
   r.srr <- srr(elev, s=5)
     plot(r.srr, main="Surface Relief Ratio") 
-    
+
+ }     
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

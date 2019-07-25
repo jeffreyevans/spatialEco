@@ -16,7 +16,9 @@ data.frame with columns H values for each target, H , sH, sHmax
 Calculates the dispersion ("rarity") of targets associated with planning units
 }
 \note{
-The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) where; P = [sum of target in planning unit / sum of target across all planning units] and a = [count of planning units containing target / number of planning units]
+The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) 
+        where; P = [sum of target in planning unit / sum of target across all planning units] 
+        and a = [count of planning units containing target / number of planning units]
 }
 \examples{
  library(sp)
@@ -43,7 +45,10 @@ The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) where;
 
 }
 \references{
-Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial Conservation Planning and Ecological Priority Design in St. Lucia, Eastern Caribbean. Chapter 26 in Central American Biodiversity : Conservation, Ecology and a Sustainable Future. F. Huettman (eds). Springer, NY.
+Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial Conservation 
+  Planning and Ecological Priority Design in St. Lucia, Eastern Caribbean. Chapter 26 in 
+  Central American Biodiversity : Conservation, Ecology and a Sustainable Future. F. Huettman (eds). 
+  Springer, NY.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

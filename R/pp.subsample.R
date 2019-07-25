@@ -21,7 +21,7 @@
 #'   geometry, Bandwidth is based on simple window geometry (1st order)
 #'   Stoyan (Stoyan & Stoyan 1995), Based on pair-correlation function (strong 2nd order)
 #'
-#' Note; resulting bandwidth can vary widly by method. the 'diggle' method is intended for selecting bandwidth representing 2nd order spatial variation whereas the 'scott' method will represent 1st order trend. the 'geometry' approach will also represent 1st order trend. for large datasets, caution should be used with the 2nd order 'likelihood' approach, as it is slow and computationaly expensive. finally, the 'stoyan' method will produce very strong 2nd order results. '
+#' Note; resulting bandwidth can vary widly by method. the 'diggle' method is intended for selecting bandwidth representing 2nd order spatial variation whereas the 'scott' method will represent 1st order trend. the 'geometry' approach will also represent 1st order trend. for large datasets, caution should be used with the 2nd order 'likelihood' approach, as it is slow and computationally expensive. finally, the 'stoyan' method will produce very strong 2nd order results. '
 #'
 #' @note Depends: sp, spatstat
 #'
@@ -59,6 +59,7 @@
 #'
 #' @export
 pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL, gradient = 1, edge = FALSE) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (is.null(window)) 
         stop("Please specify a valid window type hull | extent")
     bw.Scott <- function(X) {

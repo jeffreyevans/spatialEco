@@ -51,6 +51,7 @@
 #'
 #' @export
 zonal.stats <- function(x, y, stat, trace = TRUE, plot = TRUE) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (class(y) != "RasterLayer") 
         stop("y must be a raster object")
     if (class(x) != "SpatialPolygonsDataFrame") 

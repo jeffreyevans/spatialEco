@@ -16,6 +16,7 @@
 #'   of the topographic position index to heterogeneous landscapes. Geomorphology, 186:39-49.
 #' 
 #' @examples 
+#' \dontrun{
 #'  library(raster)
 #'  data(elev)
 #'
@@ -29,8 +30,9 @@
 #'       plot(tpi7, main="tpi 7x7")
 #'       plot(tpi025, main="tpi Circular window d=0.025")
 #'	   plot(tpi025, main="tpi Circular window d=0.025, zero correct")
+#' }
 #'
-#' @export
+#' @export tpi
 tpi <- function(x, scale = 3, win = "rectangle", normalize = FALSE, 
                 zero.correct = FALSE) {
     if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")

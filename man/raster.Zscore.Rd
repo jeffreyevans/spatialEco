@@ -16,7 +16,7 @@ raster.Zscore(x, p.value = FALSE, file.name = NULL, ...)
 \item{...}{Additional arguments passed to writeRaster}
 }
 \value{
-raster class object or raster writtent to disk
+raster class object or raster written to disk
 }
 \description{
 Calculates the modified z-score for all cells in a raster
@@ -25,6 +25,7 @@ Calculates the modified z-score for all cells in a raster
 Since this functions needs to operate on all of the raster values, it is not memory safe
 }
 \examples{
+\dontrun{
 library(raster)
 r <- raster(nrows=824, ncols=767, xmn=2451905, xmx=3218905, 
             ymn=-2744771, ymx=-1920771, resolution = 5000)
@@ -35,6 +36,7 @@ z <- raster.Zscore(r)
 
 # P-value
 p <- raster.Zscore(r, p.value = TRUE)
+}	
 
 }
 \author{

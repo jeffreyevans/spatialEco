@@ -54,7 +54,7 @@
 #'   data(elev)
 #'   elev <- projectRaster(elev, crs="+proj=robin +datum=WGS84", 
 #'                         res=1000, method='bilinear')
-#'
+#' curvature(elev, type="planform")
 #'   mcnab.crv <- curvature(elev, type="mcnab")
 #'       plot(mcnab.crv, main="McNab's curvature") 
 #' }
@@ -66,13 +66,14 @@ curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolsta
   if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
     m <- matrix(1, nrow=3, ncol=3)
       type = type[1] 
+	if(!any(c("planform", "profile", "total", "mcnab", "bolstad") %in% type)  )
+      stop("Not a valid curvature option")	
     zt.crv <- function(m, method = type, res = raster::res(x)[1], ...) {
         p=(m[6]-m[4])/(2*res)
           q=(m[2]-m[8])/(2*res)
             r=(m[4]+m[6]-2*m[5])/(2*(res^2))
             s=(m[3]+m[7]-m[1]-m[9])/(4*(res^2))
           tx=(m[2]+m[8]-2*m[5])/(2*(res^2))
-        } 
       if(type == "planform") {
         return( round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) ) 
       } else if(type == "profile") {
@@ -81,13 +82,14 @@ curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolsta
         return( round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) + 
 		        round( -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3),6 ) ) 
 	  }
+	}  
     if(type == "bolstad") {
-        return( 10000 * ((x - raster::focal(x, w=m, fun=mean)) / 1000 / 36.2) )  
-      } else if(type == "mcnab") {
-        mcnab <- function(x, ...) (((x[5] - x) + (x[5] - x)) / 4) 
-        return( raster::focal(x, w=m, fun=mcnab, ...) ) 
+      return( 10000 * ((x - raster::focal(x, w=m, fun=mean)) / 1000 / 36.2) )  
+    } else if(type == "mcnab") {
+      mcnab <- function(x, ...) (((x[5] - x) + (x[5] - x)) / 4) 
+      return( raster::focal(x, w=m, fun=mcnab, ...) ) 
     } else {  
-      return( raster::focal(x, w=m, fun = zt.crv, pad = TRUE,  
+      return( raster::focal(x, w=m, fun = function(x) { zt.crv(m=x, type = type) }, pad = TRUE,  
 	                        padValue = 0, ...) )
     }
 }	

@@ -4,8 +4,8 @@
 \alias{daymet.point}
 \title{DAYMET point values}
 \usage{
-daymet.point(lat, long, start.year, end.year, site = NULL, files = FALSE,
-  echo = FALSE)
+daymet.point(lat, long, start.year, end.year, site = NULL,
+  files = FALSE, echo = FALSE)
 }
 \arguments{
 \item{lat}{latitude of point (decimal degrees WGS84)}
@@ -26,14 +26,16 @@ daymet.point(lat, long, start.year, end.year, site = NULL, files = FALSE,
 A data.frame with climate results
 }
 \description{
-Downloads DAYMET climate variables for specified point and timeperiod
+Downloads DAYMET climate variables for specified point and time-period
 }
 \note{
-Function uses the Single Pixel Extraction tool and returns year, yday, dayl(s), prcp (mm/day), srad (W/m^2), swe (kg/m^2), tmax (deg c), tmin (deg c), vp (Pa)
+Function uses the Single Pixel Extraction tool and returns year, yday, 
+      dayl(s), prcp (mm/day), srad (W/m^2), swe (kg/m^2), tmax (deg c), 
+      tmin (deg c), vp (Pa)
 
 Metadata for DAYMET single pixel extraction: \url{ https://daymet.ornl.gov/files/UserGuides/current/readme_singlepointextraction.pdf }
 
-data is avaliable for Long -131.0 W and -53.0 W; lat 52.0 N and 14.5 N
+data is available for Long -131.0 W and -53.0 W; lat 52.0 N and 14.5 N
 }
 \examples{
 \dontrun{

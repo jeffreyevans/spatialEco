@@ -4,59 +4,78 @@
 \alias{raster.kendall}
 \title{Kendall tau trend with continuity correction for raster time-series}
 \usage{
-raster.kendall(x, intercept = FALSE, p.value = FALSE, confidence = FALSE,
-  tau = FALSE, ...)
+raster.kendall(x, tau = FALSE, intercept = FALSE, p.value = FALSE,
+  z.value = FALSE, confidence = FALSE, autocorrelation = FALSE, ...)
 }
 \arguments{
 \item{x}{A rasterStack object with at least 5 layers}
+
+\item{tau}{(FALSE/TRUE) return a raster with the pixel wise tau values}
 
 \item{intercept}{(FALSE/TRUE) return a raster with the pixel wise intercept values}
 
 \item{p.value}{(FALSE/TRUE) return a raster with the pixel wise p.values}
 
+\item{z.value}{(FALSE/TRUE) return a raster with the pixel wise z values}
+
 \item{confidence}{(FALSE/TRUE) return a raster with the pixel wise 95 pct confidence levels}
 
-\item{tau}{(FALSE/TRUE) return a raster with the pixel wise tau values}
+\item{autocorrelation}{(FALSE/TRUE) Apply autocorrelation correction using prewhitening}
 
 \item{...}{Additional arguments passed to the raster overlay function}
 }
 \value{
 Depending on arguments, a raster layer or rasterBrick object containing:
 \itemize{
-  \item {raster layer 1} {slope for trend, always returned}
-  \item {raster layer 2} {intercept for trend if intercept TRUE}
-  \item {raster layer 3} {p value for trend fit if p.value TRUE}
-  \item {raster layer 4} {lower confidence level at 95 pct, if confidence TRUE}
-  \item {raster layer 5} {upper confidence level at 95 pct, if confidence TRUE}
-  \item {raster layer 6} {Kendall's tau two-sided test, reject null at 0, if tau TRUE}
+  \item {raster layer 1} {Theil-Sen slope, always returned}
+  \item {raster layer 2} {Kendall's tau two-sided test, if tau TRUE}
+  \item {raster layer 3} {intercept for trend if intercept TRUE, not if prewhitened}
+  \item {raster layer 4} {p value for trend fit if p.value TRUE}
+  \item {raster layer 5} {Z value for trend fit if z.value TRUE}
+  \item {raster layer 6} {lower confidence level at 95-pct if confidence TRUE, not if prewhitened}
+  \item {raster layer 7} {upper confidence level at 95-pct if confidence TRUE, not if prewhitened}
 }
 }
 \description{
-Calculates a nonparametric statistic for a monotonic trend based on the Kendall tau statistic and the Theil-Sen slope modification
+Calculates a nonparametric statistic for a monotonic trend based on the Kendall 
+               tau statistic and the Theil-Sen slope modification
 }
 \details{
-This function implements Kendall's nonparametric test for a monotonic trend using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate the slope and related confidence intervals.
+This function implements Kendall's nonparametric test for a monotonic trend using the 
+         Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate the slope and related 
+         confidence intervals. Critical values are Z > 1.96 representing a significant increasing 
+         trend and a Z < -1.96 a significant decreasing trend (p < 0.05). The null hypothesis can 
+         be rejected if Tau = 0. There is also an option for autocorrelation correction using
+         the method proposed in Yue & Wang (2002).
 }
 \examples{
 \dontrun{
  library(raster)
  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
                  system.file("external/rlogo.grd", package="raster"),
- 			    system.file("external/rlogo.grd", package="raster")) 
+ 			      system.file("external/rlogo.grd", package="raster")) 
  
  # Calculate trend slope with p-value and confidence level(s)
- logo.trend <- raster.kendall(r.logo, p.value=TRUE, confidence=TRUE)
-   names(logo.trend) <- c("slope","p.value","LCI","UCI")
+ logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE,
+                              z.value = TRUE, confidence = TRUE)
+   names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
      plot(logo.trend)
+  	  	  
 }
 
 }
 \references{
-Theil, H. (1950) A rank invariant method for linear and polynomial regression analysis.  Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I), 53:521-525 (Part II), 53:1397-1412 (Part III).
+Theil, H. (1950) A rank invariant method for linear and polynomial regression analysis.  
+              Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I),  
+              53:521-525 (Part II), 53:1397-1412 (Part III).
 
-Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. Journal of the American Statistical Association. 63(324):1379-1389.
+Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. 
+              Journal of the American Statistical Association. 63(324):1379-1389.
 
 Siegel, A.F. (1982) Robust Regression Using Repeated Medians. Biometrika, 69(1):242-244
+
+Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate the influence 
+              of serial correlation on the Mann-Kendall test. Water Resources Research, 38(6):41-47.
 }
 \seealso{
 \code{\link[EnvStats]{kendallTrendTest}} for model details

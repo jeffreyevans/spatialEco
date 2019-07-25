@@ -46,7 +46,7 @@
 #'   \item  max.patch.core.area - the maximum patch core area.
 #'   \item  prop.like.adjacencies - calculated from the adjacency matrix, which shows the frequency with which different pairs of patch types (including like adjacencies between the same patch type) appear side-by-side on the map (measures the degree of aggregation of patch types).
 #'   \item  aggregation.index - computed simply as an area-weighted mean class aggregation index, where each class is weighted by its proportional area in the landscape.
-#'   \item  landscape.division.index - based on the cumulative patch area distribution and is interpreted as the probability that two randomly chosen pixels in the landscape are not situated in the same patch
+#'   \item  lanscape.division.index - based on the cumulative patch area distribution and is interpreted as the probability that two randomly chosen pixels in the landscape are not situated in the same patch
 #'   \item  splitting.index - based on the cumulative patch area distribution and is interpreted as the effective mesh number, or number of patches with a constant patch size when the landscape is subdivided into S patches, where S is the value of the splitting index.
 #'   \item  effective.mesh.size - equals 1 divided by the total landscape area (m2) multiplied by the sum of patch area (m2) squared, summed across all patches in the landscape.
 #'   \item  patch.cohesion.index - measures the physical connectedness of the corresponding patch type.
@@ -96,7 +96,7 @@ focal.lmetrics <- function(x, w = 5, bkg = 0, land.value = 1,
         "min.frac.dim.index","max.frac.dim.index","total.core.area",        
         "prop.landscape.core","mean.patch.core.area","sd.patch.core.area",     
         "min.patch.core.area","max.patch.core.area","prop.like.adjacencies",  
-        "aggregation.index","landscape.division.index","splitting.index",        
+        "aggregation.index","lanscape.division.index","splitting.index",        
         "effective.mesh.size","patch.cohesion.index")						  
   m.idx <- which( mnames %in% metric )
     if( length(m.idx) < 1 ) stop("Not a valid landscape metric")

@@ -9,21 +9,26 @@
 #' @param self     (TRUE/FALSE) Should source observations be included in density (default TRUE)
 #'
 #' @return A list object with:
-#' @return   pop.pts     sp point object with points identified within the specified p
-#' @return   pop.area    sp polygon object of buffered points specified by parameter b
-#' @return   bandwidth   Specified distance bandwidth used in identifying neighbour counts 
-#' @return   buffer      Specified buffer distance used in buffering points for pop.area  
-#' @return   p           Specified population percent
+#' \itemize{ 
+#' \item     pop.pts     sp point object with points identified within the specified p
+#' \item     pop.area    sp polygon object of buffered points specified by parameter b
+#' \item     bandwidth   Specified distance bandwidth used in identifying neighbour counts 
+#' \item     buffer      Specified buffer distance used in buffering points for pop.area  
+#' \item     p           Specified population percent
+#' }
 #'
 #' @note 
-#' The breeding density areas model identifies the Nth-percent population exhibiting the highest spatial density and counts/frequency. It then buffers these points by a specified distance to produce breeding area polygons. 
-#' @note
-#' If you want to recreate the results in Doherty et al., (2010), then define bw = 6400m and b[if p < 0.75 b = 6400m, | p >= 0.75 b = 8500m]  
+#' The breeding density areas model identifies the Nth-percent population exhibiting the highest
+#' spatial density and counts/frequency. It then buffers these points by a specified distance to 
+#' produce breeding area polygons. If you would like to recreate the results in Doherty et al., (2010), 
+#' then define bw = 6400m and b[if p < 0.75 b = 6400m, | p >= 0.75 b = 8500m]  
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#' Doherty, K.E., J.D. Tack, J.S. Evans, D.E. Naugle (2010) Mapping breeding densities of greater sage-grouse: A tool for range-wide conservation planning. Bureau of Land Management. Report Number L10PG00911
+#' Doherty, K.E., J.D. Tack, J.S. Evans, D.E. Naugle (2010) Mapping breeding densities of greater 
+#'   sage-grouse: A tool for range-wide conservation planning. Bureau of Land Management. 
+#'   Number L10PG00911
 #'                                                              
 #' @examples 
 #' require(sp)
@@ -43,6 +48,7 @@
 #' 
 #' @export
 breeding.density <- function(x, pop, p = 0.75, bw = 6400, b = 8500, self = TRUE) {
+    #if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame")) 
         stop("must be a SpatialPointsDataFrame object")
     if (is.na(match(pop, names(x@data)))) 
@@ -80,7 +86,7 @@ breeding.density <- function(x, pop, p = 0.75, bw = 6400, b = 8500, self = TRUE)
     polys <- pop.buff@polygons[[1]]@Polygons
     pl <- vector("list", length(polys))
       for (i in 1:length(polys)) {
-          pl[[i]] <- sp::Polygons(list(polys[[i]]), i)
+          pl[i] <- sp::Polygons(list(polys[[i]]), i)
       }
     pop.buff <- sp::SpatialPolygons(pl)
     row.ids <- sapply(methods::slot(pop.buff, "polygons"), function(i) methods::slot(i, "ID"))

@@ -2,21 +2,24 @@
 #' @description Multidimensional scaling of raster values within an N x N focal window
 #'                                                                       
 #' @param r              Raster layer  
-#' @param s              Window size (may be a vector of 1 or 2) of n x n dimension. If only one value provided then a square matrix (window) will be used.
-#' @param window.median  (TRUE/FALSE) Return the median of the MDS matrix values. If FALSE then the center value of the matrix is returned and not the median of the matrix 
-#' @param ...            Additional arguments passed to raster::focal (if you want a file written to disk use filename = "" argument)   
+#' @param s              Window size (may be a vector of 1 or 2) of n x n dimension. 
+#' @param window.median  (TRUE/FALSE) Return the median of the MDS matrix values. 
+#' @param ...            Additional arguments passed to raster::focal    
 #'
 #' @return A raster class object or raster written to disk 
 #'
 #' @note 
-#' An MDS focal function  
+#' An MDS focal function. If only one value provided for s, then a square matrix (window) will be used.
+#' If window.median = FALSE then the center value of the matrix is returned and not the median of the matrix   
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
 #' @references
-#' Quinn, G.P., & M.J. Keough (2002) Experimental design and data analysis for biologists. Cambridge University Press. Ch. 18. Multidimensional scaling and cluster analysis.
+#' Quinn, G.P., & M.J. Keough (2002) Experimental design and data analysis for biologists. Cambridge University Press. 
+#'   Ch. 18. Multidimensional scaling and cluster analysis.
 #' 
 #' @examples 
+#' \dontrun{ 
 #'  library(raster)
 #'  r <- raster(system.file("external/rlogo.grd", package="raster")) 
 #'    r <- r / cellStats(r, "max")
@@ -32,6 +35,7 @@
 #'        title("MDS")
 #'      plot(diss.med)
 #'        title("Median MDS")
+#' }
 #'
 #' @export raster.mds  
 raster.mds <- function(r, s = 5, window.median = FALSE, ...) {
@@ -64,7 +68,7 @@ raster.mds <- function(r, s = 5, window.median = FALSE, ...) {
 	   }
      }	
     return(cmd)
-  }
+  }  
   diss <- raster::focal(r, w = matrix(1, nrow=s[1], ncol=s[2]), 
 	                    fun = cmd.diss, ...)
 } 

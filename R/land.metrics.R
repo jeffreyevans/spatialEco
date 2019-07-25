@@ -1,5 +1,6 @@
 #' @title Landscape metrics for points and polygons
-#' @description Calculates a variety of landscape metrics, on binary rasters, for polygons or points with a buffer distance 
+#' @description Calculates a variety of landscape metrics, on binary rasters, for polygons or 
+#'              points with a buffer distance 
 #'
 #' @param x          SpatalPointsDataFrame or SpatalPolgonsDataFrame class object 
 #' @param y          raster class object 
@@ -9,7 +10,10 @@
 #' @param latlon     (FALSE/TRUE) Is raster data in lat-long 
 #' @param echo       (FALSE/TRUE) Print object ID at each iteration 
 #'
-#' @return If multiple classes are evaluated a list object with a data.frame for each class containing specified metrics in columns. The data.frame is ordered and shares the same row.names as the input feature class and can be directly joined to the @@data slot. For single class problems a data.frame object is returned.   
+#' @return If multiple classes are evaluated a list object with a data.frame for each class 
+#'         containing specified metrics in columns. The data.frame is ordered and shares the 
+#'         same row.names as the input feature class and can be directly joined to the @@data slot. 
+#'         For single class problems a data.frame object is returned.   
 #'
 #' @details The following metrics are available: 
 #'  \itemize{ 
@@ -17,17 +21,24 @@
 #'   \item  n.patches - the number of patches of a particular patch type or in a class.
 #'   \item  total.area - the sum of the areas (m2) of all patches of the corresponding patch type.
 #'   \item  prop.landscape - the proportion of the total landscape represented by this class
-#'   \item  patch.density - the numbers of patches of the corresponding patch type divided by total landscape area (m2).
+#'   \item  patch.density - the numbers of patches of the corresponding patch type divided by total 
+#'                          landscape area (m2).
 #'   \item  total.edge - the total edge length of a particular patch type.
-#'   \item  edge.density - edge length on a per unit area basis that facilitates comparison among landscapes of varying size.
-#'   \item  landscape.shape.index - a standardized measure of total edge or edge density that adjusts for the size of the landscape.
-#'   \item  largest.patch.index - largest patch index quantifies the percentage of total landscape area comprised by the largest patch.
+#'   \item  edge.density - edge length on a per unit area basis that facilitates comparison among 
+#'                         landscapes of varying size.
+#'   \item  landscape.shape.index - a standardized measure of total edge or edge density that 
+#'                                  adjusts for the size of the landscape.
+#'   \item  largest.patch.index - largest patch index quantifies the percentage of total landscape 
+#'                                area comprised by the largest patch.
 #'   \item  mean.patch.area - average area of patches.
 #'   \item  sd.patch.area - standard deviation of patch areas.
 #'   \item  min.patch.area - the minimum patch area of the total patch areas.
 #'   \item  max.patch.area - the maximum patch area of the total patch areas.
-#'   \item  perimeter.area.frac.dim - perimeter-area fractal dimension equals 2 divided by the slope of regression line obtained by regressing the logarithm of patch area (m2) against the logarithm of patch perimeter (m).
-#'   \item  mean.perim.area.ratio - the mean of the ratio patch perimeter. The perimeter-area ratio is equal to the ratio of the patch perimeter (m) to area (m2).
+#'   \item  perimeter.area.frac.dim - perimeter-area fractal dimension equals 2 divided by the 
+#'                                    slope of regression line obtained by regressing the logarithm 
+#'                                    of patch area (m2) against the logarithm of patch perimeter (m).
+#'   \item  mean.perim.area.ratio - the mean of the ratio patch perimeter. The perimeter-area ratio 
+#'                                  is equal to the ratio of the patch perimeter (m) to area (m2).
 #'   \item  sd.perim.area.ratio - standard deviation of the ratio patch perimeter.
 #'   \item  min.perim.area.ratio - minimum perimeter area ratio
 #'   \item  max.perim.area.ratio - maximum perimeter area ratio.
@@ -45,19 +56,29 @@
 #'   \item  sd.patch.core.area - standard deviation of patch core area.
 #'   \item  min.patch.core.area - the minimum patch core area.
 #'   \item  max.patch.core.area - the maximum patch core area.
-#'   \item  prop.like.adjacencies - calculated from the adjacency matrix, which shows the frequency with which different pairs of patch types (including like adjacencies between the same patch type) appear side-by-side on the map (measures the degree of aggregation of patch types).
-#'   \item  aggregation.index - computed simply as an area-weighted mean class aggregation index, where each class is weighted by its proportional area in the landscape.
-#'   \item  landscape.division.index - based on the cumulative patch area distribution and is interpreted as the probability that two randomly chosen pixels in the landscape are not situated in the same patch
-#'   \item  splitting.index - based on the cumulative patch area distribution and is interpreted as the effective mesh number, or number of patches with a constant patch size when the landscape is subdivided into S patches, where S is the value of the splitting index.
-#'   \item  effective.mesh.size - equals 1 divided by the total landscape area (m2) multiplied by the sum of patch area (m2) squared, summed across all patches in the landscape.
+#'   \item  prop.like.adjacencies - calculated from the adjacency matrix, which shows the frequency 
+#'                                  with which different pairs of patch types (including like 
+#'                                  adjacencies between the same patch type) appear side-by-side on 
+#'                                  the map (measures the degree of aggregation of patch types).
+#'   \item  aggregation.index - computed simply as an area-weighted mean class aggregation index, where 
+#'                              each class is weighted by its proportional area in the landscape.
+#'   \item  landscape.division.index - based on the cumulative patch area distribution and is interpreted 
+#'                                     as the probability that two randomly chosen pixels in the landscape 
+#'                                     are not situated in the same patch
+#'   \item  splitting.index - based on the cumulative patch area distribution and is interpreted as the 
+#'                            effective mesh number, or number of patches with a constant patch size when 
+#'                            the landscape is subdivided into S patches, where S is the value of the splitting 
+#'                            index.
+#'   \item  effective.mesh.size - equals 1 divided by the total landscape area (m2) multiplied by the sum 
+#'                                of patch area (m2) squared, summed across all patches in the landscape.
 #'   \item  patch.cohesion.index - measures the physical connectedness of the corresponding patch type.
 #'  }
 #' 
-#' @notes Modifications to the function incorporate multi-class metrics by fetching the unique values 
+#' @note Modifications to the function incorporate multi-class metrics by fetching the unique values 
 #'        of the raster and creating a list object containing a data.frame for each class. Unfortunately, 
 #'        retrieving unique values is a very slow function.  
 #'  
-#' @notes It is critical to note that if using polygon units that, the resulting metric represents the spatial 
+#' @note It is critical to note that if using polygon units that, the resulting metric represents the spatial 
 #'        pattern within each unique aggregate unit and not a metric of the unit itself. That is to say, a 
 #'        metric such as fractal dimension represents the fractal dimension of the pattern within the unit and 
 #'        not of the unit.   
@@ -88,7 +109,7 @@
 #'  # Pull metrics associated with class "0"
 #'  all.class[["0"]]
 #'
-#' @export
+#' @export 
 land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 1000, 
                          latlon = FALSE, echo = TRUE) {
     # if(class(x) == "sf") { x <- as(x, "Spatial") }

@@ -1,5 +1,6 @@
 #' @title Cosine Similarity Index 
-#' @description Calculates the cosine similarity and angular similarity on two vectors or a matrix
+#' @description Calculates the cosine similarity and angular similarity on two 
+#'              vectors or a matrix
 #' 
 #' @param x A vector or matrix object 
 #' @param y If x is a vector, then a vector object 
@@ -7,22 +8,27 @@
 #' @return If x is a matrix, a list object with: similarity and angular.similarity matrices 
 #' @return If x and y are vectors, a vector of similarity and angular.similarity   
 #'
-#' @note The cosine similarity index is a measure of similarity between two vectors of an inner product space. This index is bested suited for high-dimensional positive variable space. One useful application of the index is to measure separability of clusters derived from algorithmic approaches (e.g., k-means). It is a good common practice to centre the data before calculating the index. It should be noted that the cosine similarity index is mathematically, and often numerically, equivalent to the Pearson's correlation coefficient   
+#' @note The cosine similarity index is a measure of similarity between two vectors of an 
+#' inner product space. This index is bested suited for high-dimensional positive variable 
+#' space. One useful application of the index is to measure separability of clusters derived 
+#' from algorithmic approaches (e.g., k-means). It is a good common practice to center the data before calculating the index. It should be noted that the cosine similarity index is mathematically, and often numerically, equivalent to the Pearson's correlation coefficient   
+#'
 #' @note cosine similarity index is derived: 
 #' @note s(xy) = x * y / ||x|| * ||y||
 #' @note expected 1.0 (perfect similarity) to -1.0 (perfect dissimilarity) 
-#' @note A normalised angle between the vectors can be used as a bounded similarity function within [0,1]
+#' @note A normalized angle between the vectors can be used as a bounded similarity 
+#' function within [0,1]
 #' @note angular similarity  = 1 - (cos(s)^-1/pi)
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' # Compare two vectors (centred using scale)
+#' # Compare two vectors (centered using scale)
 #'   x=runif(100)
 #'   y=runif(100)^2
 #'   csi(as.vector(scale(x)),as.vector(scale(y)))
 #'   
-#'   #' # Compare columns (vectors) in a matrix (centred using scale)
+#'   #' # Compare columns (vectors) in a matrix (centered using scale)
 #'   x <- matrix(round(runif(100),0),nrow=20,ncol=5)
 #'   ( s <- csi(scale(x)) )
 #'     

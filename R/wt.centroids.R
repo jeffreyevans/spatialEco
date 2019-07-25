@@ -30,6 +30,7 @@
 #'
 #' @export                                                                                   
 wt.centroid <- function(x, p, sp = TRUE) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame")) 
         stop(deparse(substitute(x)), " MUST BE A SpatialPointsDataFrame OBJECT")
     p <- x@data[, p]

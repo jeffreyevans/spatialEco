@@ -22,7 +22,7 @@ group.pdf(x, y, col = NULL, lty = NULL, lwd = NULL, lx = "topleft",
 
 \item{ly}{Position of legend (y coordinate)}
 
-\item{...}{Additional agruments passed to plot}
+\item{...}{Additional arguments passed to plot}
 }
 \description{
 Creates a probability density plot of y for each group of x

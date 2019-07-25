@@ -31,6 +31,7 @@
 #'
 #' @export
 idw.smoothing <- function(x, y, d, k) {
+    # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame")) 
         stop(deparse(substitute(x)), " MUST BE A sp SpatialPointsDataFrame OBJECT")
     if (is.null(y)) 

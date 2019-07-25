@@ -54,7 +54,7 @@
 #'     lmodel$diagTable
 #'       lmodel$coefTable
 #'
-#' #### Logistic model with factorial varialbe
+#' #### Logistic model with factorial variable
 #' lmodel <- logistic.regression(meuse, y='DepVar', x=c('dist','cadmium','copper', 'soil')) 
 #'   lmodel$model
 #'     lmodel$diagTable

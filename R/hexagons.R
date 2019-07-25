@@ -24,6 +24,7 @@
 #'
 #' @export      
 hexagons <- function(x, res = 100, ...) {
+    # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame") & !inherits(x, "SpatialPolygonsDataFrame")) 
         stop("x MUST BE AN sp SpatialDataFrame OBJECT")
     pts <- sp::spsample(x, type = "hexagonal", cellsize = res, ...)

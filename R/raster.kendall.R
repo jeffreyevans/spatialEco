@@ -58,122 +58,30 @@
 #' @seealso \code{\link[EnvStats]{kendallTrendTest}} for model details
 #' @seealso \code{\link[raster]{overlay}} for available ... arguments
 #'
-#' @export
+#' @export raster.kendall
 raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,    
                            z.value = FALSE, confidence = FALSE,  
 						   autocorrelation = FALSE, ...) {
-  if(!any(class(x) %in% c("RasterBrick","RasterStack"))) stop("x is not a raster stack or brick object")
-    if( raster::nlayers(x) < 5) stop("Too few layers (n<5) to calculate a trend")
-	  if(autocorrelation) { 
-	    message(strwrap(prefix = " ", initial = "", 
-                "Please note that with autocorrelation correction
-                   only the Sen Slope, Tau, p-value and z-value 
-                   outputs are available"))
-	  }
-  trend.slope <- function(y, p.value.pass = p.value, z.pass = z.value, 
-                          tau.pass = tau, confidence.pass = confidence, 
-						  intercept.pass = intercept, na.rm, ...) { 			  
-	  if( length(y[!is.na(y)]) < 3) {
-	    pass.sum <- 0
-	    if( p.value.pass ) pass.sum = pass.sum + 1
-		  if( z.pass ) pass.sum = pass.sum + 1
-		    if( tau.pass ) pass.sum = pass.sum + 1
-		  if( confidence.pass ) pass.sum = pass.sum + 2
-		if( intercept.pass ) pass.sum = pass.sum + 2
-        fit.results <- c(rep(NA,pass.sum + 1))
-	  } else {
-	  options(warn=-1)
-      fit <- EnvStats::kendallTrendTest(y ~ 1)
-        fit.results <- fit$estimate[2]
-	    if(tau.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }
-          if(intercept.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[3]) }  
-            if(p.value.pass == TRUE) { fit.results <- c(fit.results, fit$p.value) } 
-              if(z.pass == TRUE) { fit.results <- c(fit.results, fit$statistic) }
-  	    if(confidence.pass == TRUE) { 
-	      ci <- unlist(fit$interval["limits"])
-	        if( length(ci) == 2) { 
-	          fit.results <- c(fit.results, ci)
-            } else {
-              fit.results <- c(fit.results, c(NA,NA))
-            }			  
-	    }
-	  }
-        options(warn=0)	  
-	  return(fit.results)
-    }	
-	# autocorrelation correction
-    trend.slope.ac <- function(x, p.value.pass = p.value, z.value.pass = z.value, 
-	                           tau.pass = tau, na.rm, ...) {
-	  if(all(is.na(x))){ return(NA) }
-	    z = NULL
-        pval = NULL
-        S = 0
-        var.S = NULL
-        Tau = NULL
-        if (any(is.finite(x) == FALSE)) {
-          x <- x[-c(which(is.finite(x) == FALSE))]
-        }
-        n <- length(x)
-      V <- rep(NA, n * (n - 1)/2)
-    k = 0
-      for (i in 1:(n - 1)) {
-        for (j in (i + 1):n) {
-          k = k + 1
-          V[k] = (x[j] - x[i])/(j - i)
-        }
-      }
-    slp <- stats::median(V, na.rm = TRUE)
-      t1 = 1:length(x)
-        xt <- (x[1:n]) - ((slp) * (t1))
-    ro <- stats::acf(xt, lag.max = 1, plot = FALSE)$acf[-1]
-      a = 1:(length(xt) - 1)
-        b = 2:(length(xt))
-          xp <- (xt[b] - (xt[a] * ro))
-          l <- length(xp)
-        q = 1:l
-      y <- (xp[1:l] + ((slp) * (q)))
-    n1 <- length(y)
-      for (i in 1:(n1 - 1)) {
-        for (j in (i + 1):n1) {
-          S = S + sign(y[j] - y[i])
-        }
-      }
-    var.S = n1 * (n1 - 1) * (2 * n1 + 5) * (1/18)
-      if (length(unique(y)) < n1) {
-        aux <- unique(y)
-          for (i in 1:length(aux)) {
-            tie <- length(which(y == aux[i]))
-              if (tie > 1) {
-                var.S = var.S - tie * (tie - 1) * (2 * tie + 5) * (1/18)
-              }
-          }
-      }
-    if (S == 0) { z = 0 }
-    if (S > 0) {
-      z = (S - 1)/sqrt(var.S)
-    } else {
-      z = (S + 1)/sqrt(var.S)
-    }
-    pval = 2 * stats::pnorm(-abs(z))
-      Tau = S/(0.5 * n1 * (n1 - 1))
-        W <- rep(NA, n1 * (n1 - 1)/2)
-          m = 0
-    for (i in 1:(n1 - 1)) {
-      for (j in (i + 1):n1) {
-        m = m + 1
-        W[m] = (y[j] - y[i])/(j - i)
-      }
-    }
-    slp1 <- stats::median(W, na.rm = TRUE)
-	  fit.results <- slp1 
-	  if(tau.pass == TRUE) { fit.results <- c(fit.results, Tau) }
-        if(p.value.pass == TRUE) { fit.results <- c(fit.results, pval) } 
-          if(z.value.pass == TRUE) { fit.results <- c(fit.results, z) } 	
-    return(as.numeric(fit.results))
-  }
-  if(!autocorrelation) {  
-    return( raster::overlay(x, fun = trend.slope, ...) )
-  } else {
-    return( raster::overlay(x, fun = trend.slope.ac, ...) )  
-  }
+	knames <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
+	if(!any(class(x) %in% c("RasterBrick","RasterStack")))
+	  stop("x is not a raster stack or brick object")
+    
+	if( raster::nlayers(x) < 5) 
+	  stop("Too few layers (n<5) to calculate a trend")
+	
+	if(autocorrelation == TRUE) {
+	  knames <- knames[-c(3,6,7)]					   
+      message("Please note that with autocorrelation correction only the:
+        Sen Slope, Tau, p-value and z-value outputs are available")	
+	  intercept = FALSE
+	  confidence = FALSE
+	}
+	a <- c(tau = tau, intercept = intercept,  p.value = p.value,    
+              z.value = z.value, confidence = confidence,  
+		      prewhiten = autocorrelation)			  
+	  message(cat("Outputting:", knames, "\n"))
+    tslp <- function(x) { kendall(x, tau = a[1], intercept = a[2],  
+	                              p.value = a[3], z.value = a[4], 
+								  confidence = a[5], prewhiten = a[6]) }
+  return( raster::overlay(x, fun = tslp, ...) )  
 }

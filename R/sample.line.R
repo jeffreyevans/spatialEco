@@ -56,6 +56,7 @@
 #' @export
 sample.line <- function(x, d = 100, p = NULL, n = NULL, type = "regular", 
                         longlat = FALSE, min.samp = 1, ...) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if (!inherits(x, "SpatialLinesDataFrame")) 
     stop("x is not a SpatialLinesDataFrame object")
   if( (!is.null(p) == TRUE) && (!is.null(n) == TRUE) ) 

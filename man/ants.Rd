@@ -19,5 +19,6 @@
 Roth et al., (1994) Costa Rican ant diversity data
 }
 \references{
-Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
+Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on 
+            ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
 }

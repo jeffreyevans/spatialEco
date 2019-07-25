@@ -21,7 +21,7 @@ logistic.regression(ldata, y, x, penalty = TRUE, autologistic = FALSE,
 
 \item{coords}{Geographic coordinates for auto-logistic model matrix or sp object.}
 
-\item{bw}{Distance bandwidth to calculate spatial lags (if empty neighbours result, need to increase bandwith). If not provided it will be calculated automatically based on the minimum distance that includes at least one neighbor.}
+\item{bw}{Distance bandwidth to calculate spatial lags (if empty neighbours result, need to increase bandwidth). If not provided it will be calculated automatically based on the minimum distance that includes at least one neighbor.}
 
 \item{type}{Neighbour weighting scheme (see autocov_dist)}
 
@@ -78,7 +78,7 @@ lmodel <- logistic.regression(meuse, y='DepVar', x=c('dist','cadmium','copper'))
     lmodel$diagTable
       lmodel$coefTable
 
-#### Logistic model with factorial varialbe
+#### Logistic model with factorial variable
 lmodel <- logistic.regression(meuse, y='DepVar', x=c('dist','cadmium','copper', 'soil')) 
   lmodel$model
     lmodel$diagTable

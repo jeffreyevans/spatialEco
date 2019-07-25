@@ -29,7 +29,7 @@
 #'   plot(poly)
 #'     points(meuse.erase, pch=20)
 #'
-#' @export
+#' @export erase.point
 erase.point <- function(y, x, inside = TRUE) {
     #if(class(y) == "sf") {y <- as(y, "Spatial")}
 	#if(class(x) == "sf") {x <- as(x, "Spatial")}

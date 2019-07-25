@@ -19,6 +19,7 @@ Inverts (flip) the values of a raster
 Inverts raster values using the formula: (((x - max(x)) * -1) + min(x)
 }
 \examples{
+\dontrun{
   library(raster)
   r <- raster(nrows=500, ncols=500, xmn=571823, xmx=616763, 
               ymn=4423540, ymx=4453690)
@@ -28,7 +29,8 @@ Inverts raster values using the formula: (((x - max(x)) * -1) + min(x)
     par(mfrow=c(1,2))
       plot(r, main="original raster")
       plot(r.inv, main="inverted raster") 
-    
+}     
+
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

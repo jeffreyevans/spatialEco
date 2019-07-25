@@ -12,7 +12,7 @@ correlogram(x, v, dist = 5000, dmatrix = FALSE, ns = 99,
 
 \item{v}{Test variable in x@data}
 
-\item{dist}{Distance of correlation lags, if latlong=TRUE units are in kilometres}
+\item{dist}{Distance of correlation lags, if latlong=TRUE units are in kilometers}
 
 \item{dmatrix}{Should the distance matrix be include in output (TRUE/FALSE)}
 

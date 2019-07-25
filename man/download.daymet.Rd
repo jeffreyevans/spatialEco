@@ -4,7 +4,8 @@
 \alias{download.daymet}
 \title{Download DAYMET}
 \usage{
-download.daymet(years, tiles, data.type = "all", download.folder = getwd(),
+download.daymet(years, tiles, data.type = "all",
+  download.folder = getwd(),
   http = "https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles")
 }
 \arguments{
@@ -27,7 +28,7 @@ Batch download of daily gridded DAYMET climate data
 \note{
 Available products
 
-vp        Water Vapour Pressure Daily average partial pressure of water vapour
+vp        Water Vapor Pressure Daily average partial pressure of water vapor
 
 tmin      Daily minimum (degrees C) 2-meter air temperature
 
@@ -35,11 +36,13 @@ tmax      Daily maximum (degrees C) 2-meter air temperature
 
 swe       Snow water equivalent (kg/m^2). Amount of water contained within snowpack.
 
-srad      Incident shortwave radiation flux density (W/m^2), taken as average over daylight period of the day.
+srad      Incident shortwave radiation flux density (W/m^2), taken as average over daylight 
+                    period of the day.
 
 prcp      Daily total precipitation(mm/day), sum of all forms converted to water-equivalent.
 
-dayl      Duration of the daylight period for the day (s/day). Calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.
+dayl      Duration of the daylight period for the day (s/day). Calculation is based on the 
+                    period of the day during which the sun is above a hypothetical flat horizon.
 
 DAYMET main website: \url{http://daymet.ornl.gov}
 
@@ -59,11 +62,18 @@ Path structure: /year/tile_year/file.nc
 
 }
 \references{
-Thornton P.E., S.W. Running and M.A. White (1997) Generating surfaces of daily meteorological variables over large regions of complex terrain. Journal of Hydrology 190: 214-251.
+Thornton P.E., S.W. Running and M.A. White (1997) Generating surfaces of daily 
+              meteorological variables over large regions of complex terrain. Journal of
+              Hydrology 190: 214-251.
 
-Thornton, P.E. and S.W. Running (1999) An improved algorithm for estimating incident daily solar radiation from measurements of temperature, humidity, and precipitation. Agriculture and Forest Meteorology. 93:211-228.
+Thornton, P.E. and S.W. Running (1999) An improved algorithm for estimating 
+              incident daily solar radiation from measurements of temperature, humidity, 
+              and precipitation. Agriculture and Forest Meteorology. 93:211-228.
 
-Thornton, P.E., H. Hasenauer and M.A. White (2000) Simultaneous estimation of daily solar radiation and humidity from observed temperature and precipitation: An application over complex terrain in Austria. Agricultural and Forest Meteorology 104:255-271.
+Thornton, P.E., H. Hasenauer and M.A. White (2000) Simultaneous estimation 
+              of daily solar radiation and humidity from observed temperature and 
+              precipitation: An application over complex terrain in Austria. 
+              Agricultural and Forest Meteorology 104:255-271.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

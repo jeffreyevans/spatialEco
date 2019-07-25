@@ -45,11 +45,13 @@ Recommended ranges for classifying Topographic Ruggedness Index
 Depends: raster
 }
 \examples{
+\dontrun{
  library(raster)
  data(elev)
   ( tri.ext <- tri(elev) )
   ( tri.app <- tri(elev, exact = FALSE) )
   plot(stack(tri.ext, tri.app))
+}
 
 }
 \references{

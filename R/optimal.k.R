@@ -31,6 +31,9 @@
 #' # join clusters to data
 #'   x <- data.frame(x, k=clust$clustering) 
 #'
+#' @seealso \code{\link[cluster]{pam}} for details on Partitioning Around Medoids (PAM)  
+#' @seealso \code{\link[cluster]{clara}} for details on Clustering Large Applications (clara) 
+#'
 #' @export  
 optimal.k <- function(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ...) {
     asw <- numeric(nk)
@@ -44,8 +47,8 @@ optimal.k <- function(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ..
     }
     print(paste("Optimal-K", k.best, sep = ": "))
     if (plot == TRUE) {
-        graphics::plot(1:nk, asw, type = "s", main = "Clustering Optimization using K-Mediods", xlab = "K (number of clusters)", 
-            ylab = "mean silhouette width")
+        graphics::plot(1:nk, asw, type = "s", main = "Clustering Optimization using K-Mediods",  
+                       xlab = "K (number of clusters)", ylab = "mean silhouette width")
         graphics::axis(1, k.best, paste("best", k.best, sep = "\n"), col = "red", col.axis = "red")
     }
     if (cluster == TRUE) {

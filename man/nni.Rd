@@ -12,7 +12,7 @@ nni(x, win = "hull")
 \item{win}{Type of window 'hull' or 'extent'}
 }
 \value{
-list object contanint NNI = nearest neighbor index, z.score = Z Score value, p = p value, expected.mean.distance = Expected meand distance, observed.mean.distance = Observed meand distance.
+list object containing NNI = nearest neighbor index, z.score = Z Score value, p = p value, expected.mean.distance = Expected meand distance, observed.mean.distance = Observed meand distance.
 }
 \description{
 Calculates the NNI as a measure of clustering or dispersal

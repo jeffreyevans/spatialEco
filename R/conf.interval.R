@@ -1,5 +1,6 @@
 #' @title Confidence interval for mean or median
-#' @description Calculates confidence interval for the mean or median of a distribution with unknown population variance
+#' @description Calculates confidence interval for the mean or median of a distribution with 
+#'              unknown population variance
 #' 
 #' @param x             Vector to calculate confidence interval for
 #' @param cl            Percent confidence level (default = 0.95)

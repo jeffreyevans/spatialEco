@@ -38,7 +38,7 @@ Available bandwidth selection methods are:
   geometry, Bandwidth is based on simple window geometry (1st order)
   Stoyan (Stoyan & Stoyan 1995), Based on pair-correlation function (strong 2nd order)
 
-Note; resulting bandwidth can vary widly by method. the 'diggle' method is intended for selecting bandwidth representing 2nd order spatial variation whereas the 'scott' method will represent 1st order trend. the 'geometry' approach will also represent 1st order trend. for large datasets, caution should be used with the 2nd order 'likelihood' approach, as it is slow and computationaly expensive. finally, the 'stoyan' method will produce very strong 2nd order results. '
+Note; resulting bandwidth can vary widly by method. the 'diggle' method is intended for selecting bandwidth representing 2nd order spatial variation whereas the 'scott' method will represent 1st order trend. the 'geometry' approach will also represent 1st order trend. for large datasets, caution should be used with the 2nd order 'likelihood' approach, as it is slow and computationally expensive. finally, the 'stoyan' method will produce very strong 2nd order results. '
 
 Depends: sp, spatstat
 }

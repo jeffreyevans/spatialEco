@@ -16,7 +16,7 @@ A list class object with the following components:
 
 concordance  percent of positives that are greater than probabilities of nulls
 
-isconcordance inverse of concordance representing null class
+is concordance inverse of concordance representing null class
 
 tied number of tied probabilities
 
@@ -26,10 +26,10 @@ pairs number of pairs compared
 Performs a concordance/disconcordance (C-statistic) test on binomial models.
 }
 \note{
-The C-statistic has been show to be comparable to the area under an ROC.
-
-Test of binomial regression for the hypothesis that probabilities of all positives [1], are greater than the probabilities of the nulls [0]. 
-The concordance would be 100% for a perfect model where, disconcordance is the inverse of concordance, representing the null
+Test of binomial regression for the hypothesis that probabilities of all positives [1], 
+are greater than the probabilities of the nulls [0]. The concordance would be 100% 
+for a perfect model where, disconcordance is the inverse of concordance, representing 
+the null. The C-statistic has been show to be comparable to the area under an ROC
 }
 \examples{
 data(mtcars)

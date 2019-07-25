@@ -4,33 +4,40 @@
 \alias{crossCorrelation}
 \title{Spatial cross correlation}
 \usage{
-crossCorrelation(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI",
-  "GSCI"), k = 1000, dist.function = "inv.power", scale.partial = TRUE,
-  scale.matrix = TRUE, scale.xy = TRUE, alpha = 0.05, clust = FALSE,
-  return.sims = FALSE)
+crossCorrelation(x, y = NULL, coords = NULL, w = NULL,
+  type = c("LSCI", "GSCI"), k = 1000, dist.function = "inv.power",
+  scale.xy = TRUE, scale.partial = FALSE, scale.matrix = FALSE,
+  alpha = 0.05, clust = FALSE, return.sims = FALSE)
 }
 \arguments{
 \item{x}{Vector of x response variables}
 
-\item{y}{Vector of y response variables, if not specified the univariate statistic is returned}
+\item{y}{Vector of y response variables, if not specified the univariate 
+statistic is returned}
 
-\item{coords}{A matrix of coordinates corresponding to [x,y], only used if k = NULL. Can also be an sp object with relevant x,y coordinate slot (ie., points or polygons)}
+\item{coords}{A matrix of coordinates corresponding to [x,y], only used if k = NULL. 
+Can also be an sp object with relevant x,y coordinate slot (ie., points or polygons)}
 
-\item{w}{Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)], if not defined then a default method is used}
+\item{w}{Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)] and be symmetrical.
+If w is not defined then a default method is used.}
 
-\item{type}{c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) or Global Spatial cross-correlation Index (GSCI)}
+\item{type}{c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) or 
+Global Spatial cross-correlation Index (GSCI)}
 
-\item{k}{Number of simulations for calculating permutation distribution under the null hypothesis of no spatial autocorrelation (k=1000, default)}
+\item{k}{Number of simulations for calculating permutation distribution under the 
+null hypothesis of no spatial autocorrelation (k=1000, default)}
 
-\item{dist.function}{("inv.power", "neg.exponent") If w = NULL, the default method for deriving spatial weights matrix, options are: inverse power or negative exponent}
+\item{dist.function}{("inv.power", "neg.exponent") If w = NULL, the default method for deriving 
+spatial weights matrix, options are: inverse power or negative exponent}
 
-\item{scale.partial}{(TRUE/FALSE) rescale partial spatial autocorrelation statistics [-1 - 1]}
+\item{scale.xy}{(TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that they are 
+already scaled following Chen (2015)}
 
-\item{scale.matrix}{(TRUE/FALSE) If a neighbor/distance matrix is passed, should it be scaled}
+\item{scale.partial}{(FALSE/TRUE) rescale partial spatial autocorrelation statistics [-1 - 1]}
 
-\item{scale.xy}{(TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that they are already scaled following Chen (2015)}
+\item{scale.matrix}{(FALSE/TRUE) If a neighbor/distance matrix is passed, should it be scaled using [w/sum(w)]?}
 
-\item{alpha}{= 0.05    confidence interval (default is 95 pct)}
+\item{alpha}{= 0.05     confidence interval (default is 95 pct)}
 
 \item{clust}{(FALSE/TRUE) Return approximated lisa clusters}
 
@@ -59,7 +66,8 @@ when simulated (k>0), a list containing:
 }
 }
 \description{
-Calculates univariate or bivariate spatial cross-correlation using local Moran's-I (LISA), following Chen (2015)
+Calculates univariate or bivariate spatial cross-correlation using local 
+             Moran's-I (LISA), following Chen (2015)
 }
 \examples{
   library(sp)
@@ -130,5 +138,6 @@ Calculates univariate or bivariate spatial cross-correlation using local Moran's
 
 }
 \references{
-Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
+Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
+            PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 }

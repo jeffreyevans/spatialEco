@@ -39,7 +39,9 @@ ant.div <- shannons(ants[,2:ncol(ants)], ens = TRUE, counts = FALSE, margin = "r
 }
 \references{
 Shannon, C. E. and W. Weaver (1948) A mathematical theory of communication. The Bell System Technical Journal, 27:379-423.
+
 Simpson, E. H. (1949) Measurement of diversity. Nature 163:688
+
 Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
 }
 \author{

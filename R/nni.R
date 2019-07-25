@@ -4,7 +4,7 @@
 #' @param x An sp point object
 #' @param win Type of window 'hull' or 'extent'
 #'
-#' @return list object contanint NNI = nearest neighbor index, z.score = Z Score value, p = p value, expected.mean.distance = Expected meand distance, observed.mean.distance = Observed meand distance.
+#' @return list object containing NNI = nearest neighbor index, z.score = Z Score value, p = p value, expected.mean.distance = Expected meand distance, observed.mean.distance = Observed meand distance.
 #'
 #' @note
 #' The nearest neighbour index is expressed as the ratio of the observed distance divided by the expected distance. The expected distance is the average distance between neighbours in a hypothetical random distribution. If the index is less than 1, the pattern exhibits clustering; if the index is greater than 1, the trend is toward dispersion or competition.
@@ -29,6 +29,7 @@
 #'
 #' @export
 nni <- function(x, win = "hull") {
+    # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!class(x) == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
         stop(deparse(substitute(x)), " MUST BE A sp POINTS OBJECT")
     if (win == "hull") {

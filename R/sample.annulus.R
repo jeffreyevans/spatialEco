@@ -33,6 +33,7 @@
 #'
 #' @export
 sample.annulus <- function(x, r1, r2, n = 10, ...) {
+  # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(r1 >= r2) stop("inner radius (r1) must be smaller than outer (r2)")
     dots <- as.list(match.call(expand.dots = TRUE)[-1])
   if (is.null(dots[["type"]]) & "type" %in% names(dots) == FALSE) dots[["type"]] <-  "random"

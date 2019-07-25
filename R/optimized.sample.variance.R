@@ -5,7 +5,8 @@
 #' @param n       Number of samples to draw
 #' @param type    Type of sample variance optimization c("maximized", "minimized")  
 #'
-#' @return A data.frame with "idx" representing the index of the original vector and "y" is the value of the sampled data
+#' @return A data.frame with "idx" representing the index of the original vector and "y" 
+#'           is the value of the sampled data
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

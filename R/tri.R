@@ -26,11 +26,13 @@
 #' @references Riley, S.J., S.D. DeGloria and R. Elliot (1999) A terrain ruggedness index that quantifies topographic heterogeneity, Intermountain Journal of Sciences 5(1-4):23-27.
 #'
 #' @examples 
+#' \dontrun{
 #'  library(raster)
 #'  data(elev)
 #'   ( tri.ext <- tri(elev) )
 #'   ( tri.app <- tri(elev, exact = FALSE) )
 #'   plot(stack(tri.ext, tri.app))
+#' }
 #'
 #' @export
 tri <- function(r, s = 3, exact = TRUE, file.name = NULL, ...) {

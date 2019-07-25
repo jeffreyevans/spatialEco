@@ -12,7 +12,7 @@
 #' @note 
 #' An a priori assumption of a maximum in the NW quadrant (45 azimuth)
 #' and a minimum in the SW quadrant can be replaced by an empirically
-#' determined location of the optimum without repeated caculations of
+#' determined location of the optimum without repeated calculations of
 #' the regression fit. In addition it is argued that expressions for
 #' the effects of aspect should always be considered as terms involving
 #' an interaction with slope (Stage, 1976)
@@ -23,7 +23,7 @@
 #' 
 #' An alternative for slopes with values approaching infinity is
 #' to take the square root of slope/100 to reduce the range of
-#' values.By default this model sest all values greater than 100%
+#' values.By default this model test all values greater than 100%
 #' to 101% and flat areas (-1) to nodata.
 #'
 #'

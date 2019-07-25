@@ -27,6 +27,7 @@ Calculates a percent volume on a raster or based on a systematic sample
 Since this model needs to operate on all of the raster values, it is not memory safe
 }
 \examples{
+\dontrun{
 require(raster)
   r <- raster(ncols=100, nrows=100)
     r[] <- runif(ncell(r), 0, 1)
@@ -50,6 +51,7 @@ require(raster)
   #  p30 <- raster.vol(r, p = 0.30, sample = TRUE, spct = 0.20)
   #    plot(r, main="30\% volume point sample")
   #    plot(p30, pch=20, cex=0.70, add=TRUE)
+}
 
 }
 \author{

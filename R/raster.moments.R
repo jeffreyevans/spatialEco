@@ -14,6 +14,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
+#' \dontrun{
 #'   library(raster)
 #'   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
 #'               ymn=4423540, ymx=4453690)
@@ -23,8 +24,9 @@
 #' 
 #' # Calculate 10th percentile for 3x3 window
 #' r.p10 <- raster.moments(r, type="quantile", p=0.10) 
+#' }
 #'
-#' @export
+#' @export raster.moments
 raster.moments <- function(x, type = "mean", s = 3, p = 0.75) {  
   if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
   if( length(s) == 1) s = c(s[1],s[1])

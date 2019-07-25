@@ -1,19 +1,19 @@
 #' @title separability
-#' @description Calculates variety of univariate or multivariate separability metrics for two class samples
+#' @description Calculates variety of two-class sample separability metrics 
 #'           
-#' @param x  X vector
-#' @param y  Y vector
-#' @param plot  plot separability (TRUE/FALSE)
-#' @param cols  colours for plot (must be equal to number of classes)
-#' @param clabs  labels for two classes
-#' @param ...  additional arguments passes to plot
+#' @param x         X vector
+#' @param y         Y vector
+#' @param plot      plot separability (TRUE/FALSE)
+#' @param cols      colors for plot (must be equal to number of classes)
+#' @param clabs     labels for two classes
+#' @param ...       additional arguments passes to plot
 #'
 #' @return A data.frame with the following separability metrics: 
-#' @return   B  Bhattacharryya distance statistic 
-#' @return  JM  Jeffries-Matusita distance statistic
-#' @return   M  M-Statistic
-#' @return   D  Divergence index
-#' @return   TD  Transformed Divergence index
+#' @return   B    Bhattacharryya distance statistic 
+#' @return  JM    Jeffries-Matusita distance statistic
+#' @return   M    M-Statistic
+#' @return   D    Divergence index
+#' @return   TD   Transformed Divergence index
 #'
 #' @note
 #' M-Statistic (Kaufman & Remer 1994) - This is a measure of the difference of the distributional peaks. A large M-statistic indicates good separation between the two classes as within-class variance is 
@@ -34,7 +34,7 @@
 #' @references
 #'    Bhattacharyya, A. (1943) On a measure of divergence between two statistical populations defined by their probability distributions'. Bulletin of the Calcutta Mathematical Society 35:99-109
 #' @references
-#'    Bruzzone, L., F. Roli, S.B. Serpico (1995) An extenstion to multiclass cases of the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and Machine Intelligence 33:1318-1321
+#'    Bruzzone, L., F. Roli, S.B. Serpico (1995) An extension to multiclass cases of the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and Machine Intelligence 33:1318-1321
 #' @references
 #'    Du, H., C.I. Chang, H. Ren, F.M. D'Amico, J. O. Jensen, J., (2004) New Hyperspectral Discrimination Measure for Spectral Characterization. Optical Engineering 43(8):1777-1786.
 #' @references
@@ -54,30 +54,36 @@
 #' @export                            
 separability <- function(x, y, plot = FALSE, cols = c("red", "blue"), clabs = c("Class1", "Class2"), ...) {
     if (length(cols) > 2) 
-        stop("TOO MANY COLORS")
+      stop("Too many colors")
     if (length(clabs) > 2) 
-        stop("TOO MANY CLASS LABELS")
+      stop("Too many class labels")
     trace.of.matrix <- function(SquareMatrix) {
-        sum(diag(SquareMatrix))
+      sum(diag(SquareMatrix))
     }
+	
     x <- as.matrix(x)
     y <- as.matrix(y)
-    mdif <- mean(x) - mean(y)
+    
+	mdif <- mean(x) - mean(y)
     p <- (stats::cov(x) + stats::cov(y))/2
     bh.distance <- 0.125 * t(mdif) * p^(-1) * mdif + 0.5 * log(det(p)/sqrt(det(stats::cov(x)) * det(stats::cov(y))))
-    m <- (abs(mean(x) - mean(y)))/(stats::sd(x) + stats::sd(y))
+    
+	m <- (abs(mean(x) - mean(y)))/(stats::sd(x) + stats::sd(y))
     jm.distance <- 2 * (1 - exp(-bh.distance))
-    dt1 <- 1/2 * trace.of.matrix((stats::cov(x) - stats::cov(y)) * (stats::cov(y)^(-1) - stats::cov(x)^(-1)))
-    dt2 <- 1/2 * trace.of.matrix((stats::cov(x)^(-1) + stats::cov(y)^(-1)) * (mean(x) - mean(y)) * t(mean(x) - mean(y)))
+    
+	dt1 <- 1/2 * trace.of.matrix((stats::cov(x) - stats::cov(y)) * (stats::cov(y)^(-1) - stats::cov(x)^(-1)))
+    dt2 <- 1/2 * trace.of.matrix((stats::cov(x)^(-1) + stats::cov(y)^(-1)) * 
+	                            (mean(x) - mean(y)) * t(mean(x) - mean(y)))
     divergence <- dt1 + dt2
     transformed.divergence <- 2 * (1 - exp(-(divergence/8)))
-    if (plot == TRUE) {
+    
+	if (plot == TRUE) {
         color1 <- as.vector(grDevices::col2rgb(cols[1])/255)
         color2 <- as.vector(grDevices::col2rgb(cols[2])/255)
         d1 <- stats::density(x)
         d2 <- stats::density(y)
-        graphics::plot(d1, type = "n", ylim = c(min(c(d1$y, d2$y)), max(c(d1$y, d2$y))), xlim = c(min(c(d1$x, d2$x)), max(c(d1$x, 
-            d2$x))), ...)
+        graphics::plot(d1, type = "n", ylim = c(min(c(d1$y, d2$y)), max(c(d1$y, d2$y))),  
+		               xlim = c(min(c(d1$x, d2$x)), max(c(d1$x, d2$x))), ...)
         graphics::polygon(d1, col = grDevices::rgb(color1[1], color1[2], color1[3], 1/4))
         graphics::polygon(d2, col = grDevices::rgb(color2[1], color2[2], color2[3], 1/4))
         graphics::abline(v = mean(x), lty = 1, col = "black")
@@ -85,5 +91,6 @@ separability <- function(x, y, plot = FALSE, cols = c("red", "blue"), clabs = c(
         graphics::legend("topright", legend = clabs, fill = c(grDevices::rgb(color1[1], color1[2], color1[3], 1/4), 
 		                 grDevices::rgb(color2[1], color2[2], color2[3], 1/4)))
     }
-    return(data.frame(B = bh.distance, JM = jm.distance, M = m, mdif = abs(mdif), D = divergence, TD = transformed.divergence))
+    return(data.frame(B = bh.distance, JM = jm.distance, M = m, mdif = abs(mdif), 
+	                  D = divergence, TD = transformed.divergence))
 } 

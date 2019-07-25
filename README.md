@@ -16,7 +16,6 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     Available functions in spatialEco 1.2-0 are:
 
 ​
-
           bearing.distance - Calculate new point based on bearing/distance 
 		  
 		  breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
@@ -232,7 +231,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
           wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in 
                         a point sample.      
 
-          zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function.  
+          zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. 
 
 
 **Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.

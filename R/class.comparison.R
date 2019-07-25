@@ -21,12 +21,16 @@
 #' \item   p.value  p-value of the paired t.test statistic (if stat = "t.test" or "both")
 #'  } 
 #'
-#' @note This function provides a Cohen's Kappa or paired t-test to compair two classified maps. Point based subsampling is provided for computation tractability.  The hexagon sampleing is recomended as it it good at capturing spatial process that includes nonstationarity and anistropy.    
+#' @note This function provides a Cohen's Kappa or paired t-test to compare two classified maps. 
+#'       Point based subsampling is provided for computation tractability.  The hexagon sampling 
+#'       is recommended as it it good at capturing spatial process that includes nonstationarity 
+#'       and anisotropy.    
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
 #' @references
-#' Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational and Psychological Measurement, 20:37-46 
+#' Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational and Psychological 
+#'   Measurement, 20:37-46 
 #' 
 #' @examples
 #' \dontrun{
@@ -109,9 +113,11 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
          } else if(stat == "kappa") { results <- list("kappa" = vector()) 
            } else { stop("Not a valid option") }	  	 
 	
-  nb <- spdep::dnearneigh(sp::coordinates(x),0, d)
-  if(sub.sample == FALSE) { 	
-    k <- vector()
+
+  
+  if(sub.sample == FALSE) { 
+    nb <- spdep::dnearneigh(sp::coordinates(x),0, d)  
+      k <- vector()
       for(i in 1:length(nb)) {
         if( ncol(x) > 1) {
            x.var <- x@data[nb[[i]],][x.idx][,1]
@@ -154,8 +160,13 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
       s@data <- data.frame(x=x@data[,x.idx], y=y@data[,y.idx], 
 	                       as.data.frame(do.call("cbind", results))) 
     } else {
+	
+	# Change to raster class coercion and raster::extract 
+	#   nb indexes are too slow
+	
     if(!is.null(size)) { n = size } else { n = round(nrow(x) * p, 0) } 
     if(type == "random") {
+	
 	  rs <- sample(1:length(nb), n)		  
 	  for(i in 1:length(rs)) {
         if( ncol(x) > 1) {

@@ -9,6 +9,8 @@
 #' @param z.value          (FALSE/TRUE) return z values
 #' @param confidence       (FALSE/TRUE) return 95 pct confidence levels
 #' @param prewhiten        (FALSE/TRUE) Apply autocorrelation correction using pre-whitening 
+#' @param na.rm            (FALSE/TRUE) Remove NA values
+#' @param ...               Not used
 #'
 #' @return Depending on arguments, a vector containing:
 #' \itemize{
@@ -39,27 +41,23 @@
 #' @references Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate the influence 
 #'               of serial correlation on the Mann-Kendall test. Water Resources Research, 38(6):41-47. 
 #'
-#' 
-#'
-#'
-#' @export
+#' @export kendall
 kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE, 
-                    confidence = TRUE, intercept = TRUE, 
-					prewhiten = FALSE, na.rm, ...) { 			  
-    if(!length(y[!is.na(y)]) < 8) 
+                    confidence = TRUE, intercept = TRUE,
+					prewhiten = FALSE, na.rm, ...) {
+    if(length(y[!is.na(y)]) < 8) 
       stop("The Kendall Tau needs at least 8 observations")
     pass.sum <- 0
 	if(prewhiten) {
 	  confidence = FALSE
 	  intercept = FALSE 
     }
-      if( p.value.pass ) pass.sum = pass.sum + 1
+      if( p.value ) pass.sum = pass.sum + 1
 	    if( z.value ) pass.sum = pass.sum + 1
 	    if( tau ) pass.sum = pass.sum + 1
 	  if( confidence ) pass.sum = pass.sum + 2
 	if( intercept ) pass.sum = pass.sum + 1
       fit.results <- c(rep(NA,pass.sum + 1))
-	  
     if(!prewhiten) {
       options(warn=-1)
       fit <- EnvStats::kendallTrendTest(y ~ 1)
@@ -146,6 +144,6 @@ kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE,
 	  fit.results <- as.numeric(fit.results) 
     }
     options(warn=0)	  
-  return(fit.results)
+  return(c(fit.results))
 }	
   
