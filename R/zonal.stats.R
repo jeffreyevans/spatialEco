@@ -58,24 +58,24 @@ zonal.stats <- function(x, y, stat, trace = TRUE, plot = TRUE) {
         stop("x must be a SpatialPolygonsDataFrame object")
     results <- vector()
     for (j in 1:nrow(x)) {
-        if (trace == TRUE) {
-            cat("processing", j, "of", nrow(x), "\n")
-        }
-        lsub <- x[j, ]
+      if (trace == TRUE) {
+          cat("processing", j, "of", nrow(x), "\n")
+      }
+      lsub <- x[j, ]
         cr <- raster::crop(y, raster::extent(lsub), snap = "out")
-        crop.NA <- raster::setValues(cr, NA)
-        fr <- raster::rasterize(lsub, cr)
-        r <- raster::mask(x = cr, mask = fr)
+	    fr <- fasterize::fasterize(sf::st_as_sf(lsub), cr)
+        #fr <- raster::rasterize(lsub, cr)
+      r <- raster::mask(x = cr, mask = fr)
         if (plot == TRUE) {
           plot(r, main = paste("Polygon: ", j, sep = " "))
         }
         r <- raster::values(r)
-        r <- stats::na.omit(r)
-        if (length(r) < 1) {
-            results <- append(results, NA)
-        } else {
-            results <- append(results, stat(r))
-        }
+      r <- stats::na.omit(r)
+      if (length(r) < 1) {
+        results <- append(results, NA)
+      } else {
+        results <- append(results, stat(r))
+      }
     }
     results
 } 
