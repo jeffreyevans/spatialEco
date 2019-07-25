@@ -35,7 +35,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
            convexHull - Derives a convex hull of points using the alpha hull approach with adjustable tension. 
                        Please note that due to licensing reasons, this function is only available in the GitHub 
-                       development version and not on CRAN.  
+                       development version and not on CRAN. You must call the function from the package 
+					   namespace using spatialEco:::convexHull  
 
            crossCorrelation - Calculates the partial spatial cross-correlation function
           
