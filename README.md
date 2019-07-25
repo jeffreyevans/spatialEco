@@ -17,14 +17,14 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
 
            bearing.distance - Calculate new point based on bearing/distance
-		  
+
            breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
                               population counts.     
 
            classBreaks - for finding class breaks in a distribution
-          
+
            class.comparison - Compares two nominal rasters
-          
+
            correlogram - Calculates and plots a correlogram (spatially lagged correlations, "pearson", 
                         "kendall" or "spearman")
 
@@ -32,7 +32,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
            conf.interval - Calculates confidence interval for the mean or median of a distribution with unknown 
                            population variance
-          
+
            convexHull - Derives a convex hull of points using the alpha hull approach with adjustable tension. 
                        Please note that due to licensing reasons, this function is only available in the GitHub 
                        development version and not on CRAN.  
@@ -60,23 +60,23 @@ spatialEco R package with utilities to support spatial data manipulation, query,
            download.prism - Batch download of monthly gridded PRISM climate data
 
            effect.size - Cohen's-d effect size with pooled sd for a control and experimental group 
-          
+
            erase.points - Erases points inside or outside a polygon feature class
-          
+
            focal.lmetrics - Landscape metrics using a focal window
-          
+
            fuzzySum - Calculates the fuzzy sum of a vector
 
            gaussian.kernel - Creates a Gaussian Kernel of specified size and sigma
 
            group.pdf - Creates a probability density plot of y for each group of x           
 
-           hexagons - Create hexagon polygon “fishnet” of defined size and extent. 
-		  
-		   hli - Heat Load Index
-		  
+           hexagons - Create hexagon polygon “fishnet” of defined size and extent.
+
+           hli - Heat Load Index
+
            hsp - Hierarchical Slope Position
-          
+
            hybrid.kmeans - Clustering using hierarchical clustering to define cluster-centers in k-means 
 
            idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. 
@@ -84,9 +84,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                           a distance-weighted mean.   
 
            insert.values - Inserts new values into a vector at specified positions  
-        
+
 	       kendall - Kendall tau trend with continuity correction for time-series
-		  
+
            kl.divergence - Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical 
                           component distributions. Divergence is calculated as: int [f(x) (log f(x) - log g(x)) dx]
                           for distributions with densities f() and g().       
@@ -109,15 +109,15 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                     means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    
 
            morans.plot - Autocorrelation plot 
-          
+
            nni - Calculates the nearest neighbor index (NNI) as a measure of clustering or dispersal
-          
+
            oli.aws - Download Landsat 8 - OLI from AWS.   
 
            o.ring - Calculates the inhomogeneous O-ring point pattern statistic (Wiegand & Maloney 2004)               
 
            optimal.k - Find optimal k of k-Medoid partitions using silhouette widths 
-          
+
            optimized.sample.variance - Draws an optimal sample that minimizes or maximizes the sample variance 
 
            outliers - Identify outliers using modified Z-score  
@@ -146,16 +146,16 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                            and is drawn from a probabilistic sample following the intensity function.       
 
            raster.change - Compares two categorical rasters with a variety of statistical options 
-		  
+
            raster.deviation - Local deviation from the raster based on specified global statistic or a polynomial trend.                          
 
            raster.downscale - Downscale raster to a higher resolution raster using robust regression
-          
+
            raster.entropy - Calculates entropy on integer raster (i.e., 8 bit 0-255)  
 
-           raster.gaussian.smooth - Applies a Gaussian smoothing kernel to smooth raster.                     
-          
-		   raster.invert - Inverts value of a raster                              
+           raster.gaussian.smooth - Applies a Gaussian smoothing kernel to smooth raster.
+
+           raster.invert - Inverts value of a raster                              
 
            raster.kendall - Calculates Kendall's tau trend with continuity correction for raster time-series
 
@@ -172,7 +172,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
            raster.Zscore - Calculates the modified z-score for all cells in a raster                               
 
            rasterCorrelation - Performs a simple moving window correlation between two rasters		  
-		  
+
            remove.holes - Removes all holes (null geometry) in polygon sp class objects 
 
            sa.trans - Trigonometric transformation of a slope and aspect interaction 
@@ -187,17 +187,17 @@ spatialEco R package with utilities to support spatial data manipulation, query,
            sampleTransect - Creates random transects from points and generates sample points along each transect
 
            separability - Calculates variety of univariate or multivariate separability metrics for nominal class samples
-          
+
            sg.smooth - Smoothing time-series data using a Savitzky-Golay filter 
 
            shannons - Calculates Shannon's Diversity Index and Shannon's Evenness Index
 
            similarity - Uses row imputation to identify "k" ecological similar observations
-          
+
            smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series 
                                 using (local polynomial) LOESS regression
-          
-		   sobal - Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window  
+
+           sobal - Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window  
 		  
            sp.kde - A weighted or un-weighted kernel density estimate
 
@@ -208,9 +208,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
            srr - Surface Relief Ratio 
 
            stratified.random - Creates a stratified random sample of an sp class object using a factor.
-          
+
            subsample.distance - Minimum, and optional maximum, distance constrained sub-sampling
-          
+
            swvi - Senescence weighted MSAVI or MTVI
 
            topo.distance - Calculates topographic corrected distance for a SpatialLinesDataFrame object  
@@ -231,7 +231,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
            wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in 
                         a point sample.      
 
-           bzonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. 
+           zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. 
 
 
 **Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.
