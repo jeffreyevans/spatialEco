@@ -16,10 +16,10 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 # Available functions in spatialEco 2-0 are:
 
 
-           bearing.distance - Calculate new point based on bearing/distance 
+           bearing.distance - Calculate new point based on bearing/distance
 		  
-		   breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
-                             population counts.     
+           breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
+                              population counts.     
 
            classBreaks - for finding class breaks in a distribution
           
