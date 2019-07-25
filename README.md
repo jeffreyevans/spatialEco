@@ -193,7 +193,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
            shannons - Calculates Shannon's Diversity Index and Shannon's Evenness Index
 
-           similarity - Uses row imputation to identify "k" ecological similar observations
+           shift - Shifts a vector by n lags without changing its length, can specify fill values 
+           
+		   similarity - Uses row imputation to identify "k" ecological similar observations
 
            smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series 
                                 using (local polynomial) LOESS regression
