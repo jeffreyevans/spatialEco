@@ -13,7 +13,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-# Available functions in spatialEco 2-0 are:
+# Available functions in spatialEco 2-0-1 are:
 
 
     bearing.distance - Calculate new point based on bearing/distance
@@ -126,6 +126,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     parea.sample - Creates a systematic or random point sample of polygons where n is based on percent area of 
                   each polygon
     
+	parse.bits - Based on integer value, pulls value(s) of specified bit(s)
+	
     plot.effect.size - Plot generic for effect size
     
     plot.loess.boot - Plot generic for loess boot     
@@ -193,7 +195,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     shannons - Calculates Shannon's Diversity Index and Shannon's Evenness Index
     
-    shift - Shifts a vector by n lags without changing its length, can specify fill values 
+    shift (dev) - Shifts a vector by n lags without changing its length, can specify fill values 
     
     similarity - Uses row imputation to identify "k" ecological similar observations
     

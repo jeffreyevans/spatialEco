@@ -120,3 +120,7 @@ spatialEco_1.2-0
 * Added function "sample.distance" for distance lagged sampling
 * Added function "wt.centroids" Creates centroid of [x,y] coordinates based on a weights field
 * Added function "subsample.distance" Minimum, and optional maximum, distance constrained sub-sampling
+
+spatialEco_1.2-1
+=================
+* Added function "parse.bits" for pulling value(s) for a bit(s) based on integer value 
