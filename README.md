@@ -16,7 +16,10 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 # Available functions in spatialEco 2-0-1 are:
 
 
-    bearing.distance - Calculate new point based on bearing/distance
+    annulus.matrix - Creates a 0,1 matrix based on defined annulus parameters, can be used as a window
+	                 matrix in a raster focal function
+    
+	bearing.distance - Calculate new point based on bearing/distance
     
     breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
                        population counts.     
