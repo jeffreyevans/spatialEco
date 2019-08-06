@@ -46,7 +46,7 @@
 #' 
 #' @export subsample.distance	
 subsample.distance <- function(x, n, d, d.max = NULL, replacement = FALSE,
-                            latlong = FALSE, trace = FALSE) {
+                               latlong = FALSE, trace = FALSE) {
   if(missing(x)) stop("Must define a spatial object")
     if(missing(d)) stop("Must define minimum separation distance")
   if(!any(class(x) == c("SpatialPointsDataFrame", "SpatialPolygonsDataFrame")) )

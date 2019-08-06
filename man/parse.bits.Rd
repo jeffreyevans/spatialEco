@@ -48,11 +48,11 @@ Data such as MODIS the QC band are stored in bits. This function returns the val
  
  # Calculate bit values from QC table
  ( qc_bits <- data.frame(int=0:255, 
- 					  cloud = unlist(lapply(0:255, FUN=parse.bits, bit=1)),
- 					  shadow = unlist(lapply(0:255, FUN=parse.bits, bit=3)),
- 					  acloud = unlist(lapply(0:255, FUN=parse.bits, bit=2)),
- 					  cirrus = unlist(lapply(0:255, FUN=parse.bits, bit=0)),
- 					  aerosol = unlist(lapply(0:255, FUN=parse.bits, bit=c(7,6)))) )
+ 	cloud = unlist(lapply(0:255, FUN=parse.bits, bit=1)),
+ 	shadow = unlist(lapply(0:255, FUN=parse.bits, bit=3)),
+ 	acloud = unlist(lapply(0:255, FUN=parse.bits, bit=2)),
+ 	cirrus = unlist(lapply(0:255, FUN=parse.bits, bit=0)),
+ 	aerosol = unlist(lapply(0:255, FUN=parse.bits, bit=c(7,6)))) )
  		
  # Query the results to create a vector of integer values indicating what to mask 
  m <- sort(unique(qc_bits[c(which(qc_bits$cloud == 1),

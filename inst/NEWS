@@ -124,3 +124,4 @@ spatialEco_1.2-0
 spatialEco_1.2-1
 =================
 * Added function "parse.bits" for pulling value(s) for a bit(s) based on integer value 
+* Added function "annulus.matrix" creates a [0,1] matrix based on defined annulus parameters.  
