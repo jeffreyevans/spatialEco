@@ -2,8 +2,9 @@
 #'
 #' @description Calculates a convex hull on a point feature class using the Pateiro-Lopez (2009) Alphahull model 
 #' 
-#' @param x         SpatialPoints or SpatialPointsDataFrame object
+#' @param x         SpatialPoints, SpatialPointsDataFrame, sf or matrix object representing [x,y] coordinates
 #' @param alpha     Alpha parameter for adjusting boundary tension
+#' @param sp        Output an sp SpatialPolygonsDataFrame object (TRUE/FALSE)
 #'
 #' @return SpatialPolygons object  
 #'
@@ -11,27 +12,24 @@
 #'       can be adjusted to relax or increase tension between boundary-edge points
 #'       Due to licensing constraints associated with the alphahull package, this function is not available 
 #'       in the CRAN release. The function must be called from the package NAMESPACE using: 
-#'       spatialEco:::convexHull  
+#'       spatialEco:::convexHull. If sp = FALSE an sf polygon class object will be returned 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @references Pateiro-Lopez & Rodriguez-Casal (2009) Generalizing the Convex Hull of a Sample: The R Package alphahull. Journal of Statistical Software 34(5):1-28 http://www.jstatsoft.org/v34/i05/paper
 #'                                                                    
 #' @examples 
-#'  library(sp)
+#' library(sp)
+#' library(sf)
+#' library(dplyr)
+#' 
+#' #### points example
 #'  data(meuse)
 #'   coordinates(meuse) = ~x+y
 #'  a <- convexHull(meuse, alpha=100000)
 #'    plot(a)
 #'      points(meuse, pch=19)
-#'  
-#'  # Convert SpatialLinesDataFrame to SpatialPolygonsDataFrame
-#'  library(sf)
-#'  a <- sf::st_as_sf(a) 
-#'  a <- sf::st_polygonize(a)
-#'  class( a <- as(a, "Spatial") )
-#'    plot(a)
-#'  
+#'
 #'  # Test multiple alpha values
 #'   par(mfcol=c(2,2))
 #'     for (a in c(500, 1500, 5000, 100000)) {
@@ -41,15 +39,45 @@
 #'          title( paste0("alpha=", a))		 
 #'     }
 #'
+#' \dontrun{
+#' #### Polygon example
+#' data(meuse)
+#'   coordinates(meuse) = ~x+y
+#'   meuse <- as(meuse, "sf")
+#'   meuse_poly <- st_buffer(meuse, dist = meuse$elev*15)
+#'   
+#' poly_points <- st_segmentize(meuse_poly, dfMaxLength = 5) %>% 
+#'   st_coordinates() %>% 
+#'   as.data.frame() %>% 
+#'   select(X, Y) %>% 
+#'   st_as_sf(coords = c("X", "Y"))  
+#'   			
+#' a <- convexHull(poly_points,alpha = 100000)
+#'  plot(meuse_poly, col="red")
+#'     plot(a, add=TRUE, cex=1.5)
+#'} 
+#'
 #' @export convexHull
-convexHull <- function(x, alpha = 250000)	{
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
-  if (!inherits(x, "SpatialPointsDataFrame") & !inherits(x, "SpatialPoints") ) 
-      stop(deparse(substitute(x)), " x must be a sp Points object")
-    a <- alphahull::ashape(sp::coordinates(x), alpha = alpha)
+convexHull <- function(x, alpha = 250000, sp = TRUE)	{
+  if (!inherits(x, "SpatialPointsDataFrame") &  
+        !inherits(x, "SpatialPoints") &
+       	  !inherits(x, "sf") &
+		    !inherits(x, "matrix")) 
+    stop(deparse(substitute(x)), " x must be a spatial (sp, df) or matrix object")
+  if(inherits(x, "sf")) { xy <- as.data.frame(st_coordinates(x)) }
+  if(inherits(x, "SpatialPointsDataFrame") &  inherits(x, "SpatialPoints") ) {
+    xy <- as.data.frame(coordinates(x))
+  }
+  if(inherits(x, "matrix")) {
+    xy <- as.data.frame(x)
+  }
+  xy <- xy[!duplicated(xy[c(1,2)]),]  
+    a <- alphahull::ashape(as.matrix(xy), alpha = alpha)
     l <- list()
       for (i in 1:nrow(a$edges)) { l[[i]] <-  sp::Line(rbind(a$edges[i, 3:4], a$edges[i, 5:6])) }
         a <- sp::SpatialLinesDataFrame(sp::SpatialLines(list(sp::Lines(l, as.character("1")))),
-                                       data.frame(name ="ashape"), match.ID = FALSE)				 
+                                       data.frame(name ="ashape"), match.ID = FALSE)
+      a <- sf::st_polygonize(sf::st_as_sf(a))
+    if(sp) a <- as(a, "Spatial") 									   
   return( a )	
 }
