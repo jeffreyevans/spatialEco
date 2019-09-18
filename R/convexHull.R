@@ -45,17 +45,19 @@
 #'   coordinates(meuse) = ~x+y
 #'   meuse <- as(meuse, "sf")
 #'   meuse_poly <- st_buffer(meuse, dist = meuse$elev*15)
-#'   
-#' poly_points <- st_segmentize(meuse_poly, dfMaxLength = 5) %>% 
-#'   st_coordinates() %>% 
+#' 
+#' # Create [x,y] points representing polygon boundaries  
+#' poly_points <- sf::st_segmentize(meuse_poly, dfMaxLength = 5) %>% 
+#'   sf::st_coordinates() %>% 
 #'   as.data.frame() %>% 
-#'   select(X, Y) %>% 
-#'   st_as_sf(coords = c("X", "Y"))  
+#'   dplyr::select(X, Y) %>% 
+#'   sf::st_as_sf(coords = c("X", "Y"))  
 #'   			
-#' a <- convexHull(poly_points,alpha = 100000)
-#'  plot(meuse_poly, col="red")
-#'     plot(a, add=TRUE, cex=1.5)
-#'} 
+#' a <- spatialEco::convexHull(poly_points, alpha = 100000, 
+#'                             sp=FALSE)
+#'  plot(sf::st_geometry(a), cex=1.5, col="red") 
+#'     plot(sf::st_geometry(meuse_poly), col="black", add=TRUE)
+#'}
 #'
 #' @export convexHull
 convexHull <- function(x, alpha = 250000, sp = TRUE)	{
