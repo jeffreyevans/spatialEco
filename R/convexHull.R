@@ -44,7 +44,7 @@
 #' @export convexHull
 convexHull <- function(x, alpha = 250000)	{
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
-  if (!inherits(x, "SpatialPointsDataFrame") |  !inherits(x, "SpatialPoints") ) 
+  if (!inherits(x, "SpatialPointsDataFrame") & !inherits(x, "SpatialPoints") ) 
       stop(deparse(substitute(x)), " x must be a sp Points object")
     a <- alphahull::ashape(sp::coordinates(x), alpha = alpha)
     l <- list()
