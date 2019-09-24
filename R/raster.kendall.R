@@ -2,7 +2,7 @@
 #' @description Calculates a nonparametric statistic for a monotonic trend based on the Kendall 
 #'                tau statistic and the Theil-Sen slope modification
 #'
-#' @param x                A rasterStack object with at least 5 layers
+#' @param x                A rasterStack object with at least 8 layers
 #' @param tau              (FALSE/TRUE) return a raster with the pixel wise tau values
 #' @param intercept        (FALSE/TRUE) return a raster with the pixel wise intercept values 
 #' @param p.value          (FALSE/TRUE) return a raster with the pixel wise p.values
@@ -61,14 +61,12 @@
 #' @export raster.kendall
 raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,    
                            z.value = FALSE, confidence = FALSE,  
-						   autocorrelation = FALSE, ...) {
-	knames <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
+			   autocorrelation = FALSE, ...) {
 	if(!any(class(x) %in% c("RasterBrick","RasterStack")))
 	  stop("x is not a raster stack or brick object")
-    
-	if( raster::nlayers(x) < 5) 
-	  stop("Too few layers (n<5) to calculate a trend")
-	
+	if( raster::nlayers(x) < 8) 
+	  stop("Too few layers (n < 8) to calculate a trend")
+      knames <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
 	if(autocorrelation == TRUE) {
 	  knames <- knames[-c(3,6,7)]					   
       message("Please note that with autocorrelation correction only the:
@@ -78,10 +76,10 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
 	}
 	a <- c(tau = tau, intercept = intercept,  p.value = p.value,    
               z.value = z.value, confidence = confidence,  
-		      prewhiten = autocorrelation)			  
+		        prewhiten = autocorrelation)			  
 	  message(cat("Outputting:", knames, "\n"))
     tslp <- function(x) { kendall(x, tau = a[1], intercept = a[2],  
-	                              p.value = a[3], z.value = a[4], 
-								  confidence = a[5], prewhiten = a[6]) }
+	                          p.value = a[3], z.value = a[4], 
+				  confidence = a[5], prewhiten = a[6]) }
   return( raster::overlay(x, fun = tslp, ...) )  
 }
