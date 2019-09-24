@@ -55,7 +55,6 @@
 #'	  	  	  
 #' }
 #'
-#' @seealso \code{\link[EnvStats]{kendallTrendTest}} for model details
 #' @seealso \code{\link[raster]{overlay}} for available ... arguments
 #'
 #' @export raster.kendall
