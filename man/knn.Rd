@@ -27,8 +27,9 @@ Find K nearest neighbors for two spatial objects
 }
 \note{
 Finds nearest neighbor in x based on y and returns rownames, index and distance,
-       If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
-       columns need to be ordered [X,Y].
+      If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
+      columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
+      search radius is imposed. If no neighbor is found, a neighbor is not returned
 }
 \examples{
 library(sp)

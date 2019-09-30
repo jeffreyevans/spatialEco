@@ -11,8 +11,9 @@
 #' @return A data.frame with row indexes (optional), rownames, ids (optional) and distance of k
 #'
 #' @note Finds nearest neighbor in x based on y and returns rownames, index and distance,
-#'        If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
-#'        columns need to be ordered [X,Y].  
+#'       If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
+#'       columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
+#'       search radius is imposed. If no neighbor is found, a neighbor is not returned  
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
