@@ -15,11 +15,11 @@
 #' \itemize{
 #'   \item {raster layer 1} {Theil-Sen slope, always returned}
 #'   \item {raster layer 2} {Kendall's tau two-sided test, if tau TRUE}
-#'   \item {raster layer 3} {intercept for trend if intercept TRUE, not if prewhitened}
+#'   \item {raster layer 3} {intercept for trend if intercept TRUE, not if autocorrelation}
 #'   \item {raster layer 4} {p value for trend fit if p.value TRUE}
 #'   \item {raster layer 5} {Z value for trend fit if z.value TRUE}
-#'   \item {raster layer 6} {lower confidence level at 95-pct if confidence TRUE, not if prewhitened}
-#'   \item {raster layer 7} {upper confidence level at 95-pct if confidence TRUE, not if prewhitened}
+#'   \item {raster layer 6} {lower confidence level at 95-pct if confidence TRUE, not if autocorrelation}
+#'   \item {raster layer 7} {upper confidence level at 95-pct if confidence TRUE, not if autocorrelation}
 #' }
 #'
 #' @details This function implements Kendall's nonparametric test for a monotonic trend using the 
@@ -42,17 +42,17 @@
 #'
 #' @examples
 #' \dontrun{
-#'  library(raster)
-#'  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
-#'                  system.file("external/rlogo.grd", package="raster"),
-#'  			      system.file("external/rlogo.grd", package="raster")) 
-#'  
-#'  # Calculate trend slope with p-value and confidence level(s)
-#'  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE,
-#'                               z.value = TRUE, confidence = TRUE)
-#'    names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
-#'      plot(logo.trend)
-#'	  	  	  
+  library(raster)
+  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
+                  system.file("external/rlogo.grd", package="raster"),
+  			      system.file("external/rlogo.grd", package="raster")) 
+  
+  # Calculate trend slope with p-value and confidence level(s)
+  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE,
+                               z.value = TRUE, confidence = TRUE, autocorrelation = TRUE)
+    names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
+      plot(logo.trend)
+	  	  	  
 #' }
 #'
 #' @seealso \code{\link[raster]{overlay}} for available ... arguments
@@ -60,12 +60,12 @@
 #' @export raster.kendall
 raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,    
                            z.value = FALSE, confidence = FALSE,  
-			   autocorrelation = FALSE, ...) {
+						   autocorrelation = FALSE, ...) {
+	knames <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
 	if(!any(class(x) %in% c("RasterBrick","RasterStack")))
 	  stop("x is not a raster stack or brick object")
 	if( raster::nlayers(x) < 8) 
 	  stop("Too few layers (n < 8) to calculate a trend")
-      knames <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
 	if(autocorrelation == TRUE) {
 	  knames <- knames[-c(3,6,7)]					   
       message("Please note that with autocorrelation correction only the:
@@ -75,10 +75,10 @@ raster.kendall <- function(x, tau = FALSE, intercept = FALSE,  p.value = FALSE,
 	}
 	a <- c(tau = tau, intercept = intercept,  p.value = p.value,    
               z.value = z.value, confidence = confidence,  
-		        prewhiten = autocorrelation)			  
+		      prewhiten = autocorrelation)			  
 	  message(cat("Outputting:", knames, "\n"))
     tslp <- function(x) { kendall(x, tau = a[1], intercept = a[2],  
-	                          p.value = a[3], z.value = a[4], 
-				  confidence = a[5], prewhiten = a[6]) }
+	                 p.value = a[3], z.value = a[4], 
+			confidence = a[5], prewhiten = a[6]) }
   return( raster::overlay(x, fun = tslp, ...) )  
 }
