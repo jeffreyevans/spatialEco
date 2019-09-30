@@ -66,9 +66,9 @@ convexHull <- function(x, alpha = 250000, sp = TRUE)	{
        	  !inherits(x, "sf") &
 		    !inherits(x, "matrix")) 
     stop(deparse(substitute(x)), " x must be a spatial (sp, df) or matrix object")
-  if(inherits(x, "sf")) { xy <- as.data.frame(st_coordinates(x)) }
+  if(inherits(x, "sf")) { xy <- as.data.frame(sf::st_coordinates(x)) }
   if(inherits(x, "SpatialPointsDataFrame") &  inherits(x, "SpatialPoints") ) {
-    xy <- as.data.frame(coordinates(x))
+    xy <- as.data.frame(sp::coordinates(x))
   }
   if(inherits(x, "matrix")) {
     xy <- as.data.frame(x)

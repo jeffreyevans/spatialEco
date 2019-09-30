@@ -125,5 +125,5 @@ spatialEco_1.2-1
 =================
 * Added function "parse.bits" for pulling value(s) for a bit(s) based on integer value 
 * Added function "annulus.matrix" creates a [0,1] matrix based on defined annulus parameters.  
-* Bug fix to "trasp" Missing parenthesis, thanks to Monika for reporting this mistake.
+* Bug fix to "trasp" Missing parenthesis, thanks to Monika Anna Tomaszewska for reporting this mistake.
   

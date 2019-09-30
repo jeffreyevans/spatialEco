@@ -42,17 +42,17 @@
 #'
 #' @examples
 #' \dontrun{
-  library(raster)
-  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
-                  system.file("external/rlogo.grd", package="raster"),
-  			      system.file("external/rlogo.grd", package="raster")) 
-  
-  # Calculate trend slope with p-value and confidence level(s)
-  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE,
-                               z.value = TRUE, confidence = TRUE, autocorrelation = TRUE)
-    names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
-      plot(logo.trend)
-	  	  	  
+#'  library(raster)
+#'  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
+#'                  system.file("external/rlogo.grd", package="raster"),
+#'  			      system.file("external/rlogo.grd", package="raster")) 
+#'  
+#'  # Calculate trend slope with p-value and confidence level(s)
+#'  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE,
+#'                               z.value = TRUE, confidence = TRUE, autocorrelation = TRUE)
+#'    names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
+#'      plot(logo.trend)
+#'	  	  	  
 #' }
 #'
 #' @seealso \code{\link[raster]{overlay}} for available ... arguments

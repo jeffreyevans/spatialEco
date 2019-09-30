@@ -8,7 +8,7 @@ raster.kendall(x, tau = FALSE, intercept = FALSE, p.value = FALSE,
   z.value = FALSE, confidence = FALSE, autocorrelation = FALSE, ...)
 }
 \arguments{
-\item{x}{A rasterStack object with at least 5 layers}
+\item{x}{A rasterStack object with at least 8 layers}
 
 \item{tau}{(FALSE/TRUE) return a raster with the pixel wise tau values}
 
@@ -29,11 +29,11 @@ Depending on arguments, a raster layer or rasterBrick object containing:
 \itemize{
   \item {raster layer 1} {Theil-Sen slope, always returned}
   \item {raster layer 2} {Kendall's tau two-sided test, if tau TRUE}
-  \item {raster layer 3} {intercept for trend if intercept TRUE, not if prewhitened}
+  \item {raster layer 3} {intercept for trend if intercept TRUE, not if autocorrelation}
   \item {raster layer 4} {p value for trend fit if p.value TRUE}
   \item {raster layer 5} {Z value for trend fit if z.value TRUE}
-  \item {raster layer 6} {lower confidence level at 95-pct if confidence TRUE, not if prewhitened}
-  \item {raster layer 7} {upper confidence level at 95-pct if confidence TRUE, not if prewhitened}
+  \item {raster layer 6} {lower confidence level at 95-pct if confidence TRUE, not if autocorrelation}
+  \item {raster layer 7} {upper confidence level at 95-pct if confidence TRUE, not if autocorrelation}
 }
 }
 \description{
@@ -57,7 +57,7 @@ This function implements Kendall's nonparametric test for a monotonic trend usin
  
  # Calculate trend slope with p-value and confidence level(s)
  logo.trend <- raster.kendall(r.logo, tau = TRUE, intercept = TRUE,  p.value = TRUE,
-                              z.value = TRUE, confidence = TRUE)
+                              z.value = TRUE, confidence = TRUE, autocorrelation = TRUE)
    names(logo.trend) <- c("slope","tau", "intercept", "p.value", "z.value", "LCI", "UCI")
      plot(logo.trend)
   	  	  
@@ -78,8 +78,6 @@ Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate the in
               of serial correlation on the Mann-Kendall test. Water Resources Research, 38(6):41-47.
 }
 \seealso{
-\code{\link[EnvStats]{kendallTrendTest}} for model details
-
 \code{\link[raster]{overlay}} for available ... arguments
 }
 \author{

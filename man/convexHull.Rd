@@ -4,12 +4,14 @@
 \alias{convexHull}
 \title{Alpha Convex Hull}
 \usage{
-convexHull(x, alpha = 250000)
+convexHull(x, alpha = 250000, sp = TRUE)
 }
 \arguments{
-\item{x}{SpatialPoints or SpatialPointsDataFrame object}
+\item{x}{SpatialPoints, SpatialPointsDataFrame, sf or matrix object representing [x,y] coordinates}
 
 \item{alpha}{Alpha parameter for adjusting boundary tension}
+
+\item{sp}{Output an sp SpatialPolygonsDataFrame object (TRUE/FALSE)}
 }
 \value{
 SpatialPolygons object
@@ -22,23 +24,20 @@ This method provides flexibility over traditional convex functions in that the t
       can be adjusted to relax or increase tension between boundary-edge points
       Due to licensing constraints associated with the alphahull package, this function is not available 
       in the CRAN release. The function must be called from the package NAMESPACE using: 
-      spatialEco:::convexHull
+      spatialEco:::convexHull. If sp = FALSE an sf polygon class object will be returned
 }
 \examples{
- library(sp)
+library(sp)
+library(sf)
+library(dplyr)
+
+#### points example
  data(meuse)
   coordinates(meuse) = ~x+y
  a <- convexHull(meuse, alpha=100000)
    plot(a)
      points(meuse, pch=19)
- 
- # Convert SpatialLinesDataFrame to SpatialPolygonsDataFrame
- library(sf)
- a <- sf::st_as_sf(a) 
- a <- sf::st_polygonize(a)
- class( a <- as(a, "Spatial") )
-   plot(a)
- 
+
  # Test multiple alpha values
   par(mfcol=c(2,2))
     for (a in c(500, 1500, 5000, 100000)) {
@@ -47,6 +46,26 @@ This method provides flexibility over traditional convex functions in that the t
        points(meuse, pch=19)
          title( paste0("alpha=", a))		 
     }
+
+\dontrun{
+#### Polygon example
+data(meuse)
+  coordinates(meuse) = ~x+y
+  meuse <- as(meuse, "sf")
+  meuse_poly <- st_buffer(meuse, dist = meuse$elev*15)
+
+# Create [x,y] points representing polygon boundaries  
+poly_points <- sf::st_segmentize(meuse_poly, dfMaxLength = 5) \%>\% 
+  sf::st_coordinates() \%>\% 
+  as.data.frame() \%>\% 
+  dplyr::select(X, Y) \%>\% 
+  sf::st_as_sf(coords = c("X", "Y"))  
+  			
+a <- spatialEco::convexHull(poly_points, alpha = 100000, 
+                            sp=FALSE)
+ plot(sf::st_geometry(a), cex=1.5, col="red") 
+    plot(sf::st_geometry(meuse_poly), col="black", add=TRUE)
+}
 
 }
 \references{

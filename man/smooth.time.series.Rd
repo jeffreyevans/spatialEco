@@ -7,7 +7,7 @@
 smooth.time.series(x, f = 0.8, smooth.data = FALSE, ...)
 }
 \arguments{
-\item{x}{A raster stack or brick class object}
+\item{x}{A raster stack/brick or sp object with a @data slot}
 
 \item{f}{Smoothing parameter (see loess span argument)}
 
@@ -16,7 +16,7 @@ smooth.time.series(x, f = 0.8, smooth.data = FALSE, ...)
 \item{...}{Additional arguments passed to raster calc (for writing results to disk)}
 }
 \value{
-A raster stack or brick object with imputed NA values or smoothed data.
+A raster stack or brick pr data.frame object with imputed NA values or smoothed data.
 }
 \description{
 Smooths pixel-level data in raster time-series and can impute missing (NA) values.
@@ -30,13 +30,20 @@ the function can be used to impute missing pixel data (NA) in raster time-series
 }
 \examples{
 \dontrun{
- # fill NA values
- lai.new <- smooth.time.series(lai)  
+ random.raster <- function(r=50, c=50, l=10, min=0, max=1){ 
+   do.call(stack, replicate(l, raster(matrix(runif(r*c, min, max),r,c))))
+ }
+ r <- random.raster()
 
- # Smooth time-series with a relaxed smoothing parameter
- lai.smooth <- smooth.time.series(lai, f = 0.2, smooth.data = TRUE)  
+ # Smooth time-series 
+ r.smooth <- smooth.time.series(r, f = 0.2, smooth.data = TRUE)  
+ 
+ # sp SpatialPixelsDataFrame example
+ r <- as(r, "SpatialPixelsDataFrame")
+ r@data <- smooth.time.series(r, f = 0.2, smooth.data = TRUE)
+ r <- stack(r) # coerce back to raster stack object
+
 }
-
 }
 \seealso{
 \code{\link[stats]{loess}} for details on the loess regression

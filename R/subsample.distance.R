@@ -6,8 +6,9 @@
 #' @param d             Minimum sample distance
 #' @param d.max         Maximum sample distance (not used unless specified 
 #' @param replacement  (FALSE/TRUE) sample with or without replacement
-#' @param latlong      (FALSE/TRUE) is the data in a geographic projection (latitude/longitude)
+#' @param latlong      (FALSE/TRUE) is the data in a geographic projection (latitude, longitude)
 #' @param trace        (FALSE/TRUE) Print min and max sample distances
+#' @param ...           Not used
 #' 
 #' @return A sp spatial object, of the same class as x containing the random sub-samples 
 #'
@@ -16,20 +17,20 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#'   library(sp)
-#'   data(meuse)
-#'     coordinates(meuse) <- ~ x+y
-#'   
-#'   # Subsample with a 500m minimum sample spread 
-#'   sub.meuse <- subsample.distance(meuse, n = 10, d = 500, trace = TRUE)  
-#'     plot(meuse,pch=19, main="min dist = 500")
-#'       points(sub.meuse, pch=19, col="red") 
-#'   
-#'   # Check distances	
-#'   dm <- spDists(sub.meuse)
-#'     diag(dm) <- NA
-#'   cat("\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
-#'   cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")  
+#'   # library(sp)
+#'   # data(meuse)
+#'   #   coordinates(meuse) <- ~ x+y
+#'   # 
+#'   # # Subsample with a 500m minimum sample spread 
+#'   # sub.meuse <- subsample.distance(meuse, n = 10, d = 500, trace = TRUE)  
+#'   #   plot(meuse, pch=19, main="min dist = 500")
+#'   #     points(sub.meuse, pch=19, col="red") 
+#'   # 
+#'   # # Check distances	
+#'   # dm <- spDists(sub.meuse)
+#'   #   diag(dm) <- NA
+#'   # cat("\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
+#'   # cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")  
 #'     
 #' \dontrun{
 #'   # Subsample with a 500m minimum and 3500m maximum sample spread   
@@ -44,9 +45,9 @@
 #'   cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")    
 #' }
 #' 
-#' @export subsample.distance	
+#' @export
 subsample.distance <- function(x, n, d, d.max = NULL, replacement = FALSE,
-                               latlong = FALSE, trace = FALSE) {
+                               latlong = FALSE, trace = FALSE, ...) {
   if(missing(x)) stop("Must define a spatial object")
     if(missing(d)) stop("Must define minimum separation distance")
   if(!any(class(x) == c("SpatialPointsDataFrame", "SpatialPolygonsDataFrame")) )
