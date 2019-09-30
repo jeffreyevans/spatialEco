@@ -23,5 +23,5 @@
 trasp <- function(x, ...) {  
   if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
     asp <- raster::terrain(x, out='aspect', unit='degrees') 
-    return( raster::calc(asp, fun=function(x) { 1 - cos( (3.142/180)  *(x - 30) ) / 2 }, ... ) )
+    return( raster::calc(asp, fun=function(x) { (1 - cos( (3.142/180)  *(x - 30)) ) / 2 }, ... ) )
 }  

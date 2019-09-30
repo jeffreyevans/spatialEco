@@ -27,7 +27,7 @@
 insert.values <- function(x, value, index) {
   if(length(value) == 1) value = rep(value, length(index) )
   if(length(value) < length(index) ) 
-    stop("length of repacement does not match index")
+    stop("length of replacement does not match index")
   z <- numeric(length(x) + length(index))
   z[index] <- value
   z[-index] <- x
