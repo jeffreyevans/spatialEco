@@ -95,6 +95,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                    component distributions. Divergence is calculated as: int [f(x) (log f(x) - log g(x)) dx]
                    for distributions with densities f() and g().       
     
+    knn - returns ids, rownames and distance of nearest neighbors in two (or single) spatial objects. 
+          Optional radius distance constraint
+   
     land.metrics - Calculates a variety of landscape metrics, on binary rasters, for polygons or points with a buffer 
                   distance. This is similar to the moving window in Fragstats but, uses either a buffer for each 
                   point or a zonal approach with polygons, to derive local metrics. 
