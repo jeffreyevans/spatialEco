@@ -2,3 +2,4 @@ cran-comments.md
 README.md
 LICENSE
 .git
+^CRAN-RELEASE$
