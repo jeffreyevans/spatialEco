@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.2-0, developement 1.2-1) 
+# spatialEco (CRAN 1.2-1, developement 1.2-2) 
 
 [![CRAN
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -13,7 +13,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-# Available functions in spatialEco 1.2-1 are:
+# Available functions in spatialEco 1.2-2 are:
 
 
     annulus.matrix - Creates a 0,1 matrix based on defined annulus parameters, can be used as a window
@@ -118,6 +118,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     morans.plot - Autocorrelation plot 
     
     nni - Calculates the nearest neighbor index (NNI) as a measure of clustering or dispersal
+    
+    nth.vlaue - Returns the Nth (smallest/largest) values in a numeric vector
     
     oli.aws - Download Landsat 8 - OLI from AWS.   
     
