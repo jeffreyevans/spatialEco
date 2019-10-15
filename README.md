@@ -96,7 +96,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                    for distributions with densities f() and g().       
     
     knn - returns ids, rownames and distance of nearest neighbors in two (or single) spatial objects. 
-          Optional radius distance constraint
+          Optional radius distance constraint. Added optional covariates (weights).
    
     land.metrics - Calculates a variety of landscape metrics, on binary rasters, for polygons or points with a buffer 
                   distance. This is similar to the moving window in Fragstats but, uses either a buffer for each 
@@ -212,7 +212,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     sobal - Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window  
     
-    sp.kde - A weighted or un-weighted kernel density estimate
+    spatial.select - Performs a spatial select (feature subset) similar to ArcGIS
+		
+	sp.kde - A weighted or un-weighted kernel density estimate
     
     sp.na.omit  - Removes row or column NA's in sp object. The standard R na.omit function will not propagate through 
                  all slots of an sp class object. This function removes the spatial objects, in all slots, corresponding 
