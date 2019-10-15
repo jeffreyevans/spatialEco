@@ -4,7 +4,8 @@
 \alias{knn}
 \title{Plot Spatial K nearest neighbor}
 \usage{
-knn(y, x, k = 1, d = NULL, ids = NULL, indexes = FALSE)
+knn(y, x, k = 1, d = NULL, ids = NULL, weights.y = NULL,
+  weights.x = NULL, indexes = FALSE)
 }
 \arguments{
 \item{y}{Spatial points or polygons object or coordinates matrix}
@@ -16,6 +17,10 @@ knn(y, x, k = 1, d = NULL, ids = NULL, indexes = FALSE)
 \item{d}{Optional search radius}
 
 \item{ids}{Optional column of ID's in x}
+
+\item{weights.y}{A vector or matrix representing covariates of y}
+
+\item{weights.x}{A vector or matrix representing covariates of x}
 
 \item{indexes}{(FALSE/TRUE) Return row indexes of x neighbors}
 }
@@ -30,26 +35,39 @@ Finds nearest neighbor in x based on y and returns rownames, index and distance,
       If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
       columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
       search radius is imposed. If no neighbor is found, a neighbor is not returned
+
+You can specify weights to act as covariates for x and y. The vectors or matrices
+      must match row dimensions with x and y as well as columns matching between weights.
+      In other words, the covariates must match and be numeric.
 }
 \examples{
-library(sp)
-data(meuse)
-  coordinates(meuse) <- ~x+y
+ library(sp)
+ data(meuse)
+   coordinates(meuse) <- ~x+y
+ 
+ idx <- sample(1:nrow(meuse), 10) 
+   pts <- meuse[idx,]
+   meuse <- meuse[-idx,]
+     meuse$IDS <- 1:nrow(meuse)
+ 
+ # Find 2 neighbors in meuse
+ ( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE) )
+    plot(pts, pch=19, main="KNN")
+      points(meuse[nn[,1],], pch=19, col="red")
 
-idx <- sample(1:nrow(meuse), 10) 
-  pts <- meuse[idx,]
-  meuse <- meuse[-idx,]
-    meuse$IDS <- 1:nrow(meuse)
+# Using covariates (weights)
+wx = as.matrix(meuse@data[,1:3])
+wy = as.matrix(pts@data[,1:3])
 
-# Find 2 neighbors in meuse
-( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE) )
-   plot(pts, pch=19, main="KNN")
-     points(meuse[nn[,1],], pch=19, col="red")
-
-# Using coordinate matrices
-y <- coordinates(pts)
-x <- coordinates(meuse)
-knn(y, x, k=2)
+( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE,
+            weights.y=wy, weights.x=wx) )
+    plot(pts, pch=19, main="KNN")
+      points(meuse[nn[,1],], pch=19, col="red")
+	  
+ # Using coordinate matrices
+ y <- coordinates(pts)
+ x <- coordinates(meuse)
+ knn(y, x, k=2)
   
 }
 \seealso{

@@ -1,12 +1,14 @@
 #' @title Plot Spatial K nearest neighbor
 #' @description Find K nearest neighbors for two spatial objects
 #'
-#' @param y        Spatial points or polygons object or coordinates matrix
-#' @param x        Spatial points or polygons object or coordinates matrix
-#' @param k        Number of neighbors
-#' @param d        Optional search radius
-#' @param ids      Optional column of ID's in x
-#' @param indexes  (FALSE/TRUE) Return row indexes of x neighbors
+#' @param y          Spatial points or polygons object or coordinates matrix
+#' @param x          Spatial points or polygons object or coordinates matrix
+#' @param k          Number of neighbors
+#' @param d          Optional search radius
+#' @param ids        Optional column of ID's in x
+#' @param weights.y  A vector or matrix representing covariates of y
+#' @param weights.x  A vector or matrix representing covariates of x
+#' @param indexes    (FALSE/TRUE) Return row indexes of x neighbors
 #'
 #' @return A data.frame with row indexes (optional), rownames, ids (optional) and distance of k
 #'
@@ -15,32 +17,47 @@
 #'       columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
 #'       search radius is imposed. If no neighbor is found, a neighbor is not returned  
 #'
+#' @note You can specify weights to act as covariates for x and y. The vectors or matrices
+#'       must match row dimensions with x and y as well as columns matching between weights.
+#'       In other words, the covariates must match and be numeric.   
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples 
-#' library(sp)
-#' data(meuse)
-#'   coordinates(meuse) <- ~x+y
+#'  library(sp)
+#'  data(meuse)
+#'    coordinates(meuse) <- ~x+y
+#'  
+#'  idx <- sample(1:nrow(meuse), 10) 
+#'    pts <- meuse[idx,]
+#'    meuse <- meuse[-idx,]
+#'      meuse$IDS <- 1:nrow(meuse)
+#'  
+#'  # Find 2 neighbors in meuse
+#'  ( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE) )
+#'     plot(pts, pch=19, main="KNN")
+#'       points(meuse[nn[,1],], pch=19, col="red")
 #' 
-#' idx <- sample(1:nrow(meuse), 10) 
-#'   pts <- meuse[idx,]
-#'   meuse <- meuse[-idx,]
-#'     meuse$IDS <- 1:nrow(meuse)
+#' # Using covariates (weights)
+#' wx = as.matrix(meuse@data[,1:3])
+#' wy = as.matrix(pts@data[,1:3])
 #' 
-#' # Find 2 neighbors in meuse
-#' ( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE) )
-#'    plot(pts, pch=19, main="KNN")
-#'      points(meuse[nn[,1],], pch=19, col="red")
-#'
-#' # Using coordinate matrices
-#' y <- coordinates(pts)
-#' x <- coordinates(meuse)
-#' knn(y, x, k=2)
+#' ( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE,
+#'             weights.y=wy, weights.x=wx) )
+#'     plot(pts, pch=19, main="KNN")
+#'       points(meuse[nn[,1],], pch=19, col="red")
+#' 	  
+#'  # Using coordinate matrices
+#'  y <- coordinates(pts)
+#'  x <- coordinates(meuse)
+#'  knn(y, x, k=2)
 #'	  
 #' @seealso \code{\link[RANN]{nn2}} for details on search algorithm 
 #'
 #' @export knn
-knn <- function(y, x, k = 1, d = NULL, ids = NULL, indexes = FALSE) { 
+knn <- function(y, x, k = 1, d = NULL, ids = NULL, 
+                weights.y = NULL, weights.x = NULL,
+                indexes = FALSE) { 
   if(!is.null(ids)) { 
     if(!ids %in% names(x)) 
       stop("ids do not exist in data")
@@ -66,7 +83,30 @@ knn <- function(y, x, k = 1, d = NULL, ids = NULL, indexes = FALSE) {
 	if(ncol(y) > 2)
       stop("coordinate matrix has too many columns")
     ymat <- y	  
-  }
+  } 
+  
+  if(any(!is.null(weights.x), !is.null(weights.y))) {	
+    if(any(is.null(weights.x), is.null(weights.y)))
+      stop("Both x and y weights must be defined and represent the same covariates")
+    if(is.vector(weights.x)) {	
+	  weights.x <- matrix(weights.x, byrow=TRUE)
+    }	
+    if(is.vector(weights.x)) {	
+	  weights.x <- matrix(weights.x, byrow=TRUE)
+    }
+    if(any(apply(xmat,2,is.numeric) == FALSE))
+	  stop("weights must be numeric")
+    if(any(apply(ymat,2,is.numeric) == FALSE))
+	  stop("weights must be numeric")	
+    if(nrow(weights.x) != nrow(xmat) )
+	  stop("Row dimensions of x weights do not match")
+	if(nrow(weights.y) != nrow(ymat) )
+	  stop("Row dimensions of x weights do not match")
+  	if(ncol(weights.y) != ncol(weights.y) )
+	  stop("Weights of x and y must represent the same covariates")	
+    xmat <- cbind(xmat, as.matrix(weights.x))
+    ymat <- cbind(ymat, as.matrix(weights.y))	
+  }  
   fun.args <- list(data = xmat, 
                    query = ymat,
                    treetype = "kd",

@@ -128,3 +128,7 @@ spatialEco_1.2-1
 * Bug fix to "trasp" Missing parenthesis, thanks to Monika Anna Tomaszewska for reporting this mistake.
 * Added function "knn" to find nearest neighbors between two spatial objects, with optional search radius
 
+spatialEco_1.2-2
+=================
+* Added function "spatial.select" to perform a selection (subset) of a feature class based on a polygon(s) feature
+  
