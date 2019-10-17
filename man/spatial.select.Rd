@@ -4,30 +4,35 @@
 \alias{spatial.select}
 \title{Spatial Select}
 \usage{
-spatial.select(x, y, distance = NULL, within = FALSE)
+spatial.select(x, y, distance = NULL, predicate = c("intersect",
+  "contains", "covers", "touches", "proximity"))
 }
 \arguments{
-\item{x}{A SpatialPolygonsDataFrame object that defines the spatial query}
+\item{x}{An sp or sf polygon(s) object that defines the spatial query}
 
-\item{y}{A sp feature class that will be subset by the query of x}
+\item{y}{A sp or sf feature class that will be subset by the query of x}
 
 \item{distance}{A proximity distance of features to select (within distance)}
 
-\item{within}{Select polygons completely within (TRUE) or partial within (FALSE)}
+\item{predicate}{Spatial predicate for intersection}
 }
 \value{
 An sp object representing a subset of y based on the spatial query of x
 }
 \description{
-Performs a spatial select (feature subset) between two feature classes
+Performs a spatial select (feature subset) between a polygon(s) and other feature class
 }
 \note{
 Performs a spatial select of features based on an overlay of a polygon (x),   
       which can represent multiple features, and a polygon, point or line feature 
       classes (y). User can specify a partial or complete intersection, using within 
-      argument, or within a distance, using distance argument, in relation to the  
-      query polygon. This function is similar to ArcGIS spatial select. Please note
+      argument, or within a distance, using distance argument, predicated on the  
+      query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
       that for point to point neighbor selections use the knn function.
+
+Valid spatial predicates include: intersect, touches, covers, contains and 
+      proximity. Please see \url{https://en.wikipedia.org/wiki/DE-9IM/} for detailed 
+      information on the DE-9IM topology model.
 }
 \examples{
 library(raster)
@@ -41,53 +46,57 @@ p <- raster(extent(spolys), res=800)
   p[] <- runif(ncell(p)) * 10
     p <- rasterToPolygons(p, fun=function(x){x > 6})
 	
-#### On polygons	
-# Intersecting but not contained within
-sub.int <- spatial.select(p, spolys, within = FALSE)
+#### On polygons	 
+sub.int <- spatial.select(p, spolys, predicate = "intersect")
+sub.contains <- spatial.select(p, spolys, predicate = "contains")
+sub.cov <- spatial.select(p, spolys, predicate = "covers")
+sub.touches <- spatial.select(p, spolys, predicate = "touches")
+sub.prox <- spatial.select(p, spolys, distance=100, predicate = "proximity")
 
-# Contained within
-sub.contained <- spatial.select(p, spolys, within = TRUE)
-
-# Within 100m distance
-sub.dist <- spatial.select(p, spolys, distance=100)
-
-par(mfrow=c(2,2))
+par(mfrow=c(2,3))
   plot(spolys, main="all data")
+    plot(p, add=TRUE)  
+  plot(sub.int, main="intersects")
     plot(p, add=TRUE) 
-  plot(sub.int, main="Intersecting but not contained within")
+  plot(sub.contains, main="contains")
     plot(p, add=TRUE) 
-  plot(sub.contained, main="Contained within")
+  plot(sub.cov, main="covers")
+    plot(p, add=TRUE) 	 
+  plot(sub.touches, main="touches")
     plot(p, add=TRUE) 	
-  plot(sub.dist, main="Within 100m distance")
+  plot(sub.prox, main="Proximity 100m distance")
     plot(p, add=TRUE) 
 
-#### On points
-# Intersecting but not contained within
-sub.int <- spatial.select(p, meuse, within = FALSE)
-
-# Contained within (with points, same as within = FALSE)
-sub.contained <- spatial.select(p, meuse, within = TRUE)
-
-# Within 100m distance
-sub.dist <- spatial.select(p, meuse, distance=300)
+#### On points 
+#### note; touches is not relevant for points and intersect/contains/covers 
+####       yield the same results  
+sub.int <- spatial.select(p, meuse, predicate = "intersect")
+sub.contains <- spatial.select(p, meuse, predicate = "contains")
+sub.prox <- spatial.select(p, meuse, distance=200, predicate = "proximity")
 
 par(mfrow=c(2,2))
   plot(meuse, main="all data", pch=20)
+    plot(p, add=TRUE)  
+  plot(sub.int, main="intersects", pch=20)
     plot(p, add=TRUE) 
-  plot(sub.int, main="Intersecting but not contained within", pch=20)
+  plot(sub.contains, main="contains", pch=20)
     plot(p, add=TRUE) 
-  plot(sub.contained, main="Contained within", pch=20)
-    plot(p, add=TRUE) 	
-  plot(sub.dist, main="Within 300m distance", pch=20)
+  plot(sub.prox, main="Proximity 200m distance", pch=20)
     plot(p, add=TRUE) 
 
 }
 \seealso{
-\code{\link[rgeos]{gIntersects}} for details on behavior of within = FALSE
+\code{\link[rgeos]{gIntersects}} for details on intersect predicate
 
-\code{\link[rgeos]{gContains}} for details on behavior of within = TRUE
+\code{\link[rgeos]{gContains}} for details on contain predicate
 
-\code{\link[rgeos]{gWithinDistance}} for details on distance intersection
+\code{\link[rgeos]{gCovers}} for details on covers predicate
+
+\code{\link[rgeos]{gTouches}} for details on touches predicate
+
+\code{\link[rgeos]{gWithinDistance}} for details on proximity predicate
+
+\url{https://en.wikipedia.org/wiki/DE-9IM/} for details on DE-9IM topology model
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

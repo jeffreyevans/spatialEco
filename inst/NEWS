@@ -131,4 +131,4 @@ spatialEco_1.2-1
 spatialEco_1.2-2
 =================
 * Added function "spatial.select" to perform a selection (subset) of a feature class based on a polygon(s) feature
-  
+* Feature Enhancement "knn" expanded to accept "weights" or covariates for multivariate case

@@ -48,9 +48,9 @@ download.prism <- function(data.type, date.range, time.step = "monthly", downloa
     startdate <- as.Date(date.range[1])
     enddate <- as.Date(date.range[2])
     if (format(startdate, "%Y") %in% avl.years == FALSE) 
-        stop("Start year is not avaliable")
+        stop("Start year is not available")
     if (format(enddate, "%Y") %in% avl.years == FALSE) 
-        stop("End year is not avaliable")
+        stop("End year is not available")
     getContent <- function(dirs) {
         urls <- paste(dirs, "/", sep = "")
         fls <- strsplit(RCurl::getURL(urls, dirlistonly = TRUE, 
