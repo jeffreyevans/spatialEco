@@ -41,7 +41,7 @@
 #'  plot(cadmium.kde)
 #'    points(meuse, pch=19)
 #'   			
-#'  # Weighted KDE using cadmium raster object to define grid
+#'  # Weighted KDE using cadmium and raster object to define grid
 #'  r <- raster::raster(raster::extent(c(178605, 181390, 329714, 333611)),
 #'                      nrow=104, ncol=78)
 #'    r[] <- rep(1,ncell(r))
@@ -51,7 +51,7 @@
 #'  plot(cadmium.kde)
 #'    points(meuse, pch=19)
 #'   			
-#'  # Weighted KDE using cadmium SpatialPixelsDataFrame object to define grid
+#'  # Weighted KDE using cadmium and SpatialPixelsDataFrame object to define grid
 #'  data(meuse.grid)
 #'  coordinates(meuse.grid) = ~x+y
 #'  proj4string(meuse.grid) <- CRS("+init=epsg:28992")
