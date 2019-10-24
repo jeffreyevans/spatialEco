@@ -50,59 +50,56 @@
 #' }
 #'
 #' @export
-sp.kde <- function(x, y, bw, newdata, n, standardize = FALSE, 
-                  scale.factor, mask = TRUE) {
+sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, n = NULL,  
+                   standardize = FALSE, scale.factor, mask = TRUE) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
-  if(missing(bw)){ 
+  if(is.null(bw)){ 
     bw <- c(MASS::bandwidth.nrd(sp::coordinates(x)[,1]), 
 	        MASS::bandwidth.nrd(sp::coordinates(x)[,2]))
 	  cat("Using", bw, "for bandwidth", "\n")
   } else {
     bw <- c(bw,bw)
   } 
-  check.newdata <- missing(newdata)
-    if (check.newdata) { 
+    if(is.null(newdata)) { 
 	  ext <- as.vector(raster::extent(x)) 
-	    if(missing(n)) {
+	    if(is.null(n)) {
 		  newdata <- raster::raster(raster::extent(ext))
           n <- c(raster::nrow(newdata), raster::ncol(newdata))		
 		  warning(paste0("n not defined, defaulting to ", raster::ncell(newdata), " values"))
         } else {
 		  newdata <- raster::raster(raster::extent(ext), nrow=n/2, ncol=n/2)
 		  n = c(raster::nrow(newdata),raster::ncol(newdata))
-		}
-	}
-    if(!check.newdata) {
-        if( class(newdata) == "numeric") {
-          if(length(newdata) != 4) stop("Need xmin, xmax, ymin, ymax coordinates")		
-	      ext <- raster::raster(raster::extent(newdata))
-	        if(missing(n)) {
-              n <- c(raster::nrow(ext), raster::ncol(ext))		
-	    	  warning(paste0("n not defined, defaulting to ", raster::ncell(newdata), " values"))
-            } else {
-	    	  raster::nrow(ext) <- n/2
-	    	  raster::ncol(ext) <- n/2
-			  n <- c(n/2,n/2)
-	    	}
-        }	
-	    if( class(newdata) == "RasterLayer") { 
+		}	
+    } else if(!is.null(newdata)) {
+      if( class(newdata) == "numeric") {
+        if(length(newdata) != 4) stop("Need xmin, xmax, ymin, ymax coordinates")
+          ext <- raster::raster(raster::extent(newdata), nrow=n/2, ncol=n/2)		
+		    ext[] <- rep(1, raster::ncell(ext))
+	      if(missing(n)) {
+            n <- c(raster::nrow(ext), raster::ncol(ext))		
+	  	  warning(paste0("n not defined, defaulting to ", raster::ncell(newdata), " values"))
+          } else {
+	  	  raster::nrow(ext) <- n/2
+	  	  raster::ncol(ext) <- n/2
+		  n <- c(n/2,n/2)
+	  	  }
+	  } else if(class(newdata) == "RasterLayer") { 
 	      ext <- as.vector(raster::extent(newdata))
-          if(missing(n)) {		  
-		    n = c(raster::nrow(newdata), raster::ncol(newdata)) 
-		  } else {
-			raster::nrow(newdata) <- n/2
-	    	raster::ncol(newdata) <- n/2		  
-		    n = c(n/2,n/2) 
-			  warning(paste0("changing raster dimensions to: ", n/2, " - ", n/2))
-		  }
-	    }   			
-      if( class(newdata) == "SpatialPixelsDataFrame" | class(newdata) == "SpatialGridDataFrame" ) {
-          gp = sp::gridparameters(newdata)	  
-	      ext <- as.vector(raster::extent(newdata))
-          if(missing(n)) { n <- gp$cells.dim } else { n <- c(n/2,n/2) }  
+        if(missing(n)) {		  
+	      n = c(raster::nrow(newdata), raster::ncol(newdata)) 
+	    } else {
+		  raster::nrow(newdata) <- n/2
+	  	  raster::ncol(newdata) <- n/2		  
+	      n = c(n/2,n/2) 
+		  warning(paste0("changing raster dimensions to: ", n/2, " - ", n/2))
+	    }	
+      } else if( class(newdata) == "SpatialPixelsDataFrame" | class(newdata) == "SpatialGridDataFrame" ) {
+        gp = sp::gridparameters(newdata)	  
+	    ext <- as.vector(raster::extent(newdata))
+        if(missing(n)) { n <- gp$cells.dim } else { n <- c(n/2,n/2) }  
       }
-    } # end of !missing newdata	  
- 
+	  newdata <- ext
+    }	
   #### weighted kde function, modification of MASS::kde2d 
     fhat <- function (x, y, h, w, n = 25, lims = c(range(x), range(y))) {
       nx <- length(x)
@@ -127,21 +124,21 @@ sp.kde <- function(x, y, bw, newdata, n, standardize = FALSE,
 	        ( sum(w) * h[1] * h[2] )
       return(list(x = gx, y = gy, z = z))
     }
-  if(!missing(y)) {
+  if(!is.null(y)) {
     cat("\n","calculating weighted kde","\n")
     k  <- fhat(sp::coordinates(x)[,1], sp::coordinates(x)[,2], w = y, 
 	           h = bw, n = n, lims = as.vector(raster::extent(newdata)) )
-	} else {
+  } else {
 	cat("\n","calculating unweighted kde","\n")
 	k <- MASS::kde2d(sp::coordinates(x)[,1], sp::coordinates(x)[,2], h = bw, 
 	                 n = n, lims = as.vector(raster::extent(newdata)) )
   }
-	if(!missing(scale.factor)) { k$z <- k$z * scale.factor }	
+	if(!is.null(scale.factor)) { k$z <- k$z * scale.factor }	
 	if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }		
     kde.est <- raster::raster(sp::SpatialPixelsDataFrame(sp::SpatialPoints(expand.grid(k$x, k$y)), 
 	                          data.frame(kde = as.vector(array(k$z,length(k$z))))))
       if(check.newdata == FALSE & mask == TRUE) {
-	    kde.est <- raster::mask(raster::resample(kde.est, newdata),newdata) 
+	    kde.est <- raster::mask(raster::resample(kde.est, newdata), newdata) 
 	  }
     sp::proj4string(kde.est) <- sp::proj4string(x)  
   return( kde.est )  

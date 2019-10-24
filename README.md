@@ -251,7 +251,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
 **Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.
 
-**To install `spatialEco` in R use install.packages() to download curent stable release from CRAN** 
+**To install `spatialEco` in R use install.packages() to download current stable release from CRAN** 
 
 **or, for the development version, run the following (requires the remotes package):**
 `remotes::install_github("jeffreyevans/spatialEco")`
