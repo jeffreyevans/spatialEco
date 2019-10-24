@@ -137,7 +137,7 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, n = NULL,
 	if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }		
     kde.est <- raster::raster(sp::SpatialPixelsDataFrame(sp::SpatialPoints(expand.grid(k$x, k$y)), 
 	                          data.frame(kde = as.vector(array(k$z,length(k$z))))))
-      if(check.newdata == FALSE & mask == TRUE) {
+      if(is.null(newdata) == FALSE & mask == TRUE) {
 	    kde.est <- raster::mask(raster::resample(kde.est, newdata), newdata) 
 	  }
     sp::proj4string(kde.est) <- sp::proj4string(x)  
