@@ -4,8 +4,9 @@
 \alias{spatial.select}
 \title{Spatial Select}
 \usage{
-spatial.select(x, y, distance = NULL, predicate = c("intersect",
-  "contains", "covers", "touches", "proximity"))
+spatial.select(x, y = NULL, distance = NULL,
+  predicate = c("intersect", "contains", "covers", "touches",
+  "proximity", "contingency"), neighbors = c("queen", "rook"))
 }
 \arguments{
 \item{x}{An sp or sf polygon(s) object that defines the spatial query}
@@ -15,9 +16,12 @@ spatial.select(x, y, distance = NULL, predicate = c("intersect",
 \item{distance}{A proximity distance of features to select (within distance)}
 
 \item{predicate}{Spatial predicate for intersection}
+
+\item{neighbors}{If predicate = "contingency" type of neighbors options are c("queen", "rook")}
 }
 \value{
-An sp object representing a subset of y based on the spatial query of x
+An sp object representing a subset of y based on the spatial query of x or, 
+        if predicate = contingency a sparse matrix representing neighbor indexes
 }
 \description{
 Performs a spatial select (feature subset) between a polygon(s) and other feature class
@@ -30,8 +34,8 @@ Performs a spatial select of features based on an overlay of a polygon (x),
       query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
       that for point to point neighbor selections use the knn function.
 
-Valid spatial predicates include: intersect, touches, covers, contains and 
-      proximity. Please see \url{https://en.wikipedia.org/wiki/DE-9IM/} for detailed 
+Valid spatial predicates include: intersect, touches, covers, contains, proximity and 
+      contingency. Please see \url{https://en.wikipedia.org/wiki/DE-9IM/} for detailed 
       information on the DE-9IM topology model.
 }
 \examples{
@@ -82,7 +86,14 @@ par(mfrow=c(2,2))
   plot(sub.contains, main="contains", pch=20)
     plot(p, add=TRUE) 
   plot(sub.prox, main="Proximity 200m distance", pch=20)
-    plot(p, add=TRUE) 
+    plot(p, add=TRUE)
+
+#### For rook or queen polygon contingency 	
+spolys <- as(sf::st_make_grid(sf::st_sfc(sf::st_point(c(0,0)), 
+             sf::st_point(c(3,3))), n = c(3,3)), "Spatial")
+
+spatial.select(spolys, predicate = "contingency")
+spatial.select(spolys, predicate = "contingency", neighbors = "rook") 
 
 }
 \seealso{
