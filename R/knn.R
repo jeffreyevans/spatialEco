@@ -1,4 +1,4 @@
-#' @title Plot Spatial K nearest neighbor
+#' @title Spatial K nearest neighbor
 #' @description Find K nearest neighbors for two spatial objects
 #'
 #' @param y          Spatial points or polygons object or coordinates matrix

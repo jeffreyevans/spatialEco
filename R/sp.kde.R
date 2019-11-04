@@ -65,7 +65,7 @@
 #'
 #' @export
 sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,  
-                   standardize = FALSE, scale.factor, mask = TRUE) {
+                   standardize = FALSE, scale.factor = NULL, mask = TRUE) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(is.null(bw)){ 
     bw <- c(MASS::bandwidth.nrd(sp::coordinates(x)[,1]), 
@@ -73,8 +73,9 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,
 	  cat("Using", bw, "for bandwidth", "\n")
   } else {
     bw <- c(bw,bw)
-  }  
-  if(!is.null(nr) & !is.null(nr)) { n = c(nr, nc) } else { n = NULL }   
+  }
+      if(is.null(scale.factor)) scale.factor = 1  
+    if(!is.null(nr) & !is.null(nr)) { n = c(nr, nc) } else { n = NULL }   
   if(is.null(newdata)) { 
     newdata <- as.vector(raster::extent(x))
       message("Using extent of x to define grid")	
@@ -132,7 +133,7 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,
 	k <- MASS::kde2d(sp::coordinates(x)[,1], sp::coordinates(x)[,2], h = bw, 
 	                 n = n, lims = as.vector(raster::extent(newdata)) )
   }
-	if(!is.null(scale.factor)) { k$z <- k$z * scale.factor }	
+  k$z <- k$z * scale.factor	
 	if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }		
     kde.est <- raster::raster(sp::SpatialPixelsDataFrame(sp::SpatialPoints(expand.grid(k$x, k$y)), 
 	                          data.frame(kde = as.vector(array(k$z,length(k$z))))))

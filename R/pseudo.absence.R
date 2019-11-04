@@ -173,7 +173,8 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
             lam <- spatstat::density.ppp(X, sigma = si)
             cv[i] <- sum(log(lamx)) - spatstat::integral.im(lam)
         }
-      result <- spatstat::bw.optim(cv, sigma, iopt = which.max(cv), criterion = "Likelihood Cross-Validation")
+      result <- spatstat::bw.optim(cv, sigma, iopt = which.max(cv), 
+	                    criterion = "Likelihood Cross-Validation")
     return(result)
     }
 	
