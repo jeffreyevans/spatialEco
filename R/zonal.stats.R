@@ -53,8 +53,8 @@
 #' @export
 zonal.stats <- function(x, y, stats = c("min", "mean", "max")) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
-    if (class(y) != "RasterLayer") 
-        stop("y must be a raster object")
+    if (class(y) != "RasterLayer" & class(y) != "RasterStack" & class(y) != "RasterBrick") 
+        stop("y must be a raster (layer, stack, brick) class object")
     if (class(x) != "SpatialPolygonsDataFrame") 
         stop("x must be a SpatialPolygonsDataFrame object")
   rvx <- velox::velox(y) 
