@@ -92,6 +92,7 @@
 spatial.select <- function(x, y = NULL, distance = NULL, predicate = c("intersect",   
                            "contains", "covers", "touches", "proximity",
 						   "contingency"), neighbors = c("queen", "rook")) {
+  predicate = predicate[1]
   if(!is.null(y)) {
   if(any(methods::is(x, "Spatial"), methods::is(y, "Spatial"))) {
     type="dsp"
