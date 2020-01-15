@@ -86,7 +86,7 @@
 #' @seealso \code{\link[rgeos]{gCovers}} for details on covers predicate
 #' @seealso \code{\link[rgeos]{gTouches}} for details on touches predicate 
 #' @seealso \code{\link[rgeos]{gWithinDistance}} for details on proximity predicate
-#' @seealso \url{https://en.wikipedia.org/wiki/DE-9IM/} for details on DE-9IM topology model
+#' @seealso \url{https://en.wikipedia.org/wiki/DE-9IM} for details on DE-9IM topology model
 #'
 #' @export spatial.select	
 spatial.select <- function(x, y = NULL, distance = NULL, predicate = c("intersect",   
