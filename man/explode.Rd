@@ -25,6 +25,8 @@ one-to-one match.
 \examples{
 \dontrun{
 library(sf)
+library(sp)
+
 dim( p.sf <- st_read(system.file("shapes/sids.shp", package = "spData")[1]) )
 dim( p.sf <- explode(p.sf) )
 }

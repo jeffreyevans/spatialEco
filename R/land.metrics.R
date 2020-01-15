@@ -85,11 +85,6 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @seealso \code{\link{focal.lmetrics}}
-#' @seealso \code{\link{ClassStat}}
-#' @seealso \code{\link{ConnCompLabel}}
-#' @seealso \code{\link{PatchStat}}
-#'
 #' @examples 
 #'  library(raster)
 #'  library(sp)
@@ -108,6 +103,8 @@
 #'
 #'  # Pull metrics associated with class "0"
 #'  all.class[["0"]]
+#'
+#' @seealso \code{\link{ClassStat}}, \code{\link{connected.pixels}}, \code{\link{PatchStat}}
 #'
 #' @export 
 land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 1000, 

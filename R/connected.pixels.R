@@ -24,6 +24,8 @@
 #' using contour tracing technique. Comput. Vis. Image Underst. 93:206-220.
 #'
 #' @examples
+#' library(raster)
+#' library(sp)
 #' #define a simple binary matrix
 #' tmat = { matrix(c( 0,0,0,1,0,0,1,1,0,1,
 #'                    0,0,1,0,1,0,0,0,0,0,
@@ -37,36 +39,34 @@
 #'                    1,1,1,0,0,0,0,0,0,1),nr=10,byrow=TRUE) }
 #' 					
 #' # perform connected component labelling
-#' ccl.mat = connected.pixels(tmat)
-#' ccl.mat
+#' ( ccl.mat = connected.pixels(tmat) )
 #' image(t(ccl.mat[10:1,]),col=c('grey',rainbow(length(unique(ccl.mat))-1)))
 #' 
-#'
 #' @export 
 #' @useDynLib spatialEco ccl
 connected.pixels <- function(mat)	{
 	if (any(class(mat) == 'asc')) { 
-		attrib = attributes(mat)
+	  attrib = attributes(mat)
 	} else if (any(class(mat) %in% 'RasterLayer')) {
-		attrib = mat
-		mat = asc.from.raster(mat)
+	  attrib = mat
+	  mat = asc.from.raster(mat)
 	} else if (any(class(mat) == 'SpatialGridDataFrame')) {
-		attrib = mat
-		mat = asc.from.sp(mat)
+	  attrib = mat
+	  mat = asc.from.sp(mat)
 	} else {
-		attrib = attributes(mat)
+	  attrib = attributes(mat)
 	}
 	mat = try(as.matrix(mat))
 	if (!is.matrix(mat)) stop('objects must be a matrix')
-	out = .Call('ccl',mat,PACKAGE='spatialEco')
+	  out = .Call('ccl',mat,PACKAGE='spatialEco')
 	if (any(class(attrib) %in% 'RasterLayer')) {
-		attrib <- raster::setValues(attrib, as.vector(t(t(unclass(out))[dim(out)[2]:1,])))
-		  return(attrib)
+	  attrib <- raster::setValues(attrib, as.vector(t(t(unclass(out))[dim(out)[2]:1,])))
+	    return(attrib)
 	} else if (any(class(attrib) == 'SpatialGridDataFrame')) {
-		attrib@data[1] = as.vector(unclass(out)[,dim(out)[2]:1])
-		  return(attrib)
+	  attrib@data[1] = as.vector(unclass(out)[,dim(out)[2]:1])
+	    return(attrib)
 	} else {
-		attributes(out) = attrib
-		  return(out)
+	  attributes(out) = attrib
+	    return(out)
 	}
 }

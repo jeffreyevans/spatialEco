@@ -130,13 +130,7 @@ It is critical to note that if using polygon units that, the resulting metric re
 
 }
 \seealso{
-\code{\link{focal.lmetrics}}
-
-\code{\link{ClassStat}}
-
-\code{\link{ConnCompLabel}}
-
-\code{\link{PatchStat}}
+\code{\link{ClassStat}}, \code{\link{connected.pixels}}, \code{\link{PatchStat}}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

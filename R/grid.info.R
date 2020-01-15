@@ -19,7 +19,7 @@ grid.info <- function(lats, cellsize, r = 6378137) {
 	if (length(cellsize)==1) cellsize=rep(cellsize,2) 
 	out = data.frame(lat=lats) 
 	toplats = lats+(0.5*cellsize[1]); bottomlats = lats-(0.5*cellsize[1]) #define the top and bottom lats
-	check = range(c(toplats,bottomlats),na.rm=TRUE); if (-90>check[1] | 90<check[2]) stop('latitudes must be between -90 & 90')
+	check = range(c(toplats,bottomlats),na.rm=TRUE); if (-90 > check[1] | 90 < check[2]) stop('latitudes must be between -90 & 90')
 	out$top = spheroid.distance(toplats,rep(0,length(lats)),toplats,rep(cellsize[2],length(lats)))$distance
 	out$bottom = spheroid.distance(bottomlats,rep(0,length(lats)),bottomlats,rep(cellsize[2],length(lats)))$distance
 	out$side = spheroid.distance(toplats,rep(0,length(lats)),bottomlats,rep(0,length(lats)))$distance

@@ -38,32 +38,25 @@ Returns a data.frame with:
 }
 }
 \description{
-Estimates the distance on a sphere using lat & long coordinates
+Estimates the distance on a sphere using lat and long coordinates
 }
 \note{
-The spheroid.distance estimates the distance given a starting & ending latitude
-and longitude. \link{For general information on Vincenty's formula, see:}
-(http://en.wikipedia.org/wiki/Vincenty's_formulae). It states:
-Vincenty's formulae are two related iterative methods used in geodesy
-to calculate the distance between two points on the surface of an spheroid,
-developed by Thaddeus Vincenty in 1975. They are based on the assumption
-that the figure of the Earth is an oblate spheroid, and hence are more
-accurate than methods such as great-circle distance which assume a spherical
-Earth. Note: this method assumes a locations are lat & lon
-given in WGS 84.Direction, if requested, is the the initial bearing
-(sometimes referred to as forward azimuth) for which one would follow as a
-straight line along a great-circle arc from start to finish.
-Please note that this will fail if there are NA's in the data.
-}
-\examples{
-#get the distance of 1 degree longitude at each 5 degrees latitude from -90 to 90
-spheroid.distance(lat1=seq(-90,90,5),lon1=rep(0,37),
-	
+The spheroid.distance estimates the distance given a starting and ending latitude
+and longitude. Vincenty's approach, is described as: Vincenty's formulae
+are two related iterative methods used in geodesy to calculate the distance
+between two points on the surface of an spheroid.
+They are based on the assumption that the figure of the Earth is an oblate spheroid,
+and hence are more accurate than methods such as great-circle distance which
+assume a spherical Earth.
+Note: this method assumes a locations are lat & lon given in WGS 84.Direction,
+if requested, is the the initial bearing (sometimes referred to as forward azimuth)
+which one would follow as a straight line along a great-circle arc from start
+to finish. That this will fail if there are NA's in the data.
 }
 \references{
-Vincenty, T. 1975. Direct and Inverse Solutions of Geodesics on
+Vincenty, T. (1975). Direct and Inverse Solutions of Geodesics on
 the Ellipsoid with application of Nested Equations. Survey Review, vol XXII
-no 176. (http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf)
+no 176.
 }
 \author{
 Jeremy VanDerWal (code from depreciated/orphaned SDMTools package)

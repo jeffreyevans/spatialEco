@@ -27,7 +27,7 @@ as.asc(
 }
 \arguments{
 \item{x}{is an object of class 'asc', 'RasterLayer' or
-'SpatialGridDataFrame'. For the function \code{as.asc}, a matrix}
+'SpatialGridDataFrame'. For the function as.asc, a matrix}
 
 \item{projs}{is a CRS projection string of the Proj4 package}
 
@@ -37,11 +37,12 @@ as.asc(
 
 \item{cellsize}{the size of a pixel on the studied map}
 
-\item{type}{a character string. Either \code{"numeric"} or \code{"factor"}}
+\item{type}{a character string. Either "numeric" or "factor"}
 
-\item{lev}{if \code{type = "factor"}, either a vector giving the labels of
-the factor levels, or the name of a file giving the correspondence table of
-the map see adehabitat as.asc helpfile details}
+\item{lev}{if type = "factor", either a vector giving the labels of
+the factor levels, or the name of a file giving the  
+correspondence table of the map see adehabitat as.asc 
+helpfile details}
 }
 \value{
 Returns an object of class requested.
@@ -49,19 +50,22 @@ Returns an object of class requested.
 \description{
 Raster conversion functions for adehabitat, raster and sp packages
 }
-\details{
+\note{
 asc.from.raster and asc.from.sp extracts data from objects of
 class 'RasterLayer' (raster package) and class 'SpatialGridDataFrame' 
 (sp package) into an object of class 'asc' (adehabitat packages). 
 raster.from.asc and sp.from.asc does the reverse.
 as.asc creates an object of class 'asc' (SDMTools & adehabitat
-packages) from a matrix of data. Code & helpfile associated with
+packages) from a matrix of data. Code and helpfile associated with
 as.asc were modified from adehabitat package.
 
 These functions provide capabilities of using functions from many
 packages including adehabitat, sp (plus e.g., maptools, rgdal) and raster.
 }
 \examples{
+library(sp)
+library(raster)
+
 #create a simple object of class 'asc'
 tasc = as.asc(matrix(rep(x=1:10, times=1000),nr=100))
   print(tasc)
@@ -76,7 +80,7 @@ tgrid = sp.from.asc(tasc)
 str(tgrid)
 
 #create a basic object of class asc
-tasc = as.asc(matrix(rep(x=1:10, times=1000),nr=100)); print(tasc)
+( tasc = as.asc(matrix(rep(x=1:10, times=1000),nr=100)) )
 
 }
 \author{

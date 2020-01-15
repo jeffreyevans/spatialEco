@@ -98,7 +98,7 @@ ai <- focal.lmetrics(r, w=11, metric = "aggregation.index")
 
 }
 \seealso{
-\code{\link{ClassStat}}, \code{\link{ConnCompLabel}}, \code{\link{PatchStat}}
+\code{\link{ClassStat}}, \code{\link{connected.pixels}}, \code{\link{PatchStat}}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

@@ -100,6 +100,8 @@ packages), "RasterLayer" (raster package) or "SpatialGridDataFrame" (sp
 package). The class statistics are based on statistics calculated by fragstats
 }
 \examples{
+library(raster)
+library(sp)
 # define a simple binary matrix
 tmat = { matrix(c( 0,0,0,1,0,0,1,1,0,1,
                    0,0,1,0,1,0,0,0,0,0,
@@ -113,21 +115,17 @@ tmat = { matrix(c( 0,0,0,1,0,0,1,1,0,1,
                    1,1,1,0,0,0,0,0,0,1),nr=10,byrow=TRUE) }
 					
 #perform connected component labelling
-ccl.mat = connected.pixels(tmat)
-ccl.mat
+( ccl.mat = connected.pixels(tmat) )
 image(t(ccl.mat[10:1,]),col=c("grey",rainbow(length(unique(ccl.mat))-1)))
 
 #calculate the patch statistics
-ps.data = PatchStat(ccl.mat)
-ps.data
+( ps.data = PatchStat(ccl.mat) )
 
 #calculate the class statistics
-cl.data = ClassStat(tmat)
-cl.data
+( cl.data = ClassStat(tmat) )
 
 #identify background data is 0
-cl.data = ClassStat(tmat,bkgd=0)
-cl.data
+( cl.data = ClassStat(tmat,bkgd=0) )
 
 }
 \references{

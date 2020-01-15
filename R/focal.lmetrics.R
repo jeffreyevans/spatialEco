@@ -75,7 +75,7 @@
 #'   plot(ai)
 #' }
 #' 
-#' @seealso \code{\link{ClassStat}}, \code{\link{ConnCompLabel}}, \code{\link{PatchStat}}
+#' @seealso \code{\link{ClassStat}}, \code{\link{connected.pixels}}, \code{\link{PatchStat}}
 #'
 #' @export 
 focal.lmetrics <- function(x, w = 5, bkg = 0, land.value = 1, 

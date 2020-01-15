@@ -1,33 +1,37 @@
 #' @title Raster conversion functions for adehabitat, raster and sp packages
 #'
-#' @details
+#' @param x          is an object of class 'asc', 'RasterLayer' or
+#'                   'SpatialGridDataFrame'. For the function as.asc, a matrix
+#' @param projs      is a CRS projection string of the Proj4 package
+#' @param xll        the x coordinate of the center of the lower left pixel of the map
+#' @param yll        the y coordinate of the center of the lower left pixel of the map
+#' @param cellsize   the size of a pixel on the studied map
+#' @param type       a character string. Either "numeric" or "factor"
+#' @param lev        if type = "factor", either a vector giving the labels of
+#'                   the factor levels, or the name of a file giving the  
+#'                   correspondence table of the map see adehabitat as.asc 
+#'                   helpfile details
+#'
+#' @return Returns an object of class requested.
+#'
+#' @note
 #' asc.from.raster and asc.from.sp extracts data from objects of
 #' class 'RasterLayer' (raster package) and class 'SpatialGridDataFrame' 
 #' (sp package) into an object of class 'asc' (adehabitat packages). 
 #' raster.from.asc and sp.from.asc does the reverse.
 #' as.asc creates an object of class 'asc' (SDMTools & adehabitat
-#' packages) from a matrix of data. Code & helpfile associated with
+#' packages) from a matrix of data. Code and helpfile associated with
 #' as.asc were modified from adehabitat package.
 #' 
 #' These functions provide capabilities of using functions from many
 #' packages including adehabitat, sp (plus e.g., maptools, rgdal) and raster.
 #' 
-#' @param x is an object of class 'asc', 'RasterLayer' or
-#' 'SpatialGridDataFrame'. For the function \code{as.asc}, a matrix
-#' @param projs is a CRS projection string of the Proj4 package
-#' @param xll the x coordinate of the center of the lower left pixel of the map
-#' @param yll the y coordinate of the center of the lower left pixel of the map
-#' @param cellsize the size of a pixel on the studied map
-#' @param type a character string. Either \code{"numeric"} or \code{"factor"}
-#' @param lev if \code{type = "factor"}, either a vector giving the labels of
-#' the factor levels, or the name of a file giving the correspondence table of
-#' the map see adehabitat as.asc helpfile details
-#'
-#' @return Returns an object of class requested.
-#'
 #' @author Jeremy VanDerWal (code from depreciated/orphaned SDMTools package)
 #'
 #' @examples 
+#' library(sp)
+#' library(raster)
+#'
 #' #create a simple object of class 'asc'
 #' tasc = as.asc(matrix(rep(x=1:10, times=1000),nr=100))
 #'   print(tasc)
@@ -42,8 +46,9 @@
 #' str(tgrid)
 #' 
 #' #create a basic object of class asc
-#' tasc = as.asc(matrix(rep(x=1:10, times=1000),nr=100)); print(tasc)
+#' ( tasc = as.asc(matrix(rep(x=1:10, times=1000),nr=100)) )
 #' 
+# @import raster, sp
 #' @export 
 asc.from.raster <- function(x) {
 	if (!any(class(x) %in% 'RasterLayer')) stop('x must be of class raster or RasterLayer')
@@ -59,7 +64,6 @@ asc.from.raster <- function(x) {
 #' @export
 raster.from.asc <- function(x,projs=NA) {
 	if (class(x) != 'asc') stop('x must be of class asc')
-	require(raster)
 	cellsize = attr(x, "cellsize")
 	nrows = dim(x)[2]; ncols= dim(x)[1]
 	xmin = attr(x, "xll") - 0.5 * cellsize
@@ -90,7 +94,6 @@ asc.from.sp <- function(x) {
 #' @export
 sp.from.asc <- function(x,projs=sp::CRS(as.character(NA))) {
 	if (!inherits(x, "asc")) stop('x must be of class asc')
-	require(sp)
 	tgrid = sp::GridTopology(c(attr(x, "xll"),attr(x, "yll")),rep(attr(x, "cellsize"),2),dim(x))
 	return(sp::SpatialGridDataFrame(tgrid,data.frame(z=as.vector(unclass(x)[,dim(x)[2]:1])),proj4string=projs))
 }

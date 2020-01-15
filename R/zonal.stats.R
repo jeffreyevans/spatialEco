@@ -17,7 +17,9 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @examples                                                                       
+#' @examples
+#' library(raster)
+#' library(sp)                                                                          
 #' # skewness function
 #' skew <- function(x, na.rm = FALSE) { 
 #'    if (na.rm) 
@@ -33,8 +35,6 @@
 #' }
 #' 
 #' # create some example data
-#' library(raster)
-#' library(sp)   
 #' p <- raster(nrow=10, ncol=10)
 #'   p[] <- runif(ncell(p)) * 10
 #'     p <- rasterToPolygons(p, fun=function(x){x > 9})

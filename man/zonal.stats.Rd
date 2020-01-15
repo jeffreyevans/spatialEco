@@ -26,7 +26,8 @@ This function calculates the zonal statistics between a polygon vector object an
 Depends: sp, raster, velox
 }
 \examples{
-                                                                      
+library(raster)
+library(sp)                                                                          
 # skewness function
 skew <- function(x, na.rm = FALSE) { 
    if (na.rm) 
@@ -42,8 +43,6 @@ pct <- function(x, p=0.30, na.rm = FALSE) {
 }
 
 # create some example data
-library(raster)
-library(sp)   
 p <- raster(nrow=10, ncol=10)
   p[] <- runif(ncell(p)) * 10
     p <- rasterToPolygons(p, fun=function(x){x > 9})

@@ -28,6 +28,8 @@ distribution. The raster matrix can be a raster of class 'asc'
 'SpatialGridDataFrame' (sp package).
 }
 \examples{
+library(raster)
+library(sp)
 #define a simple binary matrix
 tmat = { matrix(c( 0,0,0,1,0,0,1,1,0,1,
                    0,0,1,0,1,0,0,0,0,0,
@@ -41,10 +43,8 @@ tmat = { matrix(c( 0,0,0,1,0,0,1,1,0,1,
                    1,1,1,0,0,0,0,0,0,1),nr=10,byrow=TRUE) }
 					
 # perform connected component labelling
-ccl.mat = connected.pixels(tmat)
-ccl.mat
+( ccl.mat = connected.pixels(tmat) )
 image(t(ccl.mat[10:1,]),col=c('grey',rainbow(length(unique(ccl.mat))-1)))
-
 
 }
 \references{
