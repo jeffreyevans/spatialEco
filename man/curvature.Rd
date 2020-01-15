@@ -4,8 +4,7 @@
 \alias{curvature}
 \title{Surface curvature}
 \usage{
-curvature(x, type = c("planform", "profile", "total", "mcnab",
-  "bolstad"), ...)
+curvature(x, type = c("planform", "profile", "total", "mcnab", "bolstad"), ...)
 }
 \arguments{
 \item{x}{rasterLayer object}

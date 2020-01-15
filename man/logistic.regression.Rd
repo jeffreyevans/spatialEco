@@ -4,9 +4,19 @@
 \alias{logistic.regression}
 \title{Logistic and Auto-logistic regression}
 \usage{
-logistic.regression(ldata, y, x, penalty = TRUE, autologistic = FALSE,
-  coords = NULL, bw = NULL, type = "inverse", style = "W",
-  longlat = FALSE, ...)
+logistic.regression(
+  ldata,
+  y,
+  x,
+  penalty = TRUE,
+  autologistic = FALSE,
+  coords = NULL,
+  bw = NULL,
+  type = "inverse",
+  style = "W",
+  longlat = FALSE,
+  ...
+)
 }
 \arguments{
 \item{ldata}{data.frame object containing variables}

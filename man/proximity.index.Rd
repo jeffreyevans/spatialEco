@@ -4,8 +4,7 @@
 \alias{proximity.index}
 \title{Proximity Index}
 \usage{
-proximity.index(x, y = NULL, min.dist = 0, max.dist = 1000,
-  background = NULL)
+proximity.index(x, y = NULL, min.dist = 0, max.dist = 1000, background = NULL)
 }
 \arguments{
 \item{x}{A polygon class sp or sf object}

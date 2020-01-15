@@ -4,8 +4,14 @@
 \alias{focal.lmetrics}
 \title{Focal landscape metrics}
 \usage{
-focal.lmetrics(x, w = 5, bkg = 0, land.value = 1,
-  metric = "prop.landscape", latlong = FALSE)
+focal.lmetrics(
+  x,
+  w = 5,
+  bkg = 0,
+  land.value = 1,
+  metric = "prop.landscape",
+  latlong = FALSE
+)
 }
 \arguments{
 \item{x}{raster class object}
@@ -92,13 +98,7 @@ ai <- focal.lmetrics(r, w=11, metric = "aggregation.index")
 
 }
 \seealso{
-\code{\link[spatialEco]{land.metrics}}
-
-\code{\link[SDMTools]{ConnCompLabel}}
-
-\code{\link[SDMTools]{PatchStat}}
-
-\code{\link[SDMTools]{ClassStat}}
+\code{\link{ClassStat}}, \code{\link{ConnCompLabel}}, \code{\link{PatchStat}}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

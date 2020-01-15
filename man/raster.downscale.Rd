@@ -4,8 +4,15 @@
 \alias{raster.downscale}
 \title{Raster Downscale}
 \usage{
-raster.downscale(x, y, p = NULL, n = NULL, filename = FALSE,
-  scatter = FALSE, ...)
+raster.downscale(
+  x,
+  y,
+  p = NULL,
+  n = NULL,
+  filename = FALSE,
+  scatter = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Raster class object representing independent variable(s)}

@@ -4,8 +4,13 @@
 \alias{sa.trans}
 \title{Trigonometric  transformation of a slope and aspect interaction}
 \usage{
-sa.trans(slope, aspect, type = "cos", slp.units = "degrees",
-  asp.units = "degrees")
+sa.trans(
+  slope,
+  aspect,
+  type = "cos",
+  slp.units = "degrees",
+  asp.units = "degrees"
+)
 }
 \arguments{
 \item{slope}{slope values in degrees, radians or percent}

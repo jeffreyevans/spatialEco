@@ -4,8 +4,14 @@
 \alias{hsp}
 \title{Hierarchical Slope Position}
 \usage{
-hsp(x, min.scale = 3, max.scale = 27, inc = 4, win = "rectangle",
-  normalize = FALSE)
+hsp(
+  x,
+  min.scale = 3,
+  max.scale = 27,
+  inc = 4,
+  win = "rectangle",
+  normalize = FALSE
+)
 }
 \arguments{
 \item{x}{Object of class raster (requires integer raster)}

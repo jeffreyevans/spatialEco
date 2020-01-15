@@ -4,41 +4,38 @@
 \alias{zonal.stats}
 \title{zonal.stats}
 \usage{
-zonal.stats(x, y, stat, trace = TRUE, plot = TRUE)
+zonal.stats(x, y, stats = c("min", "mean", "max"))
 }
 \arguments{
 \item{x}{Polygon object of class SpatialPolygonsDataFrame}
 
-\item{y}{Raster object of class raster}
+\item{y}{rasterLayer object of class raster}
 
-\item{stat}{Statistic or function}
-
-\item{trace}{Should progress counter be displayed}
-
-\item{plot}{Should subset polygons/rasters be plotted (TRUE/FALSE)}
+\item{stats}{Statistic or function}
 }
 \value{
-Vector, length of nrow(x), of function results
+data.frame, nrow(x) and ncol of function results
 }
 \description{
 Polygon zonal statistics of a raster
 }
 \note{
-This function iterates through a polygon object, masks the raster to each subset polygon and then coerces the subset raster to a vector object. The resulting vector is then passed to the specified statistic/function. This is much slower than zonal functions available in GIS software but has the notable advantage of being able to accept any custom function, passed to the 'stat' argument, appropriate for a vector object (see example).
+This function calculates the zonal statistics between a polygon vector object and a raster. 
+  This provides the advantage of being able to accept any custom function, passed to the 'stats'
 
-Depends: sp, raster
+Depends: sp, raster, velox
 }
 \examples{
                                                                       
 # skewness function
-skew <- function(x, na.rm=FALSE) { 
+skew <- function(x, na.rm = FALSE) { 
    if (na.rm) 
        x <- x[!is.na(x)]
   sum( (x - mean(x)) ^ 3) / ( length(x) * sd(x) ^ 3 )  
   }   
 
 # percent x >= p function
-pct <- function(x, p=0.30) {
+pct <- function(x, p=0.30, na.rm = FALSE) {
   if ( length(x[x >= p]) < 1 )  return(0) 
     if ( length(x[x >= p]) == length(x) ) return(1) 
      else return( length(x[x >= p]) / length(x) ) 
@@ -56,9 +53,9 @@ plot(r)
   plot(p, add=TRUE, lwd=4) 
 
 # run zonal statistics using skew and pct functions   
-z.skew <- zonal.stats(x=p, y=r, stat=skew, trace=TRUE, plot=TRUE) 
-z.pct <- zonal.stats(x=p, y=r, stat=pct, trace=TRUE, plot=TRUE)
-  ( z <- data.frame(ID=as.numeric(as.character(row.names(p@data))), 
+z.skew <- zonal.stats(x = p, y = r, stats = "skew") 
+z.pct <- zonal.stats(x=p, y=r, stats = "pct")
+  ( z <- data.frame(ID = as.numeric(as.character(row.names(p@data))), 
                     SKEW=z.skew, PCT=z.pct) )  
 
 }

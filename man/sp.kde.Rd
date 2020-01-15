@@ -4,8 +4,17 @@
 \alias{sp.kde}
 \title{Spatial kernel density estimate}
 \usage{
-sp.kde(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL,
-  nc = NULL, standardize = FALSE, scale.factor, mask = TRUE)
+sp.kde(
+  x,
+  y = NULL,
+  bw = NULL,
+  newdata = NULL,
+  nr = NULL,
+  nc = NULL,
+  standardize = FALSE,
+  scale.factor = NULL,
+  mask = TRUE
+)
 }
 \arguments{
 \item{x}{sp SpatialPointsDataFrame object}

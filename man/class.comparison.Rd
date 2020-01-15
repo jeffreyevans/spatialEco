@@ -4,9 +4,18 @@
 \alias{class.comparison}
 \title{Class comparison between two nominal rasters}
 \usage{
-class.comparison(x, y, x.idx = 1, y.idx = 1, d = "AUTO",
-  stat = "kappa", sub.sample = FALSE, type = "hexagon", p = 0.1,
-  size = NULL)
+class.comparison(
+  x,
+  y,
+  x.idx = 1,
+  y.idx = 1,
+  d = "AUTO",
+  stat = "kappa",
+  sub.sample = FALSE,
+  type = "hexagon",
+  p = 0.1,
+  size = NULL
+)
 }
 \arguments{
 \item{x}{First raster for comparison, SpatialPixelsDataFrame or SpatialGridDataFrame object}

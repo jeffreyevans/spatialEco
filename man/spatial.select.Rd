@@ -4,9 +4,14 @@
 \alias{spatial.select}
 \title{Spatial Select}
 \usage{
-spatial.select(x, y = NULL, distance = NULL,
-  predicate = c("intersect", "contains", "covers", "touches",
-  "proximity", "contingency"), neighbors = c("queen", "rook"))
+spatial.select(
+  x,
+  y = NULL,
+  distance = NULL,
+  predicate = c("intersect", "contains", "covers", "touches", "proximity",
+    "contingency"),
+  neighbors = c("queen", "rook")
+)
 }
 \arguments{
 \item{x}{An sp or sf polygon(s) object that defines the spatial query}

@@ -4,9 +4,16 @@
 \alias{raster.change}
 \title{Raster change between two nominal rasters}
 \usage{
-raster.change(x, y, d = c(3, 3), stat = c("kappa", "wkappa", "t.test",
-  "cor", "entropy", "cross-entropy", "divergence"), w = NULL,
-  out.raster = NULL, mask = FALSE, force.memory = FALSE)
+raster.change(
+  x,
+  y,
+  d = c(3, 3),
+  stat = c("kappa", "wkappa", "t.test", "cor", "entropy", "cross-entropy", "divergence"),
+  w = NULL,
+  out.raster = NULL,
+  mask = FALSE,
+  force.memory = FALSE
+)
 }
 \arguments{
 \item{x}{First raster for comparison, rasterLayer class object}

@@ -4,8 +4,7 @@
 \alias{breeding.density}
 \title{Breeding density areas (aka, core habitat areas)}
 \usage{
-breeding.density(x, pop, p = 0.75, bw = 6400, b = 8500,
-  self = TRUE)
+breeding.density(x, pop, p = 0.75, bw = 6400, b = 8500, self = TRUE)
 }
 \arguments{
 \item{x}{sp SpatialPointsDataFrame object}

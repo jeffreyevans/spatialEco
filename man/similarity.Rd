@@ -4,8 +4,14 @@
 \alias{similarity}
 \title{Ecological similarity}
 \usage{
-similarity(x, k = 4, method = "mahalanobis", frequency = TRUE,
-  scale = TRUE, ID = NULL)
+similarity(
+  x,
+  k = 4,
+  method = "mahalanobis",
+  frequency = TRUE,
+  scale = TRUE,
+  ID = NULL
+)
 }
 \arguments{
 \item{x}{data.frame containing ecological measures}

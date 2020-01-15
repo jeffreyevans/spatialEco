@@ -85,10 +85,10 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @seealso \code{\link[spatialEco]{focal.lmetrics}}
-#' @seealso \code{\link[SDMTools]{ConnCompLabel}}
-#' @seealso \code{\link[SDMTools]{PatchStat}} 
-#' @seealso \code{\link[SDMTools]{ClassStat}}
+#' @seealso \code{\link{focal.lmetrics}}
+#' @seealso \code{\link{ClassStat}}
+#' @seealso \code{\link{ConnCompLabel}}
+#' @seealso \code{\link{PatchStat}}
 #'
 #' @examples 
 #'  library(raster)
@@ -117,12 +117,12 @@ land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 10
         stop("MUST BE sp SpatialPointsDataFrame OR SpatialPolygonsDataFrame CLASS OBJECT")
     if (!inherits(y, "RasterLayer")) 
         stop("MUST BE raster CLASS OBJECT")
-    mnames <- c("class", "n.patches", "total.area", "prop.landscape", "patch.density", "total.edge", "edge.density", 
-        "landscape.shape.index", "largest.patch.index", "mean.patch.area", "sd.patch.area", "min.patch.area", "max.patch.area", 
-        "perimeter.area.frac.dim", "mean.perim.area.ratio", "sd.perim.area.ratio", "min.perim.area.ratio", "max.perim.area.ratio", 
-        "mean.shape.index", "sd.shape.index", "min.shape.index", "max.shape.index", "mean.frac.dim.index", "sd.frac.dim.index", 
-        "min.frac.dim.index", "max.frac.dim.index", "total.core.area", "prop.landscape.core", "mean.patch.core.area", 
-        "sd.patch.core.area", "min.patch.core.area", "max.patch.core.area", "prop.like.adjacencies", "aggregation.index", 
+    mnames <- c("class", "n.patches", "total.area", "prop.landscape", "patch.density", "total.edge", "edge.density",
+        "landscape.shape.index", "largest.patch.index", "mean.patch.area", "sd.patch.area", "min.patch.area", "max.patch.area",
+        "perimeter.area.frac.dim", "mean.perim.area.ratio", "sd.perim.area.ratio", "min.perim.area.ratio", "max.perim.area.ratio",
+        "mean.shape.index", "sd.shape.index", "min.shape.index", "max.shape.index", "mean.frac.dim.index", "sd.frac.dim.index",
+        "min.frac.dim.index", "max.frac.dim.index", "total.core.area", "prop.landscape.core", "mean.patch.core.area",
+        "sd.patch.core.area", "min.patch.core.area", "max.patch.core.area", "prop.like.adjacencies", "aggregation.index",
         "landscape.division.index", "splitting.index", "effective.mesh.size", "patch.cohesion.index")
 			
 	  if(is.numeric(metrics)) { metrics <- mnames[metrics] }
@@ -156,7 +156,7 @@ land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 10
             fr <- raster::rasterize(lsub, cr)
             lr <- raster::mask(x = cr, mask = fr)
         }
-      LM <- SDMTools::ClassStat(lr, cellsize = raster::res(cr)[1], bkgd = bkgd, latlon = latlon)[m.idx]
+      LM <- ClassStat(lr, cellsize = raster::res(cr)[1], bkgd = bkgd, latlon = latlon)[m.idx]
         if (is.null(LM)) {
 		  LM <- as.data.frame(array(0, dim=c( length(u), length(metrics))))
 		    LM[] <- NA

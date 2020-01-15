@@ -4,8 +4,7 @@
 \alias{annulus.matrix}
 \title{Annulus matrix}
 \usage{
-annulus.matrix(scale = 3, inner.scale = 0, outer.scale = 0,
-  null.value = 0)
+annulus.matrix(scale = 3, inner.scale = 0, outer.scale = 0, null.value = 0)
 }
 \arguments{
 \item{scale}{Number of rings (defines dimensions of matrix)}

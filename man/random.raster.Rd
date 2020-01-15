@@ -4,10 +4,20 @@
 \alias{random.raster}
 \title{Random raster}
 \usage{
-random.raster(r = NULL, n.row = 50, n.col = 50, n.layers = 1,
-  x = seq(1, 10), min = 0, max = 1, mean = 0, sd = 1, p = 0.5,
-  s = 1.5, distribution = c("random", "normal", "seq", "binominal",
-  "gaussian"))
+random.raster(
+  r = NULL,
+  n.row = 50,
+  n.col = 50,
+  n.layers = 1,
+  x = seq(1, 10),
+  min = 0,
+  max = 1,
+  mean = 0,
+  sd = 1,
+  p = 0.5,
+  s = 1.5,
+  distribution = c("random", "normal", "seq", "binominal", "gaussian")
+)
 }
 \arguments{
 \item{r}{Optional existing raster defining nrow/ncol}

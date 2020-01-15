@@ -4,8 +4,17 @@
 \alias{kendall}
 \title{Kendall tau trend with continuity correction for time-series}
 \usage{
-kendall(y, tau = TRUE, p.value = TRUE, z.value = TRUE,
-  confidence = TRUE, intercept = TRUE, prewhiten = FALSE, na.rm, ...)
+kendall(
+  y,
+  tau = TRUE,
+  p.value = TRUE,
+  z.value = TRUE,
+  confidence = TRUE,
+  intercept = TRUE,
+  prewhiten = FALSE,
+  na.rm,
+  ...
+)
 }
 \arguments{
 \item{y}{A vector representing a timeseries with >= 8 obs}

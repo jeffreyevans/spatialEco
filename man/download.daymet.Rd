@@ -4,9 +4,13 @@
 \alias{download.daymet}
 \title{Download DAYMET}
 \usage{
-download.daymet(years, tiles, data.type = "all",
+download.daymet(
+  years,
+  tiles,
+  data.type = "all",
   download.folder = getwd(),
-  http = "https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles")
+  http = "https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles"
+)
 }
 \arguments{
 \item{years}{Years to download (valid years 1980-2015)}

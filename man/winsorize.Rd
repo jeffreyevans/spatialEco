@@ -4,8 +4,13 @@
 \alias{winsorize}
 \title{Winsorize transformation}
 \usage{
-winsorize(x, min.value = NULL, max.value = NULL, p = c(0.05, 0.95),
-  na.rm = FALSE)
+winsorize(
+  x,
+  min.value = NULL,
+  max.value = NULL,
+  p = c(0.05, 0.95),
+  na.rm = FALSE
+)
 }
 \arguments{
 \item{x}{A numeric vector}

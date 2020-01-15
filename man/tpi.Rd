@@ -4,8 +4,7 @@
 \alias{tpi}
 \title{Topographic Position Index (tpi)}
 \usage{
-tpi(x, scale = 3, win = "rectangle", normalize = FALSE,
-  zero.correct = FALSE)
+tpi(x, scale = 3, win = "rectangle", normalize = FALSE, zero.correct = FALSE)
 }
 \arguments{
 \item{x}{A raster class object}

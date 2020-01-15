@@ -4,8 +4,15 @@
 \alias{subsample.distance}
 \title{Distance-based subsampling}
 \usage{
-subsample.distance(x, size, d, d.max = NULL, replacement = FALSE,
-  latlong = FALSE, echo = FALSE)
+subsample.distance(
+  x,
+  size,
+  d,
+  d.max = NULL,
+  replacement = FALSE,
+  latlong = FALSE,
+  echo = FALSE
+)
 }
 \arguments{
 \item{x}{A spatial polygons or points sp object}
@@ -47,8 +54,8 @@ sub.meuse <- subsample.distance(meuse, size = 10, d = 500, echo = TRUE)
 # Check distances	
 dm <- spDists(sub.meuse)
   diag(dm) <- NA
-cat("\\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\\n")  
-cat("Max distance for subsample", max(dm, na.rm=TRUE), "\\n") 
+cat("\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
+cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n") 
 
   # Subsample with a 500m minimum and 3500m maximum sample spread   
   sub.meuse <- subsample.distance(meuse, size = 10, d = 500, d.max = 3500)  
@@ -58,8 +65,8 @@ cat("Max distance for subsample", max(dm, na.rm=TRUE), "\\n")
   # Check distances		
   dm <- spDists(sub.meuse)
     diag(dm) <- NA
-  cat("Min distance for subsample", min(dm, na.rm=TRUE), "\\n")  
-  cat("Max distance for subsample", max(dm, na.rm=TRUE), "\\n")    
+  cat("Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
+  cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")    
 }
 
 }

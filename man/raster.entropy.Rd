@@ -4,8 +4,14 @@
 \alias{raster.entropy}
 \title{Raster Entropy}
 \usage{
-raster.entropy(x, d = 5, categorical = FALSE, global = FALSE,
-  filename = FALSE, ...)
+raster.entropy(
+  x,
+  d = 5,
+  categorical = FALSE,
+  global = FALSE,
+  filename = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Object of class raster (requires integer raster)}

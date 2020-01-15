@@ -4,8 +4,17 @@
 \alias{swvi}
 \title{Senescence weighted Vegetation Index (swvi)}
 \usage{
-swvi(red, nir, swir, green = NULL, mtvi = FALSE, senescence = 0,
-  threshold = NULL, weight.factor = NULL, ...)
+swvi(
+  red,
+  nir,
+  swir,
+  green = NULL,
+  mtvi = FALSE,
+  senescence = 0,
+  threshold = NULL,
+  weight.factor = NULL,
+  ...
+)
 }
 \arguments{
 \item{red}{Red band (0.636 - 0.673mm), landsat 5&7 band 3, OLI (landsat 8) band 4}

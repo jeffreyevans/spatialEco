@@ -2,10 +2,18 @@
 % Please edit documentation in R/knn.R
 \name{knn}
 \alias{knn}
-\title{Plot Spatial K nearest neighbor}
+\title{Spatial K nearest neighbor}
 \usage{
-knn(y, x, k = 1, d = NULL, ids = NULL, weights.y = NULL,
-  weights.x = NULL, indexes = FALSE)
+knn(
+  y,
+  x,
+  k = 1,
+  d = NULL,
+  ids = NULL,
+  weights.y = NULL,
+  weights.x = NULL,
+  indexes = FALSE
+)
 }
 \arguments{
 \item{y}{Spatial points or polygons object or coordinates matrix}

@@ -4,8 +4,15 @@
 \alias{daymet.point}
 \title{DAYMET point values}
 \usage{
-daymet.point(lat, long, start.year, end.year, site = NULL,
-  files = FALSE, echo = FALSE)
+daymet.point(
+  lat,
+  long,
+  start.year,
+  end.year,
+  site = NULL,
+  files = FALSE,
+  echo = FALSE
+)
 }
 \arguments{
 \item{lat}{latitude of point (decimal degrees WGS84)}

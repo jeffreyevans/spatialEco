@@ -4,8 +4,14 @@
 \alias{raster.kendall}
 \title{Kendall tau trend with continuity correction for raster time-series}
 \usage{
-raster.kendall(x, intercept = FALSE, p.value = FALSE,
-  confidence = FALSE, tau = FALSE, ...)
+raster.kendall(
+  x,
+  intercept = FALSE,
+  p.value = FALSE,
+  confidence = FALSE,
+  tau = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{A rasterStack object with at least 5 layers}

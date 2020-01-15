@@ -4,8 +4,7 @@
 \alias{correlogram}
 \title{Correlogram}
 \usage{
-correlogram(x, v, dist = 5000, dmatrix = FALSE, ns = 99,
-  latlong = FALSE, ...)
+correlogram(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = FALSE, ...)
 }
 \arguments{
 \item{x}{SpatialPointsDataFrame object}

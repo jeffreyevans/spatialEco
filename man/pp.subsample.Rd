@@ -4,8 +4,15 @@
 \alias{pp.subsample}
 \title{Point process random subsample}
 \usage{
-pp.subsample(x, n, window = "hull", sigma = "Scott", wts = NULL,
-  gradient = 1, edge = FALSE)
+pp.subsample(
+  x,
+  n,
+  window = "hull",
+  sigma = "Scott",
+  wts = NULL,
+  gradient = 1,
+  edge = FALSE
+)
 }
 \arguments{
 \item{x}{An sp class SpatialPointsDataFrame or SpatialPoints object}

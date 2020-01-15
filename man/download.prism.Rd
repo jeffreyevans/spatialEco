@@ -4,9 +4,15 @@
 \alias{download.prism}
 \title{Download PRISM}
 \usage{
-download.prism(data.type, date.range, time.step = "monthly",
-  download.folder = getwd(), by.year = FALSE, unzip.file = TRUE,
-  ftp.site = "ftp://prism.oregonstate.edu")
+download.prism(
+  data.type,
+  date.range,
+  time.step = "monthly",
+  download.folder = getwd(),
+  by.year = FALSE,
+  unzip.file = TRUE,
+  ftp.site = "ftp://prism.oregonstate.edu"
+)
 }
 \arguments{
 \item{data.type}{Specify climate metric ('ppt','tmin','tmax','tmean')}

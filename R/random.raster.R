@@ -13,7 +13,7 @@
 #' @param p              p-value for binominal distribution 
 #' @param s              sigma value for Gaussian distribution
 #' @param distribution   Available distributions, c("random", "normal", "seq", "binominal", "gaussian", "sample")
-
+#'
 #' @return RasterLayer or RasterStack object with random rasters
 #'
 #' @details Options for distributions are for random, normal, seq, binominal, gaussian and sample raster(s)
@@ -93,6 +93,6 @@ d <- distribution[1]
                     gaussian.kernel(sigma=s, n=max(c(i,j)))))) )		  
   } else {		  
     return( do.call(raster::stack, replicate(n.layers, 
-	          raster::raster(matrix(dist.fun(.n=n), i, j)))) )
+	                raster::raster(matrix(dist.fun(.n=n), i, j)))) )
   }	
 }

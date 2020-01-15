@@ -4,10 +4,21 @@
 \alias{crossCorrelation}
 \title{Spatial cross correlation}
 \usage{
-crossCorrelation(x, y = NULL, coords = NULL, w = NULL,
-  type = c("LSCI", "GSCI"), k = 1000, dist.function = "inv.power",
-  scale.xy = TRUE, scale.partial = FALSE, scale.matrix = FALSE,
-  alpha = 0.05, clust = FALSE, return.sims = FALSE)
+crossCorrelation(
+  x,
+  y = NULL,
+  coords = NULL,
+  w = NULL,
+  type = c("LSCI", "GSCI"),
+  k = 1000,
+  dist.function = "inv.power",
+  scale.xy = TRUE,
+  scale.partial = FALSE,
+  scale.matrix = FALSE,
+  alpha = 0.05,
+  clust = FALSE,
+  return.sims = FALSE
+)
 }
 \arguments{
 \item{x}{Vector of x response variables}

@@ -4,8 +4,7 @@
 \alias{optimal.k}
 \title{optimalK}
 \usage{
-optimal.k(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE,
-  ...)
+optimal.k(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ...)
 }
 \arguments{
 \item{x}{Numeric dataframe, matrix or vector}

@@ -4,8 +4,15 @@
 \alias{land.metrics}
 \title{Landscape metrics for points and polygons}
 \usage{
-land.metrics(x, y, bkgd = NA, metrics = c("prop.landscape"),
-  bw = 1000, latlon = FALSE, echo = TRUE)
+land.metrics(
+  x,
+  y,
+  bkgd = NA,
+  metrics = c("prop.landscape"),
+  bw = 1000,
+  latlon = FALSE,
+  echo = TRUE
+)
 }
 \arguments{
 \item{x}{SpatalPointsDataFrame or SpatalPolgonsDataFrame class object}
@@ -123,13 +130,13 @@ It is critical to note that if using polygon units that, the resulting metric re
 
 }
 \seealso{
-\code{\link[spatialEco]{focal.lmetrics}}
+\code{\link{focal.lmetrics}}
 
-\code{\link[SDMTools]{ConnCompLabel}}
+\code{\link{ClassStat}}
 
-\code{\link[SDMTools]{PatchStat}}
+\code{\link{ConnCompLabel}}
 
-\code{\link[SDMTools]{ClassStat}}
+\code{\link{PatchStat}}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

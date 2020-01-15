@@ -4,8 +4,14 @@
 \alias{separability}
 \title{separability}
 \usage{
-separability(x, y, plot = FALSE, cols = c("red", "blue"),
-  clabs = c("Class1", "Class2"), ...)
+separability(
+  x,
+  y,
+  plot = FALSE,
+  cols = c("red", "blue"),
+  clabs = c("Class1", "Class2"),
+  ...
+)
 }
 \arguments{
 \item{x}{X vector}

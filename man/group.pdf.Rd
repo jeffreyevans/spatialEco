@@ -4,8 +4,16 @@
 \alias{group.pdf}
 \title{Probability density plot by group}
 \usage{
-group.pdf(x, y, col = NULL, lty = NULL, lwd = NULL, lx = "topleft",
-  ly = NULL, ...)
+group.pdf(
+  x,
+  y,
+  col = NULL,
+  lty = NULL,
+  lwd = NULL,
+  lx = "topleft",
+  ly = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Numeric, character or factorial vector of grouping variable (must be same length as y)}

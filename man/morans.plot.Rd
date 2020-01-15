@@ -4,9 +4,16 @@
 \alias{morans.plot}
 \title{Autocorrelation Plot}
 \usage{
-morans.plot(x, y = NULL, coords = NULL, type.ac = c("xy", "yx"),
-  dist.function = "inv.power", scale.xy = TRUE, scale.morans = FALSE,
-  ...)
+morans.plot(
+  x,
+  y = NULL,
+  coords = NULL,
+  type.ac = c("xy", "yx"),
+  dist.function = "inv.power",
+  scale.xy = TRUE,
+  scale.morans = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector of x response variables}

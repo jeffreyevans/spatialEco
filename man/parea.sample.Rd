@@ -4,8 +4,15 @@
 \alias{parea.sample}
 \title{Percent area sample}
 \usage{
-parea.sample(x, pct = 0.1, join = FALSE, msamp = 1, sf = 4046.86,
-  stype = "hexagonal", ...)
+parea.sample(
+  x,
+  pct = 0.1,
+  join = FALSE,
+  msamp = 1,
+  sf = 4046.86,
+  stype = "hexagonal",
+  ...
+)
 }
 \arguments{
 \item{x}{sp SpatialPolygonsDataFrame object}

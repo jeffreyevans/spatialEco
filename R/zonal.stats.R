@@ -57,10 +57,9 @@ zonal.stats <- function(x, y, stats = c("min", "mean", "max")) {
         stop("y must be a raster (layer, stack, brick) class object")
     if (class(x) != "SpatialPolygonsDataFrame") 
         stop("x must be a SpatialPolygonsDataFrame object")
-  rvx <- velox::velox(y) 
-    ldf <- rvx$extract(sp = x)
-	  names(ldf) <- row.names(x)
-	  
+    rvx <- velox::velox(y) 
+      ldf <- rvx$extract(sp = x)
+	    names(ldf) <- row.names(x)	  
     stats.fun <- function(x, m = stats) {
 	  slist <- list()
         for(i in 1:length(m)) {

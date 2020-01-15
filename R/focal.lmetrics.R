@@ -75,10 +75,7 @@
 #'   plot(ai)
 #' }
 #' 
-#' @seealso \code{\link[spatialEco]{land.metrics}}
-#' @seealso \code{\link[SDMTools]{ConnCompLabel}}
-#' @seealso \code{\link[SDMTools]{PatchStat}} 
-#' @seealso \code{\link[SDMTools]{ClassStat}}
+#' @seealso \code{\link{ClassStat}}, \code{\link{ConnCompLabel}}, \code{\link{PatchStat}}
 #'
 #' @export 
 focal.lmetrics <- function(x, w = 5, bkg = 0, land.value = 1, 
@@ -105,7 +102,7 @@ focal.lmetrics <- function(x, w = 5, bkg = 0, land.value = 1,
                       rcs = cs, latlongs = latlong, lm.idx = m.idx) {
     m <- matrix(v, nrow = window.size[1], ncol = window.size[2], byrow = TRUE)
       m <- ifelse(m != focal.values, bkgs, 1)	
-    return( as.numeric(SDMTools::ClassStat(m, bkgd = bkgs, cellsize = rcs, 
+    return( as.numeric(ClassStat(m, bkgd = bkgs, cellsize = rcs, 
 	        latlon = latlongs))[lm.idx] )
   } 
   return( raster::focal(x, w = matrix(1,window.size[1], ncol = window.size[2]), fun=lmetric) )  

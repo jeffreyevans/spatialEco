@@ -4,8 +4,15 @@
 \alias{poly.regression}
 \title{Local Polynomial Regression}
 \usage{
-poly.regression(y, x = NULL, s = 0.75, impute = FALSE,
-  na.only = FALSE, ci = FALSE, ...)
+poly.regression(
+  y,
+  x = NULL,
+  s = 0.75,
+  impute = FALSE,
+  na.only = FALSE,
+  ci = FALSE,
+  ...
+)
 }
 \arguments{
 \item{y}{Vector to smooth or impute NA values}

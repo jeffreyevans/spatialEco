@@ -4,8 +4,17 @@
 \alias{raster.modifed.ttest}
 \title{Dutilleul moving window bivariate raster correlation}
 \usage{
-raster.modifed.ttest(x, y, x.idx = 1, y.idx = 1, d = "AUTO",
-  sub.sample = FALSE, type = "hexagon", p = 0.1, size = NULL)
+raster.modifed.ttest(
+  x,
+  y,
+  x.idx = 1,
+  y.idx = 1,
+  d = "AUTO",
+  sub.sample = FALSE,
+  type = "hexagon",
+  p = 0.1,
+  size = NULL
+)
 }
 \arguments{
 \item{x}{x raster for correlation, SpatialPixelsDataFrame or SpatialGridDataFrame object}

@@ -4,8 +4,16 @@
 \alias{sample.line}
 \title{Systematic or random point sample of line(s)}
 \usage{
-sample.line(x, d = 100, p = NULL, n = NULL, type = "regular",
-  longlat = FALSE, min.samp = 1, ...)
+sample.line(
+  x,
+  d = 100,
+  p = NULL,
+  n = NULL,
+  type = "regular",
+  longlat = FALSE,
+  min.samp = 1,
+  ...
+)
 }
 \arguments{
 \item{x}{sp class SpatialLinesDataFrame object}
