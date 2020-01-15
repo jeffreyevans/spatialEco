@@ -150,7 +150,7 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
       stop("Not a valid matrix option")
     }
   } else {
-    if(!class(w) == "matrix") stop("Spatial weights must be in matrix form")					   
+    if(!class(w)[1] == "matrix") stop("Spatial weights must be in matrix form")					   
       if(ncol(w) != length(x) | nrow(w) != length(x)) stop("Spatial weights matrix must be symmetrical and match x")		   
         w[which(is.na(w))] <- 0
           if(scale.matrix) {

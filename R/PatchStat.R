@@ -38,19 +38,14 @@
 #' identified in a matrix of data. The matrix can be a raster of class 'asc'
 #' (adehabitat package), 'RasterLayer' (raster package) or
 #' 'SpatialGridDataFrame' (sp package).
-#' 
-#' The patch statistics are based on statistics calculated by fragstats
-#' \url{http://www.umass.edu/landeco/research/fragstats/fragstats.html}.
-#'
+#'      
 #' @author Jeremy VanDerWal (code from depreciated/orphaned SDMTools package)
-#'
 #'
 #' @references 
 #' McGarigal, K., S. A. Cushman, M. C. Neel, and E. Ene. (2002).
 #' FRAGSTATS: Spatial Pattern Analysis Program for Categorical Maps. Computer
 #' software program produced by the authors at the University of Massachusetts,
-#' Amherst. Available at the following web site:
-#' \url{www.umass.edu/landeco/research/fragstats/fragstats.html}
+#' Amherst.
 #'
 #' @examples 
 #' library(raster)

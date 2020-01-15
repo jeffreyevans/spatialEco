@@ -19,8 +19,8 @@
 #'       that for point to point neighbor selections use the knn function. 
 #'
 #' @note Valid spatial predicates include: intersect, touches, covers, contains, proximity and 
-#'       contingency. Please see \url{https://en.wikipedia.org/wiki/DE-9IM/} for detailed 
-#'       information on the DE-9IM topology model. 
+#'       contingency. See [DE-9IM topology model](https://en.wikipedia.org/wiki/DE-9IM) for 
+#'       detailed information on data predicates. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'                                                                    
