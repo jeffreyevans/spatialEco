@@ -4,7 +4,9 @@
 #' @param y vector of binomial response variable used in model
 #' @param p estimated probabilities from fit binomial model 
 #'
-#' @return A list class object with the following components: 
+#' @return list object with: concordance, discordance, tied and pairs    
+#'
+#' @details returns a list class object with the following components: 
 #' * concordance - percent of positives that are greater than probabilities of nulls
 #' * discordance - concordance inverse of concordance representing null class
 #' * tied - number of tied probabilities
