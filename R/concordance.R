@@ -5,10 +5,11 @@
 #' @param p estimated probabilities from fit binomial model 
 #'
 #' @return A list class object with the following components: 
-#' @return  concordance  percent of positives that are greater than probabilities of nulls
-#' @return  is concordance inverse of concordance representing null class
-#' @return  tied number of tied probabilities
-#' @return  pairs number of pairs compared
+#' * concordance - percent of positives that are greater than probabilities of nulls
+#' * discordance - concordance inverse of concordance representing null class
+#' * tied - number of tied probabilities
+#' * pairs - number of pairs compared
+#' @md
 #'
 #' @note
 #' Test of binomial regression for the hypothesis that probabilities of all positives [1], 

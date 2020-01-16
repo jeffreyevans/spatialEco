@@ -119,7 +119,6 @@ spatialEco_1.2-0
 * Added function "focal.lmetrics" for calculating moving window landscape metrics
 * Added function "sample.distance" for distance lagged sampling
 * Added function "wt.centroids" Creates centroid of [x,y] coordinates based on a weights field
-* Added function "subsample.distance" Minimum, and optional maximum, distance constrained sub-sampling
 
 spatialEco_1.2-1
 =================
@@ -128,10 +127,23 @@ spatialEco_1.2-1
 * Bug fix to "trasp" Missing parenthesis, thanks to Monika Anna Tomaszewska for reporting this mistake.
 * Added function "knn" to find nearest neighbors between two spatial objects, with optional search radius
 
-spatialEco_1.2-2
+spatialEco_1.3-0
 =================
 * Added function "spatial.select" to perform a selection (subset) of a feature class based on a polygon(s) feature
+* Added function "random.raster" for creating various random rasters or stacks
+* Added function "shift" for shifting a vector by specified positive or negative lag
+* Added function "explode" for exploding multipart to singlepart feature geometry 
+* Added function "nth.values" for returning the Nth highest or lowest value(s) in a vector
+* Added function "overlap" comparing the similarity of two niche estimates using Warren's-I
 * Feature Enhancement "knn" expanded to accept "weights" or covariates for multivariate case
 * Fixed bug "sp.ked" Error with defined extent in newdata
 * Feature Enhancement "sp.ked" added row (nr) and column (nc) dimension arguments, replacing n. 
 * Enhancement to "zonal.stats" leveraging velox extract speed
+* Added function dependencies from orphaned CRAN package SDMTools (attributed to original author)
+    Associated SDMTools functions include:
+	  - connected.pixels
+      - ClassStat
+	  - PatchStat
+	  - asc.from.raster
+	  - spheroid.distance
+	  - grid.info

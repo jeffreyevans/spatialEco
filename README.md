@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.2-1, developement 1.2-2) 
+# spatialEco (CRAN 1.3-0, developement 1.3-1) 
 
 [![CRAN
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -13,7 +13,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-# Available functions in spatialEco 1.2-2 are:
+# Available functions in spatialEco 1.3-0 are:
 
 
     annulus.matrix - Creates a 0,1 matrix based on defined annulus parameters, can be used as a window
@@ -66,6 +66,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     effect.size - Cohen's-d effect size with pooled sd for a control and experimental group 
     
     erase.points - Erases points inside or outside a polygon feature class
+    
+	explode - Explodes multi-part to single-part feature geometry
     
     focal.lmetrics - Landscape metrics using a focal window
     
@@ -131,6 +133,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     outliers - Identify outliers using modified Z-score  
     
+	overlap - For comparing the similarity of two niche estimates using Warren's-I
+	
     parea.sample - Creates a systematic or random point sample of polygons where n is based on percent area of 
                   each polygon
     
@@ -155,6 +159,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     pseudo.absence - Generates pseudo-absence samples based on the spatial intensity function of known species locations. 
                     This is akin to distance constrained but is informed by the spatial process of the observed data 
                     and is drawn from a probabilistic sample following the intensity function.       
+
+    random.raster - creates random rasters or stacks of defined dimensions and statistical distributions
     
     raster.change - Compares two categorical rasters with a variety of statistical options 
     
@@ -203,7 +209,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     shannons - Calculates Shannon's Diversity Index and Shannon's Evenness Index
     
-    shift (dev) - Shifts a vector by n lags without changing its length, can specify fill values 
+    shift - Shifts a vector by n lags without changing its length, can specify fill values 
     
     similarity - Uses row imputation to identify "k" ecological similar observations
     

@@ -40,8 +40,8 @@ Performs a spatial select of features based on an overlay of a polygon (x),
       that for point to point neighbor selections use the knn function.
 
 Valid spatial predicates include: intersect, touches, covers, contains, proximity and 
-      contingency. Please see \url{https://en.wikipedia.org/wiki/DE-9IM/} for detailed 
-      information on the DE-9IM topology model.
+      contingency. See [DE-9IM topology model](https://en.wikipedia.org/wiki/DE-9IM) for 
+      detailed information on data predicates.
 }
 \examples{
 library(raster)
@@ -112,7 +112,7 @@ spatial.select(spolys, predicate = "contingency", neighbors = "rook")
 
 \code{\link[rgeos]{gWithinDistance}} for details on proximity predicate
 
-\url{https://en.wikipedia.org/wiki/DE-9IM/} for details on DE-9IM topology model
+\url{https://en.wikipedia.org/wiki/DE-9IM} for details on DE-9IM topology model
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

@@ -132,7 +132,7 @@ image(t(ccl.mat[10:1,]),col=c("grey",rainbow(length(unique(ccl.mat))-1)))
 McGarigal, K., S. A. Cushman, M. C. Neel, and E. Ene. 2002.
 FRAGSTATS: Spatial Pattern Analysis Program for Categorical Maps. Computer
 software program produced by the authors at the University of Massachusetts,
-Amherst. \href{www.umass.edu/landeco/research/fragstats/fragstats.html}{Available at the following web site}
+Amherst.
 }
 \author{
 Jeremy VanDerWal (code from depreciated/orphaned SDMTools package)
