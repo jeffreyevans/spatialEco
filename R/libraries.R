@@ -36,7 +36,7 @@ libraries <- function(x, add = FALSE, install = TRUE, check.source = TRUE,
       if(getOption("repos")["CRAN"] == "@CRAN@")
         options(repos="https://cloud.r-project.org/") 
 	} else {
-	  mirrors <- read.csv(file.path(R.home(), "/doc/CRAN_mirrors.csv"))$URL
+	  mirrors <- utils::read.csv(file.path(R.home(), "/doc/CRAN_mirrors.csv"))$URL
 	    if(!repository %in% mirrors)
 		  stop("Not a valid repository mirror")
 	  options(repos=repository)  
@@ -52,11 +52,13 @@ libraries <- function(x, add = FALSE, install = TRUE, check.source = TRUE,
 	  cat("\n\n", "The following packages are not available on this mirror:", "\n",  
                 paste(pmiss, collapse=", "), "\n\n")    
 	    xprint <- x[-which(x %in% pmiss)]
+	} else {
+	  xprint <- x
 	}
     if (is.null(lib)) {
       lib <- .libPaths()[1L]
       if(length(.libPaths()) > 1L) 
-        message(sprintf(ngettext(length(pkgs), "Installing package into %s\n(as %s is unspecified)", 
+        message(sprintf(ngettext(length(x), "Installing package into %s\n(as %s is unspecified)", 
                 "Installing packages into %s\n(as %s is unspecified)"), 
                 sQuote(lib), sQuote("lib")), domain = NA)
     }
@@ -83,13 +85,13 @@ libraries <- function(x, add = FALSE, install = TRUE, check.source = TRUE,
       userdir <- unlist(strsplit(Sys.getenv("R_LIBS_USER"), .Platform$path.sep))[1L]
     }
   lib.path <- normalizePath(lib)
-  pkg <- as.data.frame(installed.packages())
+  pkg <- as.data.frame(utils::installed.packages())
   for(i in 1:length(x)) {
     if(!x[i] %in% pkg$Package) { 
       cat(x[i], " is not installed","\n\n")
       if(install) {
         cat("    Installing", x[i], "to", file.path(R.home(), "library"), "\n\n")	  
-	      try( install.packages(x[i], lib = lib.path) )
+	      try( utils::install.packages(x[i], lib = lib.path) )
 		if(add) require(x[i], quietly = TRUE, character.only = TRUE)
       }	  
 	} else {
