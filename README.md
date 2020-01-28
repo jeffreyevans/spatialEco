@@ -104,7 +104,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                   distance. This is similar to the moving window in Fragstats but, uses either a buffer for each 
                   point or a zonal approach with polygons, to derive local metrics. 
     
-    local.min.max - Calculates the local minimums and maximums in a numeric vector, indicating inflection points 
+    libraries - Checks package(s) install, optionally installs and adds to namespace environment
+	
+	local.min.max - Calculates the local minimums and maximums in a numeric vector, indicating inflection points 
                    in the distribution.   
     
     loess.boot - Bootstrap of a Local Polynomial Regression (loess)

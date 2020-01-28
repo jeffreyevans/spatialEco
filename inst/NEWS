@@ -147,3 +147,8 @@ spatialEco_1.3-0
 	  - asc.from.raster
 	  - spheroid.distance
 	  - grid.info
+
+spatialEco_1.3-1
+=================
+* Added function "libraries" for checking install, installing and adding packages to namespace environment
+

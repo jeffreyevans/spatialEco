@@ -4,20 +4,18 @@
 #' @param y vector of binomial response variable used in model
 #' @param p estimated probabilities from fit binomial model 
 #'
-#' @return list object with: concordance, discordance, tied and pairs    
-#'
-#' @details returns a list class object with the following components: 
-#' * concordance - percent of positives that are greater than probabilities of nulls
-#' * discordance - concordance inverse of concordance representing null class
-#' * tied - number of tied probabilities
-#' * pairs - number of pairs compared
-#' @md
+#' @return list object with: concordance, discordance, tied and pairs
 #'
 #' @note
 #' Test of binomial regression for the hypothesis that probabilities of all positives [1], 
 #' are greater than the probabilities of the nulls [0]. The concordance would be 100% 
 #' for a perfect model where, disconcordance is the inverse of concordance, representing 
 #' the null. The C-statistic has been show to be comparable to the area under an ROC
+#'
+#' Results are: concordance - percent of positives that are greater than probabilities 
+#'              of nulls. discordance - concordance inverse of concordance representing 
+#'              the null class, tied - number of tied probabilities and pairs - number of 
+#'              pairs compared
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
