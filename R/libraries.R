@@ -37,7 +37,7 @@ libraries <- function(x, add = FALSE, install = TRUE, check.source = TRUE,
         options(repos="https://cloud.r-project.org/") 
 	} else {
 	  mirrors <- utils::read.csv(file.path(R.home(), "/doc/CRAN_mirrors.csv"))$URL
-	    if(!repository %in% mirrors)
+	    if( length(grep(repository, mirrors)) < 1 )
 		  stop("Not a valid repository mirror")
 	  options(repos=repository)  
     }		  
