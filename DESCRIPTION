@@ -31,6 +31,7 @@ Imports:
     yaImpute,
 	SpatialPack (>= 0.3),
 	MASS,
+	mgcv,
 	EnvStats,
 	maptools,
     methods,

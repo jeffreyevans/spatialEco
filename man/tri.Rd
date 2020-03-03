@@ -7,11 +7,13 @@
 tri(r, s = 3, exact = TRUE, file.name = NULL, ...)
 }
 \arguments{
-\item{r}{raster class object}
+\item{r}{RasterLayer class object}
 
-\item{s}{Scale of window. Must be odd number, can represent 2 dimensions (eg., s=c(3,5) would represent a 3 x 5 window)}
+\item{s}{Scale of window. Must be odd number, can represent 2 
+dimensions (eg., s=c(3,5) would represent a 3 x 5 window)}
 
-\item{exact}{Calculate (TRUE/FALSE) the exact TRI or an algebraic approximation.}
+\item{exact}{Calculate (TRUE/FALSE) the exact TRI or an algebraic 
+approximation.}
 
 \item{file.name}{Name of output raster (optional)}
 
@@ -24,7 +26,9 @@ raster class object or raster written to disk
 Implementation of the Riley et al (1999) Terrain Ruggedness Index
 }
 \note{
-The algebraic approximation is considerably faster. However, because inclusion of the center cell, the larger the scale the larger the divergence of the minimum value
+The algebraic approximation is considerably faster. However, because 
+      inclusion of the center cell, the larger the scale the larger the divergence 
+      of the minimum value.
 
 Recommended ranges for classifying Topographic Ruggedness Index
 
@@ -36,7 +40,7 @@ Recommended ranges for classifying Topographic Ruggedness Index
 
 162-239 (4) intermediately rugged surface.
 
-240-497 (5) oderately rugged surface.
+240-497 (5) moderately rugged surface.
 
 498-958 (6) highly rugged surface.
 
@@ -55,7 +59,9 @@ Depends: raster
 
 }
 \references{
-Riley, S.J., S.D. DeGloria and R. Elliot (1999) A terrain ruggedness index that quantifies topographic heterogeneity, Intermountain Journal of Sciences 5(1-4):23-27.
+Riley, S.J., S.D. DeGloria and R. Elliot (1999) A terrain 
+              ruggedness index that quantifies topographic heterogeneity, 
+              Intermountain Journal of Sciences 5(1-4):23-27.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>
