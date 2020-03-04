@@ -27,7 +27,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     classBreaks - for finding class breaks in a distribution
     
     class.comparison - Compares two nominal rasters
-    
+        
+	colinear - Test for linear or nonlinear collinearity/correlation in data
+		
     correlogram - Calculates and plots a correlogram (spatially lagged correlations, "pearson", 
                  "kendall" or "spearman")
     
@@ -142,7 +144,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
 	parse.bits - Based on integer value, pulls value(s) of specified bit(s)
 	
-    plot.effect.size - Plot generic for effect size
+    parial.cor - Partial and Semi-partial correlation
+	
+	plot.effect.size - Plot generic for effect size
     
     plot.loess.boot - Plot generic for loess boot     
     
