@@ -66,15 +66,15 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
 	deletecol <- rep(FALSE,length(colnames(x)))
   	  names(deletecol) <- colnames(x)			
       for (i in 1:nrow(perm)) {
-        x.name = as.vector(perm[,1])[i]
-		y.name = as.vector(perm[,2])[i] 
+        x.name = paste0("^", as.vector(perm[,1])[i], "$")
+		y.name = paste0("^", as.vector(perm[,2])[i], "$") 
 		cat("evaluating", x.name, "and", y.name, "\n") 
         nl.cor <- nlcor(x[,grep(y.name, colnames(x))], 
 		                x[,grep(x.name, colnames(x))], 
 						pv = p.value )
 		  if(nl.cor > p) {
-            deletecol[grep(y.name, names(deletecol))] <- TRUE      		  
-            cat("Nonlinear correlation between ", x.name, "and ", y.name, 
+            deletecol[grep(y.name, names(deletecol))] <- TRUE
+            cat("Nonlinear correlation between ", x.name, "and ", y.name,
                  " = ", nl.cor, "\n")
             cat("   recommend dropping", y.name, "\n", "\n")
           } 
