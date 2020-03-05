@@ -66,11 +66,11 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
 	deletecol <- rep(FALSE,length(colnames(x)))
   	  names(deletecol) <- colnames(x)			
       for (i in 1:nrow(perm)) {
-        x.name = paste0("^", as.vector(perm[,1])[i], "$")
-		y.name = paste0("^", as.vector(perm[,2])[i], "$") 
+        x.name = as.vector(perm[,1])[i]
+		y.name = as.vector(perm[,2])[i]
 		cat("evaluating", x.name, "and", y.name, "\n") 
-        nl.cor <- nlcor(x[,grep(y.name, colnames(x))], 
-		                x[,grep(x.name, colnames(x))], 
+        nl.cor <- nlcor(x[,grep(paste0("^", y.name, "$"), colnames(x))], 
+		                x[,grep(paste0("^", x.name, "$"), colnames(x))], 
 						pv = p.value )
 		  if(nl.cor > p) {
             deletecol[grep(y.name, names(deletecol))] <- TRUE
