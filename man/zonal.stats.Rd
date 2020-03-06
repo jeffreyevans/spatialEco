@@ -28,6 +28,7 @@ Depends: sp, raster, velox
 \examples{
 library(raster)
 library(sp)                                                                          
+
 # skewness function
 skew <- function(x, na.rm = FALSE) { 
    if (na.rm) 

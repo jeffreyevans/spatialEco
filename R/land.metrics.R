@@ -121,13 +121,11 @@ land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 10
         "min.frac.dim.index", "max.frac.dim.index", "total.core.area", "prop.landscape.core", "mean.patch.core.area",
         "sd.patch.core.area", "min.patch.core.area", "max.patch.core.area", "prop.like.adjacencies", "aggregation.index",
         "landscape.division.index", "splitting.index", "effective.mesh.size", "patch.cohesion.index")
-			
 	  if(is.numeric(metrics)) { metrics <- mnames[metrics] }
 	    metrics <- unique(c("class", metrics))	
           m.idx <- unique(which( mnames %in% metrics))
 	         if(!length(m.idx) == length(metrics)) 
-	            stop("Non-valid metrics specified") 
-		  
+	            stop("Non-valid metrics specified") 		  
 	u <- raster::unique(y)
 	  if(bkgd %in% u) { u <- u[-which(u == bkgd)] }
 	results <- list()
@@ -141,24 +139,17 @@ land.metrics <- function(x, y, bkgd = NA, metrics = c("prop.landscape"), bw = 10
       if (echo == TRUE) cat("Processing observation -", j, "\n")
       lsub <- x[j,]
         if (class(lsub) == "SpatialPointsDataFrame") {
-            f <- rgeos::gBuffer(lsub, width = bw, joinStyle = "ROUND", quadsegs = 10)
-			fext <- methods::as(raster::extent(f), "SpatialPolygons") 
-            cr <- raster::crop(y, fext, snap = "out")
-            crop.NA <- raster::setValues(cr, NA)
-            fr <- raster::rasterize(f, cr)
-            lr <- raster::mask(x = cr, mask = fr)
-        } else if (class(lsub) == "SpatialPolygonsDataFrame") { 
-            cr <- raster::crop(y, raster::extent(lsub), snap = "out")
-            crop.NA <- raster::setValues(cr, NA)
-            fr <- raster::rasterize(lsub, cr)
-            lr <- raster::mask(x = cr, mask = fr)
+          f <- rgeos::gBuffer(lsub, width = bw, joinStyle = "ROUND", quadsegs = 10)
+		  lr <- mask(raster::crop(y, f, snap = "out"), f)
+        } else if (class(lsub) == "SpatialPolygonsDataFrame") {
+          lr <- mask(raster::crop(y, x, snap = "out"), x)		
         }
-      LM <- ClassStat(lr, cellsize = raster::res(cr)[1], bkgd = bkgd, latlon = latlon)[m.idx]
+      LM <- ClassStat(lr, cellsize = raster::res(lr)[1], bkgd = bkgd, latlon = latlon)[m.idx]
         if (is.null(LM)) {
-		  LM <- as.data.frame(array(0, dim=c( length(u), length(metrics))))
+		  LM <- as.data.frame(array(0, dim=c(length(u), length(metrics))))
 		    LM[] <- NA
-              names(LM) <- mnames[m.idx]
-			 rownames(LM) <- u
+            names(LM) <- mnames[m.idx]
+		  rownames(LM) <- u
         }
  	for( n in names(results) ) {
       lm.class <- LM[which(LM$class == n),]

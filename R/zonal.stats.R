@@ -20,6 +20,7 @@
 #' @examples
 #' library(raster)
 #' library(sp)                                                                          
+#'
 #' # skewness function
 #' skew <- function(x, na.rm = FALSE) { 
 #'    if (na.rm) 
@@ -49,17 +50,18 @@
 #'   ( z <- data.frame(ID = as.numeric(as.character(row.names(p@@data))), 
 #'                     SKEW=z.skew, PCT=z.pct) )  
 #'
-#' @import velox
-#' @export
+#' @export zonal.stats
 zonal.stats <- function(x, y, stats = c("min", "mean", "max")) {
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
-    if (class(y) != "RasterLayer" & class(y) != "RasterStack" & class(y) != "RasterBrick") 
+    if (!any(class(y)[1] == c("RasterLayer", "RasterStack", "RasterBrick"))) 
         stop("y must be a raster (layer, stack, brick) class object")
-    if (class(x) != "SpatialPolygonsDataFrame") 
-        stop("x must be a SpatialPolygonsDataFrame object")
-    rvx <- velox::velox(y) 
-      ldf <- rvx$extract(sp = x)
-	    names(ldf) <- row.names(x)	  
+    if (!any(class(x)[1] == c("SpatialPolygonsDataFrame", "sf"))) 
+        stop("x must be a SpatialPolygonsDataFrame or sf POLYGON object")
+    if(inherits(x, "SpatialPolygonsDataFrame")) {
+	  x <- sf::st_as_sf(x)
+	}  
+    ldf <- exactextractr::exact_extract(y, x, progress = FALSE)
+	  names(ldf) <- row.names(x)
+    ldf <- lapply(ldf, FUN = function(x) as.data.frame(x[,-which(names(x) %in% "coverage_fraction")]))
     stats.fun <- function(x, m = stats) {
 	  slist <- list()
         for(i in 1:length(m)) {
