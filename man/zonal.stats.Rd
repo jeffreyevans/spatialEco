@@ -20,10 +20,10 @@ data.frame, nrow(x) and ncol of function results
 Polygon zonal statistics of a raster
 }
 \note{
-This function calculates the zonal statistics between a polygon vector object and a raster. 
-  This provides the advantage of being able to accept any custom function, passed to the 'stats'
-
-Depends: sp, raster, velox
+This function calculates the zonal statistics between a polygon vector 
+object and a raster. This provides the advantage of being able to accept 
+any custom function, passed to the 'stats' argument. Please note that 
+any custom function needs to have a 'na.rm' argument.
 }
 \examples{
 library(raster)
