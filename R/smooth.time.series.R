@@ -38,41 +38,45 @@
 #'  
 #' @export smooth.time.series
 smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) { 
-  if(class(x) != "RasterStack" & 
-     class(x) != "RasterBrick" & 
-     class(x) != "SpatialPixelsDataFrame" & 
-     class(x) != "SpatialGridDataFrame")
-    stop("x must be a raster stack, brick of sp raster class object")
-	
-  impute.loess <- function(y, x.length = NULL, s = f, sdata = smooth.data, 
-                           na.rm, ...) {
-    if(is.null(x.length)) { x.length = length(y) }
-      options(warn=-1)  
-	#if( length(na.omit(x)) < 2 )  
-      x <- 1:x.length
-  	  p <- stats::loess(y ~ x, span = s, data.frame(x=x, y=y))
-  	if(sdata == TRUE) {
-  	  y <- stats::predict(p, x)
-  	} else {
-      na.idx <- which( is.na(y) )
-        if( length(na.idx) > 1 ) {
-          y[na.idx] <- stats::predict(p, data.frame(x=na.idx))
-  	    }
-    }  
-    return(y)
-  }
-  if(class(x) == "RasterStack" | class(x) == "RasterBrick") { 
-    if(raster::nlayers(x) < 5)
+  if(any(class(x) != c("RasterStack","RasterBrick", "SpatialPixelsDataFrame", 
+                       "SpatialGridDataFrame")))
+    stop("x must be a raster stack, brick of sp raster class object")	
+  impute.loess <- function(y, x.length = NULL, s = 0.2, 
+                           sdata = FALSE, na.rm, ...) {		 
+         if (is.null(x.length)) {
+            x.length = length(y)
+         }
+  	   if(length(y[!is.na(y)]) < 8) {
+  	     warning("Fewer than 8 real-value observations, assigning NA")
+  		   y <- rep(NA, x.length)
+  	   } else {			   
+         options(warn = -1)
+           x <- 1:x.length
+             p <- stats::loess(y ~ x, span = s, 
+  		             data.frame(x = x, y = y))
+         if (sdata == TRUE) {
+             y <- stats::predict(p, x)
+         } else {
+             na.idx <- which(is.na(y))
+             if (length(na.idx) > 1) {
+               y[na.idx] <- stats::predict(p, data.frame(x = na.idx))
+             }
+           }
+  	     options(warn=0)  
+  	   }
+     return(y)
+   }
+  if(any(class(x) == c("RasterStack", "RasterBrick"))) { 
+    if(raster::nlayers(x) < 8)
       warning("function is intended for imputing missing values 
-	           in multi-temporal data\n      < 5 observations is questionable\n")
+	           in multi-temporal data\n      < 8 observations is questionable\n")
     #return( raster::calc(x, fun=impute.loess, ...) )
-	return( raster::overlay(x, fun=impute.loess, unstack=TRUE, forcefun=FALSE, ...) )
-  } else if(class(x) == "SpatialPixelsDataFrame" | class(x) == "SpatialGridDataFrame") {
-      if(raster::ncol(x) < 5)
+	return( raster::overlay(x, fun = impute.loess, unstack = TRUE, forcefun = FALSE, ...) )
+  } else if(any(class(x) == c("SpatialPixelsDataFrame","SpatialGridDataFrame"))) {
+      if(raster::ncol(x) < 8)
         warning("function is intended for imputing missing values 
-	             in multi-temporal data\n      < 5 observations is questionable\n")
+	             in multi-temporal data\n      < 8 observations is questionable\n")
     return( x@data <- as.data.frame(t(apply(x@data, MARGIN=1, FUN = impute.loess, 
 	                               x.length = ncol(x)))) ) 
-  }
-  
+  }  
 }

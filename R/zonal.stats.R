@@ -9,11 +9,10 @@
 #' data.frame, nrow(x) and ncol of function results
 #'
 #' @note
-#' This function calculates the zonal statistics between a polygon vector object and a raster. 
-#'   This provides the advantage of being able to accept any custom function, passed to the 'stats' 
-#    argument. Please note that any custom function needs to have a 'na.rm' argument.     
-#'
-#' @note Depends: sp, raster, velox
+#' This function calculates the zonal statistics between a polygon vector 
+#' object and a raster. This provides the advantage of being able to accept 
+#' any custom function, passed to the 'stats' argument. Please note that 
+#' any custom function needs to have a 'na.rm' argument.     
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -53,9 +52,9 @@
 #' @export zonal.stats
 zonal.stats <- function(x, y, stats = c("min", "mean", "max")) {
     if (!any(class(y)[1] == c("RasterLayer", "RasterStack", "RasterBrick"))) 
-        stop("y must be a raster (layer, stack, brick) class object")
+      stop("y must be a raster (layer, stack, brick) class object")
     if (!any(class(x)[1] == c("SpatialPolygonsDataFrame", "sf"))) 
-        stop("x must be a SpatialPolygonsDataFrame or sf POLYGON object")
+      stop("x must be a SpatialPolygonsDataFrame or sf POLYGON object")
     if(inherits(x, "SpatialPolygonsDataFrame")) {
 	  x <- sf::st_as_sf(x)
 	}  

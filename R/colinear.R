@@ -23,8 +23,7 @@
 #' With the hypothesis: 
 #'     \eqn{H_{0} : f(x) = 0, \ \forall x$$} 
 #' 
-#' @examples
-#' 
+#' @examples 
 #' data(cor.data)
 #'
 #' # Evaluate linear correlations on linear data

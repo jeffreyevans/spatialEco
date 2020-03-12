@@ -11,46 +11,62 @@
 #' @return RasterLayer class object of specified landscape metric 
 #'
 #' @details The following metrics are available: 
-#'  \itemize{ 
-#'   \item  class - a particular patch type from the original input matrix (mat).
-#'   \item  n.patches - the number of patches of a particular patch type or in a class.
-#'   \item  total.area - the sum of the areas (m2) of all patches of the corresponding patch type.
-#'   \item  prop.landscape - the proportion of the total landscape represented by this class
-#'   \item  patch.density - the numbers of patches of the corresponding patch type divided by total landscape area (m2).
-#'   \item  total.edge - the total edge length of a particular patch type.
-#'   \item  edge.density - edge length on a per unit area basis that facilitates comparison among landscapes of varying size.
-#'   \item  landscape.shape.index - a standardized measure of total edge or edge density that adjusts for the size of the landscape.
-#'   \item  largest.patch.index - largest patch index quantifies the percentage of total landscape area comprised by the largest patch.
-#'   \item  mean.patch.area - average area of patches.
-#'   \item  sd.patch.area - standard deviation of patch areas.
-#'   \item  min.patch.area - the minimum patch area of the total patch areas.
-#'   \item  max.patch.area - the maximum patch area of the total patch areas.
-#'   \item  perimeter.area.frac.dim - perimeter-area fractal dimension equals 2 divided by the slope of regression line obtained by regressing the logarithm of patch area (m2) against the logarithm of patch perimeter (m).
-#'   \item  mean.perim.area.ratio - the mean of the ratio patch perimeter. The perimeter-area ratio is equal to the ratio of the patch perimeter (m) to area (m2).
-#'   \item  sd.perim.area.ratio - standard deviation of the ratio patch perimeter.
-#'   \item  min.perim.area.ratio - minimum perimeter area ratio
-#'   \item  max.perim.area.ratio - maximum perimeter area ratio.
-#'   \item  mean.shape.index - mean of shape index
-#'   \item  sd.shape.index - standard deviation of shape index.
-#'   \item  min.shape.index - the minimum shape index.
-#'   \item  max.shape.index - the maximum shape index.
-#'   \item  mean.frac.dim.index - mean of fractal dimension index.
-#'   \item  sd.frac.dim.index - standard deviation of fractal dimension index.
-#'   \item  min.frac.dim.index - the minimum fractal dimension index.
-#'   \item  max.frac.dim.index - the maximum fractal dimension index.
-#'   \item  total.core.area - the sum of the core areas of the patches (m2).
-#'   \item  prop.landscape.core - proportional landscape core
-#'   \item  mean.patch.core.area - mean patch core area.
-#'   \item  sd.patch.core.area - standard deviation of patch core area.
-#'   \item  min.patch.core.area - the minimum patch core area.
-#'   \item  max.patch.core.area - the maximum patch core area.
-#'   \item  prop.like.adjacencies - calculated from the adjacency matrix, which shows the frequency with which different pairs of patch types (including like adjacencies between the same patch type) appear side-by-side on the map (measures the degree of aggregation of patch types).
-#'   \item  aggregation.index - computed simply as an area-weighted mean class aggregation index, where each class is weighted by its proportional area in the landscape.
-#'   \item  lanscape.division.index - based on the cumulative patch area distribution and is interpreted as the probability that two randomly chosen pixels in the landscape are not situated in the same patch
-#'   \item  splitting.index - based on the cumulative patch area distribution and is interpreted as the effective mesh number, or number of patches with a constant patch size when the landscape is subdivided into S patches, where S is the value of the splitting index.
-#'   \item  effective.mesh.size - equals 1 divided by the total landscape area (m2) multiplied by the sum of patch area (m2) squared, summed across all patches in the landscape.
-#'   \item  patch.cohesion.index - measures the physical connectedness of the corresponding patch type.
-#'  }
+#' * class - (always included) particular patch type from the original input matrix.
+#' * n.patches - the number of patches of a particular patch type or in a class.
+#' * total.area - the sum of the areas (m2) of all patches of the corresponding patch type.
+#' * prop.landscape - the proportion of the total landscape represented by this class
+#' * patch.density - the numbers of patches of the corresponding patch type divided by total 
+#'                   landscape area (m2).
+#' * total.edge - the total edge length of a particular patch type.
+#' * edge.density - edge length on a per unit area basis that facilitates comparison among 
+#'                  landscapes of varying size.
+#' * landscape.shape.index - a standardized measure of total edge or edge density that 
+#'                           adjusts for the size of the landscape.
+#' * largest.patch.index - largest patch index quantifies the percentage of total landscape 
+#'                         area comprised by the largest patch.
+#' * mean.patch.area - average area of patches.
+#' * sd.patch.area - standard deviation of patch areas.
+#' * min.patch.area - the minimum patch area of the total patch areas.
+#' * max.patch.area - the maximum patch area of the total patch areas.
+#' * perimeter.area.frac.dim - perimeter-area fractal dimension equals 2 divided by the 
+#'                             slope of regression line obtained by regressing the logarithm 
+#'                             of patch area (m2) against the logarithm of patch perimeter (m).
+#' * mean.perim.area.ratio - the mean of the ratio patch perimeter. The perimeter-area ratio 
+#'                                  is equal to the ratio of the patch perimeter (m) to area (m2).
+#' * sd.perim.area.ratio - standard deviation of the ratio patch perimeter.
+#' * min.perim.area.ratio - minimum perimeter area ratio
+#' * max.perim.area.ratio - maximum perimeter area ratio.
+#' * mean.shape.index - mean of shape index
+#' * sd.shape.index - standard deviation of shape index.
+#' * min.shape.index - the minimum shape index.
+#' * max.shape.index - the maximum shape index.
+#' * mean.frac.dim.index - mean of fractal dimension index.
+#' * sd.frac.dim.index - standard deviation of fractal dimension index.
+#' * min.frac.dim.index - the minimum fractal dimension index.
+#' * max.frac.dim.index - the maximum fractal dimension index.
+#' * total.core.area - the sum of the core areas of the patches (m2).
+#' * prop.landscape.core - proportional landscape core
+#' * mean.patch.core.area - mean patch core area.
+#' * sd.patch.core.area - standard deviation of patch core area.
+#' * min.patch.core.area - the minimum patch core area.
+#' * max.patch.core.area - the maximum patch core area.
+#' * prop.like.adjacencies - calculated from the adjacency matrix, which shows the frequency 
+#'                           with which different pairs of patch types (including like 
+#'                           adjacencies between the same patch type) appear side-by-side on 
+#'                           the map (measures the degree of aggregation of patch types).
+#' * aggregation.index - computed simply as an area-weighted mean class aggregation index, where 
+#'                       each class is weighted by its proportional area in the landscape.
+#' * landscape.division.index - based on the cumulative patch area distribution and is interpreted 
+#'                              as the probability that two randomly chosen pixels in the landscape 
+#'                              are not situated in the same patch
+#' * splitting.index - based on the cumulative patch area distribution and is interpreted as the 
+#'                     effective mesh number, or number of patches with a constant patch size  
+#'                     when the landscape is subdivided into S patches, where S is the value of 
+#'                     the splitting index.
+#' * effective.mesh.size - equals 1 divided by the total landscape area (m2) multiplied by the sum 
+#'                         of patch area (m2) squared, summed across all patches in the landscape.
+#' * patch.cohesion.index - measures the physical connectedness of the corresponding patch type.
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

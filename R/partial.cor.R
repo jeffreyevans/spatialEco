@@ -88,7 +88,7 @@ partial.cor <- function (x, y, z, method = c("partial", "semipartial"),
       if (det(cvx) < .Machine$double.eps) {
         warning("The inverse of variance-covariance matrix is being calculated 
 		         using the Moore-Penrose generalized matrix inverse due to a 
-				 determinant of zero")
+				 determinant of zero in the covariance")
       icvx <- MASS::ginv(cvx)
       } else { 
   	  icvx <- solve(cvx)
@@ -115,7 +115,7 @@ partial.cor <- function (x, y, z, method = c("partial", "semipartial"),
     if(det(cvx) < .Machine$double.eps) {
       warning("The inverse of variance-covariance matrix is being calculated 
 	          using the Moore-Penrose generalized matrix inverse due to a 
-	  		  determinant of zero")      
+	  		  determinant of zero in the covariance")      
 	  icvx <- MASS::ginv(cvx)
     } else { 
   	  icvx <- solve(cvx)

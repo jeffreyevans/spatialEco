@@ -93,11 +93,11 @@ point.in.poly <- function(x, y, sp = TRUE, duplicate = TRUE, ...) {
   if(any(class(x) == "sfc")) { x <- sf::st_sf(x) }  
 	if(duplicate == FALSE) {
 	  if(!any(class(x)[1] == c("SpatialPoints", "SpatialPointsDataFrame"))) {
-	    x <- as(x, "Spatial")
+	    x <- methods::as(x, "Spatial")
 		  if(dim(x@data)[2] == 0) stop("There are no attributes associated with points")
 	  }	
       if(!any(class(y)[1] == c("SpatialPolygons", "SpatialPolygonsDataFrame"))) {
-	    y <- as(y, "Spatial")
+	    y <- methods::as(y, "Spatial")
 		  if(dim(y@data)[2] == 0) stop("There are no attributes associated with polygons")
 	  }
       o <- sp::over(x, y, returnList = TRUE)
@@ -121,7 +121,7 @@ point.in.poly <- function(x, y, sp = TRUE, duplicate = TRUE, ...) {
   if(dim(x)[2] == 1) x$pt.ids <- 1:nrow(x)	
     if(dim(y)[2] == 1) y$poly.ids <- 1:nrow(y)	  
       o <- sf::st_join(x, y, ...)
-   if( sp ) o <- as(o, "Spatial")
+   if( sp ) o <- methods::as(o, "Spatial")
   # if( sp ) o <- sf::as_Spatial(o)
   return( o ) 
   } 
