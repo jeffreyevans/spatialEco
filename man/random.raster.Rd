@@ -42,16 +42,19 @@ random.raster(
 
 \item{s}{sigma value for Gaussian distribution}
 
-\item{distribution}{Available distributions, c("random", "normal", "seq", "binominal", "gaussian", "sample")}
+\item{distribution}{Available distributions, c("random", "normal", "seq", 
+"binominal", "gaussian", "sample")}
 }
 \value{
 RasterLayer or RasterStack object with random rasters
 }
 \description{
-Create a random raster or raster stack using specified distribution
+Create a random raster or raster stack using specified 
+             distribution
 }
 \details{
-Options for distributions are for random, normal, seq, binominal, gaussian and sample raster(s)
+Options for distributions are for random, normal, seq, binominal, 
+gaussian and sample raster(s)
 }
 \examples{
 library(raster)

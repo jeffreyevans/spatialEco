@@ -1,11 +1,14 @@
 #' @title Fuzzy Sum
 #' @description Calculates the fuzzy sum of a vector
 #' 
-#' @param x       Vector of values to apply fuzzy sum 
+#' @param x  Vector of values to apply fuzzy sum 
 #' 
 #' @return Value of fuzzy sum
 #'
-#' @note The fuzzy sum is an increasing linear combination of values. This can be used to sum probabilities or results of multiple density functions. 
+#' @note 
+#' The fuzzy sum is an increasing linear combination of values. 
+#' This can be used to sum probabilities or results of multiple 
+#' density functions. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'

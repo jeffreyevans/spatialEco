@@ -11,7 +11,8 @@ sg.smooth(x, f = 4, l = 51, d = 1, na.rm, ...)
 
 \item{f}{Filter type (default 4 for quartic, specify 2 for quadratic)}
 
-\item{l}{Convolution filter length, must be odd number (default 51). Defines degree of smoothing}
+\item{l}{Convolution filter length, must be odd number (default 51). 
+Defines degree of smoothing}
 
 \item{d}{First derivative (default 1)}
 
@@ -20,10 +21,12 @@ sg.smooth(x, f = 4, l = 51, d = 1, na.rm, ...)
 \item{...}{not used}
 }
 \value{
-A vector of the smoothed data equal to length of x. Please note; NA values are retained
+A vector of the smoothed data equal to length of x. Please note; 
+         NA values are retained
 }
 \description{
-Smoothing of time-series data using Savitzky-Golay convolution smoothing
+Smoothing of time-series data using Savitzky-Golay 
+             convolution smoothing
 }
 \examples{
   y <- c(0.112220988, 0.055554941, 0.013333187, 0.055554941, 0.063332640, 0.014444285, 
@@ -66,9 +69,9 @@ Smoothing of time-series data using Savitzky-Golay convolution smoothing
 
 }
 \references{
-Savitzky, A., & Golay, M.J.E. (1964). Smoothing and Differentiation of Data by 
-              Simplified Least Squares Procedures. Analytical Chemistry. 36(8):1627-39
+Savitzky, A., and Golay, M.J.E. (1964). Smoothing and Differentiation of Data 
+  by Simplified Least Squares Procedures. Analytical Chemistry. 36(8):1627-39
 }
 \author{
-Jeffrey S. Evans    <jeffrey_evans<at>tnc.org>
+Jeffrey S. Evans <jeffrey_evans<at>tnc.org>
 }

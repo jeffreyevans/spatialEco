@@ -4,7 +4,8 @@
 \name{pu}
 \alias{pu}
 \title{Biodiversity Planning Units}
-\format{A sp SpatialPolygonsDataFrame with 5919 rows and 46 variables:
+\format{
+A sp SpatialPolygonsDataFrame with 5919 rows and 46 variables:
 \describe{
   \item{UNIT_ID}{Unique planning unit ID}
   \item{DR_Dr_A}{Biodiversity target}
@@ -52,7 +53,8 @@
   \item{Ht_Rn_S}{Biodiversity target}
   \item{Ht_Ms_U}{Biodiversity target}
   \item{Ht_Rn_U}{Biodiversity target}
-}}
+}
+}
 \source{
 \url{http://maps.tnc.org/gis_data.html}
 }

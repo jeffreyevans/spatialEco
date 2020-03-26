@@ -16,11 +16,6 @@
 #' Evaluation of the pairwise linear correlated variables to remove is accomplished  
 #' through calculating the mean correlations of each variable and selecting the 
 #' variable with higher mean. 
-#'
-#' Nonlinear correlations assume the model form;
-#'    \eqn{\[E(Y_i | X_i) = \alpha + f(X_i) + \varepsilon_i\]}
-#' with the hypothesis;
-#'    \eqn{\[H_{0} : f(x) = 0, \ \forall x\]} 
 #' 
 #' @examples 
 #' data(cor.data)

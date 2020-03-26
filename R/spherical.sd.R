@@ -1,10 +1,10 @@
 #' @title Spherical Variance or Standard Deviation of Surface 
 #' @description Derives the spherical standard deviation of a raster surface  
 #'    
-#' @param r          Raster class object
-#' @param d          Size of focal window or a matrix to use in focal function
-#' @param variance   (FALSE|TRUE) Output spherical variance rather than standard deviation
-#' @param ...        Additional arguments passed to calc (can write raster to disk here)
+#' @param r         Raster class object
+#' @param d         Size of focal window or a matrix to use in focal function
+#' @param variance  (FALSE|TRUE) Output spherical variance rather than standard deviation
+#' @param ...       Additional arguments passed to calc (can write raster to disk here)
 #'
 #' @return rasterLayer class object of the spherical standard deviation   
 #'
@@ -28,11 +28,8 @@
 #'
 #' @author Jeffrey S. Evans <jeffrey_evans<at>tnc.org>
 #'
-#' @seealso \code{\link[raster]{focal}} for details on focal function
-#' @seealso \code{\link[raster]{calc}} for details on ... arguments
-#'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(raster)
 #'  data(elev)
 #'  
@@ -45,7 +42,10 @@
 #'       main='terrain spherical standard deviation')
 #'    plot(ssd, col=rainbow(25, alpha=0.35), add=TRUE)
 #' }
-#'   
+#'  
+#' @seealso \code{\link[raster]{focal}} for details on focal function
+#' @seealso \code{\link[raster]{calc}} for details on ... arguments
+#' 
 #' @export
 spherical.sd <- function(r, d, variance = FALSE, ...) {
   if(class(r) != "RasterLayer") stop("r argument must be a rasterLayer class object")

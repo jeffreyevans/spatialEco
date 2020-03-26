@@ -9,9 +9,11 @@ sample.annulus(x, r1, r2, n = 10, ...)
 \arguments{
 \item{x}{sp SpatialPoints or SpatialPointsDataFrame class object}
 
-\item{r1}{Numeric value defining inner radius of annulus (in projection units)}
+\item{r1}{Numeric value defining inner radius of annulus 
+(in projection units)}
 
-\item{r2}{Numeric value defining outer radius of annulus (in projection units)}
+\item{r2}{Numeric value defining outer radius of annulus 
+(in projection units)}
 
 \item{n}{Number of samples}
 
@@ -21,10 +23,12 @@ sample.annulus(x, r1, r2, n = 10, ...)
 sp SpatialPointsataFrame OBJECT
 }
 \description{
-Creates sample points based on annulus with defined inner and outer radius
+Creates sample points based on annulus with defined 
+             inner and outer radius
 }
 \note{
-Function can be used for distance based sampling. This is one sampling method to capture the spatially lagged variation.
+Function can be used for distance based sampling. This is a sampling method 
+that can be used to capture spatially lagged variation.
 }
 \examples{
 library(sp)

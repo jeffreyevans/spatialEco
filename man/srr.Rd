@@ -20,11 +20,11 @@ raster class object of Pike's (1971) Surface Relief Ratio
 Calculates the Pike (1971) Surface Relief Ratio
 }
 \note{
-Describes rugosity in continuous raster surface within a specified window. The implementation of SRR can be shown as: 
-(mean(x) - min(x)) / (max(x) - min(x))
+Describes rugosity in continuous raster surface within a specified window. 
+The implementation of SRR can be shown as: (mean(x) - min(x)) / (max(x) - min(x))
 }
 \examples{
-\dontrun{
+\donttest{
   library(raster)
   data(elev)
   r.srr <- srr(elev, s=5)

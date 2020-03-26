@@ -18,7 +18,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples      
-#' \dontrun{
+#' \donttest{
 #' library(sp)
 #' data(meuse)
 #'   coordinates(meuse) <- ~ x+y

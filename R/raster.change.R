@@ -1,27 +1,34 @@
 #' @title Raster change between two nominal rasters
-#' @description Compares two categorical rasters with a variety of statistical options
+#' @description Compares two categorical rasters with a variety of 
+#'              statistical options
 #'       
-#' @param x              First raster for comparison, rasterLayer class object    
-#' @param y              Second raster for comparison, rasterLayer class object   
-#' @param d              Rectangular window size, must be odd but not necessarily square
-#' @param stat           Statistic to use in comparison, please see details for options. 
-#' @param w              Weights if stat="kappa", must represent same classes as input rasters
-#' @param out.raster     Optional output raster
-#' @param mask           (FALSE/TRUE) mask output to original rasters 
-#' @param force.memory   (FALSE/TRUE) Force in memory processing, may fail with insufficient RAM
+#' @param x            First raster for comparison, rasterLayer class object    
+#' @param y            Second raster for comparison, rasterLayer class object   
+#' @param d            Rectangular window size, must be odd but not necessarily 
+#'                     square
+#' @param stat         Statistic to use in comparison, please see details for 
+#'                     options. 
+#' @param w            Weights if stat="kappa", must represent same classes as 
+#'                     input rasters
+#' @param out.raster   Optional output raster
+#' @param mask         (FALSE/TRUE) mask output to original rasters 
+#' @param force.memory (FALSE/TRUE) Force in memory processing, may fail with 
+#'                      insufficient RAM
 #'
 #' @return A raster layer or stack object one of the following layers:
 #' \itemize{ 
-#' \item   kappa             Kappa or Weighted Kappa statistic (if stat = "kappa")
-#' \item   correlation       Paired t.test statistic  (if stat = "cor")
-#' \item   entropy           Delta entropy  (if stat = "entropy")
-#' \item   divergence        Kullback-Leibler divergence (if stat = "divergence")
-#' \item   cross.entropy     Cross-entropy (if stat = "cross.entropy")
-#' \item   t.test            Paired t.test statistic  (if stat = "t.test")
-#' \item   p.value           p-value of the paired t.test statistic (if stat = "t.test")
+#' \item   kappa         Kappa or Weighted Kappa statistic (if stat = "kappa")
+#' \item   correlation   Paired t.test statistic  (if stat = "cor")
+#' \item   entropy       Delta entropy  (if stat = "entropy")
+#' \item   divergence    Kullback-Leibler divergence (if stat = "divergence")
+#' \item   cross.entropy Cross-entropy (if stat = "cross.entropy")
+#' \item   t.test        Paired t.test statistic  (if stat = "t.test")
+#' \item   p.value       p-value of the paired t.test statistic (if stat = "t.test")
 #'  } 
 #'
-#' @note This function provides a various statistics for comparing two classified maps. Valid options are:
+#' @description
+#' This function provides a various statistics for comparing two classified maps. 
+#' Valid options are:
 #' \itemize{ 
 #' \item   kappa - Cohen's Kappa 
 #' \item   wkappa - Cohen's Weighted Kappa (not yet implemented) 
@@ -31,23 +38,26 @@
 #' \item   cross-entropy - Cross-entropy loss function 
 #' \item   divergence - Kullback-Leibler divergence (relative entropy) 
 #' }
-#' Kappa and t-test values < 0 are reported as 0. For a weighted kappa, a matrix must be 
-#' provided that correspond to the pairwise weights for all values in both rasters. 
-#' Delta entropy is derived by calculating Shannon's on each focal window then differencing them (e(x) - e(y))
+#' @description
+#' Kappa and t-test values < 0 are reported as 0. For a weighted kappa, a matrix must 
+#' ne provided that correspond to the pairwise weights for all values in both rasters. 
+#' Delta entropy is derived by calculating Shannon's on each focal window then 
+#' differencing  them (e(x) - e(y))
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
-#'                                                                           
+#'
 #' @references
-#'   Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational and Psychological 
-#'     Measurement, 20:37-46 
-#' 
-#'   McHugh M.L. (2012) Interrater reliability: the kappa statistic. Biochemia medica, 22(3):276–282. 
-#' 
-#'   Kullback, S., R.A. Leibler (1951). On information and sufficiency. Annals of Mathematical Statistics. 
-#'     22(1):79–86
+#' Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational  
+#'   and Psychological Measurement, 20:37-46 
+#' @references
+#' McHugh M.L. (2012) Interrater reliability: the kappa statistic. 
+#'   Biochemia medica, 22(3):276–282. 
+#' @references
+#'  Kullback, S., R.A. Leibler (1951). On information and sufficiency. Annals of 
+#'    Mathematical Statistics. 22(1):79–86
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(sp)
 #'  library(raster)
 #'  data(meuse.grid)
@@ -84,7 +94,6 @@ raster.change <- function(x, y, d = c(3,3), stat = c("kappa", "wkappa", "t.test"
                           "cor", "entropy", "cross-entropy", "divergence"), w = NULL,
                           out.raster = NULL, mask = FALSE, force.memory = FALSE) {
 	stat = stat[1]
-      options(warn=-1)
     if(stat == "wkappa") stop("Sorry, weighted kappa is not yet implemented")
 	if (class(x) != "RasterLayer")
 	  stop(deparse(substitute(x)), " Must be a raster object")
@@ -198,7 +207,6 @@ raster.change <- function(x, y, d = c(3,3), stat = c("kappa", "wkappa", "t.test"
 		    if(stat == "t.test") mp[i] <- NA
           }
         }
-      options(warn=0)
     if(stat == "t.test") {
       out <- raster::setValues(out, mi, layer=1)
       out <- raster::setValues(out, mp, layer=2)
@@ -254,7 +262,6 @@ raster.change <- function(x, y, d = c(3,3), stat = c("kappa", "wkappa", "t.test"
 	    out[[2]] <- raster::writeValues(out[[2]], mi, start = rl)
       }  
     }
-	  options(warn=0)
     raster::writeStop(out)
   }
 return(out)  

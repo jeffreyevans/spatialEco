@@ -25,7 +25,8 @@ Creates a stratified random sample of an sp class object
 }
 \note{
 If replace=FALSE features are removed from consideration in subsequent replicates.
-Conversely, if replace=TRUE, a feature can be selected multiple times across replicates. Not applicable if rep=1.
+Conversely, if replace=TRUE, a feature can be selected multiple times across 
+replicates. Not applicable if rep=1.
 
 Depends: sp
 }
@@ -35,9 +36,11 @@ require(sp)
     coordinates(meuse) <- ~x+y
 
 # Create stratified variable using quartile breaks
-x1 <- cut(meuse@data[,'cadmium'], summary(meuse@data[,'cadmium'])[-4], include.lowest=TRUE)
+x1 <- cut(meuse@data[,'cadmium'], summary(meuse@data[,'cadmium'])[-4], 
+          include.lowest=TRUE)
   levels(x1) <- seq(1,nlevels(x1),1)
-x2 <- cut(meuse@data[,'lead'], summary(meuse@data[,'lead'])[-4], include.lowest=TRUE)
+x2 <- cut(meuse@data[,'lead'], summary(meuse@data[,'lead'])[-4], 
+          include.lowest=TRUE)
   levels(x2) <- seq(1,nlevels(x2),1) 
 meuse@data <- cbind(meuse@data, STRAT=paste(x1, x2, sep='.') ) 
    
@@ -45,10 +48,12 @@ meuse@data <- cbind(meuse@data, STRAT=paste(x1, x2, sep='.') )
 ssample <- stratified.random(meuse, strata='STRAT', n=2, reps=2)
 
 # 2 replicates and no replacement
-ssample.nr <- stratified.random(meuse, strata='STRAT', n=2, reps=2, replace=FALSE)
+ssample.nr <- stratified.random(meuse, strata='STRAT', n=2, reps=2, 
+                                replace=FALSE)
 
 # n=1 and reps=10 for sequential numbering of samples 
-ssample.ct <- stratified.random(meuse, strata='STRAT', n=1, reps=10, replace=TRUE)
+ssample.ct <- stratified.random(meuse, strata='STRAT', n=1, reps=10, 
+                                replace=TRUE)
 
 # Counts for each full strata (note; 2 strata have only 1 observation)
 tapply(meuse@data$STRAT, meuse@data$STRAT, length)
@@ -68,7 +73,10 @@ ssample@data$REP <- factor(ssample@data$REP)
 
 }
 \references{
-Hudak, A.T., N.L. Crookston, J.S. Evans, M.J. Falkowski, A.M.S. Smith, P. Gessler and P. Morgan. (2006) Regression modelling and mapping of coniferous forest basal area and tree density from discrete-return lidar and multispectral satellite data. Canadian Journal of Remote Sensing 32: 126-138.
+Hudak, A.T., N.L. Crookston, J.S. Evans, M.J. Falkowski, A.M.S. Smith, P. Gessler 
+  and P. Morgan. (2006) Regression modelling and mapping of coniferous forest basal 
+  area and tree density from discrete-return lidar and multispectral satellite data. 
+  Canadian Journal of Remote Sensing 32: 126-138.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

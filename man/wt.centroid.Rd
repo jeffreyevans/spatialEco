@@ -17,7 +17,8 @@ wt.centroid(x, p, sp = TRUE)
 A vector or an sp class SpatialPoints object of the weighted coordinate centroid
 }
 \description{
-Creates centroid of [x,y] coordinates based on a weights field
+Creates centroid of [x,y] coordinates based on a 
+             weights field
 }
 \note{
 The weighted centroid is calculated as:

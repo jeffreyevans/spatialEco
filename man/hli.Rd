@@ -9,7 +9,8 @@ hli(x, check = TRUE)
 \arguments{
 \item{x}{raster object}
 
-\item{check}{(TRUE/FALSE) check for projection integrity in northern latitudes}
+\item{check}{(TRUE/FALSE) check for projection integrity in 
+northern latitudes}
 }
 \value{
 raster class object of McCune & Keon (2002) Heat Load Index
@@ -18,11 +19,13 @@ raster class object of McCune & Keon (2002) Heat Load Index
 Calculates the McCune & Keon (2002) Heat Load Index
 }
 \note{
-Describes A southwest facing slope should have warmer temperatures than a southeast facing slope, 
-even though the amount of solar radiation they receive is equivalent. The McCune and Keon (2002) 
-method accounts for this by "folding" the aspect so that the highest values are southwest and the 
-lowest values are northeast. Additionally, this method account for steepness of slope, which is 
-not addressed in most other aspect rescaling equations. HLI values range from 0 (coolest) to 1 (hottest).
+Describes A southwest facing slope should have warmer temperatures than a 
+southeast facing slope, even though the amount of solar radiation they receive 
+is equivalent. The McCune and Keon (2002) method accounts for this by "folding" 
+the aspect so that the highest values are southwest and the lowest values are  
+northeast. Additionally, this method account for steepness of slope, which is 
+not addressed in most other aspect rescaling equations. HLI values range 
+from 0 (coolest) to 1 (hottest).
 }
 \examples{
   library(raster)
@@ -32,8 +35,9 @@ not addressed in most other aspect rescaling equations. HLI values range from 0 
     
 }
 \references{
-McCune, B., and D. Keon (2002) Equations for potential annual direct incident radiation 
-              and heat load index. Journal of Vegetation Science. 13:603-606.
+McCune, B., and D. Keon (2002) Equations for potential annual direct 
+  incident radiation and heat load index. Journal of Vegetation 
+  Science. 13:603-606.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

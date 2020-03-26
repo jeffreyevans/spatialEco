@@ -1,28 +1,39 @@
 #' @title Ecological similarity
 #' @description Uses row imputation to identify "k" ecological similar observations 
 #'
-#' @param x           data.frame containing ecological measures 
-#' @param k           Number of k nearest neighbors (kNN)
-#' @param method      Method to compute multivariate distances c("mahalanobis", "raw", "euclidean", "ica")
-#' @param frequency   Calculate frequency of each reference row (TRUE/FALSE) 
-#' @param scale       Scale multivariate distances to standard range (TRUE/FALSE)
-#' @param ID          Unique ID vector to use as reference ID's (rownames). Must be unique and same length as number of rows in x
+#' @param x          data.frame containing ecological measures 
+#' @param k          Number of k nearest neighbors (kNN)
+#' @param method     Method to compute multivariate distances c("mahalanobis", "raw", 
+#'                   "euclidean", "ica")
+#' @param frequency  Calculate frequency of each reference row (TRUE/FALSE) 
+#' @param scale      Scale multivariate distances to standard range (TRUE/FALSE)
+#' @param ID         Unique ID vector to use as reference ID's (rownames). Must be 
+#'                   unique and same length as number of rows in x
 #' 
-#' @return data.frame with k similar targets and associated distances. If frequency = TRUE  the freq column represents the number of times a row (ID) was selected as a neighbor.
+#' @return 
+#' data.frame with k similar targets and associated distances. If frequency = TRUE  the 
+#' freq column represents the number of times a row (ID) was selected as a neighbor.
 #'
-#' @note This function uses row-based imputation to identify k similar neighbors for each observation. Has been used to identify offsets based on ecological similarity. 
+#' @note 
+#' This function uses row-based imputation to identify k similar neighbors for each 
+#' observation. Has been used to identify offsets based on ecological similarity. 
 #'  
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#' Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial Conservation Planning and Ecological Priority Design in St. Lucia, Eastern Caribbean. Chapter 26 in Central American Biodiversity : Conservation, Ecology and a Sustainable Future. F. Huettman (eds). Springer, NY.   
+#' Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial 
+#'   Conservation Planning and Ecological Priority Design in St. Lucia, Eastern 
+#'   Caribbean. Chapter 26 in Central American Biodiversity : Conservation, Ecology 
+#'   and a Sustainable Future. F. Huettman (eds). Springer, NY.   
 #'
 #' @examples
 #'  data(pu)
-#'  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = FALSE, ID = pu@data$UNIT_ID)  
+#'  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = FALSE, 
+#'                    ID = pu@data$UNIT_ID)  
 #'
-#' \dontrun{  
-#'  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = TRUE, ID = pu@data$UNIT_ID)  
+#' \donttest{  
+#'  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = TRUE, 
+#'                    ID = pu@data$UNIT_ID)  
 #'  p <- kNN$freq   
 #'  clr <- c("#3288BD", "#99D594", "#E6F598", "#FEE08B", 
 #'           "#FC8D59", "#D53E4F")   

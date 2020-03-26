@@ -30,22 +30,26 @@ poly.regression(
 \item{...}{Additional arguments passed to loess}
 }
 \value{
-If ci = FALSE, a vector of smoothed values otherwise a list object with:
-
-loess      A vector, same length of y, representing the smoothed or inputed data
-
-lower.ci   Lower confidence interval
-
-upper.ci   Upper confidence interval
+If ci = FALSE, a vector of smoothed values,
+otherwise a list object with:
+\itemize{
+\item loess - A vector, same length of y, representing the smoothed or
+inputed data
+\item lower.ci - Lower confidence interval
+\item upper.ci - Upper confidence interval
+}
 }
 \description{
-Calculates a Local Polynomial Regression for smoothing or imputation of missing data.
-}
-\note{
-This is a wrapper function for loess that simplifies data smoothing and imputation of missing values. The function allows for smoothing a vector, based on an index (derived automatically) or covariates. If the impute option is TRUE NA values are imputed, otherwise the returned vector will still have NA's present. 
-If impute and na.only are both TRUE the vector is returned, without being smoothed but with imputed NA values filled in.
+Calculates a Local Polynomial Regression for smoothing
+or imputation of missing data.
 
-The loess weight function is defined using the tri-cube weight function w(x) = (1-|x|^3)^3 where; x is the distance of a data point from the point on the curve being fitted.
+This is a wrapper function for loess that simplifies data smoothing and imputation of
+missing values. The function allows for smoothing a vector, based on an index
+(derived automatically) or covariates. If the impute option is TRUE NA values are imputed,
+otherwise the returned vector will still have NA's present. If impute and na.only are both
+TRUE the vector is returned, without being smoothed but with imputed NA values filled in.
+The loess weight function is defined using the tri-cube weight function w(x) = (1-|x|^3)^3
+where; x is the distance of a data point from the point on the curve being fitted.
 }
 \examples{
  x <- seq(-20, 20, 0.1)
@@ -74,5 +78,5 @@ The loess weight function is defined using the tri-cube weight function w(x) = (
 \code{\link[stats]{loess}} for loess ... model options
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

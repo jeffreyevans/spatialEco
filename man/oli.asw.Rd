@@ -53,7 +53,7 @@ Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
     "L1G" and "L1GS" - Radiomertically calibrated with systematic ephemeris correction
 }
 \examples{
-\dontrun{
+\donttest{
 # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20\% cloud cover    
 ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), 
                           cloud.cover = 20) )

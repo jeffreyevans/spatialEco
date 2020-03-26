@@ -1,16 +1,18 @@
 #' @title Parse bits
 #' @description Returns specified bit value based on integer input
 #' 
-#' @param x             Integer value
-#' @param bit           A single or vector of bits to return             
-#' @param depth         The depth (length) of the bit range, default is 8
-#' @param order         c("reverse", "none") sort order for the bits
+#' @param x      Integer value
+#' @param bit    A single or vector of bits to return             
+#' @param depth  The depth (length) of the bit range, default is 8
+#' @param order  c("reverse", "none") sort order for the bits
 #'
-#' @note Data such as MODIS the QC band are stored in bits. This function returns the value(s) 
-#'       for specified bit. For example, the MODIS QC flag are bits 0-1 with the bit
-#'       value 00 representing the "LST produced, good quality" flag. When exported from
-#'       HDF the QC bands are often in an 8 bit integer range (0-255). With this function
-#'       you can parse the values for each bit to assign the flag values. 
+#' @description
+#' Data such as MODIS the QC band are stored in bits. This function returns the 
+#' value(s) for specified bit. For example, the MODIS QC flag are bits 0-1 with 
+#' the bit value 00 representing the "LST produced, good quality" flag. When 
+#' exported from HDF the QC bands are often in an 8 bit integer range (0-255). 
+#' With this function you can parse the values for each bit to assign the 
+#' flag values. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'

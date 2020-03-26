@@ -1,37 +1,45 @@
 #' @title Dutilleul moving window bivariate raster correlation 
-#' @description A bivarate raster correlation using Dutilleul's modified t-test
+#' @description A bivarate raster correlation using Dutilleul's 
+#'              modified t-test
 #'       
-#' @param x               x raster for correlation, SpatialPixelsDataFrame or SpatialGridDataFrame object    
-#' @param y               y raster for correlation, SpatialPixelsDataFrame or SpatialGridDataFrame object 
-#' @param x.idx           Index for the column in the x raster object  
-#' @param y.idx           Index for the column in the y raster object  
-#' @param d               Distance for finding neighbors
-#' @param sub.sample      Should a sub-sampling approach be employed (TRUE/FALSE)  
-#' @param type            If sub.sample = TRUE, what type of sample (random  or hexagon)
-#' @param p               If sub.sample = TRUE, what proportion of population should be sampled
-#' @param size            Fixed sample size               
+#' @param x           x raster for correlation, SpatialPixelsDataFrame or 
+#'                    SpatialGridDataFrame object    
+#' @param y           y raster for correlation, SpatialPixelsDataFrame or 
+#'                    SpatialGridDataFrame object 
+#' @param x.idx       Index for the column in the x raster object  
+#' @param y.idx       Index for the column in the y raster object  
+#' @param d           Distance for finding neighbors
+#' @param sub.sample  Should a sub-sampling approach be employed (TRUE/FALSE)  
+#' @param type        If sub.sample = TRUE, what type of sample (random  or hexagon)
+#' @param p           If sub.sample = TRUE, what proportion of population 
+#'                    should be sampled
+#' @param size        Fixed sample size               
 #'
-#' @return A SpatialPixelsDataFrame or SpatialPointsDataFrame with the following attributes:
+#' @return A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
+#'         following attributes:
 #' \itemize{ 
 #' \item   corr        Correlation 
-#' \item   Fstat       The F-statistic calculated as [degrees of freedom * unscaled F-statistic]
+#' \item   Fstat       The F-statistic calculated as [degrees of freedom * 
+#'                     unscaled F-statistic]
 #' \item   p.value     p-value for the test
 #' \item   moran.x     Moran's-I for x 
 #' \item   moran.y     Moran's-I for y  
 #'  } 
 #'
-#' @note This function provides a bivariate moving window correlation using the modified t-test to account for 
-#'         spatial autocorrelation. Point based subsampling is provided for computation tractability.  
-#'         The hexagon sampling is recommended as it it good at capturing spatial process that includes 
-#'         nonstationarity and anistropy.    
+#' @description 
+#' This function provides a bivariate moving window correlation using the modified  
+#' t-test to account for spatial autocorrelation. Point based subsampling is provided 
+#' for computation tractability. The hexagon sampling is recommended as it it good  
+#' at capturing spatial process that includes nonstationarity and anistropy.    
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
 #' @references
-#' Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the correlation between two 
-#'   spatial processes. Biometrics 45:123-134.
-#' Dutilleul, P. (1993), Modifying the t test for assessing the correlation between two spatial processes. 
-#'   Biometrics 49:305-314. 
+#' Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the  
+#'   correlationbetween two spatial processes. Biometrics 45:123-134.
+#' @references
+#' Dutilleul, P. (1993), Modifying the t test for assessing the correlation between 
+#'   two spatial processes. Biometrics 49:305-314. 
 #' 
 #' @examples
 #' \dontrun{
@@ -68,8 +76,9 @@
 #' }
 #' 
 #' @export raster.modified.ttest
-raster.modified.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sample = FALSE, 
-                                 type = "hexagon", p = 0.10, size = NULL) {
+raster.modified.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", 
+                                  sub.sample = FALSE, type = "hexagon", p = 0.10, 
+								  size = NULL) {
 	if (!sp::gridded(x))
 	  stop(deparse(substitute(x)), " Must be an sp raster object")
     if (!sp::gridded(y)) 
@@ -90,7 +99,8 @@ raster.modified.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sa
 		y.var <- y@data[,y.idx][nb[[i]]]
       sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
 	                                    nclass = 1)		
-        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= (sc$dof * sc$Fstat),  
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, 
+		                      Fstat= (sc$dof * sc$Fstat),  
 		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
 							  moran.y = sc$imoran[2]),5))  
       }
@@ -147,7 +157,8 @@ raster.modified.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", sub.sa
 						   r.ids[[i]]) )  						   
 	sc <- SpatialPack::modified.ttest(cdat[,1], 
 		                         cdat[,2], cdat[,3:4], nclass = 1)
-        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat = (sc$dof * sc$Fstat),  
+        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, 
+		                      Fstat = (sc$dof * sc$Fstat),  
 		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
 							  moran.y = sc$imoran[2]),5)) 
       }

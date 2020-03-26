@@ -18,8 +18,8 @@ proximity.index(x, y = NULL, min.dist = 0, max.dist = 1000, background = NULL)
 \item{background}{Optional value in y column indicating background value}
 }
 \value{
-A vector equal to nrow(x) of proximity index values, if a background value is specified
-        NA values will be returned in the position(s) of the specified class
+A vector equal to nrow(x) of proximity index values, if a background value is 
+specified NA values will be returned in the position(s) of the specified class
 }
 \description{
 Calculates proximity index for a set of polygons
@@ -32,7 +32,8 @@ library(rgeos)
 data(meuse)
   coordinates(meuse) = ~x+y
   meuse_poly <- gBuffer(meuse, width = meuse$elev * 5, byid = TRUE)
-    meuse_poly$LU <- sample(c("forest","nonforest"), nrow(meuse_poly), replace=TRUE) 
+    meuse_poly$LU <- sample(c("forest","nonforest"), nrow(meuse_poly), 
+                            replace=TRUE) 
 
 # All polygon proximity index 1000 radius	
 ( pidx <-proximity.index(meuse_poly, min.dist = 1) )
@@ -57,7 +58,7 @@ forest <- meuse_poly[meuse_poly$LU == "forest",]
 }
 \references{
 Gustafson, E.J., & G.R. Parker (1994) Using an Index of Habitat Patch Proximity 
-              for Landscape Design. Landscape and Urban Planning 29:117-130
+  for Landscape Design. Landscape and Urban Planning 29:117-130
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

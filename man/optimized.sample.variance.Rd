@@ -11,14 +11,16 @@ optimized.sample.variance(x, n, type = "maximized")
 
 \item{n}{Number of samples to draw}
 
-\item{type}{Type of sample variance optimization c("maximized", "minimized")}
+\item{type}{Type of sample variance optimization 
+c("maximized", "minimized")}
 }
 \value{
-A data.frame with "idx" representing the index of the original vector and "y" 
-          is the value of the sampled data
+A data.frame with "idx" representing the index of the original vector  
+and "y" is the value of the sampled data
 }
 \description{
-Draws an optimal sample that minimizes or maximizes the sample variance
+Draws an optimal sample that minimizes or maximizes the 
+             sample variance
 }
 \examples{
  library(sp)
@@ -30,7 +32,8 @@ Draws an optimal sample that minimizes or maximizes the sample variance
  ( max.sv <- optimized.sample.variance(meuse$zinc, 15) )
  
  # Draw n samples that minimize the variance of y
- ( min.sv <- optimized.sample.variance(meuse$zinc, 15, type="minimized") )
+ ( min.sv <- optimized.sample.variance(meuse$zinc, 15, 
+               type="minimized") )
  
  # Plot results
  plot(meuse, pch=19, col="grey")
@@ -41,12 +44,13 @@ Draws an optimal sample that minimizes or maximizes the sample variance
             "minimized variance"), col=c("grey","red","blue"),  
             pch=c(19,19,19))
 
-\dontrun{
+\donttest{
  # Raster example (not memory safe) 
  library(raster)
    r <- raster(system.file("external/test.grd", package="raster"))
   
-# Calculate optimal sample variance and coerce to SpatialPointDataFrame using xyFromCell
+# Calculate optimal sample variance and coerce to SpatialPointDataFrame 
+#   using xyFromCell
      ( min.sv <- optimized.sample.variance(getValues(r), n, type="minimized") )
       min.sv <- sp::SpatialPointsDataFrame(xyFromCell(r, min.sv[,"idx"], 
                                            spatial=TRUE), data=min.sv) 

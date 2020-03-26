@@ -30,13 +30,15 @@ hsp(
 raster class object
 }
 \description{
-Calculates a hierarchical scale decomposition of topographic position index
+Calculates a hierarchical scale decomposition of topographic 
+position index
 }
 \note{
-if win  = "circle" units are distance, if win = "rectangle" untis are number of cells
+if win  = "circle" units are distance, if win = "rectangle" units 
+are number of cells
 }
 \examples{
-\dontrun{ 
+\donttest{ 
   library(raster)
   data(elev)
   hsp27 <- hsp(elev, 3, 27, 4, normalize = TRUE)
@@ -45,7 +47,9 @@ if win  = "circle" units are distance, if win = "rectangle" untis are number of 
 
 }
 \references{
-Murphy M.A., J.S. Evans, and A.S. Storfer (2010) Quantify Bufo boreas connectivity in Yellowstone National Park with landscape genetics. Ecology 91:252-261
+Murphy M.A., J.S. Evans, and A.S. Storfer (2010) Quantify Bufo boreas 
+  connectivity in Yellowstone National Park with landscape genetics. 
+  Ecology 91:252-261
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

@@ -11,9 +11,12 @@ rasterCorrelation(x, y, s = 3, type = "pearson", file.name = NULL, ...)
 
 \item{y}{raster class object for y}
 
-\item{s}{Scale of window. Can be a single value, two values for uneven window or a custom matrix. Must be odd number (eg., s=3, for 3x3 window or s=c(3,5) for 3 x 5 window)}
+\item{s}{Scale of window. Can be a single value, two 
+values for uneven window or a custom matrix. 
+Must be odd number (eg., s=3, for 3x3 window or 
+s=c(3,5) for 3 x 5 window)}
 
-\item{type}{Type of output, options are: "pearson", "spearman", "covariance"}
+\item{type}{Type of output, options are: "pearson", "spearman",}
 
 \item{file.name}{Name of output raster (optional)}
 
@@ -23,13 +26,14 @@ rasterCorrelation(x, y, s = 3, type = "pearson", file.name = NULL, ...)
 raster class object or raster written to disk
 }
 \description{
-Performs a simple moving window correlation between two rasters
+Performs a simple moving window correlation 
+             between two rasters
 }
 \note{
 Depends: raster
 }
 \examples{
-\dontrun{
+\donttest{
  library(raster)                                                                    
  b <- brick(system.file("external/rlogo.grd", package="raster"))
  x <- b[[1]]

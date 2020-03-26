@@ -2,13 +2,16 @@
 % Please edit documentation in R/mwCorr.R
 \name{mwCorr}
 \alias{mwCorr}
-\title{Dutilleul moving window bivariate raster correlation}
+\title{Dutilleul moving window bivariate raster 
+       correlation}
 \usage{
 mwCorr(...)
 }
 \arguments{
-\item{...}{Parameters to be passed to the modern version of the function}
+\item{...}{Parameters to be passed to the modern version 
+of the function}
 }
 \description{
-A bivarate raster corrlation using Dutilleul's modified t-test
+A bivarate raster corrlation using Dutilleul's 
+             modified t-test
 }

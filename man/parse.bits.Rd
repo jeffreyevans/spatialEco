@@ -17,13 +17,13 @@ parse.bits(x, bit, depth = 8, order = c("reverse", "none"))
 }
 \description{
 Returns specified bit value based on integer input
-}
-\note{
-Data such as MODIS the QC band are stored in bits. This function returns the value(s) 
-      for specified bit. For example, the MODIS QC flag are bits 0-1 with the bit
-      value 00 representing the "LST produced, good quality" flag. When exported from
-      HDF the QC bands are often in an 8 bit integer range (0-255). With this function
-      you can parse the values for each bit to assign the flag values.
+
+Data such as MODIS the QC band are stored in bits. This function returns the 
+value(s) for specified bit. For example, the MODIS QC flag are bits 0-1 with 
+the bit value 00 representing the "LST produced, good quality" flag. When 
+exported from HDF the QC bands are often in an 8 bit integer range (0-255). 
+With this function you can parse the values for each bit to assign the 
+flag values.
 }
 \examples{
 

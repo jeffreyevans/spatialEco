@@ -7,7 +7,8 @@
 sp.na.omit(x, col.name = NULL, margin = 1)
 }
 \arguments{
-\item{x}{Object of class SpatialPointsDataFrame OR SpatialPolygonsDataFrame}
+\item{x}{Object of class SpatialPointsDataFrame OR 
+SpatialPolygonsDataFrame}
 
 \item{col.name}{The name of a specific column to remove NA's from}
 
@@ -17,7 +18,8 @@ sp.na.omit(x, col.name = NULL, margin = 1)
 Removes row or column NA's in sp object
 }
 \note{
-This function will remove all NA's in the object or NA's associated with a specific column.
+This function will remove all NA's in the object or NA's associated 
+with a specific column.
 }
 \examples{
  library(sp)

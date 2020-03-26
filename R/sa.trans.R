@@ -1,26 +1,29 @@
 #' @title Trigonometric  transformation of a slope and aspect interaction 
-#' @description The Trigonometric  Stage (1978) [slope * cos(aspect)] or [slope * sin(aspect)] 
+#' @description The Trigonometric  Stage (1978) 
+#'              [slope * cos(aspect)] or [slope * sin(aspect)] 
 #'
 #' @param slope       slope values in degrees, radians or percent 
 #' @param aspect      aspect values in degrees or radians
-#' @param type        Type of transformation, options are: "cos", "sin", 
-#' @param slp.units   Units of slope values, options are: "degrees", "radians" or "percent"
-#' @param asp.units   Units of aspect values, options are: "degrees" or "radians"
+#' @param type        Type of transformation, options are: "cos", "sin" 
+#' @param slp.units   Units of slope values, options are: "degrees", 
+#'                    "radians" or "percent"
+#' @param asp.units   Units of aspect values, options are: 
+#'                   "degrees" or "radians"
 #'
 #' @return A vector of the modeled value
 #'
-#' @note 
+#' @description 
 #' An a priori assumption of a maximum in the NW quadrant (45 azimuth)
 #' and a minimum in the SW quadrant can be replaced by an empirically
 #' determined location of the optimum without repeated calculations of
 #' the regression fit. In addition it is argued that expressions for
 #' the effects of aspect should always be considered as terms involving
 #' an interaction with slope (Stage, 1976)
-#' 
-#' For slopes from 0% - 100%, The functions are linerized and
+#' @description
+#' For slopes from 0% - 100%, The functions are linearized and
 #' bounded from -1 to 1. Greater than 100% slopes are treated
 #' out of the -1 to 1 range.
-#' 
+#' @description
 #' An alternative for slopes with values approaching infinity is
 #' to take the square root of slope/100 to reduce the range of
 #' values.By default this model test all values greater than 100%
@@ -29,7 +32,9 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @references Stage, A. R. 1976. An Expression of the Effects of Aspect, Slope, and Habitat Type on Tree Growth. Forest Science Vol 22, No 3, 457-460.
+#' @references 
+#' Stage, A. R. 1976. An Expression of the Effects of Aspect, Slope, 
+#'   and Habitat Type on Tree Growth. Forest Science 22(3):457-460.
 #'  
 #' @examples 
 #'  sa.trans(slope = 48.146, aspect = 360.000)
@@ -48,6 +53,7 @@ sa.trans <- function(slope, aspect, type = "cos", slp.units = "degrees",
   if(asp.units == "degrees") aspect * (pi / 180)
     slope[slope > 1] <- 1.001
     slope[slope <= 0] <- NA
-    trans <- as.vector(t(apply(data.frame(slope, aspect), 1, function (x){ return ( x[1] * cos(x[2]) ) } )))
+    trans <- as.vector(t(apply(data.frame(slope, aspect), 1, 
+	           function (x){ return ( x[1] * cos(x[2]) ) } )))
     return(trans)
   }

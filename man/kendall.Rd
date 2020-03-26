@@ -29,7 +29,8 @@ kendall(
 
 \item{intercept}{(FALSE/TRUE) return intercept values}
 
-\item{prewhiten}{(FALSE/TRUE) Apply autocorrelation correction using pre-whitening}
+\item{prewhiten}{(FALSE/TRUE) Apply autocorrelation correction using 
+pre-whitening}
 
 \item{na.rm}{(FALSE/TRUE) Remove NA values}
 
@@ -40,37 +41,43 @@ Depending on arguments, a vector containing:
 \itemize{
   \item {value 1} { Theil-Sen slope, always returned }
   \item {value 2} {Kendall's tau two-sided test, if tau TRUE}
-  \item {value 3} {intercept for trend if intercept TRUE, not if prewhitened}
+  \item {value 3} {intercept for trend if intercept TRUE, not 
+                   if prewhitened}
   \item {value 4} {p value for trend fit if p.value TRUE}
   \item {value 5} {Z value for trend fit if z.value TRUE}
-  \item {value 6} {lower confidence level at 95-pct if confidence TRUE, not if prewhitened}
-  \item {value 7} {upper confidence level at 95-pct if confidence TRUE, not if prewhitened}
+  \item {value 6} {lower confidence level at 95-pct if confidence 
+                   TRUE, not if prewhitened}
+  \item {value 7} {upper confidence level at 95-pct if confidence 
+                   TRUE, not if prewhitened}
 }
 }
 \description{
-Calculates a nonparametric statistic for a monotonic trend based on the Kendall 
-               tau statistic and the Theil-Sen slope modification
+Calculates a nonparametric statistic for a monotonic trend based 
+on the Kendall tau statistic and the Theil-Sen slope modification
 }
 \details{
-This function implements Kendall's nonparametric test for a monotonic trend using the 
-         Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate the slope and related 
-         confidence intervals. Critical values are Z > 1.96 representing a significant increasing 
-         trend and a Z < -1.96 a significant decreasing trend (p < 0.05). The null hypothesis can 
-         be rejected if Tau = 0. There is also an option for autocorrelation correction using
-         the method proposed in Yue & Wang (2002).
+This function implements Kendall's nonparametric test for a monotonic trend 
+using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate 
+the slope and related confidence intervals. Critical values are Z > 1.96 
+representing a significant increasing trend and a Z < -1.96 a significant 
+decreasing trend (p < 0.05). The null hypothesis can be rejected if Tau = 0. 
+There is also an option for autocorrelation correction using the method proposed 
+in Yue & Wang (2002).
 }
 \references{
-Theil, H. (1950) A rank invariant method for linear and polynomial regression analysis.  
-              Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I),  
-              53:521-525 (Part II), 53:1397-1412 (Part III).
+Theil, H. (1950) A rank invariant method for linear and polynomial regression 
+  analysis. Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I),  
+  53:521-525 (Part II), 53:1397-1412 (Part III).
 
 Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. 
-              Journal of the American Statistical Association. 63(324):1379-1389.
+  Journal of the American Statistical Association. 63(324):1379-1389.
 
-Siegel, A.F. (1982) Robust Regression Using Repeated Medians. Biometrika, 69(1):242-244
+Siegel, A.F. (1982) Robust Regression Using Repeated Medians. 
+  Biometrika, 69(1):242-244
 
-Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate the influence 
-              of serial correlation on the Mann-Kendall test. Water Resources Research, 38(6):41-47.
+Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate 
+the influence of serial correlation on the Mann-Kendall test. Water 
+Resources Research, 38(6):41-47.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

@@ -13,10 +13,11 @@ daymet.tiles(x, tiles, ids, coords, sp = FALSE)
 
 \item{ids}{A tile id field in the tiles index}
 
-\item{coords}{A vector of xmin, xmax, ymin, ymax coordinates, in same projection as tiles}
+\item{coords}{A vector of xmin, xmax, ymin, ymax coordinates, in same 
+projection as tiles}
 
-\item{sp}{(TRUE/FALSE) Should an sp class SpatialPolygonsDataFrame object of associate tiles 
-be returned}
+\item{sp}{(TRUE/FALSE) Should an sp class SpatialPolygonsDataFrame 
+object of associate tiles be returned}
 }
 \value{
 Vector of DAYMET tile IDS or if sp = TRUE a sp class SpatialPolygonsDataFrame
@@ -25,9 +26,10 @@ Vector of DAYMET tile IDS or if sp = TRUE a sp class SpatialPolygonsDataFrame
 Returns a vector of DAYMET tile id's within a specified extent
 }
 \note{
-Function accepts sp, raster or extent class object or bounding coordinates. All input must 
-        be in the same projection as the tile index SpatialPolygonsDataFrame. The library includes 
-        the DAYMAT tile index "DAYMET_tiles" which can be add using data(), see examples.
+Function accepts sp, raster or extent class object or bounding coordinates. 
+All input must be in the same projection as the tile index SpatialPolygonsDataFrame. 
+The library includes the DAYMAT tile index "DAYMET_tiles" which can be add using 
+data(), see examples.
 }
 \examples{
 library(sp)

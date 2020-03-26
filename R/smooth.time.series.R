@@ -1,19 +1,24 @@
 #' @title Smooth Raster Time-series
-#' @description Smooths pixel-level data in raster time-series and can impute missing (NA) values.
+#' @description Smooths pixel-level data in raster time-series and can impute 
+#'              missing (NA) values.
 #'
 #' @param x            A raster stack/brick or sp object with a @data slot 
 #' @param f            Smoothing parameter (see loess span argument)
 #' @param smooth.data  (FALSE/TRUE) Smooth all of the data or just impute NA values 
-#' @param ...          Additional arguments passed to raster calc (for writing results to disk)
+#' @param ...          Additional arguments passed to raster calc (for 
+#'                     writing results to disk)
 #' 
-#' @return A raster stack or brick pr data.frame object with imputed NA values or smoothed data.  
+#' @return 
+#' A raster stack or brick pr data.frame object with imputed NA values or smoothed data.  
 #'
 #' @details  
-#' This function uses a LOESS regression to smooth the time-series (using the smooth.data = TRUE argument). 
-#' If the data is smoothed, it will be replaced by a loess estimate of the time-series (estimated distribution 
-#' at the pixel-level). The results can dramatically be effected by the choice of the smoothing parameter (f) 
-#' so caution is warranted and the effect of this parameter tested. Alternately, with smooth.data = FALSE,
-#' the function can be used to impute missing pixel data (NA) in raster time-series (stacks/bricks). 
+#' This function uses a LOESS regression to smooth the time-series (using the 
+#' smooth.data = TRUE argument). If the data is smoothed, it will be replaced by 
+#' a loess estimate of the time-series (estimated distribution at the pixel-level). 
+#' The results can dramatically be effected by the choice of the smoothing 
+#' parameter (f) so caution is warranted and the effect of this parameter tested. 
+#' Alternately, with smooth.data = FALSE, the function can be used to impute missing 
+#' pixel data (NA) in raster time-series (stacks/bricks). 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -50,7 +55,6 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
   	     warning("Fewer than 8 real-value observations, assigning NA")
   		   y <- rep(NA, x.length)
   	   } else {			   
-         options(warn = -1)
            x <- 1:x.length
              p <- stats::loess(y ~ x, span = s, 
   		             data.frame(x = x, y = y))
@@ -61,8 +65,7 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
              if (length(na.idx) > 1) {
                y[na.idx] <- stats::predict(p, data.frame(x = na.idx))
              }
-           }
-  	     options(warn=0)  
+           } 
   	   }
      return(y)
    }

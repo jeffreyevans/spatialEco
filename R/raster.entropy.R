@@ -4,26 +4,26 @@
 #' @param x            Object of class raster (requires integer raster)  
 #' @param d            Size of matrix (window)
 #' @param categorical  Is the data categorical or continuous (FALSE/TRUE)
-#' @param global       Should the model use a global or local n to calculate entropy (FALSE/TRUE)
+#' @param global       Should the model use a global or local n to calculate 
+#'                     entropy (FALSE/TRUE)
 #' @param filename     Raster file written to disk
 #' @param ...          Optional arguments passed to writeRaster or dataType              
 #'  
 #' @return raster class object or specified format raster written to disk                
 #'
-#' @note
-#' Entropy calculated as: H = -sum(Pi*ln(Pi))
-#'   where; Pi, Proportion of one value to total values Pi=n(p)/m and m, Number of unique values
-#'   Expected range: 0 to log(m)
-#'     H=0 if window contains the same value in all cells.
-#'     H increases with the number of different values in the window.
+#' @description
+#' Entropy calculated as: H = -sum(Pi*ln(Pi)) where; Pi, Proportion of one value 
+#' to total values Pi=n(p)/m and m, Number of unique values. Expected range: 
+#' 0 to log(m) H=0 if window contains the same value in all cells.
+#' H increases with the number of different values in the window.
 #'
 #' Maximum entropy is reached when all values are different, same as log(m)
 #'   max.ent <- function(x) { log( length( unique(x) ) ) }
 #'
-#' @note Depends: raster
-#'
+
 #' @references
-#' Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS GIS - Comparison of images taken by different sensor. On line at: http://geoinformatics.fsv.cvut.cz/gwiki/Change_Detection_with_GRASS_GIS_-_Comparison_of_images_taken_by_different_sensors
+#' Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS 
+#'   GIS - Comparison of images taken by different sensor. 
 #'
 #' @examples 
 #' require(raster)
@@ -74,14 +74,14 @@ raster.entropy <- function(x, d = 5, categorical = FALSE, global = FALSE,
       if (filename != FALSE) {          	  
         raster::focal(x, w = d, fun = function(x) { entropy(x, n = k) }, 
                       filename = filename, ...)
-          print(paste("Raster written to", filename, sep = ": "))				
+          message(paste("Raster written to", filename, sep = ": "))				
       	} else {
 		return( raster::focal(x, w = d, fun = function(x) { entropy(x, n = k) }) )  
 	  }  
 	} else {  
 	  if (filename != FALSE) {	
         raster::focal(x, w = d, fun = function(x) { entropy(x) }, filename = filename, ...)
-          print(paste("Raster written to", filename, sep = ": "))	
+          message(paste("Raster written to", filename, sep = ": "))	
 	  } else {  
 		return(raster::focal(x, w = d, fun = function(x) { entropy(x) }))  
       }

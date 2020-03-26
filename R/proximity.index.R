@@ -7,13 +7,15 @@
 #' @param   max.dist    Maximum neighbor distance
 #' @param   background  Optional value in y column indicating background value 
 #'
-#' @return A vector equal to nrow(x) of proximity index values, if a background value is specified
-#'         NA values will be returned in the position(s) of the specified class
+#' @return 
+#' A vector equal to nrow(x) of proximity index values, if a background value is 
+#' specified NA values will be returned in the position(s) of the specified class
 #'   
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @references Gustafson, E.J., & G.R. Parker (1994) Using an Index of Habitat Patch Proximity 
-#'               for Landscape Design. Landscape and Urban Planning 29:117-130
+#' @references 
+#' Gustafson, E.J., & G.R. Parker (1994) Using an Index of Habitat Patch Proximity 
+#'   for Landscape Design. Landscape and Urban Planning 29:117-130
 #'
 #' @examples
 #' library(sp)
@@ -23,7 +25,8 @@
 #' data(meuse)
 #'   coordinates(meuse) = ~x+y
 #'   meuse_poly <- gBuffer(meuse, width = meuse$elev * 5, byid = TRUE)
-#'     meuse_poly$LU <- sample(c("forest","nonforest"), nrow(meuse_poly), replace=TRUE) 
+#'     meuse_poly$LU <- sample(c("forest","nonforest"), nrow(meuse_poly), 
+#'                             replace=TRUE) 
 #' 
 #' # All polygon proximity index 1000 radius	
 #' ( pidx <-proximity.index(meuse_poly, min.dist = 1) )

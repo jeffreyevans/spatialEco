@@ -16,7 +16,9 @@ Value of fuzzy sum
 Calculates the fuzzy sum of a vector
 }
 \note{
-The fuzzy sum is an increasing linear combination of values. This can be used to sum probabilities or results of multiple density functions.
+The fuzzy sum is an increasing linear combination of values. 
+This can be used to sum probabilities or results of multiple 
+density functions.
 }
 \examples{
 p = c(0.8,0.76,0.87)

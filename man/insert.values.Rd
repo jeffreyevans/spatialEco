@@ -14,13 +14,17 @@ insert.values(x, value, index)
 \item{index}{Index position(s) to insert y values into x}
 }
 \value{
-A vector with values of y inserted into x and the position(s) defined by the index
+A vector with values of y inserted into x and the position(s) 
+defined by the index
 }
 \description{
-Inserts new values into a vector at specified positions
-}
-\note{
-This function inserts new values at specified positions in a vector. It does not replace existing values. If a single value is provided for y and l represents multiple positions y will be replicated for the length of l. In this way you can insert the same value at multiple locations.
+Inserts new values into a vector at 
+             specified positions
+
+This function inserts new values at specified positions in a vector. It 
+does not replace existing values. If a single value is provided for y 
+and l represents multiple positions y will be replicated for the length 
+of l. In this way you can insert the same value at multiple locations.
 }
 \examples{
  (x=1:10)
@@ -36,5 +40,5 @@ This function inserts new values at specified positions in a vector. It does not
 
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans <jeffrey_evans@tnc.org>
 }

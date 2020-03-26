@@ -2,19 +2,23 @@
 #' @description Calculates focal statistical moments of a raster  
 #' 
 #' @param x         raster object
-#' @param type      The global statistic to represent the local deviation  options are: "min", "min", "mean", "median", "var, "sd", "mad", "kurt", "skew", "quantile"  
-#' @param s         Size of matrix (focal window), can be single value or two values defining the [x,y] dimensions of the focal matrix
+#' @param type      The global statistic to represent the local deviation  
+#'                  options are: "min", "min", "mean", "median", "var, "sd", 
+#'                  "mad", "kurt", "skew", "quantile"  
+#' @param s         Size of matrix (focal window), can be single value or two 
+#'                  values defining the [x,y] dimensions of the focal matrix
 #' @param p         if type="quantile", the returned percentile.  
 #' 
 #' @return raster class object of the local distributional moment
 #'
 #' @note
-#'  This is a simple wrapper for the focal function, returning local statistical moments 
+#'  This is a simple wrapper for the focal function, returning local 
+#'  statistical moments 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #'   library(raster)
 #'   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
 #'               ymn=4423540, ymx=4453690)

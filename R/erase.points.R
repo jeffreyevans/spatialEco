@@ -13,8 +13,8 @@
 #'
 #' @examples 
 #' require(sp)
-#' data(meuse)
-#' coordinates(meuse) = ~x+y
+#'   data(meuse)
+#'   coordinates(meuse) = ~x+y
 #' poly <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(
 #'             Polygon(cbind(c(180042, 180545, 180553, 180314, 179955,
 #'             179142, 179437, 179524, 179979, 180042), c(332373, 332026,
@@ -34,9 +34,9 @@ erase.point <- function(y, x, inside = TRUE) {
     #if(class(y) == "sf") {y <- as(y, "Spatial")}
 	#if(class(x) == "sf") {x <- as(x, "Spatial")}
     if (!inherits(y, "SpatialPointsDataFrame") | !inherits(y, "SpatialPoints")) 
-        stop("y must be a SpatialPoints or SpatialPointsDataFrame")
+      stop("y must be a SpatialPoints or SpatialPointsDataFrame")
 	if (!inherits(x, "SpatialPolygonsDataFrame") | !inherits(x, "SpatialPolygons")) 
-        stop("x must be a SpatialPolygons or SpatialPolygonsDataFrame")	
+      stop("x must be a SpatialPolygons or SpatialPolygonsDataFrame")	
   if(inside) {
     return( y[-which(rgeos::gIntersects(y, x, byid = TRUE)),] )
   } else {

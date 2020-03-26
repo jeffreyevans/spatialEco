@@ -1,15 +1,24 @@
 #' @title Pseudo-absence random samples 
-#' @description Generates pseudo-absence samples based on density estimate of known locations 
+#' @description Generates pseudo-absence samples based on density estimate 
+#'              of known locations 
 #'
 #' @param x An sp class SpatialPointsDataFrame or SpatialPoints object
 #' @param n Number of random samples to generate
 #' @param window Type of window (hull OR extent), overridden if mask provided
-#' @param Mask Optional rasterLayer class mask raster. The resolution of the density estimate will match mask.        
-#' @param s Optional resolution passed to window argument. Caution should be used due to long processing times associated with high resolution. In contrast, coarse resolution can exclude known points.            
-#' @param sigma Bandwidth selection method for KDE, default is 'Scott'. Options are 'Scott', 'Stoyan', 'Diggle', 'likelihood', and 'geometry'
+#' @param Mask Optional rasterLayer class mask raster. The resolution of the 
+#'             density estimate will match mask.        
+#' @param s Optional resolution passed to window argument. Caution should be 
+#'                   used due to long processing times associated with high 
+#'                   resolution. In contrast, coarse resolution can exclude 
+#'                   known points.            
+#' @param sigma Bandwidth selection method for KDE, default is 'Scott'. 
+#'              Options are 'Scott', 'Stoyan', 'Diggle', 'likelihood', 
+#'              and 'geometry'
 #' @param wts Optional vector of weights corresponding to point pattern
 #' @param KDE save KDE raster (TRUE/FALSE)
-#' @param gradient A scaling factor applied to the sigma parameter used to adjust the gradient decent of the density estimate. The default is 1, for no adjustment (downweight < 1 | upweight > 1)   
+#' @param gradient A scaling factor applied to the sigma parameter used to 
+#'                 adjust the gradient decent of the density estimate. The 
+#'                 default is 1, for no adjustment (downweight < 1 | upweight > 1)   
 #' @param p Minimum value for probability distribution (must be >  0)
 #' @param edge Apply Diggle edge correction (TRUE/FALSE)
 #' 
@@ -21,34 +30,56 @@
 #'  }
 #'
 #' @details
-#' The window type creates a convex hull by default or, optionally, uses the maximum extent (envelope). If a mask is provided the kde will represent areas defined by the mask and defines the area that pseudo absence data will be generated.
+#' The window type creates a convex hull by default or, optionally, uses the 
+#' maximum extent (envelope). If a mask is provided the kde will represent 
+#' areas defined by the mask and defines the area that pseudo absence data 
+#' will be generated.
+#' 
+#' @details
 #' Available bandwidth selection methods are:
 #' \itemize{
 #' \item   Scott (Scott 1992), Scott's Rule for Bandwidth Selection (1st order)
-#' \item   Diggle (Berman & Diggle 1989), Minimize the mean-square error via cross validation (2nd order)  
+#' \item   Diggle (Berman & Diggle 1989), Minimize the mean-square error via cross 
+#'         validation (2nd order)  
 #' \item   likelihood (Loader 1999), Maximum likelihood cross validation (2nd order)
 #' \item   geometry, Bandwidth is based on simple window geometry (1st order)
-#' \item   Stoyan (Stoyan & Stoyan 1995), Based on pair-correlation function (strong 2nd order)
+#' \item   Stoyan (Stoyan & Stoyan 1995), Based on pair-correlation function 
+#'        (strong 2nd order)
+#' \item   User defined numeric distance bandwidth
 #'  }
 #'
-#' Note; resulting bandwidth can vary widely by method. the 'diggle' method is intended for selecting bandwidth representing 2nd order spatial variation whereas the 'scott' method will represent 1st order trend. the 'geometry' approach will also represent 1st order trend. for large datasets, caution should be used with the 2nd order 'likelihood' approach, as it is slow and computationally expensive. finally, the 'stoyan' method will produce very strong 2nd order results.
+#' @details
+#' Note; resulting bandwidth can vary widely by method. the 'diggle' method 
+#' is intended for selecting bandwidth representing 2nd order spatial variation 
+#' whereas the 'scott' method will represent 1st order trend. the 'geometry' approach 
+#' will also represent 1st order trend. For large datasets, caution should be used with 
+#' the 2nd order 'likelihood' approach, as it is slow and computationally expensive. 
+#' finally, the 'stoyan' method will produce very strong 2nd order results.
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
 #' @references
-#' Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order intensity of a spatial point process. Journal of the Royal Statistical Society, series B 51, 81-92. 
+#' Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order 
+#'   intensity of a spatial point process. Journal of the Royal Statistical Society, 
+#'   series B 51, 81-92. 
 #' @references
-#' Fithian, W & T. Hastie (2013) Finite-sample equivalence in statistical models for presence-only data. Annals of Applied Statistics 7(4): 1917-1939
+#' Fithian, W & T. Hastie (2013) Finite-sample equivalence in statistical models for 
+#'   presence-only data. Annals of Applied Statistics 7(4): 1917-1939
 #' @references
-#' Hengl, T., H. Sierdsema, A. Radovic, and A. Dilo (2009) Spatial prediction of species distributions from occurrence-only records: combining point pattern analysis, ENFA and regression-kriging. Ecological Modelling, 220(24):3499-3511  
+#' Hengl, T., H. Sierdsema, A. Radovic, and A. Dilo (2009) Spatial prediction of species 
+#'   distributions from occurrence-only records: combining point pattern analysis, 
+#'   ENFA and regression-kriging. Ecological Modelling, 220(24):3499-3511  
 #' @references
 #' Loader, C. (1999) Local Regression and Likelihood. Springer, New York. 
 #' @references
-#' Scott, D.W. (1992) Multivariate Density Estimation. Theory, Practice and Visualization. New York, Wiley. 
+#' Scott, D.W. (1992) Multivariate Density Estimation. Theory, Practice and Visualization. 
+#'   New York, Wiley. 
 #' @references
-#' Stoyan, D. and Stoyan, H. (1995) Fractals, random shapes and point fields: methods of geometrical statistics. John Wiley and Sons. 
+#' Stoyan, D. and Stoyan, H. (1995) Fractals, random shapes and point fields: methods of 
+#'   geometrical statistics. John Wiley and Sons. 
 #' @references
-#' Warton, D.i., and L.C. Shepherd (2010) Poisson Point Process Models Solve the Pseudo-Absence Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
+#' Warton, D.i., and L.C. Shepherd (2010) Poisson Point Process Models Solve the Pseudo-Absence 
+#'   Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
 #'
 #' @examples
 #'  library(raster) 
@@ -88,8 +119,8 @@
 #'                 pch=c(20,20),col=c('black','red'))
 #'      
 #' @export     
-pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma = "Scott", wts = NULL, 
-                           KDE = FALSE, gradient = 1, p = NULL, edge = FALSE) {
+pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma = "Scott", 
+                           wts = NULL, KDE = FALSE, gradient = 1, p = NULL, edge = FALSE) {
     if (!class(x) == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
         stop(deparse(substitute(x)), " MUST BE A sp POINTS OBJECT")
     if (!is.null(Mask)) {
@@ -98,7 +129,6 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
     }
     if (is.null(p)) p <- 1e-09
       a <- 10000
-      options(warn = -1)
     raster.as.im <- function(im) {
 	  r <- raster::res(im)
       orig <- sp::bbox(im)[, 1] + 0.5 * r

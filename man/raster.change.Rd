@@ -8,7 +8,8 @@ raster.change(
   x,
   y,
   d = c(3, 3),
-  stat = c("kappa", "wkappa", "t.test", "cor", "entropy", "cross-entropy", "divergence"),
+  stat = c("kappa", "wkappa", "t.test", "cor", "entropy", "cross-entropy",
+    "divergence"),
   w = NULL,
   out.raster = NULL,
   mask = FALSE,
@@ -20,35 +21,40 @@ raster.change(
 
 \item{y}{Second raster for comparison, rasterLayer class object}
 
-\item{d}{Rectangular window size, must be odd but not necessarily square}
+\item{d}{Rectangular window size, must be odd but not necessarily 
+square}
 
-\item{stat}{Statistic to use in comparison, please see details for options.}
+\item{stat}{Statistic to use in comparison, please see details for 
+options.}
 
-\item{w}{Weights if stat="kappa", must represent same classes as input rasters}
+\item{w}{Weights if stat="kappa", must represent same classes as 
+input rasters}
 
 \item{out.raster}{Optional output raster}
 
 \item{mask}{(FALSE/TRUE) mask output to original rasters}
 
-\item{force.memory}{(FALSE/TRUE) Force in memory processing, may fail with insufficient RAM}
+\item{force.memory}{(FALSE/TRUE) Force in memory processing, may fail with 
+insufficient RAM}
 }
 \value{
 A raster layer or stack object one of the following layers:
 \itemize{ 
-\item   kappa             Kappa or Weighted Kappa statistic (if stat = "kappa")
-\item   correlation       Paired t.test statistic  (if stat = "cor")
-\item   entropy           Delta entropy  (if stat = "entropy")
-\item   divergence        Kullback-Leibler divergence (if stat = "divergence")
-\item   cross.entropy     Cross-entropy (if stat = "cross.entropy")
-\item   t.test            Paired t.test statistic  (if stat = "t.test")
-\item   p.value           p-value of the paired t.test statistic (if stat = "t.test")
+\item   kappa         Kappa or Weighted Kappa statistic (if stat = "kappa")
+\item   correlation   Paired t.test statistic  (if stat = "cor")
+\item   entropy       Delta entropy  (if stat = "entropy")
+\item   divergence    Kullback-Leibler divergence (if stat = "divergence")
+\item   cross.entropy Cross-entropy (if stat = "cross.entropy")
+\item   t.test        Paired t.test statistic  (if stat = "t.test")
+\item   p.value       p-value of the paired t.test statistic (if stat = "t.test")
  }
 }
 \description{
-Compares two categorical rasters with a variety of statistical options
-}
-\note{
-This function provides a various statistics for comparing two classified maps. Valid options are:
+Compares two categorical rasters with a variety of 
+             statistical options
+
+This function provides a various statistics for comparing two classified maps. 
+Valid options are:
 \itemize{ 
 \item   kappa - Cohen's Kappa 
 \item   wkappa - Cohen's Weighted Kappa (not yet implemented) 
@@ -58,12 +64,14 @@ This function provides a various statistics for comparing two classified maps. V
 \item   cross-entropy - Cross-entropy loss function 
 \item   divergence - Kullback-Leibler divergence (relative entropy) 
 }
-Kappa and t-test values < 0 are reported as 0. For a weighted kappa, a matrix must be 
-provided that correspond to the pairwise weights for all values in both rasters. 
-Delta entropy is derived by calculating Shannon's on each focal window then differencing them (e(x) - e(y))
+
+Kappa and t-test values < 0 are reported as 0. For a weighted kappa, a matrix must 
+ne provided that correspond to the pairwise weights for all values in both rasters. 
+Delta entropy is derived by calculating Shannon's on each focal window then 
+differencing  them (e(x) - e(y))
 }
 \examples{
-\dontrun{
+\donttest{
  library(sp)
  library(raster)
  data(meuse.grid)
@@ -97,13 +105,14 @@ s = 11
 
 }
 \references{
-Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational and Psychological 
-    Measurement, 20:37-46 
+Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational  
+  and Psychological Measurement, 20:37-46
 
-  McHugh M.L. (2012) Interrater reliability: the kappa statistic. Biochemia medica, 22(3):276–282. 
+McHugh M.L. (2012) Interrater reliability: the kappa statistic. 
+  Biochemia medica, 22(3):276–282.
 
-  Kullback, S., R.A. Leibler (1951). On information and sufficiency. Annals of Mathematical Statistics. 
-    22(1):79–86
+Kullback, S., R.A. Leibler (1951). On information and sufficiency. Annals of 
+   Mathematical Statistics. 22(1):79–86
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

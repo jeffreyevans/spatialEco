@@ -43,7 +43,7 @@ on features that confine the view from the center of a
 by dividing by the radius distance to the outermost cell (36.2m).
 }
 \examples{
-\dontrun{
+\donttest{
   library(raster)
   library(spatialEco)
   data(elev)
@@ -59,13 +59,17 @@ curvature(elev, type="planform")
 Bolstad, P.V., and T.M. Lillesand (1992). Improved classification of forest 
   vegetation in northern Wisconsin through a rule-based combination of soils, 
   terrain, and Landsat TM data. Forest Science. 38(1):5-20.
+
 Florinsky, I.V. (1998). Accuracy of Local Topographic Variables Derived from 
   Digital Elevation Models. International Journal of Geographical Information 
   Science, 12(1):47-62.
+
 McNab, H.W. (1989). Terrain shape index: quantifying effect of minor landforms 
   on tree height. Forest Science. 35(1):91-104.
+
 McNab, H.W. (1993). A topographic index to quantify the effect of mesoscale 
   landform on site productivity. Canadian Journal of Forest Research. 23:1100-1107.
+
 Zevenbergen, L.W. & C.R. Thorne (1987). Quantitative Analysis of Land Surface 
   Topography. Earth Surface Processes and Landforms, 12:47-56.
 }

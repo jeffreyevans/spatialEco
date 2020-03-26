@@ -23,30 +23,34 @@ crossCorrelation(
 \arguments{
 \item{x}{Vector of x response variables}
 
-\item{y}{Vector of y response variables, if not specified the univariate 
-statistic is returned}
+\item{y}{Vector of y response variables, if not specified the 
+univariate  statistic is returned}
 
-\item{coords}{A matrix of coordinates corresponding to [x,y], only used if k = NULL. 
-Can also be an sp object with relevant x,y coordinate slot (ie., points or polygons)}
+\item{coords}{A matrix of coordinates corresponding to [x,y], only 
+used if k = NULL. Can also be an sp object with relevant 
+x,y coordinate slot (ie., points or polygons)}
 
-\item{w}{Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)] and be symmetrical.
-If w is not defined then a default method is used.}
+\item{w}{Spatial neighbors/weights in matrix format. Dimensions 
+must match [n(x),n(y)] and be symmetrical. If w is not defined 
+then a default method is used.}
 
-\item{type}{c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) or 
-Global Spatial cross-correlation Index (GSCI)}
+\item{type}{c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) 
+or Global Spatial cross-correlation Index (GSCI)}
 
-\item{k}{Number of simulations for calculating permutation distribution under the 
-null hypothesis of no spatial autocorrelation (k=1000, default)}
+\item{k}{Number of simulations for calculating permutation distribution
+under the null hypothesis of no spatial autocorrelation}
 
-\item{dist.function}{("inv.power", "neg.exponent") If w = NULL, the default method for deriving 
-spatial weights matrix, options are: inverse power or negative exponent}
+\item{dist.function}{("inv.power", "neg.exponent") If w = NULL, the default method 
+for deriving spatial weights matrix, options are: inverse power 
+or negative exponent}
 
-\item{scale.xy}{(TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that they are 
-already scaled following Chen (2015)}
+\item{scale.xy}{(TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that
+they are already scaled following Chen (2015)}
 
 \item{scale.partial}{(FALSE/TRUE) rescale partial spatial autocorrelation statistics [-1 - 1]}
 
-\item{scale.matrix}{(FALSE/TRUE) If a neighbor/distance matrix is passed, should it be scaled using [w/sum(w)]?}
+\item{scale.matrix}{(FALSE/TRUE) If a neighbor/distance matrix is passed, should it 
+be scaled using [w/sum(w)]}
 
 \item{alpha}{= 0.05     confidence interval (default is 95 pct)}
 
@@ -77,11 +81,11 @@ when simulated (k>0), a list containing:
 }
 }
 \description{
-Calculates univariate or bivariate spatial cross-correlation using local 
-             Moran's-I (LISA), following Chen (2015)
+Calculates univariate or bivariate spatial cross-correlation using  
+             local Moran's-I (LISA), following Chen (2015)
 }
 \examples{
-\dontrun{
+\donttest{
   library(sp)
   library(spdep)
    
@@ -107,7 +111,8 @@ Calculates univariate or bivariate spatial cross-correlation using local
     meuse$lisa.clust <- as.factor(I$cluster)
       spplot(meuse, "lisa")
       spplot(meuse, "lisa.clust")	  
-
+ }
+\dontrun{
   #### Simulate spatially autocorrelated random normal variables 
   ####   using eigen-decomposition, requires ncf package
   library(sp)
@@ -149,5 +154,5 @@ Calculates univariate or bivariate spatial cross-correlation using local
 }
 \references{
 Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
-            PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
+              PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 }

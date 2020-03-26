@@ -1,5 +1,6 @@
 #' @title Local Polynomial Regression
-#' @description Calculates a Local Polynomial Regression for smoothing or imputation of missing data.
+#' @description Calculates a Local Polynomial Regression for smoothing 
+#'              or imputation of missing data.
 #' 
 #' @param y          Vector to smooth or impute NA values
 #' @param x          Optional x covariate data (must match dimensions of y)
@@ -9,16 +10,22 @@
 #' @param ci         (FALSE/TRUE) Should confidence intervals be returned
 #' @param ...        Additional arguments passed to loess 
 #'
-#' @return If ci = FALSE, a vector of smoothed values otherwise a list object with:
-#' @return   loess      A vector, same length of y, representing the smoothed or inputed data 
-#' @return   lower.ci   Lower confidence interval 
-#' @return   upper.ci   Upper confidence interval
+#' @return If ci = FALSE, a vector of smoothed values,
+#'         otherwise a list object with:
+#' *  loess - A vector, same length of y, representing the smoothed or 
+#'            inputed data 
+#' *  lower.ci - Lower confidence interval 
+#' *  upper.ci - Upper confidence interval
+#' @md
 #'
-#' @note 
-#' This is a wrapper function for loess that simplifies data smoothing and imputation of missing values. The function allows for smoothing a vector, based on an index (derived automatically) or covariates. If the impute option is TRUE NA values are imputed, otherwise the returned vector will still have NA's present. 
-#' If impute and na.only are both TRUE the vector is returned, without being smoothed but with imputed NA values filled in. 
-#' @note 
-#' The loess weight function is defined using the tri-cube weight function w(x) = (1-|x|^3)^3 where; x is the distance of a data point from the point on the curve being fitted.  
+#' @description
+#' This is a wrapper function for loess that simplifies data smoothing and imputation of 
+#' missing values. The function allows for smoothing a vector, based on an index 
+#' (derived automatically) or covariates. If the impute option is TRUE NA values are imputed, 
+#' otherwise the returned vector will still have NA's present. If impute and na.only are both 
+#' TRUE the vector is returned, without being smoothed but with imputed NA values filled in.  
+#' The loess weight function is defined using the tri-cube weight function w(x) = (1-|x|^3)^3 
+#' where; x is the distance of a data point from the point on the curve being fitted.  
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                              

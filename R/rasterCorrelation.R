@@ -1,12 +1,17 @@
 #' @title Raster correlation
-#' @description Performs a simple moving window correlation between two rasters
+#' @description Performs a simple moving window correlation 
+#'              between two rasters
 #'
-#' @param x              raster class object for x
-#' @param y              raster class object for y
-#' @param s              Scale of window. Can be a single value, two values for uneven window or a custom matrix. Must be odd number (eg., s=3, for 3x3 window or s=c(3,5) for 3 x 5 window)
-#' @param type           Type of output, options are: "pearson", "spearman", "covariance"  
-#' @param file.name      Name of output raster (optional)
-#' @param ...            Additional arguments passed to writeRaster
+#' @param x          raster class object for x
+#' @param y          raster class object for y
+#' @param s          Scale of window. Can be a single value, two 
+#'                   values for uneven window or a custom matrix. 
+#'                   Must be odd number (eg., s=3, for 3x3 window or 
+#'                   s=c(3,5) for 3 x 5 window)
+#' @param type       Type of output, options are: "pearson", "spearman", 
+#"                   "covariance"  
+#' @param file.name  Name of output raster (optional)
+#' @param ...        Additional arguments passed to writeRaster
 #'
 #' @return raster class object or raster written to disk
 #' 
@@ -15,7 +20,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #'  library(raster)                                                                    
 #'  b <- brick(system.file("external/rlogo.grd", package="raster"))
 #'  x <- b[[1]]

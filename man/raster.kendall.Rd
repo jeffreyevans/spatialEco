@@ -16,15 +16,20 @@ raster.kendall(
 \arguments{
 \item{x}{A rasterStack object with at least 5 layers}
 
-\item{intercept}{(FALSE/TRUE) return a raster with the pixel wise intercept values}
+\item{intercept}{(FALSE/TRUE) return a raster with the pixel 
+wise intercept values}
 
-\item{p.value}{(FALSE/TRUE) return a raster with the pixel wise p.values}
+\item{p.value}{(FALSE/TRUE) return a raster with the pixel 
+wise p.values}
 
-\item{confidence}{(FALSE/TRUE) return a raster with the pixel wise 95 pct confidence levels}
+\item{confidence}{(FALSE/TRUE) return a raster with the pixel 
+wise 95 pct confidence levels}
 
-\item{tau}{(FALSE/TRUE) return a raster with the pixel wise tau values}
+\item{tau}{(FALSE/TRUE) return a raster with the pixel wise 
+tau values}
 
-\item{...}{Additional arguments passed to the raster overlay function}
+\item{...}{Additional arguments passed to the raster 
+overlay function}
 }
 \value{
 Depending on arguments, a raster layer or rasterBrick object containing:
@@ -32,19 +37,26 @@ Depending on arguments, a raster layer or rasterBrick object containing:
   \item {raster layer 1} {slope for trend, always returned}
   \item {raster layer 2} {intercept for trend if intercept TRUE}
   \item {raster layer 3} {p value for trend fit if p.value TRUE}
-  \item {raster layer 4} {lower confidence level at 95 pct, if confidence TRUE}
-  \item {raster layer 5} {upper confidence level at 95 pct, if confidence TRUE}
-  \item {raster layer 6} {Kendall's tau two-sided test, reject null at 0, if tau TRUE}
+  \item {raster layer 4} {lower confidence level at 95 pct, if 
+                          confidence TRUE}
+  \item {raster layer 5} {upper confidence level at 95 pct, if 
+                          confidence TRUE}
+  \item {raster layer 6} {Kendall's tau two-sided test, reject null at 0, 
+                          if tau TRUE}
 }
 }
 \description{
-Calculates a nonparametric statistic for a monotonic trend based on the Kendall tau statistic and the Theil-Sen slope modification
+Calculates a nonparametric statistic for a monotonic trend 
+             based on the Kendall tau statistic and the Theil-Sen slope 
+             modification
 }
 \details{
-This function implements Kendall's nonparametric test for a monotonic trend using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate the slope and related confidence intervals.
+This function implements Kendall's nonparametric test for a monotonic trend 
+using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate 
+the slope and related confidence intervals.
 }
 \examples{
-\dontrun{
+\donttest{
  library(raster)
  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
                  system.file("external/rlogo.grd", package="raster"),
@@ -58,11 +70,15 @@ This function implements Kendall's nonparametric test for a monotonic trend usin
 
 }
 \references{
-Theil, H. (1950) A rank invariant method for linear and polynomial regression analysis.  Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I), 53:521-525 (Part II), 53:1397-1412 (Part III).
+Theil, H. (1950) A rank invariant method for linear and polynomial regression 
+  analysis.  Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I), 
+  53:521-525 (Part II), 53:1397-1412 (Part III).
 
-Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. Journal of the American Statistical Association. 63(324):1379-1389.
+Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. 
+  Journal of the American Statistical Association. 63(324):1379-1389.
 
-Siegel, A.F. (1982) Robust Regression Using Repeated Medians. Biometrika, 69(1):242-244
+Siegel, A.F. (1982) Robust Regression Using Repeated Medians. 
+  Biometrika, 69(1):242-244
 }
 \seealso{
 \code{\link[EnvStats]{kendallTrendTest}} for model details

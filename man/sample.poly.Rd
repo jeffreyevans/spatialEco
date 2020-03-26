@@ -11,7 +11,9 @@ sample.poly(x, n = 10, type = "random", ...)
 
 \item{n}{Number of random samples}
 
-\item{type}{Type of sample with options for: "random", "regular", "stratified", "nonaligned", "hexagonal", "clustered", "Fibonacci". See "spsample" for details.}
+\item{type}{Type of sample with options for: "random", "regular", 
+"stratified", "nonaligned", "hexagonal", "clustered", 
+ "Fibonacci". See "spsample" for details.}
 
 \item{...}{Additional arguments passed to spsample}
 }
@@ -19,10 +21,8 @@ sample.poly(x, n = 10, type = "random", ...)
 sp SpatialPointsDataFrame object
 }
 \description{
-Creates an equal sample of n for each polygon in an sp Polygon class object
-}
-\note{
-Depends: sp
+Creates an equal sample of n for each polygon in an 
+             sp Polygon class object
 }
 \examples{
  library(raster)

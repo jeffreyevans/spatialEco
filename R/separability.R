@@ -9,38 +9,58 @@
 #' @param ...       additional arguments passes to plot
 #'
 #' @return A data.frame with the following separability metrics: 
-#' @return   B    Bhattacharryya distance statistic 
-#' @return  JM    Jeffries-Matusita distance statistic
-#' @return   M    M-Statistic
-#' @return   D    Divergence index
-#' @return   TD   Transformed Divergence index
+#' *  B - Bhattacharryya distance statistic 
+#' * JM - Jeffries-Matusita distance statistic
+#' *  M - M-Statistic
+#' *  D - Divergence index
+#' *  TD - Transformed Divergence index
+#' @md
 #'
-#' @note
-#' M-Statistic (Kaufman & Remer 1994) - This is a measure of the difference of the distributional peaks. A large M-statistic indicates good separation between the two classes as within-class variance is 
-#' minimized and between-class variance maximized (M <1 poor, M >1 good).
+#' @description
+#' Available statistics:
+#' * M-Statistic (Kaufman & Remer 1994) - This is a measure of the difference of the 
+#'   distributional peaks. A large M-statistic indicates good separation between the 
+#'   two classes as within-class variance is minimized and between-class variance 
+#'   maximized (M <1 poor, M >1 good).
 #'    
-#' Bhattacharyya distance (Bhattacharyya 1943; Harold 2003) - Measures the similarity of two discrete or continuous probability distributions.   
+#' * Bhattacharyya distance (Bhattacharyya 1943; Harold 2003) - Measures the similarity
+#'   of two discrete or continuous probability distributions.   
 #'    
-#' Jeffries-Matusita distance (Bruzzone et al., 2005; Swain et al., 1971) - The J-M distance is a function of separability that directly relates to the
-#' probability of how good a resultant classification will be. The J-M distance is asymptotic to v2, where values of v2 suggest complete separability
+#' * Jeffries-Matusita distance (Bruzzone et al., 2005; Swain et al., 1971) - The J-M 
+#'   distance is a function of separability that directly relates to the probability of 
+#'   how good a resultant classification will be. The J-M distance is asymptotic to v2, 
+#'   where values of v2 suggest complete separability
 #'    
-#' Divergence and transformed Divergence (Du et al., 2004) - Maximum likelihood approach. Transformed divergence gives an exponentially 
-#' decreasing weight to increasing distances between the classes.
+#' * Divergence and transformed Divergence (Du et al., 2004) - Maximum likelihood approach. 
+#'   Transformed divergence gives an exponentially decreasing weight to increasing distances 
+#'   between the classes.
 #'
-#' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
+#' @md 
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#'    Anderson, M. J., & Clements, A. (2000) Resolving environmental disputes: a statistical method for choosing among competing cluster models. Ecological Applications 10(5):1341-1355
+#' Anderson, M. J., & Clements, A. (2000) Resolving environmental disputes: a  
+#'   statistical method for choosing among competing cluster models. Ecological  
+#'   Applications 10(5):1341-1355
 #' @references
-#'    Bhattacharyya, A. (1943) On a measure of divergence between two statistical populations defined by their probability distributions'. Bulletin of the Calcutta Mathematical Society 35:99-109
+#' Bhattacharyya, A. (1943) On a measure of divergence between two statistical 
+#'   populations defined by their probability distributions'. Bulletin of the 
+#'   Calcutta Mathematical Society 35:99-109
 #' @references
-#'    Bruzzone, L., F. Roli, S.B. Serpico (1995) An extension to multiclass cases of the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and Machine Intelligence 33:1318-1321
+#' Bruzzone, L., F. Roli, S.B. Serpico (1995) An extension to multiclass cases of 
+#'   the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and  
+#'   Machine Intelligence 33:1318-1321
 #' @references
-#'    Du, H., C.I. Chang, H. Ren, F.M. D'Amico, J. O. Jensen, J., (2004) New Hyperspectral Discrimination Measure for Spectral Characterization. Optical Engineering 43(8):1777-1786.
+#' Du, H., C.I. Chang, H. Ren, F.M. D'Amico, J. O. Jensen, J., (2004) New 
+#'   Hyperspectral Discrimination Measure for Spectral Characterization. Optical 
+#'   Engineering 43(8):1777-1786.
 #' @references
-#'    Kailath, T., (1967) The Divergence and Bhattacharyya measures in signal selection. IEEE Transactions on Communication Theory 15:52-60  
+#' Kailath, T., (1967) The Divergence and Bhattacharyya measures in signal  
+#'   selection. IEEE Transactions on Communication Theory 15:52-60  
 #' @references
-#'    Kaufman Y., and L. Remer (1994) Detection of forests using mid-IR reflectance: An application for aerosol studies. IEEE T. Geosci.Remote. 32(3):672-683.
+#' Kaufman Y., and L. Remer (1994) Detection of forests using mid-IR reflectance: 
+#'   An application for aerosol studies. IEEE T. Geosci.Remote. 32(3):672-683.
 #' 
 #' @examples 
 #'    norm1 <- dnorm(seq(-20,20,length=5000),mean=0,sd=1) 

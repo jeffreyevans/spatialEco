@@ -1,14 +1,15 @@
 #' @title Sample Polygons
-#' @description Creates an equal sample of n for each polygon in an sp Polygon class object
+#' @description Creates an equal sample of n for each polygon in an 
+#'              sp Polygon class object
 #'
 #' @param x     sp class SpatialPolygons or SpatialPolygonsDataFrame object 
 #' @param n     Number of random samples
-#' @param type  Type of sample with options for: "random", "regular", "stratified", "nonaligned", "hexagonal", "clustered", "Fibonacci". See "spsample" for details.
+#' @param type  Type of sample with options for: "random", "regular", 
+#'              "stratified", "nonaligned", "hexagonal", "clustered", 
+#'               "Fibonacci". See "spsample" for details.
 #' @param ...   Additional arguments passed to spsample
 #'
 #' @return sp SpatialPointsDataFrame object 
-#'
-#' @note Depends: sp
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

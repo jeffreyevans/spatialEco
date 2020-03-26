@@ -39,13 +39,15 @@ A list object containing:
 }
 }
 \description{
-Downscales a raster to a higher resolution raster using a robust regression
+Downscales a raster to a higher resolution raster using 
+             a robust regression
 }
 \examples{
-\dontrun{
+\donttest{
  library(raster)
  elev <- raster::getData('alt', country='SWZ', mask=TRUE)
- tmax <- raster::getData('worldclim', var='tmax', res=10, lon=8.25, lat=46.8)
+ tmax <- raster::getData('worldclim', var='tmax', res=10, 
+                         lon=8.25, lat=46.8)
    tmax <- crop(tmax[[1]], extent(elev))
  
  tmax.ds <- raster.downscale(elev, tmax, scatter=TRUE)

@@ -5,7 +5,8 @@
 #'
 #' @return SpatialPolygonsDataFrame object with all holes removed
 #'
-#' @note A hole is considered a polygon within a polygon representing null geometry 
+#' @note 
+#' A hole is considered a polygon within a polygon representing null geometry 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

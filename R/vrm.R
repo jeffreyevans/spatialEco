@@ -1,18 +1,26 @@
 #' @title Vector Ruggedness Measure (VRM)
-#' @description Implementation of the Sappington et al., (2007) vector ruggedness measure
+#' @description Implementation of the Sappington et al., (2007) vector 
+#'              ruggedness measure
 #'
-#' @param x              Elevation raster class object
-#' @param s              Scale of window. Must be odd number, can represent 2 dimensions (eg., s=c(3,5) would represent a 3 x 5 window)
-#' @param file.name      Name of output raster (optional)
-#' @param ...            Additional arguments passed to writeRaster
+#' @param x          Elevation raster class object
+#' @param s          Scale of window. Must be odd number, can 
+#'                   represent 2 dimensions (eg., s=c(3,5) would 
+#'                   represent a 3 x 5 window)
+#' @param file.name  Name of output raster (optional)
+#' @param ...        Additional arguments passed to writeRaster
 #'
 #' @return raster class object or raster written to disk
 #' 
-#' @note This function measures terrain ruggedness by calculating the vector ruggedness measure
+#' @note 
+#' This function measures terrain ruggedness by calculating the vector 
+#' ruggedness measure
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
-#' @references Sappington, J.M., K.M. Longshore, D.B. Thomson (2007). Quantifying Landscape Ruggedness for Animal Habitat Analysis: A case Study Using Bighorn Sheep inthe Mojave Desert. Journal of Wildlife Management. 71(5):1419-1426
+#' @references 
+#' Sappington, J.M., K.M. Longshore, D.B. Thomson (2007). Quantifying Landscape 
+#'   Ruggedness for Animal Habitat Analysis: A case Study Using Bighorn Sheep in 
+#'   the Mojave Desert. Journal of Wildlife Management. 71(5):1419-1426
 #'
 #' @examples 
 #'  library(raster)

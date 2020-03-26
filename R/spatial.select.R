@@ -1,26 +1,32 @@
 #' @title Spatial Select
 #'
-#' @description Performs a spatial select (feature subset) between a polygon(s) and other feature class
+#' @description 
+#' Performs a spatial select (feature subset) between a polygon(s) and other 
+#' feature class
 #' 
 #' @param x           An sp or sf polygon(s) object that defines the spatial query
 #' @param y           A sp or sf feature class that will be subset by the query of x
 #' @param distance    A proximity distance of features to select (within distance)
 #' @param predicate   Spatial predicate for intersection
-#' @param neighbors   If predicate = "contingency" type of neighbors options are c("queen", "rook")
+#' @param neighbors   If predicate = "contingency" type of neighbors options are 
+#'                    c("queen", "rook")
 #'
-#' @return An sp object representing a subset of y based on the spatial query of x or, 
-#'         if predicate = contingency a sparse matrix representing neighbor indexes
+#' @return 
+#' An sp object representing a subset of y based on the spatial query of x or, 
+#' if predicate = contingency a sparse matrix representing neighbor indexes
 #'
-#' @note Performs a spatial select of features based on an overlay of a polygon (x),   
-#'       which can represent multiple features, and a polygon, point or line feature 
-#'       classes (y). User can specify a partial or complete intersection, using within 
-#'       argument, or within a distance, using distance argument, predicated on the  
-#'       query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
-#'       that for point to point neighbor selections use the knn function. 
+#' @description
+#' Performs a spatial select of features based on an overlay of a polygon (x),   
+#' which can represent multiple features, and a polygon, point or line feature 
+#' classes (y). User can specify a partial or complete intersection, using within 
+#' argument, or within a distance, using distance argument, predicated on the  
+#' query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
+#' that for point to point neighbor selections use the knn function. 
 #'
-#' @note Valid spatial predicates include: intersect, touches, covers, contains, proximity and 
-#'       contingency. See [DE-9IM topology model](https://en.wikipedia.org/wiki/DE-9IM) for 
-#'       detailed information on data predicates. 
+#' @note 
+#' Valid spatial predicates include: intersect, touches, covers, contains, proximity 
+#' and contingency. See [DE-9IM topology model](https://en.wikipedia.org/wiki/DE-9IM)
+#' for detailed information on data predicates. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'                                                                    

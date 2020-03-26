@@ -18,29 +18,35 @@ similarity(
 
 \item{k}{Number of k nearest neighbors (kNN)}
 
-\item{method}{Method to compute multivariate distances c("mahalanobis", "raw", "euclidean", "ica")}
+\item{method}{Method to compute multivariate distances c("mahalanobis", "raw", 
+"euclidean", "ica")}
 
 \item{frequency}{Calculate frequency of each reference row (TRUE/FALSE)}
 
 \item{scale}{Scale multivariate distances to standard range (TRUE/FALSE)}
 
-\item{ID}{Unique ID vector to use as reference ID's (rownames). Must be unique and same length as number of rows in x}
+\item{ID}{Unique ID vector to use as reference ID's (rownames). Must be 
+unique and same length as number of rows in x}
 }
 \value{
-data.frame with k similar targets and associated distances. If frequency = TRUE  the freq column represents the number of times a row (ID) was selected as a neighbor.
+data.frame with k similar targets and associated distances. If frequency = TRUE  the 
+freq column represents the number of times a row (ID) was selected as a neighbor.
 }
 \description{
 Uses row imputation to identify "k" ecological similar observations
 }
 \note{
-This function uses row-based imputation to identify k similar neighbors for each observation. Has been used to identify offsets based on ecological similarity.
+This function uses row-based imputation to identify k similar neighbors for each 
+observation. Has been used to identify offsets based on ecological similarity.
 }
 \examples{
  data(pu)
- kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = FALSE, ID = pu@data$UNIT_ID)  
+ kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = FALSE, 
+                   ID = pu@data$UNIT_ID)  
 
-\dontrun{  
- kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = TRUE, ID = pu@data$UNIT_ID)  
+\donttest{  
+ kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = TRUE, 
+                   ID = pu@data$UNIT_ID)  
  p <- kNN$freq   
  clr <- c("#3288BD", "#99D594", "#E6F598", "#FEE08B", 
           "#FC8D59", "#D53E4F")   
@@ -59,7 +65,10 @@ This function uses row-based imputation to identify k similar neighbors for each
  
 }
 \references{
-Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial Conservation Planning and Ecological Priority Design in St. Lucia, Eastern Caribbean. Chapter 26 in Central American Biodiversity : Conservation, Ecology and a Sustainable Future. F. Huettman (eds). Springer, NY.
+Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial 
+  Conservation Planning and Ecological Priority Design in St. Lucia, Eastern 
+  Caribbean. Chapter 26 in Central American Biodiversity : Conservation, Ecology 
+  and a Sustainable Future. F. Huettman (eds). Springer, NY.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

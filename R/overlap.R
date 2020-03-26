@@ -5,9 +5,9 @@
 #' @param y    A matrix, rasterLayer or sp raster class object
 #'             with the same dimensions of x
 #'
-#' @return A single value that is the I similarity statistic
+#' @return A value representing the I similarity statistic
 #'
-#' @note
+#' @description
 #' The overlap function computes the I similarity statistic (Warren et al. 2008)  
 #' of two overlaping niche estimates. Similarity is based on the Hellenger distance. 
 #' It is assumed that the input data share the same extent and cellsize and all values 
@@ -17,14 +17,15 @@
 #' predictions to create a single value representing the similarity of the two
 #' distributions. The I similarity statistic ranges from a value of 0, where
 #' two distributions have no overlap, to 1 where two distributions are
-#' identical (Warren et al., 2008).
+#' identical (Warren et al., 2008). The function is based on code from 
+#' Jeremy VanDerWal
 #'
-#' @author Jeremy VanDerWal w/ modifications by Jeffrey Evans <jeffrey_evans@@tnc.org>
+#' @author Jeffrey Evans <jeffrey_evans@@tnc.org> 
 #'
 #' @references 
 #' Warren, D. L., R. E. Glor, M. Turelli, and D. Funk. (2008).
-#' Environmental Niche Equivalency versus Conservatism: Quantitative Approaches
-#' to Niche Evolution. Evolution 62:2868-2883.
+#'   Environmental Niche Equivalency versus Conservatism: Quantitative 
+#'   Approaches to Niche Evolution. Evolution 62:2868-2883.
 #'
 #' @examples   
 #' # add degree of separation in two matrices 

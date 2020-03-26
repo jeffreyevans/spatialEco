@@ -1,8 +1,8 @@
 #' @title Gaussian Kernel
 #' @description Creates a Gaussian Kernel of specified size and sigma
 #'
-#' @param sigma          sigma (standard deviation) of kernel (defaults 2)
-#' @param n              size of symmetrical kernel (defaults to 5x5)
+#' @param sigma  sigma (standard deviation) of kernel (defaults 2)
+#' @param n      size of symmetrical kernel (defaults to 5x5)
 #'
 #' @return Symmetrical (NxN) matrix of a Gaussian distribution
 #'
@@ -10,14 +10,15 @@
 #'  
 #' @examples 
 #'   par(mfrow=c(2,2))
-#'   persp(gaussian.kernel(sigma=1, n=27), theta = 135, phi = 30, col = "grey", 
-#'         ltheta = -120, shade = 0.6, border=NA )
-#'   persp(gaussian.kernel(sigma=2, n=27), theta = 135, phi = 30, col = "grey", 
-#'         ltheta = -120, shade = 0.6, border=NA )		
-#'   persp(gaussian.kernel(sigma=3, n=27), theta = 135, phi = 30, col = "grey", 
-#'         ltheta = -120, shade = 0.6, border=NA )				
-#'   persp(gaussian.kernel(sigma=4, n=27), theta = 135, phi = 30, col = "grey", 
-#'         ltheta = -120, shade = 0.6, border=NA )					
+#'   persp(gaussian.kernel(sigma=1, n=27), theta = 135, 
+#'         phi = 30, col = "grey", ltheta = -120, shade = 0.6, 
+#'         border=NA )
+#'   persp(gaussian.kernel(sigma=2, n=27), theta = 135, phi = 30, 
+#'         col = "grey", ltheta = -120, shade = 0.6, border=NA )		
+#'   persp(gaussian.kernel(sigma=3, n=27), theta = 135, phi = 30, 
+#'         col = "grey", ltheta = -120, shade = 0.6, border=NA )				
+#'   persp(gaussian.kernel(sigma=4, n=27), theta = 135, phi = 30,
+#'         col = "grey", ltheta = -120, shade = 0.6, border=NA )					
 #'			
 #' @export
 gaussian.kernel <- function(sigma=2, n=5) {

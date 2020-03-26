@@ -17,19 +17,21 @@ sa.trans(
 
 \item{aspect}{aspect values in degrees or radians}
 
-\item{type}{Type of transformation, options are: "cos", "sin",}
+\item{type}{Type of transformation, options are: "cos", "sin"}
 
-\item{slp.units}{Units of slope values, options are: "degrees", "radians" or "percent"}
+\item{slp.units}{Units of slope values, options are: "degrees", 
+"radians" or "percent"}
 
-\item{asp.units}{Units of aspect values, options are: "degrees" or "radians"}
+\item{asp.units}{Units of aspect values, options are: 
+"degrees" or "radians"}
 }
 \value{
 A vector of the modeled value
 }
 \description{
-The Trigonometric  Stage (1978) [slope * cos(aspect)] or [slope * sin(aspect)]
-}
-\note{
+The Trigonometric  Stage (1978) 
+             [slope * cos(aspect)] or [slope * sin(aspect)]
+
 An a priori assumption of a maximum in the NW quadrant (45 azimuth)
 and a minimum in the SW quadrant can be replaced by an empirically
 determined location of the optimum without repeated calculations of
@@ -37,7 +39,7 @@ the regression fit. In addition it is argued that expressions for
 the effects of aspect should always be considered as terms involving
 an interaction with slope (Stage, 1976)
 
-For slopes from 0% - 100%, The functions are linerized and
+For slopes from 0% - 100%, The functions are linearized and
 bounded from -1 to 1. Greater than 100% slopes are treated
 out of the -1 to 1 range.
 
@@ -56,7 +58,8 @@ to 101% and flat areas (-1) to nodata.
 
 }
 \references{
-Stage, A. R. 1976. An Expression of the Effects of Aspect, Slope, and Habitat Type on Tree Growth. Forest Science Vol 22, No 3, 457-460.
+Stage, A. R. 1976. An Expression of the Effects of Aspect, Slope, 
+  and Habitat Type on Tree Growth. Forest Science 22(3):457-460.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

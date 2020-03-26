@@ -41,7 +41,7 @@ This function provides a distance constrained subsample of existing point
 }
 \examples{
      
-\dontrun{
+\donttest{
 library(sp)
 data(meuse)
   coordinates(meuse) <- ~ x+y

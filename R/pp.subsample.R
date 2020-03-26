@@ -1,47 +1,65 @@
 #' @title Point process random subsample
-#' @description Generates random subsample based on density estimate of observations
+#' @description Generates random subsample based on density estimate 
+#'              of observations
 #'
 #' @param x An sp class SpatialPointsDataFrame or SpatialPoints object
 #' @param n Number of random samples to generate
 #' @param window Type of window (hull or extent)
-#' @param sigma Bandwidth selection method for KDE, default is 'Scott'. Options are 'Scott', 'Stoyan', 'Diggle', 'likelihood', and 'geometry'
+#' @param sigma Bandwidth selection method for KDE, default is 'Scott'. 
+#'              Options are 'Scott', 'Stoyan', 'Diggle', 'likelihood', 
+#'              and 'geometry'
 #' @param wts Optional vector of weights corresponding to point pattern
-#' @param gradient A scaling factor applied to the sigma parameter used to adjust the gradient decent of the density estimate. The default is 1, for no adjustment (downweight < 1 | upweight > 1)   
+#' @param gradient A scaling factor applied to the sigma parameter used to 
+#'                 adjust the gradient decent of the density estimate. The 
+#'                 default is 1, for no adjustment (downweight < 1 | upweight > 1)   
 #' @param edge Apply Diggle edge correction (TRUE/FALSE)
 #'
 #' @return sp class SpatialPointsDataFrame containing random subsamples
 #'
-#' @note
-#' The window type creates a convex hull by default or, optionally, uses the maximum extent (envelope). 
+#' @description
+#' The window type creates a convex hull by default or, optionally, uses the maximum 
+#' extent (envelope). The resulting bandwidth can vary widely by method. the 'diggle' 
+#' method is intended for  bandwidth representing 2nd order spatial variation whereas 
+#' the 'scott' method will represent 1st order trend. the 'geometry' approach will also 
+#' represent 1st order trend. for large datasets, caution should be used with the 2nd 
+#' order 'likelihood' approach, as it is slow and computationally expensive. finally, 
+#' the 'stoyan' method will produce very strong 2nd order results. '
 #' 
+#' @note
 #' Available bandwidth selection methods are:
-#'   Scott (Scott 1992), Scott's Rule for Bandwidth Selection (1st order)
-#'   Diggle (Berman & Diggle 1989), Minimise the mean-square error via cross validation (2nd order)  
-#'   likelihood (Loader 1999), Maximum likelihood cross validation (2nd order)
-#'   geometry, Bandwidth is based on simple window geometry (1st order)
-#'   Stoyan (Stoyan & Stoyan 1995), Based on pair-correlation function (strong 2nd order)
-#'
-#' Note; resulting bandwidth can vary widly by method. the 'diggle' method is intended for selecting bandwidth representing 2nd order spatial variation whereas the 'scott' method will represent 1st order trend. the 'geometry' approach will also represent 1st order trend. for large datasets, caution should be used with the 2nd order 'likelihood' approach, as it is slow and computationally expensive. finally, the 'stoyan' method will produce very strong 2nd order results. '
-#'
-#' @note Depends: sp, spatstat
+#' * Scott - (Scott 1992), Scott's Rule for Bandwidth Selection (1st order)
+#' * Diggle - (Berman & Diggle 1989), Minimise the mean-square error via cross 
+#'           validation (2nd order)  
+#' * likelihood - (Loader 1999), Maximum likelihood cross validation (2nd order)
+#' * geometry - Bandwidth is based on simple window geometry (1st order)
+#' * Stoyan - (Stoyan & Stoyan 1995), Based on pair-correlation function (strong 2nd order)
+#' * User defined - using a numeric value for sigma
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#' Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order intensity of a spatial point process. Journal of the Royal Statistical Society, series B 51, 81-92. 
-#' Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order intensity of a spatial point process. Journal of the Royal Statistical Society, series B 51, 81-92. 
+#' Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order 
+#'   intensity of a spatial point process. Journal of the Royal Statistical Society, 
+#'   series B 51, 81-92. 
 #' @references
-#' Fithian, W & T. Hastie (2013) Finite-sample equivalence in statistical models for presence-only data. Annals of Applied Statistics 7(4): 1917-1939
+#' Fithian, W & T. Hastie (2013) Finite-sample equivalence in statistical models for 
+#'   presence-only data. Annals of Applied Statistics 7(4): 1917-1939
 #' @references
-#' Hengl, T., H. Sierdsema, A. Radovic, and A. Dilo (2009) Spatial prediction of species distributions from occurrence-only records: combining point pattern analysis, ENFA and regression-kriging. Ecological Modelling, 220(24):3499-3511  
+#' Hengl, T., H. Sierdsema, A. Radovic, and A. Dilo (2009) Spatial prediction of species 
+#'   distributions from occurrence-only records: combining point pattern analysis, 
+#'   ENFA and regression-kriging. Ecological Modelling, 220(24):3499-3511  
 #' @references
 #' Loader, C. (1999) Local Regression and Likelihood. Springer, New York. 
 #' @references
-#' Scott, D.W. (1992) Multivariate Density Estimation. Theory, Practice and Visualization. New York, Wiley. 
+#' Scott, D.W. (1992) Multivariate Density Estimation. Theory, Practice and Visualization. 
+#'   New York, Wiley. 
 #' @references
-#' Stoyan, D. and Stoyan, H. (1995) Fractals, random shapes and point fields: methods of geometrical statistics. John Wiley and Sons. 
+#' Stoyan, D. and Stoyan, H. (1995) Fractals, random shapes and point fields: methods of 
+#'   geometrical statistics. John Wiley and Sons. 
 #' @references
-#' Warton, D.i., and L.C. Shepherd (2010) Poisson Point Process Models Solve the Pseudo-Absence Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
+#' Warton, D.i., and L.C. Shepherd (2010) Poisson Point Process Models Solve the Pseudo-Absence 
+#'   Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
 #'
 #' @examples  
 #' require(spatstat)
@@ -58,7 +76,8 @@
 #'                  col=c('black','red'),pch=c(19,19))   
 #'
 #' @export
-pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL, gradient = 1, edge = FALSE) {
+pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL, 
+                        gradient = 1, edge = FALSE) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (is.null(window)) 
         stop("Please specify a valid window type hull | extent")

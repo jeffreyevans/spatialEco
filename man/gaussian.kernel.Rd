@@ -19,14 +19,15 @@ Creates a Gaussian Kernel of specified size and sigma
 }
 \examples{
   par(mfrow=c(2,2))
-  persp(gaussian.kernel(sigma=1, n=27), theta = 135, phi = 30, col = "grey", 
-        ltheta = -120, shade = 0.6, border=NA )
-  persp(gaussian.kernel(sigma=2, n=27), theta = 135, phi = 30, col = "grey", 
-        ltheta = -120, shade = 0.6, border=NA )		
-  persp(gaussian.kernel(sigma=3, n=27), theta = 135, phi = 30, col = "grey", 
-        ltheta = -120, shade = 0.6, border=NA )				
-  persp(gaussian.kernel(sigma=4, n=27), theta = 135, phi = 30, col = "grey", 
-        ltheta = -120, shade = 0.6, border=NA )					
+  persp(gaussian.kernel(sigma=1, n=27), theta = 135, 
+        phi = 30, col = "grey", ltheta = -120, shade = 0.6, 
+        border=NA )
+  persp(gaussian.kernel(sigma=2, n=27), theta = 135, phi = 30, 
+        col = "grey", ltheta = -120, shade = 0.6, border=NA )		
+  persp(gaussian.kernel(sigma=3, n=27), theta = 135, phi = 30, 
+        col = "grey", ltheta = -120, shade = 0.6, border=NA )				
+  persp(gaussian.kernel(sigma=4, n=27), theta = 135, phi = 30,
+        col = "grey", ltheta = -120, shade = 0.6, border=NA )					
 		
 }
 \author{

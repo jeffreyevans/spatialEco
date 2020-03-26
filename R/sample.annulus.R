@@ -1,15 +1,20 @@
 #' @title Sample annulus
-#' @description Creates sample points based on annulus with defined inner and outer radius
+#' @description Creates sample points based on annulus with defined 
+#'              inner and outer radius
 #' 
-#' @param x              sp SpatialPoints or SpatialPointsDataFrame class object
-#' @param r1             Numeric value defining inner radius of annulus (in projection units)
-#' @param r2             Numeric value defining outer radius of annulus (in projection units)
-#' @param n              Number of samples
-#' @param ...            Additional arguments passed to spsample
+#' @param x    sp SpatialPoints or SpatialPointsDataFrame class object
+#' @param r1   Numeric value defining inner radius of annulus 
+#'             (in projection units)
+#' @param r2   Numeric value defining outer radius of annulus 
+#'             (in projection units)
+#' @param n    Number of samples
+#' @param ...  Additional arguments passed to spsample
 #'
 #' @return sp SpatialPointsataFrame OBJECT
 #'
-#' @note Function can be used for distance based sampling. This is one sampling method to capture the spatially lagged variation.
+#' @note 
+#' Function can be used for distance based sampling. This is a sampling method 
+#' that can be used to capture spatially lagged variation.
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
@@ -37,6 +42,7 @@ sample.annulus <- function(x, r1, r2, n = 10, ...) {
   if(r1 >= r2) stop("inner radius (r1) must be smaller than outer (r2)")
     dots <- as.list(match.call(expand.dots = TRUE)[-1])
   if (is.null(dots[["type"]]) & "type" %in% names(dots) == FALSE) dots[["type"]] <-  "random"
+  if (is.null(dots[["n"]]) & "n" %in% names(dots) == FALSE) dots[["n"]] <- 10
   if (is.null(dots[["n"]]) & "n" %in% names(dots) == FALSE) dots[["n"]] <- 10
     c1 <- rgeos::gBuffer(x, byid = TRUE, width = r1, quadsegs = 10)
     c2 <- rgeos::gBuffer(x, byid = TRUE, width = r2, quadsegs = 10)

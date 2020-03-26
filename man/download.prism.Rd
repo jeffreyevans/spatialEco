@@ -8,7 +8,7 @@ download.prism(
   data.type,
   date.range,
   time.step = "monthly",
-  download.folder = getwd(),
+  download.folder = c("current", "temp"),
   by.year = FALSE,
   unzip.file = TRUE,
   ftp.site = "ftp://prism.oregonstate.edu"
@@ -21,41 +21,36 @@ download.prism(
 
 \item{time.step}{Timestep of product ('daily'/'monthly')}
 
-\item{download.folder}{Local download directory, defaults to current working directory}
+\item{download.folder}{Local download directory, defaults to current 
+working directory}
 
 \item{by.year}{Create a directory for each year (TRUE/FALSE)}
 
 \item{unzip.file}{Unzip file on download (TRUE/FALSE)}
 
-\item{ftp.site}{PRISM ftp address to use, default: \url{ftp://prism.oregonstate.edu}}
+\item{ftp.site}{PRISM ftp address to use, default: 
+\url{ftp://prism.oregonstate.edu}}
 }
 \value{
-Compressed or uncompressed PRISM monthly gridded data(bil raster format)
+Compressed or uncompressed PRISM monthly gridded 
+        data(bil raster format)
 }
 \description{
 Batch download of monthly gridded PRISM climate data
 }
-\note{
+\details{
 Monthly data 1895-1980 is available in a single zip file on the ftp site
-
 PRISM URL: \url{http://prism.nacse.org/}
-
 FTP download sites for 400m gridded daily/monthly climate data
-
-\url{ftp://prism.oregonstate.edu/daily}
-
-\url{ftp://prism.oregonstate.edu/monthly}
-
-Naming convention: PRISM_<var>_<stability>_<scale&version>_<date>_bil.zip
-
-i.e., 'PRISM_ppt_stable_4kmD1_20100208_bil.zip'
-
-Data description:
-
+  \url{ftp://prism.oregonstate.edu/daily}
+   \url{ftp://prism.oregonstate.edu/monthly}
+   
+i.e., 'PRISM_ppt_stable_4kmD1_20100208_bil.zip' 
+Data description: 
 \url{http://prism.nacse.org/documents/PRISM_datasets_aug2013.pdf}
 }
 \examples{
-\dontrun{
+\donttest{
    my.dates <- c('2000/1/1', '2001/12/30')
    download.prism('ppt', date.range=my.dates, time.step='monthly', by.year=TRUE)
 

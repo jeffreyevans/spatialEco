@@ -1,19 +1,23 @@
 #' @title Probability density plot by group
-#' @description Creates a probability density plot of y for each group of x 
+#' @description Creates a probability density plot of y for 
+#'              each group of x 
 #'
 #' @param y Numeric vector (density variable)
-#' @param x Numeric, character or factorial vector of grouping variable (must be same length as y)
+#' @param x Numeric, character or factorial vector of grouping 
+#'          variable (must be same length as y)
 #' @param col Optional line colors (see par, col)
 #' @param lty Optional line types (see par, lty)
 #' @param lwd Optional line widths (see par, lwd)
-#' @param lx Position of legend (x coordinate or 'topright', 'topleft', 'bottomright', 'bottomleft') 
+#' @param lx Position of legend (x coordinate or 'topright', 'topleft', 
+#'           'bottomright', 'bottomleft') 
 #' @param ly Position of legend (y coordinate)
 #' @param ... Additional arguments passed to plot
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'
 #' @references
-#'  Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, New York.
+#'  Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, 
+#'    New York.
 #'
 #' @examples 
 #' y=dnorm(runif(100))
@@ -22,7 +26,8 @@
 #' ylab='PDF', xlab='Y', lty=c(1,2,3))
 #'
 #' @export
-group.pdf <- function(x, y, col = NULL, lty = NULL, lwd = NULL, lx = "topleft", ly = NULL, ...) {
+group.pdf <- function(x, y, col = NULL, lty = NULL, lwd = NULL, 
+                     lx = "topleft", ly = NULL, ...) {
     if (!is.numeric(y)) 
         stop("y MUST BE NUMERIC")
     if (length(x) != length(y)) 

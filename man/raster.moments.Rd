@@ -9,9 +9,12 @@ raster.moments(x, type = "mean", s = 3, p = 0.75)
 \arguments{
 \item{x}{raster object}
 
-\item{type}{The global statistic to represent the local deviation  options are: "min", "min", "mean", "median", "var, "sd", "mad", "kurt", "skew", "quantile"}
+\item{type}{The global statistic to represent the local deviation
+options are: "min", "min", "mean", "median", "var, "sd", 
+"mad", "kurt", "skew", "quantile"}
 
-\item{s}{Size of matrix (focal window), can be single value or two values defining the [x,y] dimensions of the focal matrix}
+\item{s}{Size of matrix (focal window), can be single value or two 
+values defining the [x,y] dimensions of the focal matrix}
 
 \item{p}{if type="quantile", the returned percentile.}
 }
@@ -22,10 +25,11 @@ raster class object of the local distributional moment
 Calculates focal statistical moments of a raster
 }
 \note{
-This is a simple wrapper for the focal function, returning local statistical moments
+This is a simple wrapper for the focal function, returning local 
+ statistical moments
 }
 \examples{
-\dontrun{
+\donttest{
   library(raster)
   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
               ymn=4423540, ymx=4453690)

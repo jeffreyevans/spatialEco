@@ -20,15 +20,19 @@ sample.line(
 
 \item{d}{Sample distance. For regular sample.}
 
-\item{p}{Proportional sample size (length * p), expected value is 0-1. For regular or random.}
+\item{p}{Proportional sample size (length * p), expected value 
+is 0-1. For regular or random.}
 
 \item{n}{Fixed sample size. For regular or random}
 
-\item{type}{Defines sample type. Options are "regular" or "random". A regular sample results in a systematic, evenly spaced sample.}
+\item{type}{Defines sample type. Options are "regular" or "random". A 
+regular sample results in a systematic, evenly spaced sample.}
 
-\item{longlat}{TRUE/FALSE is data in geographic units, if TRUE distance is in kilometres}
+\item{longlat}{TRUE/FALSE is data in geographic units, if TRUE distance 
+is in kilometres}
 
-\item{min.samp}{Minimal number of sample points for a given line (default is 1 point)}
+\item{min.samp}{Minimal number of sample points for a given line 
+(default is 1 point)}
 
 \item{...}{Additional argument passed to spsample}
 }
@@ -36,45 +40,50 @@ sample.line(
 sp SpatialPointsDataFrame object.
 }
 \description{
-Creates a systematic or random point sample of an sp SpatialLinesDataFrame object based on distance spacing, fixed size or proportional size
-}
-\note{
-The sdist argument will produce an evenly spaced sample, whereas n produces a fixed sized sample. The p (proportional) argument calculates the percent of the line-length.
+Creates a systematic or random point sample of an sp 
+             SpatialLinesDataFrame object based on distance spacing, 
+             fixed size or proportional size
 
-The LID column in the @data slot corresponds to the row.names of the SpatialLinesDataFrame object.
-
-Depends: sp
+The sdist argument will produce an evenly spaced sample, whereas n produces 
+a fixed sized sample. The p (proportional) argument calculates the percent 
+of the line-length. The LID column in the @data slot corresponds to the row.names 
+of the SpatialLinesDataFrame object.
 }
 \examples{
  require(sp)
- sp.lines <- SpatialLines(list(Lines(list(Line(cbind(c(1,2,3),c(3,2,2)))), ID="1"),
-                          Lines(list(Line(cbind(c(1,2,3),c(1,1.5,1)))), ID="2")))
- sp.lines <- SpatialLinesDataFrame( sp.lines, data.frame(ID=1:2, row.names=c(1,2)) )
+ sp.lines <- SpatialLines(list(Lines(list(Line(cbind(c(1,2,3),c(3,2,2)))), 
+               ID="2")))
+ sp.lines <- SpatialLinesDataFrame( sp.lines, data.frame(ID=1:2, 
+                                    row.names=c(1,2)) )
 
 par(mfrow=c(2,2))
  # Create systematic sample at 20 km spacing 
- reg.sample <- sample.line(sp.lines, d = 20, type = "regular", longlat = TRUE)
+ reg.sample <- sample.line(sp.lines, d = 20, type = "regular", 
+                           longlat = TRUE)
    plot(sp.lines)
      plot(reg.sample, pch = 20, add = TRUE)
   box()
   title("systematic d = 20")
 
  # Create fixed size (n = 20) systematic sample
- reg.sample <- sample.line(sp.lines, n = 20, type = "regular", longlat = TRUE)  
+ reg.sample <- sample.line(sp.lines, n = 20, type = "regular", 
+                           longlat = TRUE)  
    plot(sp.lines)
      plot(reg.sample, pch = 20, add = TRUE)
      box()
   title("systematic n = 20")
   
  # Create fixed size (n = 20) random sample 
- rand.sample <- sample.line(sp.lines, n = 20, type = "random", longlat = TRUE)  
+ rand.sample <- sample.line(sp.lines, n = 20, type = "random", 
+                            longlat = TRUE)  
    plot(sp.lines)
      plot(rand.sample, pch = 20, add = TRUE)
      box()	  
      title("rand n = 20")
   
  # Create proportional (p = 0.10) random sample
- rand.sample <- sample.line(sp.lines, p = 0.10, type = "random", longlat = TRUE)  
+ rand.sample <- sample.line(sp.lines, p = 0.10, type = "random", 
+                            longlat = TRUE)  
    plot(sp.lines)
      plot(rand.sample, pch = 20, add = TRUE)
      box()

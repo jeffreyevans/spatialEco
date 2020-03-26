@@ -9,10 +9,10 @@ tri(r, s = 3, exact = TRUE, file.name = NULL, ...)
 \arguments{
 \item{r}{RasterLayer class object}
 
-\item{s}{Scale of window. Must be odd number, can represent 2 
+\item{s}{Scale of window. Must be odd number, can represent 2
 dimensions (eg., s=c(3,5) would represent a 3 x 5 window)}
 
-\item{exact}{Calculate (TRUE/FALSE) the exact TRI or an algebraic 
+\item{exact}{Calculate (TRUE/FALSE) the exact TRI or an algebraic
 approximation.}
 
 \item{file.name}{Name of output raster (optional)}
@@ -24,32 +24,24 @@ raster class object or raster written to disk
 }
 \description{
 Implementation of the Riley et al (1999) Terrain Ruggedness Index
+
+The algebraic approximation is considerably faster. However, because
+inclusion of the center cell, the larger the scale the larger the divergence
+of the minimum value.
+
+Recommended ranges for classifying Topographic Ruggedness Index:
+\itemize{
+\item 0-80 - level terrain surface.
+\item 81-116 - nearly level surface.
+\item 117-161 - slightly rugged surface.
+\item 162-239 - intermediately rugged surface.
+\item 240-497 - moderately rugged surface.
+\item 498-958 - highly rugged surface.
+\item gt 959 - extremely rugged surface.
 }
-\note{
-The algebraic approximation is considerably faster. However, because 
-      inclusion of the center cell, the larger the scale the larger the divergence 
-      of the minimum value.
-
-Recommended ranges for classifying Topographic Ruggedness Index
-
-0-80 (1) level terrain surface.
-
-81-116 (2) nearly level surface.
-
-117-161 (3) slightly rugged surface.
-
-162-239 (4) intermediately rugged surface.
-
-240-497 (5) moderately rugged surface.
-
-498-958 (6) highly rugged surface.
-
->959 (7) extremely rugged surface.
-
-Depends: raster
 }
 \examples{
-\dontrun{
+\donttest{
  library(raster)
  data(elev)
   ( tri.ext <- tri(elev) )
@@ -59,10 +51,10 @@ Depends: raster
 
 }
 \references{
-Riley, S.J., S.D. DeGloria and R. Elliot (1999) A terrain 
-              ruggedness index that quantifies topographic heterogeneity, 
-              Intermountain Journal of Sciences 5(1-4):23-27.
+Riley, S.J., S.D. DeGloria and R. Elliot (1999) A terrain
+ruggedness index that quantifies topographic heterogeneity,
+Intermountain Journal of Sciences 5(1-4):23-27.
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

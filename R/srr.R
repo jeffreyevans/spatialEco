@@ -8,13 +8,13 @@
 #' @return raster class object of Pike's (1971) Surface Relief Ratio
 #'
 #' @note
-#' Describes rugosity in continuous raster surface within a specified window. The implementation of SRR can be shown as: 
-#' (mean(x) - min(x)) / (max(x) - min(x)) 
+#' Describes rugosity in continuous raster surface within a specified window. 
+#' The implementation of SRR can be shown as: (mean(x) - min(x)) / (max(x) - min(x)) 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #'   library(raster)
 #'   data(elev)
 #'   r.srr <- srr(elev, s=5)
@@ -29,5 +29,6 @@ srr <- function(x, s = 5, ...) {
     rmin <- raster::focal(x, w=m, fun=min)
     rmax <- raster::focal(x, w=m, fun=max)
 	rmean <- raster::focal(x, w=m, fun=mean)
-    return( raster::calc(raster::stack(rmean,rmin,rmax), fun=function(x) { (x[1] - x[2] ) / ( x[3] - x[2] ) }, ... ) )
+    return( raster::calc(raster::stack(rmean,rmin,rmax), 
+	        fun=function(x) { (x[1] - x[2] ) / ( x[3] - x[2] ) }, ... ) )
 } 

@@ -13,12 +13,11 @@ overlap(x, y)
 with the same dimensions of x}
 }
 \value{
-A single value that is the I similarity statistic
+A value representing the I similarity statistic
 }
 \description{
 Similarity Statistic for Quantifying Niche Overlap using Warren's-I
-}
-\note{
+
 The overlap function computes the I similarity statistic (Warren et al. 2008)  
 of two overlaping niche estimates. Similarity is based on the Hellenger distance. 
 It is assumed that the input data share the same extent and cellsize and all values 
@@ -28,7 +27,8 @@ The I similarity statistic sums the pair-wise differences between two
 predictions to create a single value representing the similarity of the two
 distributions. The I similarity statistic ranges from a value of 0, where
 two distributions have no overlap, to 1 where two distributions are
-identical (Warren et al., 2008).
+identical (Warren et al., 2008). The function is based on code from 
+Jeremy VanDerWal
 }
 \examples{
   
@@ -44,9 +44,9 @@ p2 <- abs(matrix(1:50,nr=50,nc=50) +
 }
 \references{
 Warren, D. L., R. E. Glor, M. Turelli, and D. Funk. (2008).
-Environmental Niche Equivalency versus Conservatism: Quantitative Approaches
-to Niche Evolution. Evolution 62:2868-2883.
+  Environmental Niche Equivalency versus Conservatism: Quantitative 
+  Approaches to Niche Evolution. Evolution 62:2868-2883.
 }
 \author{
-Jeremy VanDerWal w/ modifications by Jeffrey Evans <jeffrey_evans@tnc.org>
+Jeffrey Evans <jeffrey_evans@tnc.org>
 }

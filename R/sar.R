@@ -2,7 +2,8 @@
 #' @description Calculates the Berry (2002) Surface Area Ratio based on slope
 #' 
 #' @param x    raster object
-#' @param s    cell resolution (default is NULL, not needed if projection is in planar units)
+#' @param s    cell resolution (default is NULL, not needed if projection 
+#'             is in planar units)
 #' @param ...  Additional arguments passed to raster::calc
 #' 
 #' @return raster class object of Berry (2002) Surface Area Ratio
@@ -11,7 +12,8 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
-#' @references Berry, J.K. (2002). Use surface area for realistic calculations. Geoworld 15(9):20-1.
+#' @references 
+#' Berry, J.K. (2002). Use surface area for realistic calculations. Geoworld 15(9):20-1.
 #'
 #' @examples 
 #'   library(raster)

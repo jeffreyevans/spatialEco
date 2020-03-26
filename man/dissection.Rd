@@ -17,13 +17,15 @@ dissection(x, s = 5, ...)
 raster class object of Martonne's modified dissection
 }
 \description{
-Calculates the Evans (1972) Martonne's modified dissection
+Calculates the Evans (1972) Martonne's modified 
+             dissection
 }
 \note{
-Dissection is calculated as: ( z(s) - min(z(s)) ) / ( max(z(s)) - min(z(s)) )
+Dissection is calculated as: 
+( z(s) - min(z(s)) ) / ( max(z(s)) - min(z(s)) )
 }
 \examples{
-\dontrun{ 
+\donttest{ 
   library(raster)
   data(elev)
   d <- dissection(elev, s=3)

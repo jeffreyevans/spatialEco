@@ -19,11 +19,12 @@ optimal.k(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ...)
 
 \item{...}{Additional arguments passed to clara}
 }
-\description{
-Find optimal k of k-Medoid partitions using silhouette widths
+\value{
+Object of class clust "pam" or "clara"
 }
-\note{
-Depends: cluster
+\description{
+Find optimal k of k-Medoid partitions using 
+             silhouette widths
 }
 \examples{
 require(cluster)

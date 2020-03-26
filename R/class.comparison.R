@@ -1,46 +1,58 @@
 #' @title Class comparison between two nominal rasters
-#' @description Compares two categorical rasters using Cohen's Kappa (d) or paired t-test statistic(s)
+#' @description Compares two categorical rasters using Cohen's Kappa (d) 
+#'              or paired t-test statistic(s)
 #'       
-#' @param x               First raster for comparison, SpatialPixelsDataFrame or SpatialGridDataFrame object    
-#' @param y               Second raster for comparison, SpatialPixelsDataFrame or SpatialGridDataFrame object 
+#' @param x               First raster for comparison, SpatialPixelsDataFrame or 
+#'                        SpatialGridDataFrame object    
+#' @param y               Second raster for comparison, SpatialPixelsDataFrame or 
+#'                        SpatialGridDataFrame object 
 #' @param x.idx           Index for the column in the x raster object  
 #' @param y.idx           Index for the column in the y raster object  
-#' @param d               Distance for finding neighbors, the default "AUTO" will derive a distance
+#' @param d               Distance for finding neighbors, the default "AUTO" will derive 
+#'                        a distance
 #' @param stat            Statistic to use in comparison ("kappa", "t.test", "both")
 #' @param sub.sample      Should a subsampling approach be employed (FALSE/TRUE)  
-#' @param type            If sub.sample = TRUE, what type of sample ("random"  or "hexagon")
-#' @param p               If sub.sample = TRUE, what proportion of population should be sampled
-#' @param size            If sub.sample = TRUE, alternate to proportion of population (p), using fixed sample size               
+#' @param type            If sub.sample = TRUE, what type of sample ("random"  
+#'                        or "hexagon")
+#' @param p               If sub.sample = TRUE, what proportion of population 
+#'                        should be sampled
+#' @param size            If sub.sample = TRUE, alternate to proportion of population (p), 
+#'                        using fixed sample size               
 #'
-#' @return A SpatialPixelsDataFrame or SpatialPointsDataFrame with the following attributes:
+#' @return A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
+#'         following attributes:
 #' \itemize{ 
 #' \item   x        x variable used to derive Kappa (d)
 #' \item   y        y variable used to derive Kappa (d)
 #' \item   kappa    Kappa (d) statistic
 #' \item   t.test   Paired t.test statistic  (if stat = "t.test" or "both")
-#' \item   p.value  p-value of the paired t.test statistic (if stat = "t.test" or "both")
+#' \item   p.value  p-value of the paired t.test statistic (if stat = "t.test" 
+#'                  or "both")
 #'  } 
 #'
-#' @note This function provides a Cohen's Kappa or paired t-test to compare two classified maps. 
-#'       Point based subsampling is provided for computation tractability.  The hexagon sampling 
-#'       is recommended as it it good at capturing spatial process that includes nonstationarity 
-#'       and anisotropy.    
+#' @note 
+#' This function provides a Cohen's Kappa or paired t-test to compare two 
+#' classified maps. Point based subsampling is provided for computation 
+#' tractability.  The hexagon sampling is recommended as it it good at 
+#' capturing spatial process that includes nonstationarity and anisotropy.    
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
 #' @references
-#' Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational and Psychological 
-#'   Measurement, 20:37-46 
+#' Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational 
+#'   and Psychological Measurement, 20:37-46 
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(sp)                                            
 #'  library(raster)
 #'                                                                                                
 #'  data(meuse.grid)
-#'  r1 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], data = meuse.grid)
+#'  r1 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
+#'                                   data = meuse.grid)
 #'    r1@data$class1 <- round(runif(nrow(r1), 1,5),0)
-#'  r2 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], data = meuse.grid) 
+#'  r2 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
+#'                                   data = meuse.grid) 
 #'	r2@data$class2 <- round(runif(nrow(r2), 1,5),0)
 #'
 #'  d <- class.comparison(r1, r2, x.idx = 8, y.idx = 8, stat="both")

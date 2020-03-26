@@ -4,32 +4,32 @@
 #' @param data.type Specify climate metric ('ppt','tmin','tmax','tmean')
 #' @param date.range A vector with start and end date in y/m/d format 
 #' @param time.step Timestep of product ('daily'/'monthly') 
-#' @param download.folder Local download directory, defaults to current working directory
+#' @param download.folder Local download directory, defaults to current 
+#'        working directory
 #' @param by.year Create a directory for each year (TRUE/FALSE) 
 #' @param unzip.file Unzip file on download (TRUE/FALSE)  
-#' @param ftp.site PRISM ftp address to use, default: \url{ftp://prism.oregonstate.edu}
+#' @param ftp.site PRISM ftp address to use, default: 
+#'        \url{ftp://prism.oregonstate.edu}
 #'
-#' @return Compressed or uncompressed PRISM monthly gridded data(bil raster format)
+#' @return Compressed or uncompressed PRISM monthly gridded 
+#'         data(bil raster format)
 #' 
-#' @note Monthly data 1895-1980 is available in a single zip file on the ftp site
-#'
-#' @note PRISM URL: \url{http://prism.nacse.org/}
-#' @note FTP download sites for 400m gridded daily/monthly climate data
-#' @note     \url{ftp://prism.oregonstate.edu/daily}
-#' @note     \url{ftp://prism.oregonstate.edu/monthly}
+#' @details
+#' Monthly data 1895-1980 is available in a single zip file on the ftp site
+#' PRISM URL: \url{http://prism.nacse.org/}
+#' FTP download sites for 400m gridded daily/monthly climate data
+#'   \url{ftp://prism.oregonstate.edu/daily}
+#'    \url{ftp://prism.oregonstate.edu/monthly}
 #'    
-#' @note Naming convention: PRISM_<var>_<stability>_<scale&version>_<date>_bil.zip
-#' @note     i.e., 'PRISM_ppt_stable_4kmD1_20100208_bil.zip' 
-#' @note Data description: 
-#' @note   \url{http://prism.nacse.org/documents/PRISM_datasets_aug2013.pdf}   
+#" Naming convention: PRISM_<var>_<stability>_<scale&version>_<date>_bil.zip
+#' i.e., 'PRISM_ppt_stable_4kmD1_20100208_bil.zip' 
+#' Data description: 
+#' \url{http://prism.nacse.org/documents/PRISM_datasets_aug2013.pdf}   
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @seealso
-#' \code{\link{download.daymet}}, \code{\link{download.hansen}}
-#'
 #' @examples 
-#' \dontrun{
+#' \donttest{
 # Download monthly precipitation data Jan 1st 2000 to Dec 30th 2001 (n=24)
 #'    my.dates <- c('2000/1/1', '2001/12/30')
 #'    download.prism('ppt', date.range=my.dates, time.step='monthly', by.year=TRUE)
@@ -39,11 +39,25 @@
 #'    download.prism('ppt', date.range=my.dates, time.step='daily', by.year=TRUE)
 #'}
 #'
+#' @seealso
+#' \code{\link{download.daymet}}, \code{\link{download.hansen}}
+#'
 #' @export
-download.prism <- function(data.type, date.range, time.step = "monthly", download.folder = getwd(), 
-                    by.year = FALSE, unzip.file = TRUE, ftp.site = "ftp://prism.oregonstate.edu") {
-    if (!(data.type == "ppt" | data.type == "tmin" | data.type == "tmax" | data.type == "tmean")) 
-        stop("Not a valid dataset")
+download.prism <- function(data.type, date.range, time.step = "monthly", 
+                           download.folder = c("current", "temp"), 
+						   by.year = FALSE, unzip.file = TRUE, 
+						   ftp.site = "ftp://prism.oregonstate.edu") {
+    if (!any(data.type == c("ppt", "tmin", "tmax", "tmean"))) 
+      stop("Not a valid dataset")
+    owd <- getwd()
+      on.exit(setwd(owd))			
+	if(download.folder == "current") {
+	  download.folder = getwd()
+    } else if(download.folder == "temp") {
+	  download.folder = tempdir()
+    } 
+	if(!dir.exists(download.folder))
+      stop("directory does not exists")		
     avl.years <- seq(1895, 2014, by = 1)
     startdate <- as.Date(date.range[1])
     enddate <- as.Date(date.range[2])
@@ -99,8 +113,7 @@ download.prism <- function(data.type, date.range, time.step = "monthly", downloa
             dl.list[[i]] <- tmp.vector
         }
     }
-    print(paste("Downloading", data.type, "for dates...", sep = " "))
-    print(dates)
+    message(paste("Downloading", data.type, "for dates...", sep = " "))
     for (i in 1:length(dl.list)) {
         if (by.year) {
             dir.create(file.path(download.folder, years[i]), showWarnings = FALSE)

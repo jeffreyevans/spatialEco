@@ -9,7 +9,8 @@ raster.Zscore(x, p.value = FALSE, file.name = NULL, ...)
 \arguments{
 \item{x}{A raster class object}
 
-\item{p.value}{Return p-value rather than z-score raster (FALSE/TRUE)}
+\item{p.value}{Return p-value rather than z-score 
+raster (FALSE/TRUE)}
 
 \item{file.name}{Name of raster written to disk}
 
@@ -19,13 +20,15 @@ raster.Zscore(x, p.value = FALSE, file.name = NULL, ...)
 raster class object or raster written to disk
 }
 \description{
-Calculates the modified z-score for all cells in a raster
+Calculates the modified z-score for all cells 
+             in a raster
 }
 \note{
-Since this functions needs to operate on all of the raster values, it is not memory safe
+Since this functions needs to operate on all of the raster values, 
+it is not memory safe
 }
 \examples{
-\dontrun{
+\donttest{
 library(raster)
 r <- raster(nrows=824, ncols=767, xmn=2451905, xmx=3218905, 
             ymn=-2744771, ymx=-1920771, resolution = 5000)

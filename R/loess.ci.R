@@ -1,5 +1,6 @@
 #' @title Loess with confidence intervals
-#' @description Calculates a local polynomial regression fit with associated confidence intervals
+#' @description Calculates a local polynomial regression fit 
+#'              with associated confidence intervals
 #' 
 #' @param y Dependent variable, vector 
 #' @param x Independent variable, vector 
@@ -8,17 +9,21 @@
 #' @param ... Arguments passed to loess 
 #' 
 #' @return A list object with:
-#' @return loess Predicted values   
-#' @return se Estimated standard error for each predicted value
-#' @return lci Lower confidence interval 
-#' @return uci Upper confidence interval
-#' @return df Estimated degrees of freedom 
-#' @return rs Residual scale of residuals used in computing the standard errors 
+#' * loess Predicted values   
+#' * se Estimated standard error for each predicted value
+#' * lci Lower confidence interval 
+#' * uci Upper confidence interval
+#' * df Estimated degrees of freedom 
+#' * rs Residual scale of residuals used in computing the 
+#'            standard errors 
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#' W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression models. Chapter 8 of Statistical Models in S eds J.M. Chambers and T.J. Hastie, Wadsworth & Brooks/Cole. 
+#' W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression models. 
+#'   Chapter 8 of Statistical Models in S eds J.M. Chambers and T.J. Hastie, 
+#'   Wadsworth & Brooks/Cole. 
 #' 
 #' @examples 
 #'  x <- seq(-20, 20, 0.1)

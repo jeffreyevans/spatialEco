@@ -26,13 +26,7 @@ Test for linear or nonlinear collinearity/correlation in data
 \details{
 Evaluation of the pairwise linear correlated variables to remove is accomplished  
 through calculating the mean correlations of each variable and selecting the 
-variable with higher mean. 
-
-Nonlinear correlations assume the model form;
-   \eqn{\[E(Y_i | X_i) = \alpha + f(X_i) + \varepsilon_i\]}{%
-    E(Y_i | X_i) = \alpha + f(X_i) + \varepsilon_i}
-With the hypothesis;
-   \eqn{\[H_{0} : f(x) = 0, \ \forall x\]}
+variable with higher mean.
 }
 \examples{
 data(cor.data)

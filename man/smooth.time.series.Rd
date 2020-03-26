@@ -13,20 +13,24 @@ smooth.time.series(x, f = 0.8, smooth.data = FALSE, ...)
 
 \item{smooth.data}{(FALSE/TRUE) Smooth all of the data or just impute NA values}
 
-\item{...}{Additional arguments passed to raster calc (for writing results to disk)}
+\item{...}{Additional arguments passed to raster calc (for 
+writing results to disk)}
 }
 \value{
 A raster stack or brick pr data.frame object with imputed NA values or smoothed data.
 }
 \description{
-Smooths pixel-level data in raster time-series and can impute missing (NA) values.
+Smooths pixel-level data in raster time-series and can impute 
+             missing (NA) values.
 }
 \details{
-This function uses a LOESS regression to smooth the time-series (using the smooth.data = TRUE argument). 
-If the data is smoothed, it will be replaced by a loess estimate of the time-series (estimated distribution 
-at the pixel-level). The results can dramatically be effected by the choice of the smoothing parameter (f) 
-so caution is warranted and the effect of this parameter tested. Alternately, with smooth.data = FALSE,
-the function can be used to impute missing pixel data (NA) in raster time-series (stacks/bricks).
+This function uses a LOESS regression to smooth the time-series (using the 
+smooth.data = TRUE argument). If the data is smoothed, it will be replaced by 
+a loess estimate of the time-series (estimated distribution at the pixel-level). 
+The results can dramatically be effected by the choice of the smoothing 
+parameter (f) so caution is warranted and the effect of this parameter tested. 
+Alternately, with smooth.data = FALSE, the function can be used to impute missing 
+pixel data (NA) in raster time-series (stacks/bricks).
 }
 \examples{
 \dontrun{

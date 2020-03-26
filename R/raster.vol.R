@@ -1,20 +1,25 @@
 #' @title Raster Percent Volume
-#' @description Calculates a percent volume on a raster or based on a systematic sample
+#' @description Calculates a percent volume on a raster or based on a 
+#'              systematic sample
 #' 
 #' @param x        raster class object
 #' @param p        percent raster-value volume
 #' @param sample   base volume on systematic point sample (TRUE/FALSE)
 #' @param spct     sample percent, if sample (TRUE)
 #'
-#' @return if sample (FALSE) binary raster object with 1 representing designated percent volume
-#' @return if sample (TRUE) n sp SpatialPointsDataFrame object with points that represent the percent volume of the sub-sample
+#' @return 
+#' if sample (FALSE) binary raster object with 1 representing designated 
+#' percent volume else, if sample (TRUE) n sp SpatialPointsDataFrame object 
+#' with points that represent the percent volume of the sub-sample
 #'
-#' @note Since this model needs to operate on all of the raster values, it is not memory safe 
+#' @note 
+#' Since this model needs to operate on all of the raster values, 
+#' it is not memory safe 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' require(raster)
 #'   r <- raster(ncols=100, nrows=100)
 #'     r[] <- runif(ncell(r), 0, 1)

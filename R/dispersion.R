@@ -1,29 +1,32 @@
 #' @title Dispersion (H-prime) 
-#' @description Calculates the dispersion ("rarity") of targets associated with planning units
+#' @description Calculates the dispersion ("rarity") of targets associated 
+#'              with planning units
 #'
-#' @param  x       data.frame object of target values 
+#' @param  x data.frame object of target values 
 #'
-#' @return data.frame with columns H values for each target, H , sH, sHmax 
+#' @return 
+#' data.frame with columns H values for each target, H , sH, sHmax 
 #'
-#' @note The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) 
-#'         where; P = [sum of target in planning unit / sum of target across all planning units] 
-#'         and a = [count of planning units containing target / number of planning units]  
+#' @note 
+#' The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) 
+#' where; P = [sum of target in planning unit / sum of target across all 
+#' planning units] and a = [count of planning units containing 
+#' target / number of planning units]  
 #'  
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#' Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial Conservation 
-#'   Planning and Ecological Priority Design in St. Lucia, Eastern Caribbean. Chapter 26 in 
-#'   Central American Biodiversity : Conservation, Ecology and a Sustainable Future. F. Huettman (eds). 
-#'   Springer, NY.   
+#' Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial 
+#'   Conservation Planning and Ecological Priority Design in St. Lucia, Eastern Caribbean. 
+#'   Chapter 26 in Central American Biodiversity : Conservation, Ecology and a Sustainable 
+#'   Future. F. Huettman (eds). Springer, NY.   
 #'
 #' @examples
+#' \donttest{ 
 #'  library(sp)
-#'  data(pu)
+#'    data(pu)
 #'  
-#'  d <- dispersion(pu@data[,2:ncol(pu)])
-#'
-#' \dontrun{   
+#'  d <- dispersion(pu@data[,2:ncol(pu)])  
 #'  p <- d[,"H"]
 #'  clr <- c("#3288BD", "#99D594", "#E6F598", "#FEE08B", 
 #'           "#FC8D59", "#D53E4F")      

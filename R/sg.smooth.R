@@ -1,19 +1,23 @@
 #' @title Savitzky-Golay smoothing filter
-#' @description Smoothing of time-series data using Savitzky-Golay convolution smoothing 
+#' @description Smoothing of time-series data using Savitzky-Golay 
+#'              convolution smoothing 
 #'
 #' @param x      A vector to be smoothed  
 #' @param f      Filter type (default 4 for quartic, specify 2 for quadratic)  
-#' @param l      Convolution filter length, must be odd number (default 51). Defines degree of smoothing
+#' @param l      Convolution filter length, must be odd number (default 51). 
+#'               Defines degree of smoothing
 #' @param d      First derivative (default 1)
 #' @param na.rm  NA behavior
 #' @param ...    not used
 #'
-#' @return  A vector of the smoothed data equal to length of x. Please note; NA values are retained
+#' @return  A vector of the smoothed data equal to length of x. Please note; 
+#'          NA values are retained
 #'
-#' @author Jeffrey S. Evans    <jeffrey_evans<at>tnc.org>
+#' @author Jeffrey S. Evans <jeffrey_evans<at>tnc.org>
 #'
-#' @references Savitzky, A., & Golay, M.J.E. (1964). Smoothing and Differentiation of Data by 
-#'               Simplified Least Squares Procedures. Analytical Chemistry. 36(8):1627-39
+#' @references 
+#' Savitzky, A., and Golay, M.J.E. (1964). Smoothing and Differentiation of Data 
+#'   by Simplified Least Squares Procedures. Analytical Chemistry. 36(8):1627-39
 #'
 #' @examples 
 #'   y <- c(0.112220988, 0.055554941, 0.013333187, 0.055554941, 0.063332640, 0.014444285, 

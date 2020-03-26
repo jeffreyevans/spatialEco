@@ -1,11 +1,11 @@
 #' @title Query AWS-OLI
 #' @description Query of Amazon AWS OLI-Landsat 8 cloud service
 #'
-#' @param path              landsat path
-#' @param row               landsat row
-#' @param dates             dates, single or start-stop range in YYYY-MM-DD format 
-#' @param cloud.cover       percent cloud cover
-#' @param processing        processing level ("L1GT" or "L1T")
+#' @param path        landsat path
+#' @param row         landsat row
+#' @param dates       dates, single or start-stop range in YYYY-MM-DD format 
+#' @param cloud.cover percent cloud cover
+#' @param processing  processing level ("L1GT" or "L1T")
 #'
 #' @return
 #' data.frame object with:
@@ -42,7 +42,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20% cloud cover    
 #' ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), 
 #'                           cloud.cover = 20) )
@@ -55,7 +55,8 @@
 #' }
 #'
 #' @export
-oli.asw <- function(path, row, dates, cloud.cover = 10, processing) {
+oli.asw <- function(path, row, dates, cloud.cover = 10, 
+                    processing) {
     aws.url <- "http://landsat-pds.s3.amazonaws.com/scene_list.gz"
 	if( missing(path) ) stop("Must specify landsat path")
       if( missing(row) ) stop("Must specify landsat row")
@@ -74,7 +75,7 @@ oli.asw <- function(path, row, dates, cloud.cover = 10, processing) {
         if(!missing(processing)) {
 	      oli.processing <- oli[oli$processingLevel == processing,]
             if( nrow(oli.processing) == 0) { 
-			  cat("\n", "Processing level", processing, "not available, returning other results", "\n")  			  
+			  message("\n", "Processing level ", processing, "not available, returning other results", "\n")  			  
 			} else {
 			  oli <- oli.processing
             }			

@@ -11,7 +11,8 @@ divergence(x, y, type = c("Kullback-Leibler", "cross-entropy"))
 
 \item{y}{a vector of integer values, defining estimates}
 
-\item{type}{Type of divergence statistic c("Kullback-Leibler", "cross-entropy")}
+\item{type}{Type of divergence statistic c("Kullback-Leibler", 
+"cross-entropy")}
 }
 \value{
 single value vector with divergence statistic

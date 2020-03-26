@@ -1,14 +1,21 @@
 #' @title Spatial kernel density estimate
-#' @description A weighted or unweighted Gaussian Kernel Density estimate for spatial data
+#' @description A weighted or unweighted Gaussian Kernel Density estimate 
+#'              for spatial data
 #'
 #' @param x             sp SpatialPointsDataFrame object
-#' @param y             Optional values, associated with x coordinates, to be used as weights
-#' @param bw            Distance bandwidth of Gaussian Kernel, must be units of projection
-#' @param newdata       A Rasterlayer, any sp class object or c[xmin,xmax,ymin,ymax] vector to estimate the kde extent
-#' @param nr            Number of rows used for creating grid. If not defined a value based on extent or existing raster will be used
-#' @param nc            Number of columns used for creating grid. If not defined a value based on extent or existing raster will be used
+#' @param y             Optional values, associated with x coordinates, 
+#'                      to be used as weights
+#' @param bw            Distance bandwidth of Gaussian Kernel, must be units 
+#'                      of projection
+#' @param newdata       A Rasterlayer, any sp class object or c[xmin,xmax,ymin,ymax] 
+#'                      vector to estimate the kde extent
+#' @param nr            Number of rows used for creating grid. If not defined a value 
+#'                      based on extent or existing raster will be used
+#' @param nc            Number of columns used for creating grid. If not defined a value 
+#'                      based on extent or existing raster will be used
 #' @param standardize   Standardize results to 0-1 (FALSE/TRUE)
-#' @param scale.factor  Optional numeric scaling factor for the KDE (eg., 10000), to account for small estimate values
+#' @param scale.factor  Optional numeric scaling factor for the KDE (eg., 10000), to 
+#'                      account for small estimate values
 #' @param mask          (TRUE/FALSE) mask resulting raster if newdata is provided
 #'
 #' @return  Raster class object containing kernel density estimate 
@@ -16,7 +23,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' \dontrun{ 
+#' \donttest{ 
 #'  library(sp)
 #'  library(raster)
 #'    data(meuse)
@@ -70,7 +77,7 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,
   if(is.null(bw)){ 
     bw <- c(MASS::bandwidth.nrd(sp::coordinates(x)[,1]), 
 	        MASS::bandwidth.nrd(sp::coordinates(x)[,2]))
-	  cat("Using", bw, "for bandwidth", "\n")
+	  message("Using", bw, "for bandwidth", "\n")
   } else {
     bw <- c(bw,bw)
   }
@@ -125,11 +132,11 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,
       return(list(x = gx, y = gy, z = z))
     }
   if(!is.null(y)) {
-    cat("\n","calculating weighted kde","\n")
+    message("\n","calculating weighted kde","\n")
     k  <- fhat(sp::coordinates(x)[,1], sp::coordinates(x)[,2], w = y, 
 	           h = bw, n = n, lims = as.vector(raster::extent(newdata)) )
   } else {
-	cat("\n","calculating unweighted kde","\n")
+	message("\n","calculating unweighted kde","\n")
 	k <- MASS::kde2d(sp::coordinates(x)[,1], sp::coordinates(x)[,2], h = bw, 
 	                 n = n, lims = as.vector(raster::extent(newdata)) )
   }

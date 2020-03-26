@@ -1,20 +1,21 @@
 #' @title Explodes multipart features
 #' @description Explodes multipart features into single part  
 #'
-#' @param x     sp or sf multipart (MULTIPOLYGON, MULTIPOINT, MULTILINE) object
+#' @param x     sp or sf multipart (MULTIPOLYGON, MULTIPOINT, MULTILINE) 
+#'              object
 #' @param sp    (FALSE/TRUE) output as sp class object, else is sf class
 #'
 #' @return A single part sp or sf object (polygons or points) 
 #'
 #' @note 
-#' Multipart geometries are a data structure where a single attribute shares multiple 
-#' features (polygons, points, lines). This function dissaggregates the data into a 
-#' one-to-one match.    
+#' Multipart geometries are a data structure where a single attribute 
+#' shares multiple features (polygons, points, lines). This function 
+#' dissaggregates the data into a one-to-one match.    
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(sf)
 #' library(sp)
 #' 

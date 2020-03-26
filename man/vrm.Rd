@@ -9,7 +9,9 @@ vrm(x, s = 3, file.name = NULL, ...)
 \arguments{
 \item{x}{Elevation raster class object}
 
-\item{s}{Scale of window. Must be odd number, can represent 2 dimensions (eg., s=c(3,5) would represent a 3 x 5 window)}
+\item{s}{Scale of window. Must be odd number, can 
+represent 2 dimensions (eg., s=c(3,5) would 
+represent a 3 x 5 window)}
 
 \item{file.name}{Name of output raster (optional)}
 
@@ -19,10 +21,12 @@ vrm(x, s = 3, file.name = NULL, ...)
 raster class object or raster written to disk
 }
 \description{
-Implementation of the Sappington et al., (2007) vector ruggedness measure
+Implementation of the Sappington et al., (2007) vector 
+             ruggedness measure
 }
 \note{
-This function measures terrain ruggedness by calculating the vector ruggedness measure
+This function measures terrain ruggedness by calculating the vector 
+ruggedness measure
 }
 \examples{
  library(raster)
@@ -33,7 +37,9 @@ This function measures terrain ruggedness by calculating the vector ruggedness m
 
 }
 \references{
-Sappington, J.M., K.M. Longshore, D.B. Thomson (2007). Quantifying Landscape Ruggedness for Animal Habitat Analysis: A case Study Using Bighorn Sheep inthe Mojave Desert. Journal of Wildlife Management. 71(5):1419-1426
+Sappington, J.M., K.M. Longshore, D.B. Thomson (2007). Quantifying Landscape 
+  Ruggedness for Animal Habitat Analysis: A case Study Using Bighorn Sheep in 
+  the Mojave Desert. Journal of Wildlife Management. 71(5):1419-1426
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

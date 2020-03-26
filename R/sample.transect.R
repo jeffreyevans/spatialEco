@@ -1,13 +1,17 @@
 #' @title Sample transect
-#' @description Creates random transects from points and generates sample points along each transect
+#' @description Creates random transects from points and generates 
+#'              sample points along each transect
 #' 
-#' @param x                A sp point object
-#' @param min.length       Minimum length of transect(s)
-#' @param max.length       Maximum length of transect(s)
-#' @param id               A unique identification column in x
-#' @param ...              Additional arguments passed to sample.line 
+#' @param x           A sp point object
+#' @param min.length  Minimum length of transect(s)
+#' @param max.length  Maximum length of transect(s)
+#' @param id          A unique identification column in x
+#' @param ...         Additional arguments passed to sample.line 
 #'
-#' @note Function create random direction and length transects and then creates a point sample along each transect. The characteristic of the sample points are defined by arguments passed to the sample.line function
+#' @note 
+#' Function create random direction and length transects and then creates a point 
+#' sample along each transect. The characteristic of the sample points are defined 
+#' by arguments passed to the sample.line function
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
@@ -18,7 +22,8 @@
 #' proj4string(meuse) <- CRS("+init=epsg:28992")
 #' meuse <- meuse[sample(1:nrow(meuse),10),]
 #' 
-#' transects <- sampleTransect(meuse, min.length=200, max.length=500, min.samp = 3)
+#' transects <- sampleTransect(meuse, min.length=200, 
+#'                     max.length=500, min.samp = 3)
 #'   plot(transects$transects)
 #'     plot(transects$samples, pch=20, add=TRUE)
 #'

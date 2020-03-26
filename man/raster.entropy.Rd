@@ -20,7 +20,8 @@ raster.entropy(
 
 \item{categorical}{Is the data categorical or continuous (FALSE/TRUE)}
 
-\item{global}{Should the model use a global or local n to calculate entropy (FALSE/TRUE)}
+\item{global}{Should the model use a global or local n to calculate 
+entropy (FALSE/TRUE)}
 
 \item{filename}{Raster file written to disk}
 
@@ -31,18 +32,14 @@ raster class object or specified format raster written to disk
 }
 \description{
 Calculates entropy on integer raster (i.e., 8 bit 0-255)
-}
-\note{
-Entropy calculated as: H = -sum(Pi*ln(Pi))
-  where; Pi, Proportion of one value to total values Pi=n(p)/m and m, Number of unique values
-  Expected range: 0 to log(m)
-    H=0 if window contains the same value in all cells.
-    H increases with the number of different values in the window.
+
+Entropy calculated as: H = -sum(Pi*ln(Pi)) where; Pi, Proportion of one value 
+to total values Pi=n(p)/m and m, Number of unique values. Expected range: 
+0 to log(m) H=0 if window contains the same value in all cells.
+H increases with the number of different values in the window.
 
 Maximum entropy is reached when all values are different, same as log(m)
   max.ent <- function(x) { log( length( unique(x) ) ) }
-
-Depends: raster
 }
 \examples{
 require(raster)
@@ -58,5 +55,6 @@ rEnt <- raster.entropy(r, d=5, categorical = TRUE, global = TRUE)
 
 }
 \references{
-Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS GIS - Comparison of images taken by different sensor. On line at: http://geoinformatics.fsv.cvut.cz/gwiki/Change_Detection_with_GRASS_GIS_-_Comparison_of_images_taken_by_different_sensors
+Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS 
+  GIS - Comparison of images taken by different sensor.
 }

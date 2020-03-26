@@ -7,13 +7,16 @@
 point.in.poly(x, y, sp = TRUE, duplicate = TRUE, ...)
 }
 \arguments{
-\item{x}{sp SpatialPointsDataFrame or SpatialPoints or sf point object}
+\item{x}{sp SpatialPointsDataFrame or SpatialPoints or sf point 
+object}
 
 \item{y}{sp SpatialPolygonsDataFrame or sf polygon object}
 
-\item{sp}{(TRUE/FALSE) Return an sp class object, else returns sf class object}
+\item{sp}{(TRUE/FALSE) Return an sp class object, else returns sf 
+class object}
 
-\item{duplicate}{(TRUE/FALSE) Return duplicated features with more than one polygon intersection}
+\item{duplicate}{(TRUE/FALSE) Return duplicated features with more than one 
+polygon intersection}
 
 \item{...}{Additional arguments passed to sf::st_join}
 }
@@ -21,13 +24,14 @@ point.in.poly(x, y, sp = TRUE, duplicate = TRUE, ...)
 A SpatialPointsDataFrame or sf
 }
 \description{
-Intersects point and polygon feature classes and adds polygon attributes to points
-}
-\note{
-If duplicate argument is TRUE and more than one polygon intersection occurs, points will be duplicated (new row added) and all attributes joined.  
-However, if duplicate is FALSE, with duplicate intersections, a new column for each unique intersecting polygon will 
-be returned and the points will not be duplicated. For example, if a point intersect three polygons, three new columns will be added
-representing the polygons ID.
+Intersects point and polygon feature classes and adds polygon 
+             attributes to points
+
+If duplicate argument is TRUE and more than one polygon intersection occurs, points 
+will be duplicated (new row added) and all attributes joined. However, if duplicate is 
+FALSE, with duplicate intersections, a new column for each unique intersecting polygon 
+will be returned and the points will not be duplicated. For example, if a point intersect 
+three polygons, three new columns will be added representing the polygons ID.
 }
 \examples{
  #### Simple one-to-one feature overlay. 

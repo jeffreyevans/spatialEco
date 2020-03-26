@@ -1,24 +1,28 @@
 #' @title Spatial cross correlation
-#' @description Calculates univariate or bivariate spatial cross-correlation using local 
-#'              Moran's-I (LISA), following Chen (2015)
+#' @description Calculates univariate or bivariate spatial cross-correlation using  
+#'              local Moran's-I (LISA), following Chen (2015)
 #'
 #' @param x               Vector of x response variables
-#' @param y               Vector of y response variables, if not specified the univariate 
-#'                          statistic is returned
-#' @param coords          A matrix of coordinates corresponding to [x,y], only used if k = NULL. 
-#'                          Can also be an sp object with relevant x,y coordinate slot (ie., points or polygons)
-#' @param w               Spatial neighbors/weights in matrix format. Dimensions must match [n(x),n(y)] and be symmetrical.
-#'                          If w is not defined then a default method is used.
-#' @param type            c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) or 
-#'                          Global Spatial cross-correlation Index (GSCI)
-#' @param k               Number of simulations for calculating permutation distribution under the 
-#'                          null hypothesis of no spatial autocorrelation (k=1000, default)
-#' @param dist.function   ("inv.power", "neg.exponent") If w = NULL, the default method for deriving 
-#'                          spatial weights matrix, options are: inverse power or negative exponent    
-#' @param scale.xy        (TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that they are 
-#'                          already scaled following Chen (2015) 
+#' @param y               Vector of y response variables, if not specified the 
+#'                        univariate  statistic is returned
+#' @param coords          A matrix of coordinates corresponding to [x,y], only 
+#'                        used if k = NULL. Can also be an sp object with relevant 
+#'                        x,y coordinate slot (ie., points or polygons)
+#' @param w               Spatial neighbors/weights in matrix format. Dimensions 
+#'                        must match [n(x),n(y)] and be symmetrical. If w is not defined 
+#'                        then a default method is used.
+#' @param type            c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) 
+#'                        or Global Spatial cross-correlation Index (GSCI)
+#' @param k               Number of simulations for calculating permutation distribution  
+#'                        under the null hypothesis of no spatial autocorrelation
+#' @param dist.function   ("inv.power", "neg.exponent") If w = NULL, the default method 
+#'                        for deriving spatial weights matrix, options are: inverse power 
+#'                        or negative exponent    
+#' @param scale.xy        (TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that  
+#'                        they are already scaled following Chen (2015) 
 #' @param scale.partial   (FALSE/TRUE) rescale partial spatial autocorrelation statistics [-1 - 1]
-#' @param scale.matrix    (FALSE/TRUE) If a neighbor/distance matrix is passed, should it be scaled using [w/sum(w)]?
+#' @param scale.matrix    (FALSE/TRUE) If a neighbor/distance matrix is passed, should it 
+#'                         be scaled using [w/sum(w)]
 #' @param alpha = 0.05     confidence interval (default is 95 pct)
 #' @param clust           (FALSE/TRUE) Return approximated lisa clusters
 #' @param return.sims     (FALSE/TRUE) Return randomizations vector n = k
@@ -45,10 +49,10 @@
 #' }
 #'
 #' @references Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
-#'             PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
+#'               PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   library(sp)
 #'   library(spdep)
 #'    
@@ -74,7 +78,8 @@
 #'     meuse$lisa.clust <- as.factor(I$cluster)
 #'       spplot(meuse, "lisa")
 #'       spplot(meuse, "lisa.clust")	  
-#'
+#'  }
+#' \dontrun{
 #'   #### Simulate spatially autocorrelated random normal variables 
 #'   ####   using eigen-decomposition, requires ncf package
 #'   library(sp)
@@ -197,7 +202,7 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
 	  }  
 	  probs <- c(alpha / 2, 1 - alpha / 2)   
     if(k > 0) {
-     cat("\n ( Computing Permutation Distribution )\n")
+     message("\n Computing Permutation Distribution \n")
 	 # Global Moran's-I p-value
        y.sim <- matrix(y[sample(1:n, size = n * k, replace = TRUE)], 
        		        nrow = n, ncol = k) 	

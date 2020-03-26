@@ -9,29 +9,37 @@ raster.transformation(x, trans = "norm", smin = 0, smax = 255)
 \arguments{
 \item{x}{raster class object}
 
-\item{trans}{Transformation method: "norm", "rstd", "std", "stretch", "nl", "slog", "sr" (please see notes)}
+\item{trans}{Transformation method: "norm", "rstd", "std", "stretch",
+"nl", "slog", "sr" (please see notes)}
 
 \item{smin}{Minimum value for stretch}
 
-\item{smax}{Maxmum value for stretch}
+\item{smax}{Maximum value for stretch}
 }
 \value{
 raster class object of transformation
 }
 \description{
 Transforms raster to a specified statistical transformation
+
+Transformation option details:
+\itemize{
+\item norm - (Normalization_ (0-1): if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )
+\item rstd - (Row standardize) (0-1): if min(x) >= 0 x / max(x) This normalizes data
+\item \preformatted{   with negative distributions
 }
-\note{
-("norm") Normalization [0-1]: if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )
- ("rstd") Row standardize [0-1]: if min(x) >= 0 x / max(x) This normalizes data with negative distributions
- ("std") Standardize: (x - mean(x)) / sdv(x)
- ("stretch") Stretch: ((x - min(x)) * max.stretch / (max(x) - min(x)) + min.stretch) This will stretch values to the specified minimum and maximum values (eg., 0-255 for 8-bit)
- ("nl") Natural logarithms: if min(x) > 0 log(x)
- ("slog") Signed log 10 (for skewed data): if min(x) >= 0 ifelse(abs(x) <= 1, 0, sign(x)*log10(abs(x))) 
- ("sr") Square-root: if min(x) >= 0 sqrt(x)
+\item std - (Standardize) (x - mean(x)) / sdv(x)
+\item stretch - (Stretch) ((x - min(x)) * max.stretch / (max(x) - min(x)) + min.stretch)
+This will stretch values to the specified minimum and maximum values
+(eg., 0-255 for 8-bit)
+\item nl - (Natural logarithms) if min(x) > 0 log(x)
+\item slog - (Signed log 10) (for skewed data): if min(x) >= 0 ifelse(abs(x) <= 1, 0,
+sign(x)*log10(abs(x)))
+\item sr - (Square-root) if min(x) >= 0 sqrt(x)
+}
 }
 \examples{
-\dontrun{
+\donttest{
   library(raster)
   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
               ymn=4423540, ymx=4453690)
@@ -51,5 +59,5 @@ r[] <- runif(ncell(r), -1, 1)
 
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

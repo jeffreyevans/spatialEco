@@ -1,25 +1,30 @@
 #' @title Raster multidimensional scaling (MDS) 
-#' @description Multidimensional scaling of raster values within an N x N focal window
+#' @description Multidimensional scaling of raster values within an 
+#'              N x N focal window
 #'                                                                       
 #' @param r              Raster layer  
-#' @param s              Window size (may be a vector of 1 or 2) of n x n dimension. 
-#' @param window.median  (TRUE/FALSE) Return the median of the MDS matrix values. 
+#' @param s              Window size (may be a vector of 1 or 2) of 
+#'                       n x n dimension. 
+#' @param window.median  (TRUE/FALSE) Return the median of the MDS 
+#'                        matrix values. 
 #' @param ...            Additional arguments passed to raster::focal    
 #'
 #' @return A raster class object or raster written to disk 
 #'
-#' @note 
-#' An MDS focal function. If only one value provided for s, then a square matrix (window) will be used.
-#' If window.median = FALSE then the center value of the matrix is returned and not the median of the matrix   
+#' @description
+#' An MDS focal function. If only one value provided for s, then a square matrix 
+#' (window) will be used. If window.median = FALSE then the center value of the 
+#' matrix is returned and not the median of the matrix   
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
 #' @references
-#' Quinn, G.P., & M.J. Keough (2002) Experimental design and data analysis for biologists. Cambridge University Press. 
-#'   Ch. 18. Multidimensional scaling and cluster analysis.
+#' Quinn, G.P., & M.J. Keough (2002) Experimental design and data analysis 
+#'   for biologists. Cambridge University Press. Ch. 18. Multidimensional 
+#'   scaling and cluster analysis.
 #' 
 #' @examples 
-#' \dontrun{ 
+#' \donttest{ 
 #'  library(raster)
 #'  r <- raster(system.file("external/rlogo.grd", package="raster")) 
 #'    r <- r / cellStats(r, "max")

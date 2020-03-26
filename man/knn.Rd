@@ -16,9 +16,11 @@ knn(
 )
 }
 \arguments{
-\item{y}{Spatial points or polygons object or coordinates matrix}
+\item{y}{Spatial points or polygons object or 
+coordinates matrix}
 
-\item{x}{Spatial points or polygons object or coordinates matrix}
+\item{x}{Spatial points or polygons object or 
+coordinates matrix}
 
 \item{k}{Number of neighbors}
 
@@ -33,20 +35,20 @@ knn(
 \item{indexes}{(FALSE/TRUE) Return row indexes of x neighbors}
 }
 \value{
-A data.frame with row indexes (optional), rownames, ids (optional) and distance of k
+A data.frame with row indexes (optional), rownames, ids (optional) and 
+distance of k
 }
 \description{
 Find K nearest neighbors for two spatial objects
-}
-\note{
+
 Finds nearest neighbor in x based on y and returns rownames, index and distance,
-      If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
-      columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
-      search radius is imposed. If no neighbor is found, a neighbor is not returned
+If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
+columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
+search radius is imposed. If no neighbor is found, a neighbor is not returned  
 
 You can specify weights to act as covariates for x and y. The vectors or matrices
-      must match row dimensions with x and y as well as columns matching between weights.
-      In other words, the covariates must match and be numeric.
+must match row dimensions with x and y as well as columns matching between weights.
+In other words, the covariates must match and be numeric.
 }
 \examples{
  library(sp)

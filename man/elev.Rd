@@ -4,7 +4,8 @@
 \name{elev}
 \alias{elev}
 \title{Elevation raster}
-\format{A raster RasterLayer class object:
+\format{
+A raster RasterLayer class object:
 \describe{
   \item{resoultion}{5 arc-minute 0.00833 (10000m)}
   \item{nrow}{264}
@@ -15,7 +16,8 @@
   \item{ymin}{45.7}
   \item{ymax}{47.9}
   \item{proj4string}{+proj=longlat +ellps=WGS84}
-}}
+}
+}
 \source{
 \url{http://www.diva-gis.org/Data}
 }

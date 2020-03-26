@@ -1,5 +1,6 @@
 #' @title optimalK
-#' @description Find optimal k of k-Medoid partitions using silhouette widths
+#' @description Find optimal k of k-Medoid partitions using 
+#'              silhouette widths
 #'
 #' @param x Numeric dataframe, matrix or vector  
 #' @param nk Number of clusters to test (2:nk)
@@ -8,12 +9,12 @@
 #' @param clara Use clara model for large data
 #' @param ... Additional arguments passed to clara
 #'
-#' @note Depends: cluster
+#' @return Object of class clust "pam" or "clara" 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'
 #' @references 
-#'    Theodoridis, S. & K. Koutroumbas(2006) Pattern Recognition 3rd ed.   
+#' Theodoridis, S. & K. Koutroumbas(2006) Pattern Recognition 3rd ed.   
 #'
 #' @examples 
 #' require(cluster)
@@ -45,7 +46,7 @@ optimal.k <- function(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ..
         }
         k.best <- which.max(asw)
     }
-    print(paste("Optimal-K", k.best, sep = ": "))
+    message(paste("Optimal-K", k.best, sep = ": "))
     if (plot == TRUE) {
         graphics::plot(1:nk, asw, type = "s", main = "Clustering Optimization using K-Mediods",  
                        xlab = "K (number of clusters)", ylab = "mean silhouette width")

@@ -4,15 +4,19 @@
 #' @param x       A sp, raster or extent object (with same projection as tiles)
 #' @param tiles   A SpatialPolygonsDataFrame tile index (see notes)
 #' @param ids     A tile id field in the tiles index 
-#' @param coords  A vector of xmin, xmax, ymin, ymax coordinates, in same projection as tiles 
-#' @param sp      (TRUE/FALSE) Should an sp class SpatialPolygonsDataFrame object of associate tiles 
-#'                 be returned
+#' @param coords  A vector of xmin, xmax, ymin, ymax coordinates, in same 
+#'                projection as tiles 
+#' @param sp      (TRUE/FALSE) Should an sp class SpatialPolygonsDataFrame 
+#'                 object of associate tiles be returned
 #'
-#' @return Vector of DAYMET tile IDS or if sp = TRUE a sp class SpatialPolygonsDataFrame 
+#' @return 
+#' Vector of DAYMET tile IDS or if sp = TRUE a sp class SpatialPolygonsDataFrame 
 #' 
-#' @note Function accepts sp, raster or extent class object or bounding coordinates. All input must 
-#'         be in the same projection as the tile index SpatialPolygonsDataFrame. The library includes 
-#'         the DAYMAT tile index "DAYMET_tiles" which can be add using data(), see examples. 
+#' @note 
+#' Function accepts sp, raster or extent class object or bounding coordinates. 
+#' All input must be in the same projection as the tile index SpatialPolygonsDataFrame. 
+#' The library includes the DAYMAT tile index "DAYMET_tiles" which can be add using 
+#' data(), see examples. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           

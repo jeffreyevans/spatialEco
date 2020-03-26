@@ -21,14 +21,16 @@ hybrid.kmeans(x, k = 2, hmethod = "ward.D", stat = mean, ...)
 returns an object of class "kmeans" which has a print and a fitted method
 }
 \description{
-Hybrid K-means clustering using hierarchical clustering to define cluster-centers
+Hybrid K-means clustering using hierarchical clustering to define 
+cluster-centers
 }
 \details{
 This method uses hierarchical clustering to define the cluster-centers in the K-means 
 clustering algorithm. This mitigates some of the know convergence issues in K-means.
 }
 \note{
-options for hmethod are: "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"
+options for hmethod are: "ward.D", "ward.D2", "single", "complete", "average", 
+mcquitty", "median", "centroid"
 }
 \examples{
 x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
@@ -44,10 +46,11 @@ par(mfrow=c(1,2))
 
 }
 \references{
-Singh, H., & K. Kaur (2013) New Method for Finding Initial Cluster Centroids in K-means Algorithm. 
-  International Journal of Computer Application. 74(6):27-30
-Ward, J.H., (1963) Hierarchical grouping to optimize an objective function. Journal of the American 
-  Statistical Association. 58:236-24
+Singh, H., & K. Kaur (2013) New Method for Finding Initial Cluster Centroids in 
+  K-means Algorithm. International Journal of Computer Application. 74(6):27-30
+
+Ward, J.H., (1963) Hierarchical grouping to optimize an objective function. Journal 
+  of the American Statistical Association. 58:236-24
 }
 \seealso{
 \code{\link[stats]{kmeans}} for available ... arguments and function details

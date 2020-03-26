@@ -2,21 +2,24 @@
 #' @description Calculates topographic position using mean deviations
 #' 
 #' @param x              A raster class object
-#' @param scale          focal window size (n-cell x n-cell for rectangle or distance for circle) 
+#' @param scale          focal window size (n-cell x n-cell for rectangle or 
+#'                       distance for circle) 
 #' @param win            Window type. Options are "rectangle" and "circle" 
-#' @param normalize      Apply deviation correction that normalizes to local surface roughness 
+#' @param normalize      Apply deviation correction that normalizes to local 
+#'                       surface roughness 
 #' @param zero.correct   Apply correction for zero values in matrix weights      
 #' 
-#' @return raster class object of tpi 
+#' @return raster class object of tpi metric 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#' De Reu, J., J. Bourgeois, M. Bats, A. Zwertvaegher, V. Gelorini, et al., (2014) Application 
-#'   of the topographic position index to heterogeneous landscapes. Geomorphology, 186:39-49.
+#' De Reu, J., J. Bourgeois, M. Bats, A. Zwertvaegher, V. Gelorini, et al., (2014) 
+#'   Application of the topographic position index to heterogeneous landscapes. 
+#'   Geomorphology, 186:39-49.
 #' 
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #'  library(raster)
 #'  data(elev)
 #'

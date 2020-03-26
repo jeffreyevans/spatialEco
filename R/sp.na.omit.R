@@ -1,11 +1,14 @@
 #' @title sp na.omit
 #' @description Removes row or column NA's in sp object
 #'
-#' @param x Object of class SpatialPointsDataFrame OR SpatialPolygonsDataFrame 
+#' @param x Object of class SpatialPointsDataFrame OR 
+#'          SpatialPolygonsDataFrame 
 #' @param col.name  The name of a specific column to remove NA's from
 #' @param margin Margin (1,2) of data.frame 1 for rows or 2 for columns
 #'
-#' @note This function will remove all NA's in the object or NA's associated with a specific column.
+#' @note 
+#' This function will remove all NA's in the object or NA's associated 
+#' with a specific column.
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'                                                                       
@@ -43,11 +46,11 @@ sp.na.omit <- function(x, col.name = NULL, margin = 1) {
     } else {    
       na.index <- unique(as.data.frame(which(is.na(x@data), arr.ind = TRUE))[, margin])
       if (margin == 1) {
-          cat("Deleting rows: ", na.index, "\n")
+          message("Deleting rows: ", na.index, "\n")
           return(x[-na.index, ])
       }
       if (margin == 2) {
-          cat("Deleting columns: ", na.index, "\n")
+          message("Deleting columns: ", na.index, "\n")
           return(x[, -na.index])
       }
     }

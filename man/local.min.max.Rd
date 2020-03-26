@@ -11,38 +11,43 @@ local.min.max(x, dev = mean, plot = TRUE, add.points = FALSE, ...)
 
 \item{dev}{Deviation statistic (mean or median)}
 
-\item{plot}{plot the minimum and maximum values with the distribution (TRUE/FALSE)}
+\item{plot}{plot the minimum and maximum values with the
+distribution (TRUE/FALSE)}
 
-\item{add.points}{Should all points of x be added to plot (TRUE/FALSE)}
+\item{add.points}{Should all points of x be added to
+plot (TRUE/FALSE)}
 
 \item{...}{Arguments passed to plot}
 }
 \value{
 A list object with:
-
-minima minimum local values of x
-
-maxima maximum local values of x
-
-mindev Absolute deviation of minimum from specified deviation statistic (dev argument)
-
-maxdev Absolute deviation of maximum from specified deviation statistic (dev argument)
+\itemize{
+\item minima - minimum local values of x
+\item maxima - maximum local values of x
+\item mindev - Absolute deviation of minimum from specified deviation
+statistic (dev argument)
+\item maxdev - Absolute deviation of maximum from specified deviation
+statistic (dev argument)
+}
 }
 \description{
-Calculates the local minimums and maximums in a numeric vector, indicating inflection points in the distribution.
+Calculates the local minimums and maximums in a numeric vector,
+indicating inflection points in the distribution.
 }
 \note{
-Useful function for identifying inflection or enveloping points in a distribution
+Useful function for identifying inflection or enveloping points in
+a distribution
 }
 \examples{
                                                  
 x <- rnorm(100,mean=1500,sd=800) 
-( lmm <- local.min.max(x, dev=mean, add.points=TRUE, main="Local Minima and Maxima") )
+( lmm <- local.min.max(x, dev=mean, add.points=TRUE, 
+                       main="Local Minima and Maxima") )
 
 # return only local minimum values
    local.min.max(x)$minima 
                                            
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

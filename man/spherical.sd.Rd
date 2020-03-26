@@ -40,7 +40,7 @@ The value of (1 - R^2), which will lie between 0 and 1, is the spherical varianc
 and it's square root can be considered the spherical standard deviation.
 }
 \examples{
-\dontrun{
+\donttest{
  library(raster)
  data(elev)
  
@@ -53,7 +53,7 @@ and it's square root can be considered the spherical standard deviation.
       main='terrain spherical standard deviation')
    plot(ssd, col=rainbow(25, alpha=0.35), add=TRUE)
 }
-  
+ 
 }
 \seealso{
 \code{\link[raster]{focal}} for details on focal function

@@ -1,19 +1,24 @@
 #' @title Point and Polygon Intersect
-#' @description Intersects point and polygon feature classes and adds polygon attributes to points
+#' @description Intersects point and polygon feature classes and adds polygon 
+#'              attributes to points
 #'
-#' @param x         sp SpatialPointsDataFrame or SpatialPoints or sf point object
+#' @param x         sp SpatialPointsDataFrame or SpatialPoints or sf point 
+#'                  object
 #' @param y         sp SpatialPolygonsDataFrame or sf polygon object
-#' @param sp        (TRUE/FALSE) Return an sp class object, else returns sf class object
-#' @param duplicate (TRUE/FALSE) Return duplicated features with more than one polygon intersection
+#' @param sp        (TRUE/FALSE) Return an sp class object, else returns sf 
+#'                  class object
+#' @param duplicate (TRUE/FALSE) Return duplicated features with more than one 
+#'                  polygon intersection
 #' @param ...       Additional arguments passed to sf::st_join  
 #'
 #' @return A SpatialPointsDataFrame or sf 
 #'
-#' @note 
-#' If duplicate argument is TRUE and more than one polygon intersection occurs, points will be duplicated (new row added) and all attributes joined.  
-#' However, if duplicate is FALSE, with duplicate intersections, a new column for each unique intersecting polygon will 
-#' be returned and the points will not be duplicated. For example, if a point intersect three polygons, three new columns will be added
-#' representing the polygons ID.    
+#' @description 
+#' If duplicate argument is TRUE and more than one polygon intersection occurs, points 
+#' will be duplicated (new row added) and all attributes joined. However, if duplicate is 
+#' FALSE, with duplicate intersections, a new column for each unique intersecting polygon 
+#' will be returned and the points will not be duplicated. For example, if a point intersect 
+#' three polygons, three new columns will be added representing the polygons ID.    
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

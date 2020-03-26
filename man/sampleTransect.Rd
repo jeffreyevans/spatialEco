@@ -18,10 +18,13 @@ sampleTransect(x, min.length, max.length, id = NULL, ...)
 \item{...}{Additional arguments passed to sample.line}
 }
 \description{
-Creates random transects from points and generates sample points along each transect
+Creates random transects from points and generates 
+             sample points along each transect
 }
 \note{
-Function create random direction and length transects and then creates a point sample along each transect. The characteristic of the sample points are defined by arguments passed to the sample.line function
+Function create random direction and length transects and then creates a point 
+sample along each transect. The characteristic of the sample points are defined 
+by arguments passed to the sample.line function
 }
 \examples{
 library(sp)
@@ -30,7 +33,8 @@ coordinates(meuse) <- ~x+y
 proj4string(meuse) <- CRS("+init=epsg:28992")
 meuse <- meuse[sample(1:nrow(meuse),10),]
 
-transects <- sampleTransect(meuse, min.length=200, max.length=500, min.samp = 3)
+transects <- sampleTransect(meuse, min.length=200, 
+                    max.length=500, min.samp = 3)
   plot(transects$transects)
     plot(transects$samples, pch=20, add=TRUE)
 

@@ -19,21 +19,19 @@ loess.ci(y, x, p = 0.95, plot = FALSE, ...)
 }
 \value{
 A list object with:
-
-loess Predicted values
-
-se Estimated standard error for each predicted value
-
-lci Lower confidence interval
-
-uci Upper confidence interval
-
-df Estimated degrees of freedom
-
-rs Residual scale of residuals used in computing the standard errors
+\itemize{
+\item loess Predicted values
+\item se Estimated standard error for each predicted value
+\item lci Lower confidence interval
+\item uci Upper confidence interval
+\item df Estimated degrees of freedom
+\item rs Residual scale of residuals used in computing the
+standard errors
+}
 }
 \description{
-Calculates a local polynomial regression fit with associated confidence intervals
+Calculates a local polynomial regression fit
+with associated confidence intervals
 }
 \examples{
  x <- seq(-20, 20, 0.1)
@@ -50,8 +48,10 @@ Calculates a local polynomial regression fit with associated confidence interval
 
 }
 \references{
-W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression models. Chapter 8 of Statistical Models in S eds J.M. Chambers and T.J. Hastie, Wadsworth & Brooks/Cole.
+W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression models.
+Chapter 8 of Statistical Models in S eds J.M. Chambers and T.J. Hastie,
+Wadsworth & Brooks/Cole.
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

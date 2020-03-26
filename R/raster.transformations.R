@@ -2,25 +2,32 @@
 #' @description Transforms raster to a specified statistical transformation 
 #' 
 #' @param x       raster class object
-#' @param trans   Transformation method: "norm", "rstd", "std", "stretch", "nl", "slog", "sr" (please see notes)
+#' @param trans   Transformation method: "norm", "rstd", "std", "stretch", 
+#'                 "nl", "slog", "sr" (please see notes)
 #' @param smin    Minimum value for stretch 
-#' @param smax    Maxmum value for stretch
+#' @param smax    Maximum value for stretch
 #' 
 #' @return raster class object of transformation
 #'
-#' @note
-#'  ("norm") Normalization [0-1]: if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )
-#'  ("rstd") Row standardize [0-1]: if min(x) >= 0 x / max(x) This normalizes data with negative distributions
-#'  ("std") Standardize: (x - mean(x)) / sdv(x)
-#'  ("stretch") Stretch: ((x - min(x)) * max.stretch / (max(x) - min(x)) + min.stretch) This will stretch values to the specified minimum and maximum values (eg., 0-255 for 8-bit)
-#'  ("nl") Natural logarithms: if min(x) > 0 log(x)
-#'  ("slog") Signed log 10 (for skewed data): if min(x) >= 0 ifelse(abs(x) <= 1, 0, sign(x)*log10(abs(x))) 
-#'  ("sr") Square-root: if min(x) >= 0 sqrt(x) 
+#' @description
+#' Transformation option details:
+#' * norm - (Normalization_ (0-1): if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )
+#' * rstd - (Row standardize) (0-1): if min(x) >= 0 x / max(x) This normalizes data 
+#' *        with negative distributions
+#' * std - (Standardize) (x - mean(x)) / sdv(x)
+#' * stretch - (Stretch) ((x - min(x)) * max.stretch / (max(x) - min(x)) + min.stretch) 
+#'              This will stretch values to the specified minimum and maximum values 
+#'              (eg., 0-255 for 8-bit)
+#' * nl - (Natural logarithms) if min(x) > 0 log(x)
+#' * slog - (Signed log 10) (for skewed data): if min(x) >= 0 ifelse(abs(x) <= 1, 0, 
+#'           sign(x)*log10(abs(x))) 
+#' * sr - (Square-root) if min(x) >= 0 sqrt(x) 
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #'   library(raster)
 #'   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
 #'               ymn=4423540, ymx=4453690)
@@ -61,25 +68,25 @@ raster.transformation <- function(x, trans = "norm", smin=0, smax=255) {
   }
   
   if( trans == "norm") {
-    cat("applying normalization transformation", "\n")
+    message("applying normalization transformation", "\n")
     return( ( x - rmin ) / ( rmax - rmin ) )
    } else if ( trans == "rstd") {
-     cat("applying row-standardization transformation", "\n")
+     message("applying row-standardization transformation", "\n")
      return( x / rmax )
       } else if ( trans == "std") {
-	    cat("applying standardization transformation", "\n")
+	    message("applying standardization transformation", "\n")
 	    return( (x - rmean) / rsd )
 	     } else if ( trans == "stretch") {
-		   cat("applying stretch transformation", "\n")
+		   message("applying stretch transformation", "\n")
 		   return( (x - rmin) * smax / (rmax - rmin) + smin )
 		    } else if ( trans == "nl") {
-			  cat("applying log transformation", "\n")
+			  message("applying log transformation", "\n")
 			  return(  raster::calc(x, fun=log) )
 			  } else if ( trans == "slog") {
-			    cat("applying singned-log10 transformation", "\n")
+			    message("applying singned-log10 transformation", "\n")
 			    return(raster::calc(x, fun=slog) )
 			    } else if ( trans == "sr") {
-				  cat("applying sqare-root transformation", "\n")
+				  message("applying sqare-root transformation", "\n")
 			      return(  raster::calc(x, fun=sqrt) )		  
 		          } else {
                     stop("Not a valid transformation") 

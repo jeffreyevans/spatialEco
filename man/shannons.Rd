@@ -16,13 +16,15 @@ shannons(x, counts = TRUE, ens = FALSE, margin = "row")
 \item{margin}{Calculate diversity for rows or columns. c("row", "col")}
 }
 \value{
-data.frame with "H" (Shannon's diversity) and "evenness" (Shannon's evenness where H / max( sum(x) ) ) and ESN
+data.frame with "H" (Shannon's diversity) and "evenness" (Shannon's 
+evenness where H / max( sum(x) ) ) and ESN
 }
 \description{
 Calculates Shannon's Diversity Index and Shannon's Evenness Index
 }
 \note{
-The expected for H is 0-3+ where a value of 2 has been suggested as medium-high diversity, for eveness is 0-1 with 0 signifying no evenness and 1, complete evenness.
+The expected for H is 0-3+ where a value of 2 has been suggested as medium-high diversity, 
+for evenness is 0-1 with 0 signifying no evenness and 1, complete evenness.
 }
 \examples{
 # Using Costa Rican ant diversity data from Roth et al. (1994)
@@ -32,17 +34,20 @@ data(ants)
 shannons(ants[,2:ncol(ants)], ens = TRUE, counts = FALSE, margin = "col")
 
 # Calculate diversity for each species ("row") 
-ant.div <- shannons(ants[,2:ncol(ants)], ens = TRUE, counts = FALSE, margin = "row")
+ant.div <- shannons(ants[,2:ncol(ants)], ens = TRUE, counts = FALSE, 
+                    margin = "row")
   row.names(ant.div) <- ants[,1]
   ant.div
 
 }
 \references{
-Shannon, C. E. and W. Weaver (1948) A mathematical theory of communication. The Bell System Technical Journal, 27:379-423.
+Shannon, C. E. and W. Weaver (1948) A mathematical theory of communication. The Bell 
+  System Technical Journal, 27:379-423.
 
 Simpson, E. H. (1949) Measurement of diversity. Nature 163:688
 
-Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
+Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on 
+  ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

@@ -22,26 +22,28 @@ spatial.select(
 
 \item{predicate}{Spatial predicate for intersection}
 
-\item{neighbors}{If predicate = "contingency" type of neighbors options are c("queen", "rook")}
+\item{neighbors}{If predicate = "contingency" type of neighbors options are 
+c("queen", "rook")}
 }
 \value{
 An sp object representing a subset of y based on the spatial query of x or, 
-        if predicate = contingency a sparse matrix representing neighbor indexes
+if predicate = contingency a sparse matrix representing neighbor indexes
 }
 \description{
-Performs a spatial select (feature subset) between a polygon(s) and other feature class
+Performs a spatial select (feature subset) between a polygon(s) and other 
+feature class
+
+Performs a spatial select of features based on an overlay of a polygon (x),   
+which can represent multiple features, and a polygon, point or line feature 
+classes (y). User can specify a partial or complete intersection, using within 
+argument, or within a distance, using distance argument, predicated on the  
+query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
+that for point to point neighbor selections use the knn function.
 }
 \note{
-Performs a spatial select of features based on an overlay of a polygon (x),   
-      which can represent multiple features, and a polygon, point or line feature 
-      classes (y). User can specify a partial or complete intersection, using within 
-      argument, or within a distance, using distance argument, predicated on the  
-      query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
-      that for point to point neighbor selections use the knn function.
-
-Valid spatial predicates include: intersect, touches, covers, contains, proximity and 
-      contingency. See [DE-9IM topology model](https://en.wikipedia.org/wiki/DE-9IM) for 
-      detailed information on data predicates.
+Valid spatial predicates include: intersect, touches, covers, contains, proximity 
+and contingency. See [DE-9IM topology model](https://en.wikipedia.org/wiki/DE-9IM)
+for detailed information on data predicates.
 }
 \examples{
 library(raster)

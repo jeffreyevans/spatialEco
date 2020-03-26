@@ -1,5 +1,6 @@
 #' @title Raster Downscale
-#' @description Downscales a raster to a higher resolution raster using a robust regression
+#' @description Downscales a raster to a higher resolution raster using 
+#'              a robust regression
 #' 
 #' @param x          Raster class object representing independent variable(s) 
 #' @param y          Raster class object representing dependent variable
@@ -20,10 +21,11 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #'  library(raster)
 #'  elev <- raster::getData('alt', country='SWZ', mask=TRUE)
-#'  tmax <- raster::getData('worldclim', var='tmax', res=10, lon=8.25, lat=46.8)
+#'  tmax <- raster::getData('worldclim', var='tmax', res=10, 
+#'                          lon=8.25, lat=46.8)
 #'    tmax <- crop(tmax[[1]], extent(elev))
 #'  
 #'  tmax.ds <- raster.downscale(elev, tmax, scatter=TRUE)
@@ -58,7 +60,7 @@ raster.downscale <- function(x, y, p = NULL, n = NULL, filename = FALSE,
     if (filename != FALSE) {
 	  raster::predict(x, rrr, filename=filename, na.rm=TRUE, progress='window', 
 	                  overwrite=TRUE, ...)
-      print(paste("Raster written to", filename, sep=": "))	
+      message(paste("Raster written to", filename, sep=": "))	
         return(list(model = rrr, MRE = round(mean(rrr$residuals), digits=4), 
                AIC = round(stats::AIC(rrr), digits=4)))			  
 	} else {

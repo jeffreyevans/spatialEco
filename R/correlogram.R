@@ -3,7 +3,8 @@
 #' 
 #' @param x         SpatialPointsDataFrame object
 #' @param v         Test variable in x@@data
-#' @param dist      Distance of correlation lags, if latlong=TRUE units are in kilometers
+#' @param dist      Distance of correlation lags, if latlong=TRUE units are 
+#'                  in kilometers
 #' @param latlong   Coordinates are in latlong (TRUE/FALSE)
 #' @param dmatrix   Should the distance matrix be include in output (TRUE/FALSE)
 #' @param ns        Number of simulations to derive simulation envelope 
@@ -24,7 +25,7 @@
 #'                                                                   
 #' @examples 
 #' library(sp)
-#' data(meuse)
+#'   data(meuse)
 #' coordinates(meuse) = ~x+y
 #' zinc.cg <- correlogram(x = meuse, v = meuse@@data[,'zinc'], dist = 250, ns = 9)
 #' 
@@ -52,7 +53,7 @@ correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = F
         cors <- c(cors, stats::cor(v, lag, ...))
     }
     if (length(which(is.na(cors))) > 0) {
-      print(paste(length(which(is.na(cors))), "Spatial lag empty and dropped", sep = " "))
+      message(paste(length(which(is.na(cors))), "Spatial lag empty and dropped", sep = " "))
       bw <- bw[-which(is.na(cors))]
      cors <- cors[-which(is.na(cors))]
     }

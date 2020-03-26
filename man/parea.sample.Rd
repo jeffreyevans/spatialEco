@@ -33,19 +33,21 @@ parea.sample(
 A SpatialPointsDataFrame with polygon samples
 }
 \description{
-Creates a point sample of polygons where n is based on percent area
+Creates a point sample of polygons where n is based 
+             on percent area
 }
 \note{
-This function results in an adaptive sample based on the area of each polygon
+This function results in an adaptive sample based on the area of 
+      each polygon
 }
 \examples{
 require(sp)
-sr1=Polygons(list(Polygon(cbind(c(180114, 180553, 181127, 181477, 181294, 181007, 180409, 
-  180162, 180114), c(332349, 332057, 332342, 333250, 333558, 333676, 
-  332618, 332413, 332349)))),'1')
-sr2=Polygons(list(Polygon(cbind(c(180042, 180545, 180553, 180314, 179955, 179142, 179437, 
-  179524, 179979, 180042), c(332373, 332026, 331426, 330889, 330683, 
-  331133, 331623, 332152, 332357, 332373)))),'2')
+sr1=Polygons(list(Polygon(cbind(c(180114, 180553, 181127, 181477, 181294, 
+  181007, 180409, 180162, 180114), c(332349, 332057, 332342, 333250, 333558, 
+  333676, 332618, 332413, 332349)))),'1')
+sr2=Polygons(list(Polygon(cbind(c(180042, 180545, 180553, 180314, 179955, 
+  179142, 179437, 179524, 179979, 180042), c(332373, 332026, 331426, 330889, 
+  330683, 331133, 331623, 332152, 332357, 332373)))),'2')
 sr=SpatialPolygons(list(sr1,sr2))
 srdf=SpatialPolygonsDataFrame(sr, data.frame(row.names=c('1','2'), PIDS=1:2))
 

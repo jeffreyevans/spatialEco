@@ -7,7 +7,8 @@
 explode(x, sp = FALSE)
 }
 \arguments{
-\item{x}{sp or sf multipart (MULTIPOLYGON, MULTIPOINT, MULTILINE) object}
+\item{x}{sp or sf multipart (MULTIPOLYGON, MULTIPOINT, MULTILINE) 
+object}
 
 \item{sp}{(FALSE/TRUE) output as sp class object, else is sf class}
 }
@@ -18,12 +19,12 @@ A single part sp or sf object (polygons or points)
 Explodes multipart features into single part
 }
 \note{
-Multipart geometries are a data structure where a single attribute shares multiple 
-features (polygons, points, lines). This function dissaggregates the data into a 
-one-to-one match.
+Multipart geometries are a data structure where a single attribute 
+shares multiple features (polygons, points, lines). This function 
+dissaggregates the data into a one-to-one match.
 }
 \examples{
-\dontrun{
+\donttest{
 library(sf)
 library(sp)
 

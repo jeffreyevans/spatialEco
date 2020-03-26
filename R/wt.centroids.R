@@ -1,11 +1,13 @@
 #' @title Weighted centroid
-#' @description Creates centroid of [x,y] coordinates based on a weights field 
+#' @description Creates centroid of [x,y] coordinates based on a 
+#'              weights field 
 #'
 #' @param x  sp SpatialPointsDataFrame class object                       
 #' @param p  Weights column in x@@data slot 
 #' @param sp  Output sp SpatailPoints class object (TRUE | FALSE)    
 #' 
-#' @return A vector or an sp class SpatialPoints object of the weighted coordinate centroid      
+#' @return 
+#' A vector or an sp class SpatialPoints object of the weighted coordinate centroid      
 #'
 #' @note
 #' The weighted centroid is calculated as:

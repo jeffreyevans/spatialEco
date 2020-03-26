@@ -40,12 +40,13 @@ Function uses the Single Pixel Extraction tool and returns year, yday,
       dayl(s), prcp (mm/day), srad (W/m^2), swe (kg/m^2), tmax (deg c), 
       tmin (deg c), vp (Pa)
 
-Metadata for DAYMET single pixel extraction: \url{ https://daymet.ornl.gov/files/UserGuides/current/readme_singlepointextraction.pdf }
+Metadata for DAYMET single pixel extraction: 
+\url{ https://daymet.ornl.gov/files/UserGuides/current/readme_singlepointextraction.pdf }
 
 data is available for Long -131.0 W and -53.0 W; lat 52.0 N and 14.5 N
 }
 \examples{
-\dontrun{
+\donttest{
 ( d <- daymet.point(lat = 36.0133, long = -84.2625, start.year = 2013, end.year=2014, 
                     site = "1", files = FALSE, echo = FALSE) )
 }

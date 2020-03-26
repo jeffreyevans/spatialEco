@@ -1,16 +1,19 @@
 #' @title trend.line
 #' @description Calculated specified trend line of x,y
 #'
-#' @param x Vector of x
-#' @param y Vector of y
-#' @param type   Trend line types are: 'linear', 'exponential', 'logarithmic', 'polynomial'
-#' @param plot plot results (TRUE/FALSE)
-#' @param ... Additional arguments passed to plot 
+#' @param x      Vector of x
+#' @param y      Vector of y
+#' @param type   Trend line types are: 'linear', 'exponential', 
+#'               'logarithmic', 'polynomial'
+#' @param plot   plot results (TRUE/FALSE)
+#' @param ...    Additional arguments passed to plot 
 #'
 #' @return A list class object with the following components:
-#' for type = 'linear'  x is slope and y is intercept
-#' for type = 'exponential', 'logarithmic', or 'polynomial'
-#'   x is original x variable and y is vector of fit regression line
+#' * for type = 'linear'  x is slope and y is intercept
+#' * for type = 'exponential', 'logarithmic', or 'polynomial'
+#'       x is original x variable and y is vector of fit 
+#'       regression line
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

@@ -17,10 +17,12 @@ topo.distance(x, r, echo = FALSE)
 Vector of corrected topographic distances same length as nrow(x)
 }
 \description{
-Calculates topographic corrected distance for a SpatialLinesDataFrame object
+Calculates topographic corrected distance for a 
+             SpatialLinesDataFrame object
 }
 \note{
-This function corrects straight-line (euclidean) distances for topographic-slope effect.
+This function corrects straight-line (euclidean) distances for 
+topographic-slope effect.
 
 Depends: sp, raster
 }

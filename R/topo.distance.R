@@ -1,14 +1,17 @@
 #' @title Topographic distance
-#' @description Calculates topographic corrected distance for a SpatialLinesDataFrame object
+#' @description Calculates topographic corrected distance for a 
+#'              SpatialLinesDataFrame object
 #'
 #' @param x     sp SpatialLinesDataFrame object
 #' @param r     raster class elevation raster
 #' @param echo  (FALSE/TRUE) print progress to screen
 #'
-#' @return Vector of corrected topographic distances same length as nrow(x)
+#' @return 
+#' Vector of corrected topographic distances same length as nrow(x)
 #'
 #' @note
-#' This function corrects straight-line (euclidean) distances for topographic-slope effect. 
+#' This function corrects straight-line (euclidean) distances for 
+#' topographic-slope effect. 
 #'
 #' @note Depends: sp, raster
 #'

@@ -14,13 +14,14 @@
 #' @note Function uses the Single Pixel Extraction tool and returns year, yday, 
 #'       dayl(s), prcp (mm/day), srad (W/m^2), swe (kg/m^2), tmax (deg c), 
 #'       tmin (deg c), vp (Pa)
-#' @note Metadata for DAYMET single pixel extraction: \url{ https://daymet.ornl.gov/files/UserGuides/current/readme_singlepointextraction.pdf }
+#' @note Metadata for DAYMET single pixel extraction: 
+#' \url{ https://daymet.ornl.gov/files/UserGuides/current/readme_singlepointextraction.pdf }
 #' @note data is available for Long -131.0 W and -53.0 W; lat 52.0 N and 14.5 N
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'         
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ( d <- daymet.point(lat = 36.0133, long = -84.2625, start.year = 2013, end.year=2014, 
 #'                     site = "1", files = FALSE, echo = FALSE) )
 #' }
@@ -38,7 +39,7 @@ daymet.point <- function (lat, long, start.year, end.year, site=NULL,
     download.url = sprintf("https://daymet.ornl.gov/data/send/saveData?lat=%s&lon=%s&measuredParams=tmax,tmin,dayl,prcp,srad,swe,vp&year=%s", 
                            lat, long, year.range)
 	if (echo == TRUE) {
-      cat(paste("Downloading DAYMET data for: ", site, " at ", 
+      message(paste("Downloading DAYMET data for: ", site, " at ", 
           lat, "/", long, " latitude/longitude !\n", sep = ""))
     }	
     x <- try( RCurl::getURL(download.url, ssl.verifypeer = FALSE) )

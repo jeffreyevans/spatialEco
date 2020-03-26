@@ -16,7 +16,8 @@ group.pdf(
 )
 }
 \arguments{
-\item{x}{Numeric, character or factorial vector of grouping variable (must be same length as y)}
+\item{x}{Numeric, character or factorial vector of grouping 
+variable (must be same length as y)}
 
 \item{y}{Numeric vector (density variable)}
 
@@ -26,14 +27,16 @@ group.pdf(
 
 \item{lwd}{Optional line widths (see par, lwd)}
 
-\item{lx}{Position of legend (x coordinate or 'topright', 'topleft', 'bottomright', 'bottomleft')}
+\item{lx}{Position of legend (x coordinate or 'topright', 'topleft', 
+'bottomright', 'bottomleft')}
 
 \item{ly}{Position of legend (y coordinate)}
 
 \item{...}{Additional arguments passed to plot}
 }
 \description{
-Creates a probability density plot of y for each group of x
+Creates a probability density plot of y for 
+             each group of x
 }
 \examples{
 y=dnorm(runif(100))
@@ -43,7 +46,8 @@ ylab='PDF', xlab='Y', lty=c(1,2,3))
 
 }
 \references{
-Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, New York.
+Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, 
+   New York.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>

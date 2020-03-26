@@ -1,45 +1,58 @@
 #' @title Kendall tau trend with continuity correction for time-series 
-#' @description Calculates a nonparametric statistic for a monotonic trend based on the Kendall 
-#'                tau statistic and the Theil-Sen slope modification
+#' @description 
+#' Calculates a nonparametric statistic for a monotonic trend based 
+#' on the Kendall tau statistic and the Theil-Sen slope modification
 #'
-#' @param y                A vector representing a timeseries with >= 8 obs
-#' @param tau              (FALSE/TRUE) return tau values
-#' @param intercept        (FALSE/TRUE) return intercept values 
-#' @param p.value          (FALSE/TRUE) return p.values
-#' @param z.value          (FALSE/TRUE) return z values
-#' @param confidence       (FALSE/TRUE) return 95 pct confidence levels
-#' @param prewhiten        (FALSE/TRUE) Apply autocorrelation correction using pre-whitening 
-#' @param na.rm            (FALSE/TRUE) Remove NA values
-#' @param ...               Not used
+#' @param y          A vector representing a timeseries with >= 8 obs
+#' @param tau        (FALSE/TRUE) return tau values
+#' @param intercept  (FALSE/TRUE) return intercept values 
+#' @param p.value    (FALSE/TRUE) return p.values
+#' @param z.value    (FALSE/TRUE) return z values
+#' @param confidence (FALSE/TRUE) return 95 pct confidence levels
+#' @param prewhiten  (FALSE/TRUE) Apply autocorrelation correction using 
+#'                    pre-whitening 
+#' @param na.rm      (FALSE/TRUE) Remove NA values
+#' @param ...         Not used
 #'
 #' @return Depending on arguments, a vector containing:
 #' \itemize{
 #'   \item {value 1} { Theil-Sen slope, always returned }
 #'   \item {value 2} {Kendall's tau two-sided test, if tau TRUE}
-#'   \item {value 3} {intercept for trend if intercept TRUE, not if prewhitened}
+#'   \item {value 3} {intercept for trend if intercept TRUE, not 
+#'                    if prewhitened}
 #'   \item {value 4} {p value for trend fit if p.value TRUE}
 #'   \item {value 5} {Z value for trend fit if z.value TRUE}
-#'   \item {value 6} {lower confidence level at 95-pct if confidence TRUE, not if prewhitened}
-#'   \item {value 7} {upper confidence level at 95-pct if confidence TRUE, not if prewhitened}
+#'   \item {value 6} {lower confidence level at 95-pct if confidence 
+#'                    TRUE, not if prewhitened}
+#'   \item {value 7} {upper confidence level at 95-pct if confidence 
+#'                    TRUE, not if prewhitened}
 #' }
 #'
-#' @details This function implements Kendall's nonparametric test for a monotonic trend using the 
-#'          Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate the slope and related 
-#'          confidence intervals. Critical values are Z > 1.96 representing a significant increasing 
-#'          trend and a Z < -1.96 a significant decreasing trend (p < 0.05). The null hypothesis can 
-#'          be rejected if Tau = 0. There is also an option for autocorrelation correction using
-#'          the method proposed in Yue & Wang (2002). 
+#' @details 
+#' This function implements Kendall's nonparametric test for a monotonic trend 
+#' using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate 
+#' the slope and related confidence intervals. Critical values are Z > 1.96 
+#' representing a significant increasing trend and a Z < -1.96 a significant 
+#' decreasing trend (p < 0.05). The null hypothesis can be rejected if Tau = 0. 
+#' There is also an option for autocorrelation correction using the method proposed 
+#' in Yue & Wang (2002). 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @references Theil, H. (1950) A rank invariant method for linear and polynomial regression analysis.  
-#'               Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I),  
-#'               53:521-525 (Part II), 53:1397-1412 (Part III).
-#' @references Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. 
-#'               Journal of the American Statistical Association. 63(324):1379-1389.
-#' @references Siegel, A.F. (1982) Robust Regression Using Repeated Medians. Biometrika, 69(1):242-244
-#' @references Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate the influence 
-#'               of serial correlation on the Mann-Kendall test. Water Resources Research, 38(6):41-47. 
+#' @references 
+#' Theil, H. (1950) A rank invariant method for linear and polynomial regression 
+#'   analysis. Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I),  
+#'   53:521-525 (Part II), 53:1397-1412 (Part III).
+#' @references 
+#' Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. 
+#'   Journal of the American Statistical Association. 63(324):1379-1389.
+#' @references 
+#' Siegel, A.F. (1982) Robust Regression Using Repeated Medians. 
+#'   Biometrika, 69(1):242-244
+#' @references 
+#' Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate 
+#' the influence of serial correlation on the Mann-Kendall test. Water 
+#' Resources Research, 38(6):41-47. 
 #'
 #' @export kendall
 kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE, 
@@ -59,7 +72,6 @@ kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE,
 	if( intercept ) pass.sum = pass.sum + 1
       fit.results <- c(rep(NA,pass.sum + 1))
     if(!prewhiten) {
-      options(warn=-1)
       fit <- EnvStats::kendallTrendTest(y ~ 1)
       fit.results <- fit$estimate[2]
         if(tau == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }
@@ -143,7 +155,6 @@ kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE,
           if(z.value == TRUE) { fit.results <- c(fit.results, z) }
 	  fit.results <- as.numeric(fit.results) 
     }
-    options(warn=0)	  
   return(c(fit.results))
 }	
   

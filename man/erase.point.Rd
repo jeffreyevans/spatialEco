@@ -24,8 +24,8 @@ Provides the same functionality as the ESRI ArcGIS Erase Point tool
 }
 \examples{
 require(sp)
-data(meuse)
-coordinates(meuse) = ~x+y
+  data(meuse)
+  coordinates(meuse) = ~x+y
 poly <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(
             Polygon(cbind(c(180042, 180545, 180553, 180314, 179955,
             179142, 179437, 179524, 179979, 180042), c(332373, 332026,

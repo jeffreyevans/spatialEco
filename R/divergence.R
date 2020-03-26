@@ -3,7 +3,8 @@
 #'       
 #' @param x     a vector of integer values, defining observed
 #' @param y     a vector of integer values, defining estimates
-#' @param type  Type of divergence statistic c("Kullback-Leibler", "cross-entropy")
+#' @param type  Type of divergence statistic c("Kullback-Leibler", 
+#'              "cross-entropy")
 #' 
 #' @return single value vector with divergence statistic
 #' 
@@ -29,10 +30,10 @@ divergence <- function(x, y, type = c("Kullback-Leibler", "cross-entropy")) {
     p <- p[which(names(p) %in% classes)]
     q <- q[which(names(q) %in% classes)]
   if(type == "cross-entropy") {
-    cat("Cross-Entropy", "\n")
+    message("Cross-Entropy", "\n")
     return( -sum( q, log(p) ) ) 
   } else if(type == "Kullback-Leibler") {
-    cat("Kullback-Leibler", "\n")
+    message("Kullback-Leibler", "\n")
     return( sum( p * log(p / q) ) )
   }
 }  

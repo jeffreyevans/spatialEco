@@ -8,7 +8,7 @@ download.daymet(
   years,
   tiles,
   data.type = "all",
-  download.folder = getwd(),
+  download.folder = c("current", "temp"),
   http = "https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles"
 )
 }
@@ -17,9 +17,11 @@ download.daymet(
 
 \item{tiles}{Tile index value (see url for tile index grid in notes section)}
 
-\item{data.type}{Type of climate metric: 'all', 'vp', 'tmin', 'tmax', 'swe', 'srad', 'prcp', 'dayl'.}
+\item{data.type}{Type of climate metric: 'all', 'vp', 'tmin', 'tmax', 'swe',
+'srad', 'prcp', 'dayl'.}
 
-\item{download.folder}{local download directory, defaults to current working directory}
+\item{download.folder}{local download directory, defaults to current working
+directory}
 
 \item{http}{option to change URL}
 }
@@ -29,35 +31,30 @@ DAYMET netCDF format climate metrics
 \description{
 Batch download of daily gridded DAYMET climate data
 }
-\note{
-Available products
-
-vp        Water Vapor Pressure Daily average partial pressure of water vapor
-
-tmin      Daily minimum (degrees C) 2-meter air temperature
-
-tmax      Daily maximum (degrees C) 2-meter air temperature
-
-swe       Snow water equivalent (kg/m^2). Amount of water contained within snowpack.
-
-srad      Incident shortwave radiation flux density (W/m^2), taken as average over daylight 
-                    period of the day.
-
-prcp      Daily total precipitation(mm/day), sum of all forms converted to water-equivalent.
-
-dayl      Duration of the daylight period for the day (s/day). Calculation is based on the 
-                    period of the day during which the sun is above a hypothetical flat horizon.
+\details{
+Available products:
+\itemize{
+\item vp - Water Vapor Pressure Daily average partial pressure of water vapor
+\item tmin - Daily minimum (degrees C) 2-meter air temperature
+\item tmax - Daily maximum (degrees C) 2-meter air temperature
+\item swe - Snow water equivalent (kg/m^2). Amount of water contained within
+snowpack.
+\item srad - Incident shortwave radiation flux density (W/m^2), taken as average
+over daylight period of the day.
+\item prcp - Daily total precipitation(mm/day), sum of all forms converted to
+water-equivalent.
+\item dayl - Duration of the daylight period for the day (s/day). Calculation is
+based on the period of the day during which the sun is above a hypothetical
+flat horizon.
+}
 
 DAYMET main website: \url{http://daymet.ornl.gov}
-
 Tile index information \url{http://daymet.ornl.gov/datasupport.html}
-
-Data respotory url: https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles
-
+Data repository url: https://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles
 Path structure: /year/tile_year/file.nc
 }
 \examples{
-\dontrun{
+\donttest{
 # Download 2009-2010 min and max temp for tiles 11737 and 11738  
  laramie.plains <- c(11737, 11738)
  my.years <- c(seq(2009,2010,1))
@@ -66,19 +63,19 @@ Path structure: /year/tile_year/file.nc
 
 }
 \references{
-Thornton P.E., S.W. Running and M.A. White (1997) Generating surfaces of daily 
-              meteorological variables over large regions of complex terrain. Journal of
-              Hydrology 190: 214-251.
+Thornton P.E., S.W. Running and M.A. White (1997) Generating surfaces of daily
+meteorological variables over large regions of complex terrain. Journal of
+Hydrology 190: 214-251.
 
-Thornton, P.E. and S.W. Running (1999) An improved algorithm for estimating 
-              incident daily solar radiation from measurements of temperature, humidity, 
-              and precipitation. Agriculture and Forest Meteorology. 93:211-228.
+Thornton, P.E. and S.W. Running (1999) An improved algorithm for estimating
+incident daily solar radiation from measurements of temperature, humidity,
+and precipitation. Agriculture and Forest Meteorology. 93:211-228.
 
-Thornton, P.E., H. Hasenauer and M.A. White (2000) Simultaneous estimation 
-              of daily solar radiation and humidity from observed temperature and 
-              precipitation: An application over complex terrain in Austria. 
-              Agricultural and Forest Meteorology 104:255-271.
+Thornton, P.E., H. Hasenauer and M.A. White (2000) Simultaneous estimation
+of daily solar radiation and humidity from observed temperature and
+precipitation: An application over complex terrain in Austria.
+Agricultural and Forest Meteorology 104:255-271.
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

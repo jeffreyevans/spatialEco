@@ -2,19 +2,29 @@
 #' @description Removes extreme outliers using a winsorization transformation
 #' 
 #' @param x           A numeric vector
-#' @param min.value   A fixed lower bounds, all values lower than this will be replaced by this value. The default is set to the 5th-quantile of x.
-#' @param max.value   A fixed upper bounds, all values higher than this will be replaced by this value. The default is set to the 95th-quantile of x.
-#' @param p           A numeric vector of 2 representing the probabilities used in the quantile function. 
+#' @param min.value   A fixed lower bounds, all values lower than this will be 
+#'                    replaced by this value. The default is set to the 5th-quantile 
+#'                    of x.
+#' @param max.value   A fixed upper bounds, all values higher than this will be replaced 
+#'                    by this value. The default is set to the 95th-quantile of x.
+#' @param p           A numeric vector of 2 representing the probabilities used in the 
+#'                    quantile function. 
 #' @param na.rm       (FALSE/TRUE) should NAs be omitted? 
 #' 
-#' @return A transformed vector the same length as x, unless na.rm is TRUE, then x is length minus number of NA's
+#' @return 
+#' A transformed vector the same length as x, unless na.rm is TRUE, then x is length minus 
+#' number of NA's
 #' 
-#' @note 
-#'   Winsorization is the transformation of a distribution by limiting extreme values to reduce the effect of spurious outliers. This is done by shrinking outlying observations to the border of the main part of the distribution. 
+#' @description 
+#' Winsorization is the transformation of a distribution by limiting extreme values to reduce 
+#' the effect of spurious outliers. This is done by shrinking outlying observations to the border 
+#' of the main part of the distribution. 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
-#' @references Dixon, W.J. (1960) Simplified Estimation from Censored Normal Samples. Annals of Mathematical Statistics. 31(2):385-391 
+#' @references 
+#' Dixon, W.J. (1960) Simplified Estimation from Censored Normal Samples. Annals of Mathematical 
+#'   Statistics. 31(2):385-391 
 #' 
 #' @examples
 #' set.seed(1234)     

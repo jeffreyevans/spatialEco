@@ -14,13 +14,15 @@ classBreaks(x, n, type = c("equal", "quantile", "std", "geometric"))
 \item{type}{Statistic used to find breaks c("equal", "quantile", "std", "geometric")}
 }
 \value{
-A vector containing class break values the length is n+1 to allow for specification of ranges
+A vector containing class break values the length is n+1 to allow for 
+        specification of ranges
 }
 \description{
 Finds class breaks in a distribution
 }
 \note{
-The robust std method uses sqrt(sum(x^2)/(n-1)) to center the data before deriving "pretty" breaks.
+The robust std method uses sqrt(sum(x^2)/(n-1)) to center the data before 
+      deriving "pretty" breaks.
 }
 \examples{
  y <- rnbinom(100, 10, 0.5)

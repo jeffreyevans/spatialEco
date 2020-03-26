@@ -12,39 +12,25 @@ moments(x, plot = FALSE)
 \item{plot}{plot of distribution (TRUE/FALSE)}
 }
 \value{
-A vector with the following values
-
-min Minimum
-
-25th  25th percentile
-
-mean  Arithmetic mean
-
-gmean  Geometric mean
-
-hmean  Harmonic mean
-
-median  50th percentile
-
-7th5  75th percentile
-
-max  Maximum
-
-stdv  Standard deviation
-
-var  Variance
-
-cv  Coefficient of variation (percent)
-
-mad  Median absolute deviation
-
-skew  Skewness
-
-kurt  Kurtosis
-
-nmodes  Number of modes
-
-mode  Mode (dominate)
+A vector with the following values:
+\itemize{
+\item min Minimum
+\item 25th  25th percentile
+\item mean  Arithmetic mean
+\item gmean  Geometric mean
+\item hmean  Harmonic mean
+\item median  50th percentile
+\item 7th5  75th percentile
+\item max  Maximum
+\item stdv  Standard deviation
+\item var  Variance
+\item cv  Coefficient of variation (percent)
+\item mad  Median absolute deviation
+\item skew  Skewness
+\item kurt  Kurtosis
+\item nmodes  Number of modes
+\item mode  Mode (dominate)
+}
 }
 \description{
 Calculate statistical moments of a distribution
@@ -56,5 +42,5 @@ Calculate statistical moments of a distribution
  
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

@@ -11,7 +11,8 @@ correlogram(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = FALSE, ...)
 
 \item{v}{Test variable in x@data}
 
-\item{dist}{Distance of correlation lags, if latlong=TRUE units are in kilometers}
+\item{dist}{Distance of correlation lags, if latlong=TRUE units are 
+in kilometers}
 
 \item{dmatrix}{Should the distance matrix be include in output (TRUE/FALSE)}
 
@@ -46,7 +47,7 @@ depends: sp
 }
 \examples{
 library(sp)
-data(meuse)
+  data(meuse)
 coordinates(meuse) = ~x+y
 zinc.cg <- correlogram(x = meuse, v = meuse@data[,'zinc'], dist = 250, ns = 9)
 

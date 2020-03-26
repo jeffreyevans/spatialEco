@@ -4,14 +4,16 @@
 \name{ants}
 \alias{ants}
 \title{Ant Biodiversity Data}
-\format{A data.frame with 82 rows (species) and 5 columns (covertypes):
+\format{
+A data.frame with 82 rows (species) and 5 columns (covertypes):
 \describe{
   \item{species}{Ant species (family)}
   \item{Primary.Forest}{Primary forest type}
   \item{Abandoned.cacao.plantations}{Abandoned cacao plantations type}
   \item{Productive.cacao.plantations}{Active cacao plantations type}
   \item{Banana.plantations}{Active banana plantations type}
-}}
+}
+}
 \source{
 \url{http://www.tiem.utk.edu/~gross/bioed/bealsmodules/shannonDI.html}
 }

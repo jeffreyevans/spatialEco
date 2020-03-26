@@ -5,9 +5,11 @@
 #' @param n     Number of breaks
 #' @param type  Statistic used to find breaks c("equal", "quantile", "std", "geometric")
 #'
-#' @return A vector containing class break values the length is n+1 to allow for specification of ranges
+#' @return A vector containing class break values the length is n+1 to allow for 
+#'         specification of ranges
 #'
-#' @note The robust std method uses sqrt(sum(x^2)/(n-1)) to center the data before deriving "pretty" breaks.
+#' @note The robust std method uses sqrt(sum(x^2)/(n-1)) to center the data before 
+#'       deriving "pretty" breaks.
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

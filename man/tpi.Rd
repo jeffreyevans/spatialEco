@@ -9,22 +9,24 @@ tpi(x, scale = 3, win = "rectangle", normalize = FALSE, zero.correct = FALSE)
 \arguments{
 \item{x}{A raster class object}
 
-\item{scale}{focal window size (n-cell x n-cell for rectangle or distance for circle)}
+\item{scale}{focal window size (n-cell x n-cell for rectangle or 
+distance for circle)}
 
 \item{win}{Window type. Options are "rectangle" and "circle"}
 
-\item{normalize}{Apply deviation correction that normalizes to local surface roughness}
+\item{normalize}{Apply deviation correction that normalizes to local 
+surface roughness}
 
 \item{zero.correct}{Apply correction for zero values in matrix weights}
 }
 \value{
-raster class object of tpi
+raster class object of tpi metric
 }
 \description{
 Calculates topographic position using mean deviations
 }
 \examples{
-\dontrun{
+\donttest{
  library(raster)
  data(elev)
 
@@ -42,8 +44,9 @@ Calculates topographic position using mean deviations
 
 }
 \references{
-De Reu, J., J. Bourgeois, M. Bats, A. Zwertvaegher, V. Gelorini, et al., (2014) Application 
-  of the topographic position index to heterogeneous landscapes. Geomorphology, 186:39-49.
+De Reu, J., J. Bourgeois, M. Bats, A. Zwertvaegher, V. Gelorini, et al., (2014) 
+  Application of the topographic position index to heterogeneous landscapes. 
+  Geomorphology, 186:39-49.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

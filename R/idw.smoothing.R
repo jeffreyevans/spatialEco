@@ -1,19 +1,22 @@
-#' @title idw.smoothing
-#' @description Distance weighted smoothing of a variable in a spatial point object
+#' @title Inverse Distance Weighted smoothing
+#' @description 
+#' Distance weighted smoothing of a variable in a 
+#'          spatial point object
 #'
 #' @param x Object of class SpatialPointsDataFrame
 #' @param y Numeric data in x@@data
 #' @param d Distance constraint       
-#' @param k Maximum number of k-nearest neighbours within d    
+#' @param k Maximum number of k-nearest neighbors within d    
 #' 
 #' @return A vector, same length as nrow(x), of adjusted y values 
 #'
 #' @note
-#' Smoothing is conducted with a weighted-mean where; weights represent inverse standardized distance lags
-#' Distance-based or neighbour-based smoothing can be specified by setting the desired neighbour smoothing method to a specified value then the other parameter to the potential maximum. 
-#' For example; a constraint distance, including all neighbours within 1000 (d=1000) would require k to equal all of the potential neighbours (n-1 or k=nrow(x)-1).  
-#'    
-#' @note Depends: sp, RANN 
+#' Smoothing is conducted with a weighted-mean where; weights represent inverse 
+#' standardized distance lags Distance-based or neighbour-based smoothing can be 
+#' specified by setting the desired neighbour smoothing method to a specified value 
+#' then the other parameter to the potential maximum. For example; a constraint 
+#' distance, including all neighbors within 1000 (d=1000) would require k to equal 
+#' all of the potential neighbors (n-1 or k=nrow(x)-1).  
 #'                                                                     
 #' @examples 
 #'  library(sp)

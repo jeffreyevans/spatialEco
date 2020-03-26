@@ -3,7 +3,8 @@
 #'
 #' @param x A character vector representing a file with extension 
 #'
-#' @return The file name with extension and file path stripped off
+#' @return 
+#' The file name with extension and file path stripped off
 #'
 #' @examples 
 #' rm.ext("C:/path/file.txt")

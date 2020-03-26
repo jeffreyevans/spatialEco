@@ -17,9 +17,11 @@ raster.modified.ttest(
 )
 }
 \arguments{
-\item{x}{x raster for correlation, SpatialPixelsDataFrame or SpatialGridDataFrame object}
+\item{x}{x raster for correlation, SpatialPixelsDataFrame or 
+SpatialGridDataFrame object}
 
-\item{y}{y raster for correlation, SpatialPixelsDataFrame or SpatialGridDataFrame object}
+\item{y}{y raster for correlation, SpatialPixelsDataFrame or 
+SpatialGridDataFrame object}
 
 \item{x.idx}{Index for the column in the x raster object}
 
@@ -31,28 +33,31 @@ raster.modified.ttest(
 
 \item{type}{If sub.sample = TRUE, what type of sample (random  or hexagon)}
 
-\item{p}{If sub.sample = TRUE, what proportion of population should be sampled}
+\item{p}{If sub.sample = TRUE, what proportion of population 
+should be sampled}
 
 \item{size}{Fixed sample size}
 }
 \value{
-A SpatialPixelsDataFrame or SpatialPointsDataFrame with the following attributes:
+A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
+        following attributes:
 \itemize{ 
 \item   corr        Correlation 
-\item   Fstat       The F-statistic calculated as [degrees of freedom * unscaled F-statistic]
+\item   Fstat       The F-statistic calculated as [degrees of freedom * 
+                    unscaled F-statistic]
 \item   p.value     p-value for the test
 \item   moran.x     Moran's-I for x 
 \item   moran.y     Moran's-I for y  
  }
 }
 \description{
-A bivarate raster correlation using Dutilleul's modified t-test
-}
-\note{
-This function provides a bivariate moving window correlation using the modified t-test to account for 
-        spatial autocorrelation. Point based subsampling is provided for computation tractability.  
-        The hexagon sampling is recommended as it it good at capturing spatial process that includes 
-        nonstationarity and anistropy.
+A bivarate raster correlation using Dutilleul's 
+             modified t-test
+
+This function provides a bivariate moving window correlation using the modified  
+t-test to account for spatial autocorrelation. Point based subsampling is provided 
+for computation tractability. The hexagon sampling is recommended as it it good  
+at capturing spatial process that includes nonstationarity and anistropy.
 }
 \examples{
 \dontrun{
@@ -90,10 +95,11 @@ corr.hex <- raster.modifed.ttest(G1, G2, sub.sample = TRUE, d = 500, size = 1000
 
 }
 \references{
-Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the correlation between two 
-  spatial processes. Biometrics 45:123-134.
-Dutilleul, P. (1993), Modifying the t test for assessing the correlation between two spatial processes. 
-  Biometrics 49:305-314.
+Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the  
+  correlationbetween two spatial processes. Biometrics 45:123-134.
+
+Dutilleul, P. (1993), Modifying the t test for assessing the correlation between 
+  two spatial processes. Biometrics 49:305-314.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

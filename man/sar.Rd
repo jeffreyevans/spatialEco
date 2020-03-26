@@ -9,7 +9,8 @@ sar(x, s = NULL, ...)
 \arguments{
 \item{x}{raster object}
 
-\item{s}{cell resolution (default is NULL, not needed if projection is in planar units)}
+\item{s}{cell resolution (default is NULL, not needed if projection 
+is in planar units)}
 
 \item{...}{Additional arguments passed to raster::calc}
 }

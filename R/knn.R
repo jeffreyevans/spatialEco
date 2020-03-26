@@ -1,8 +1,11 @@
 #' @title Spatial K nearest neighbor
-#' @description Find K nearest neighbors for two spatial objects
+#' @description 
+#' Find K nearest neighbors for two spatial objects
 #'
-#' @param y          Spatial points or polygons object or coordinates matrix
-#' @param x          Spatial points or polygons object or coordinates matrix
+#' @param y          Spatial points or polygons object or 
+#'                   coordinates matrix
+#' @param x          Spatial points or polygons object or 
+#'                   coordinates matrix
 #' @param k          Number of neighbors
 #' @param d          Optional search radius
 #' @param ids        Optional column of ID's in x
@@ -10,16 +13,19 @@
 #' @param weights.x  A vector or matrix representing covariates of x
 #' @param indexes    (FALSE/TRUE) Return row indexes of x neighbors
 #'
-#' @return A data.frame with row indexes (optional), rownames, ids (optional) and distance of k
+#' @return 
+#' A data.frame with row indexes (optional), rownames, ids (optional) and 
+#' distance of k
 #'
-#' @note Finds nearest neighbor in x based on y and returns rownames, index and distance,
-#'       If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
-#'       columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
-#'       search radius is imposed. If no neighbor is found, a neighbor is not returned  
+#' @description
+#' Finds nearest neighbor in x based on y and returns rownames, index and distance,
+#' If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
+#' columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
+#' search radius is imposed. If no neighbor is found, a neighbor is not returned  
 #'
-#' @note You can specify weights to act as covariates for x and y. The vectors or matrices
-#'       must match row dimensions with x and y as well as columns matching between weights.
-#'       In other words, the covariates must match and be numeric.   
+#' You can specify weights to act as covariates for x and y. The vectors or matrices
+#' must match row dimensions with x and y as well as columns matching between weights.
+#' In other words, the covariates must match and be numeric.   
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'

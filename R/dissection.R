@@ -1,5 +1,6 @@
 #' @title Dissection
-#' @description Calculates the Evans (1972) Martonne's modified dissection 
+#' @description Calculates the Evans (1972) Martonne's modified 
+#'              dissection 
 #' 
 #' @param x    raster object
 #' @param s    Focal window size
@@ -8,12 +9,13 @@
 #' @return raster class object of Martonne's modified dissection  
 #'
 #' @note
-#' Dissection is calculated as: ( z(s) - min(z(s)) ) / ( max(z(s)) - min(z(s)) ) 
+#' Dissection is calculated as: 
+#' ( z(s) - min(z(s)) ) / ( max(z(s)) - min(z(s)) ) 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
 #' @examples
-#' \dontrun{ 
+#' \donttest{ 
 #'   library(raster)
 #'   data(elev)
 #'   d <- dissection(elev, s=3)

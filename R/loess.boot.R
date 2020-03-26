@@ -1,44 +1,54 @@
 #' @title Loess Bootstrap 
 #' @description Bootstrap of a Local Polynomial Regression (loess) 
 #' 
-#' @param  y                 Dependent variable
-#' @param  x                 Independent variable  
-#' @param  nreps             Number of bootstrap replicates 
-#' @param  confidence        Fraction of replicates contained in confidence region 
-#' @param  ...               Additional arguments passed to loess function
+#' @param  y            Dependent variable
+#' @param  x            Independent variable  
+#' @param  nreps        Number of bootstrap replicates 
+#' @param  confidence   Fraction of replicates contained in confidence 
+#'                      region 
+#' @param  ...          Additional arguments passed to loess function
+#'                      
+#' @return list object containing  
+#' * nreps        Number of bootstrap replicates 
+#' * confidence   Confidence interval (region)
+#' * span         alpha (span) parameter used loess fit
+#' * degree       polynomial degree used in loess fit
+#' * normalize    Normalized data (TRUE/FALSE)
+#' * family       Family of statistic used in fit
+#' * parametric   Parametric approximation (TRUE/FALSE) 
+#' * surface      Surface fit, see loess.control
+#' * data         data.frame of x,y used in model
+#' * fit          data.frame including:
+#'   1) x - Equally-spaced x index (see NOTES)         
+#'   2) y.fit - loess fit
+#'   3) up.lim - Upper confidence interval 
+#'   4) low.lim - Lower confidence interval 
+#'   5) stddev - Standard deviation of loess fit at each x value
+#' @md
 #'
-#' @return  nreps             Number of bootstrap replicates 
-#' @return  confidence        Confidence interval (region)
-#' @return  span              alpha (span) parameter used loess fit
-#' @return  degree            polynomial degree used in loess fit
-#' @return  normalize         Normalized data (TRUE/FALSE)
-#' @return  family            Family of statistic used in fit
-#' @return  parametric        Parametric approximation (TRUE/FALSE) 
-#' @return  surface           Surface fit, see loess.control
-#' @return  data              data.frame of x,y used in model
-#' @return  fit               data.frame including:
-#'                              x         Equally-spaced x index (see NOTES)         
-#'                              y.fit     loess fit
-#'                              up.lim    Upper confidence interval 
-#'                              low.lim   Lower confidence interval 
-#'                              stddev    Standard deviation of loess fit at each x value
-#'
-#' @note
-#' The function fits a loess curve and then calculates a symmetric nonparametric bootstrap with a confidence region.  
-#' Fitted curves are evaluated at a fixed number of equally-spaced x values, regardless of the number of x values in the data. Some replicates do not include 
-#' the values at the lower and upper end of the range of x values.  If the number of such replicates is too large, it becomes impossible to construct a confidence 
-#' region that includes a fraction "confidence" of the bootstrap replicates. In such cases, the left and/or right portion of the confidence region is truncated.
+#' @description
+#' The function fits a loess curve and then calculates a symmetric nonparametric 
+#' bootstrap with a confidence region. Fitted curves are evaluated at a fixed number 
+#' of equally-spaced x values, regardless of the number of x values in the data. Some 
+#' replicates do not include the values at the lower and upper end of the range of x   
+#' values. If the number of such replicates is too large, it becomes impossible to 
+#' construct a confidence region that includes a fraction "confidence" of the bootstrap 
+#' replicates. In such cases, the left and/or right portion of the confidence region 
+#' is truncated.
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#' Cleveland, WS, (1979) Robust Locally Weighted Regression and Smoothing Plots Journal of the American Statistical Association 74:829-836
+#' Cleveland, WS, (1979) Robust Locally Weighted Regression and Smoothing Plots Journal  
+#'   of the American Statistical Association 74:829-836
 #' @references
-#' Efron, B., and R. Tibshirani (1993) An Introduction to the Bootstrap Chapman and Hall, New York
+#' Efron, B., and R. Tibshirani (1993) An Introduction to the Bootstrap Chapman and 
+#'   Hall, New York
 #' @references
 #' Hardle, W., (1989) Applied Nonparametric Regression Cambridge University Press, NY.
 #' @references
-#' Tibshirani, R. (1988) Variance stabilization and the bootstrap. Biometrika 75(3):433-44.
+#' Tibshirani, R. (1988) Variance stabilization and the bootstrap. 
+#'   Biometrika 75(3):433-44.
 #'
 #' @examples 
 #'  n=1000

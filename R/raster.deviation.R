@@ -1,23 +1,37 @@
 #' @title Raster local deviation from the global trend 
-#' @description Calculates the local deviation from the raster, a specified global statistic or a polynomial trend of the raster.  
+#' @description 
+#' Calculates the local deviation from the raster, a specified global statistic 
+#' or a polynomial trend of the raster.  
 #' 
 #' @param x         raster object
-#' @param type      The global statistic to represent the local deviation  options are: "trend", "min", "max", "mean", "median"
+#' @param type      The global statistic to represent the local deviation  
+#'                  options are: "trend", "min", "max", "mean", "median"
 #' @param degree    The polynomial degree if type is trend, options are 1 and 2. 
 #' @param s         Size of matrix (focal window), not used with type="trend"
-#' @param global    Use single global value for deviation or cell-level values (FALSE/TRUE). Argument is ignored for type="trend"
+#' @param global    Use single global value for deviation or cell-level values 
+#'                 (FALSE/TRUE). Argument is ignored for type="trend"
 #' 
-#' @return raster class object of the local deviation from the raster or specified global statistic
+#' @return 
+#' raster class object of the local deviation from the raster or specified 
+#' global statistic
 #'
-#' @note
-#'  The deviation from the trend is derived as [y-hat - y] where; y-hat is the Nth-order polynomial.  Whereas the deviation from a global statistic is [y - y-hat] where; y-hat is the local (focal) statistic. 
-#'  The global = TRUE argument allows one to evaluate the local deviation from the global statistic [stat(x) - y-hat] where; stat(x) is the global value of the specified statistic and y-hat is the specified focal statistic.  
+#' @description
+#'  The deviation from the trend is derived as [y-hat - y] where; y-hat is the 
+#' Nth-order polynomial. Whereas the deviation from a global statistic is [y - y-hat] 
+#' where; y-hat is the local (focal) statistic. The global = TRUE argument allows 
+#' one to evaluate the local deviation from the global statistic [stat(x) - y-hat] 
+#' where; stat(x) is the global value of the specified statistic and y-hat is the 
+#' specified focal statistic.  
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#'  Magee, Lonnie (1998). Nonlocal Behavior in Polynomial Regressions. The American Statistician. American Statistical Association. 52(1):20-22
-#'  Fan, J. (1996). Local Polynomial Modelling and Its Applications: From linear regression to nonlinear regression. Monographs on Statistics and Applied Probability. Chapman and Hall/CRC. ISBN 0-412-98321-4
+#'  Magee, Lonnie (1998). Nonlocal Behavior in Polynomial Regressions. The American 
+#'   Statistician. American Statistical Association. 52(1):20-22
+#' @references
+#'  Fan, J. (1996). Local Polynomial Modelling and Its Applications: From linear regression 
+#'    to nonlinear regression. Monographs on Statistics and Applied Probability. Chapman and 
+#'    Hall/CRC. ISBN 0-412-98321-4
 #' 
 #' @examples 
 #'   library(raster)

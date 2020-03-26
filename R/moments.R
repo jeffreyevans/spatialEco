@@ -5,25 +5,26 @@
 #' @param x numeric vector  
 #' @param plot plot of distribution (TRUE/FALSE)
 #'
-#' @return A vector with the following values
-#' @return     min Minimum           
-#' @return     25th  25th percentile     
-#' @return     mean  Arithmetic mean 
-#' @return     gmean  Geometric mean
-#' @return     hmean  Harmonic mean
-#' @return     median  50th percentile      
-#' @return     7th5  75th percentile      
-#' @return     max  Maximum          
-#' @return     stdv  Standard deviation         
-#' @return     var  Variance     
-#' @return     cv  Coefficient of variation (percent)         
-#' @return     mad  Median absolute deviation         
-#' @return     skew  Skewness    
-#' @return     kurt  Kurtosis     
-#' @return     nmodes  Number of modes   
-#' @return     mode  Mode (dominate)
+#' @return A vector with the following values:
+#' * min Minimum           
+#' * 25th  25th percentile     
+#' * mean  Arithmetic mean 
+#' * gmean  Geometric mean
+#' * hmean  Harmonic mean
+#' * median  50th percentile      
+#' * 7th5  75th percentile      
+#' * max  Maximum          
+#' * stdv  Standard deviation         
+#' * var  Variance     
+#' * cv  Coefficient of variation (percent)         
+#' * mad  Median absolute deviation         
+#' * skew  Skewness    
+#' * kurt  Kurtosis     
+#' * nmodes  Number of modes   
+#' * mode  Mode (dominate)
+#' @md
 #'
-#' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
 #'     x <- runif(1000,0,100)

@@ -9,9 +9,11 @@ raster.mds(r, s = 5, window.median = FALSE, ...)
 \arguments{
 \item{r}{Raster layer}
 
-\item{s}{Window size (may be a vector of 1 or 2) of n x n dimension.}
+\item{s}{Window size (may be a vector of 1 or 2) of 
+n x n dimension.}
 
-\item{window.median}{(TRUE/FALSE) Return the median of the MDS matrix values.}
+\item{window.median}{(TRUE/FALSE) Return the median of the MDS 
+matrix values.}
 
 \item{...}{Additional arguments passed to raster::focal}
 }
@@ -19,14 +21,15 @@ raster.mds(r, s = 5, window.median = FALSE, ...)
 A raster class object or raster written to disk
 }
 \description{
-Multidimensional scaling of raster values within an N x N focal window
-}
-\note{
-An MDS focal function. If only one value provided for s, then a square matrix (window) will be used.
-If window.median = FALSE then the center value of the matrix is returned and not the median of the matrix
+Multidimensional scaling of raster values within an 
+             N x N focal window
+
+An MDS focal function. If only one value provided for s, then a square matrix 
+(window) will be used. If window.median = FALSE then the center value of the 
+matrix is returned and not the median of the matrix
 }
 \examples{
-\dontrun{ 
+\donttest{ 
  library(raster)
  r <- raster(system.file("external/rlogo.grd", package="raster")) 
    r <- r / cellStats(r, "max")
@@ -46,8 +49,9 @@ If window.median = FALSE then the center value of the matrix is returned and not
 
 }
 \references{
-Quinn, G.P., & M.J. Keough (2002) Experimental design and data analysis for biologists. Cambridge University Press. 
-  Ch. 18. Multidimensional scaling and cluster analysis.
+Quinn, G.P., & M.J. Keough (2002) Experimental design and data analysis 
+  for biologists. Cambridge University Press. Ch. 18. Multidimensional 
+  scaling and cluster analysis.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

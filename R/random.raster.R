@@ -1,22 +1,26 @@
 #' @title Random raster
-#' @description Create a random raster or raster stack using specified distribution
+#' @description Create a random raster or raster stack using specified 
+#'              distribution
 #'
-#' @param r              Optional existing raster defining nrow/ncol                
-#' @param n.row          Number of rows             
-#' @param n.col          Number of columns
-#' @param n.layers       Number of layers in resulting raster stack 
-#' @param x              A vector of values to sample if distribution is "sample"
-#' @param min            Minimum value of raster
-#' @param max            Maximum value of raster
-#' @param mean           Mean of centered distribution 
-#' @param sd             Standard deviation of centered distribution
-#' @param p              p-value for binominal distribution 
-#' @param s              sigma value for Gaussian distribution
-#' @param distribution   Available distributions, c("random", "normal", "seq", "binominal", "gaussian", "sample")
+#' @param r            Optional existing raster defining nrow/ncol                
+#' @param n.row        Number of rows             
+#' @param n.col        Number of columns
+#' @param n.layers     Number of layers in resulting raster stack 
+#' @param x            A vector of values to sample if distribution is "sample"
+#' @param min          Minimum value of raster
+#' @param max          Maximum value of raster
+#' @param mean         Mean of centered distribution 
+#' @param sd           Standard deviation of centered distribution
+#' @param p            p-value for binominal distribution 
+#' @param s            sigma value for Gaussian distribution
+#' @param distribution Available distributions, c("random", "normal", "seq", 
+#'                     "binominal", "gaussian", "sample")
 #'
 #' @return RasterLayer or RasterStack object with random rasters
 #'
-#' @details Options for distributions are for random, normal, seq, binominal, gaussian and sample raster(s)
+#' @details 
+#' Options for distributions are for random, normal, seq, binominal, 
+#' gaussian and sample raster(s)
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

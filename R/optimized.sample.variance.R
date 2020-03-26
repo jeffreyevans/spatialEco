@@ -1,12 +1,15 @@
 #' @title Optimized sample variance 
-#' @description Draws an optimal sample that minimizes or maximizes the sample variance 
+#' @description Draws an optimal sample that minimizes or maximizes the 
+#'              sample variance 
 #'
 #' @param x       A vector to draw a sample from
 #' @param n       Number of samples to draw
-#' @param type    Type of sample variance optimization c("maximized", "minimized")  
+#' @param type    Type of sample variance optimization 
+#'                c("maximized", "minimized")  
 #'
-#' @return A data.frame with "idx" representing the index of the original vector and "y" 
-#'           is the value of the sampled data
+#' @return 
+#' A data.frame with "idx" representing the index of the original vector  
+#' and "y" is the value of the sampled data
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -20,7 +23,8 @@
 #'  ( max.sv <- optimized.sample.variance(meuse$zinc, 15) )
 #'  
 #'  # Draw n samples that minimize the variance of y
-#'  ( min.sv <- optimized.sample.variance(meuse$zinc, 15, type="minimized") )
+#'  ( min.sv <- optimized.sample.variance(meuse$zinc, 15, 
+#'                type="minimized") )
 #'  
 #'  # Plot results
 #'  plot(meuse, pch=19, col="grey")
@@ -31,12 +35,13 @@
 #'             "minimized variance"), col=c("grey","red","blue"),  
 #'             pch=c(19,19,19))
 #'	
-#' \dontrun{
+#' \donttest{
 #'  # Raster example (not memory safe) 
 #'  library(raster)
 #'    r <- raster(system.file("external/test.grd", package="raster"))
 #'   
-#' # Calculate optimal sample variance and coerce to SpatialPointDataFrame using xyFromCell
+#' # Calculate optimal sample variance and coerce to SpatialPointDataFrame 
+#' #   using xyFromCell
 #'      ( min.sv <- optimized.sample.variance(getValues(r), n, type="minimized") )
 #'       min.sv <- sp::SpatialPointsDataFrame(xyFromCell(r, min.sv[,"idx"], 
 #'                                            spatial=TRUE), data=min.sv) 
@@ -77,6 +82,6 @@ optimized.sample.variance <- function(x, n, type = "maximized") {
         x[opt] <- NA
       mean.y <- mean(y, na.rm=TRUE)
       }
-    cat("\n", paste0(type, " sample variance"), stats::var(y), "\n")
+    message("\n", paste0(type, " sample variance: "), stats::var(y), "\n")
   return( data.frame(idx=idx,y=y) )
 }

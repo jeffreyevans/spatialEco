@@ -19,19 +19,25 @@ sp.kde(
 \arguments{
 \item{x}{sp SpatialPointsDataFrame object}
 
-\item{y}{Optional values, associated with x coordinates, to be used as weights}
+\item{y}{Optional values, associated with x coordinates, 
+to be used as weights}
 
-\item{bw}{Distance bandwidth of Gaussian Kernel, must be units of projection}
+\item{bw}{Distance bandwidth of Gaussian Kernel, must be units 
+of projection}
 
-\item{newdata}{A Rasterlayer, any sp class object or c[xmin,xmax,ymin,ymax] vector to estimate the kde extent}
+\item{newdata}{A Rasterlayer, any sp class object or c[xmin,xmax,ymin,ymax] 
+vector to estimate the kde extent}
 
-\item{nr}{Number of rows used for creating grid. If not defined a value based on extent or existing raster will be used}
+\item{nr}{Number of rows used for creating grid. If not defined a value 
+based on extent or existing raster will be used}
 
-\item{nc}{Number of columns used for creating grid. If not defined a value based on extent or existing raster will be used}
+\item{nc}{Number of columns used for creating grid. If not defined a value 
+based on extent or existing raster will be used}
 
 \item{standardize}{Standardize results to 0-1 (FALSE/TRUE)}
 
-\item{scale.factor}{Optional numeric scaling factor for the KDE (eg., 10000), to account for small estimate values}
+\item{scale.factor}{Optional numeric scaling factor for the KDE (eg., 10000), to 
+account for small estimate values}
 
 \item{mask}{(TRUE/FALSE) mask resulting raster if newdata is provided}
 }
@@ -39,10 +45,11 @@ sp.kde(
 Raster class object containing kernel density estimate
 }
 \description{
-A weighted or unweighted Gaussian Kernel Density estimate for spatial data
+A weighted or unweighted Gaussian Kernel Density estimate 
+             for spatial data
 }
 \examples{
-\dontrun{ 
+\donttest{ 
  library(sp)
  library(raster)
    data(meuse)
