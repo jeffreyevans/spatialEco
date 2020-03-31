@@ -49,6 +49,7 @@
 #' sub.touches <- spatial.select(p, spolys, predicate = "touches")
 #' sub.prox <- spatial.select(p, spolys, distance=100, predicate = "proximity")
 #'
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,3))
 #'   plot(spolys, main="all data")
 #'     plot(p, add=TRUE)  
@@ -62,6 +63,7 @@
 #'     plot(p, add=TRUE) 	
 #'   plot(sub.prox, main="Proximity 100m distance")
 #'     plot(p, add=TRUE) 
+#' par(opar)
 #' 
 #' #### On points 
 #' #### note; touches is not relevant for points and intersect/contains/covers 
@@ -70,6 +72,7 @@
 #' sub.contains <- spatial.select(p, meuse, predicate = "contains")
 #' sub.prox <- spatial.select(p, meuse, distance=200, predicate = "proximity")
 #'
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,2))
 #'   plot(meuse, main="all data", pch=20)
 #'     plot(p, add=TRUE)  
@@ -79,6 +82,7 @@
 #'     plot(p, add=TRUE) 
 #'   plot(sub.prox, main="Proximity 200m distance", pch=20)
 #'     plot(p, add=TRUE)
+#' par(opar)
 #'
 #' #### For rook or queen polygon contingency 	
 #' spolys <- as(sf::st_make_grid(sf::st_sfc(sf::st_point(c(0,0)), 

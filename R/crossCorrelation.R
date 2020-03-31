@@ -48,8 +48,9 @@
 #'   \item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
 #' }
 #'
-#' @references Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
-#'               PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
+#' @references 
+#' Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
+#'   PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 #'
 #' @examples
 #' \donttest{

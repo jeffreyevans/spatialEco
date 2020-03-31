@@ -30,6 +30,8 @@
 #'   p30 <- raster.vol(r, p=0.30)
 #'   p50 <- raster.vol(r, p=0.50)
 #'   p80 <- raster.vol(r, p=0.80)
+#'
+#' opar <- par(no.readonly=TRUE)
 #'     par(mfrow=c(2,2))
 #'     plot(r, col=cm.colors(10), main="original raster")
 #'     plot(p30, breaks=c(0,0.1,1), col=c("cyan","red"), legend=FALSE,
@@ -38,11 +40,7 @@
 #'	      main="50% volume")
 #'     plot(p80, breaks=c(0,0.1,1), col=c("cyan","red"), legend=FALSE,
 #'	      main="80% volume")
-#'   
-#'   # point sample percent volume
-#'   #  p30 <- raster.vol(r, p = 0.30, sample = TRUE, spct = 0.20)
-#'   #    plot(r, main="30% volume point sample")
-#'   #    plot(p30, pch=20, cex=0.70, add=TRUE)
+#' par(opar)  
 #' }
 #'
 #' @export    	

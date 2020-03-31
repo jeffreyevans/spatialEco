@@ -42,9 +42,7 @@ explode <- function(x, sp = FALSE) {
   if(!any(unique(g) == c("MULTIPOLYGON", "MULTIPOINT", "MULTILINE")))
     stop("x does not appear to have multipart geometry") 
   message(paste0("Converting multipart ", g, " to single part ", substring(g, 6, last = 1000000L)))	
-    options(warn=-1)
-	  x <- sf::st_cast(x, substring(g, 6, last = 1000000L))
-    options(warn=0)	
+	  x <- suppressWarnings( sf::st_cast(x, substring(g, 6, last = 1000000L)) )
     if(sp) x <- as(x, "Spatial")
   return(x)	
 }

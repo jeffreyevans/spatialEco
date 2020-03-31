@@ -23,11 +23,13 @@
 #'
 #' meuse.erase <- erase.point(meuse, poly)
 #' 
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,2))
 #'   plot(poly,)
 #'     points(meuse, pch=20)
 #'   plot(poly)
 #'     points(meuse.erase, pch=20)
+#' par(opar)
 #'
 #' @export erase.point
 erase.point <- function(y, x, inside = TRUE) {

@@ -13,15 +13,11 @@
 #' This function corrects straight-line (euclidean) distances for 
 #' topographic-slope effect. 
 #'
-#' @note Depends: sp, raster
-#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' @examples
 #' \dontrun{       
 #'  library(sp)
 #'  library(raster)
-#'  library(spatialEco)
 #'  library(GeNetIt)
 #'  
 #'  # create example data

@@ -11,15 +11,14 @@
 #' @param ...       Arguments passed to cor ('pearson', 'kendall' or 'spearman')
 #' 
 #' @return A list object containing: 
-#' @return      autocorrelation is a data.frame object with the following components
-#' @return      autocorrelation - Autocorrelation value for each distance lag 
-#' @return      dist - Value of distance lag
-#' @return      lci - Lower confidence interval (p=0.025)                
-#' @return      uci - Upper confidence interval (p=0.975)
-#' @return      CorrPlot recordedplot object to recall plot
-#' @return      dmatrix Distance matrix (if dmatrix=TRUE)
-#'
-#' @note depends: sp
+#' * autocorrelation is a data.frame object with the following components
+#' * autocorrelation - Autocorrelation value for each distance lag 
+#' * dist - Value of distance lag
+#' * lci - Lower confidence interval (p=0.025)                
+#' * uci - Upper confidence interval (p=0.975)
+#' * CorrPlot recordedplot object to recall plot
+#' * dmatrix Distance matrix (if dmatrix=TRUE)
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                   

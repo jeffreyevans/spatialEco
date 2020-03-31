@@ -38,14 +38,13 @@ parea.sample <- function(x, pct = 0.1, join = FALSE, msamp = 1, sf = 4046.86,
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPolygonsDataFrame")) 
         stop("Must be a SpatialPolygonsDataFrame object")
-	options(warn=-1)
     pids <- rownames(x@data)	
 	samp.list <- list()	
       for (i in 1:nrow(x)) {
         psub <- x[rownames(x@data) == pids[i],]
 	    ns <- round( (rgeos::gArea(psub) / sf) * pct, 0)
         if (ns < msamp) { ns <- msamp }
-          psamp <- try( sp::spsample(psub, n = ns, type = stype, iter = 10, ...) )
+          psamp <- try( sp::spsample(psub, n = ns, type = stype, iter = 10) )
 		  if(class(psamp) != "try-error") {
             samp.list[[i]] <- sp::SpatialPointsDataFrame(psamp, 
 			  data = data.frame(ID = rep(as.numeric(pids[i]), 

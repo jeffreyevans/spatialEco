@@ -15,10 +15,11 @@
 #' between neighbors in a hypothetical random distribution. If the index is less than 1, 
 #' the pattern exhibits clustering; if the index is greater than 1, the trend is toward 
 #' dispersion or competition. The Nearest Neighbor Index is calculated as:
-#'   Mean Nearest Neighbor Distance (observed) D(nn) = sum(min(Dij)/N) 
-#'   Mean Random Distance (expected) D(e) = 0.5 SQRT(A/N)
-#'   Nearest Neighbor Index NNI = D(nn)/D(e)
+#'   * Mean Nearest Neighbor Distance (observed) D(nn) = sum(min(Dij)/N) 
+#'   * Mean Random Distance (expected) D(e) = 0.5 SQRT(A/N)
+#'   * Nearest Neighbor Index NNI = D(nn)/D(e)
 #'       Where; D=neighbor distance, A=Area
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

@@ -69,7 +69,7 @@ raster.kendall <- function(x, intercept = FALSE, p.value = FALSE,
     if( raster::nlayers(x) < 5) stop("Too few layers (n<5) to calculate a trend")
   trend.slope <- function(y, p.value.pass = p.value, tau.pass = tau, confidence.pass = confidence,
                           intercept.pass = intercept) {
-    fit <- EnvStats::kendallTrendTest(y ~ 1)
+    fit <- suppressWarnings( EnvStats::kendallTrendTest(y ~ 1) )
       fit.results <- fit$estimate[2]
         if(p.value.pass == TRUE) { fit.results <- c(fit.results, fit$p.value) } 
   	      if(confidence.pass == TRUE) { 

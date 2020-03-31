@@ -89,6 +89,7 @@
 #'  tapply(pts.poly.dup$IDS.x, pts.poly.dup$IDS.y, FUN=length)      
 #'
 #' @import sf
+#' @importFrom methods as slot
 #' @export
 point.in.poly <- function(x, y, sp = TRUE, duplicate = TRUE, ...) {
   if(!any(class(x)[1] == c("SpatialPoints", "SpatialPointsDataFrame", "sf"))) {

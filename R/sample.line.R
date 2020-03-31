@@ -34,6 +34,7 @@
 #'  sp.lines <- SpatialLinesDataFrame( sp.lines, data.frame(ID=1:2, 
 #'                                     row.names=c(1,2)) )
 #' 
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,2))
 #'  # Create systematic sample at 20 km spacing 
 #'  reg.sample <- sample.line(sp.lines, d = 20, type = "regular", 
@@ -66,6 +67,7 @@
 #'      plot(rand.sample, pch = 20, add = TRUE)
 #'      box()
 #'	  title("rand p = 0.10")
+#' par(opar)
 #'	
 #' @export
 sample.line <- function(x, d = 100, p = NULL, n = NULL, type = "regular", 

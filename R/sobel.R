@@ -34,12 +34,15 @@
 #' s.int <- sobal(r[[1]])
 #' s.dir <- sobal(r[[1]], method = "direction")
 #' s.edge <- sobal(r[[1]], method = "edge")
+#'
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,2))
 #'   plot(r[[1]])
 #'   plot(s.int, main="intensity") 
 #'   plot(s.dir, main="direction") 
 #'   plot(s.edge, main="edge")
-#'   
+#' par(opar)   
+#'
 #' @export sobal
 sobal <- function(x, method = "intensity", ...) {
   sobal.y <- matrix( c(-1, 0, 1, -2, 0, 2, -1, 0, 1), nrow=3, ncol=3)

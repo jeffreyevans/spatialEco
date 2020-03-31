@@ -14,7 +14,7 @@
 #' \itemize{ 
 #' \item pop.pts   sp point object with points identified within the specified p
 #' \item pop.area  sp polygon object of buffered points specified by parameter b
-#' \item bandwidth Specified distance bandwidth used in identifying neighbour counts 
+#' \item bandwidth Specified distance bandwidth used in identifying neighbor counts 
 #' \item buffer    Specified buffer distance used in buffering points for pop.area  
 #' \item p         Specified population percent
 #' }

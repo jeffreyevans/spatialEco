@@ -44,12 +44,6 @@
 #'   plot(DAYMET_tiles)
 #'     plot(tiles, col="red", add=TRUE)
 #' 			 
-#' \dontrun{
-#' # batch download of DAYMET tiles using function
-#'   tile.ids = daymet.tiles(e)
-#'   download.daymet(years=2010, tile=tile.ids, data.type=c('tmin'))
-#'  }
-#'
 #' @importFrom methods as slot
 #' @export
 daymet.tiles <- function(x, tiles, ids, coords, sp = FALSE) {

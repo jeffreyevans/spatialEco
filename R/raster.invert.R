@@ -1,9 +1,10 @@
 #' @title Invert raster
 #' @description Inverts (flip) the values of a raster
 #' 
-#' @param x  raster object
+#' @param x raster object
 #' 
-#' @return raster class object with inverted (flipped) raster values
+#' @return 
+#' raster class object with inverted (flipped) raster values
 #'
 #' @note
 #' Inverts raster values using the formula: (((x - max(x)) * -1) + min(x)
@@ -18,9 +19,12 @@
 #'     r[] <- runif(ncell(r), 1, 100)
 #'	 r <- focal(r, focalWeight(r, 150, "Gauss") )
 #'   r.inv <- raster.invert(r)
+#'
+#' opar <- par(no.readonly=TRUE)
 #'     par(mfrow=c(1,2))
 #'       plot(r, main="original raster")
 #'       plot(r.inv, main="inverted raster") 
+#' par(opar)
 #' }     
 #'
 #' @export raster.invert

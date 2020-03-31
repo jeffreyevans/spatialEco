@@ -39,9 +39,6 @@
 #'    download.prism('ppt', date.range=my.dates, time.step='daily', by.year=TRUE)
 #'}
 #'
-#' @seealso
-#' \code{\link{download.daymet}}, \code{\link{download.hansen}}
-#'
 #' @export
 download.prism <- function(data.type, date.range, time.step = "monthly", 
                            download.folder = c("current", "temp"), 

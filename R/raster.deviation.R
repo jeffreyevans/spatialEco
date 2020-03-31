@@ -29,9 +29,9 @@
 #'  Magee, Lonnie (1998). Nonlocal Behavior in Polynomial Regressions. The American 
 #'   Statistician. American Statistical Association. 52(1):20-22
 #' @references
-#'  Fan, J. (1996). Local Polynomial Modelling and Its Applications: From linear regression 
-#'    to nonlinear regression. Monographs on Statistics and Applied Probability. Chapman and 
-#'    Hall/CRC. ISBN 0-412-98321-4
+#'  Fan, J. (1996). Local Polynomial Modelling and Its Applications: From linear  
+#'    regression to nonlinear regression. Monographs on Statistics and Applied 
+#'    Probability. Chapman and  Hall/CRC. ISBN 0-412-98321-4
 #' 
 #' @examples 
 #'   library(raster)
@@ -42,11 +42,13 @@
 #' r.dev.mean <- raster.deviation(elev, type="mean", s=5)
 #' r.gdev.mean <- raster.deviation(elev, type="mean", s=5, global=TRUE)
 #' 
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,2))
 #'   plot(elev, main="original")
 #'   plot(r.dev.trend, main="dev from trend")
 #'   plot(r.dev.mean, main="dev of mean from raw values")
 #'   plot(r.gdev.mean, main="local dev from global mean")
+#' par(opar)
 #'
 #' @export
 raster.deviation <- function(x, type = "trend", s = 3, degree = 1, global = FALSE) {  

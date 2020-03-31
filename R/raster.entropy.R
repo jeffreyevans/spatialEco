@@ -31,7 +31,7 @@
 #'     r[] <- round(runif(ncell(r), 1,8), digits=0)
 #'
 #' rEnt <- raster.entropy(r, d=5, categorical = TRUE, global = TRUE)
-#'   opar <- par  
+#'   opar <- par(no.readonly=TRUE)
 #'     par(mfcol=c(2,1))
 #'       plot(r)
 #'         plot(rEnt)

@@ -4,7 +4,8 @@
 #'
 #' @title Various correlation structures
 #'
-#' @description a list object with various linear and nonlinear correlation structures
+#' @description 
+#' A list object with various linear and nonlinear correlation structures
 #'
 #' @format A list object with 4 elements containing data.frames:
 #' \describe{

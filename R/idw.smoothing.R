@@ -26,11 +26,12 @@
 #' # Calculate distance weighted mean on cadmium variable in meuse data   
 #'   cadmium.idw <- idw.smoothing(meuse, 'cadmium', k=nrow(meuse), d = 1000)                
 #'   meuse@@data$cadmium.wm <- cadmium.idw
-#'   opar <- par 
-#'   par(mfrow=c(2,1)) 
-#'   plot(density(meuse@@data$cadmium), main='Cadmium')
-#'   plot(density(meuse@@data$cadmium.wm), main='IDW Cadmium')
-#'   par <- opar
+#' 
+#'   opar <- par(no.readonly=TRUE)
+#'     par(mfrow=c(2,1)) 
+#'       plot(density(meuse@@data$cadmium), main='Cadmium')
+#'       plot(density(meuse@@data$cadmium.wm), main='IDW Cadmium')
+#'   par(opar)
 #'
 #' @export
 idw.smoothing <- function(x, y, d, k) {

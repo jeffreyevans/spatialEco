@@ -75,7 +75,7 @@
 #' data(lsat)
 #' lsat <- radCor(lsat, metaData = readMeta(system.file(
 #'                  "external/landsat/LT52240631988227CUB02_MTL.txt", 
-#'                package="RStoolbox")), method = "apref")
+#'                   package="RStoolbox")), method = "apref")
 #' 
 #' # Using Modified Soil-adjusted Vegetation Index (MSAVI)
 #' ( wmsavi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]]) )

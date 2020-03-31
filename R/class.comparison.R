@@ -2,25 +2,26 @@
 #' @description Compares two categorical rasters using Cohen's Kappa (d) 
 #'              or paired t-test statistic(s)
 #'       
-#' @param x               First raster for comparison, SpatialPixelsDataFrame or 
-#'                        SpatialGridDataFrame object    
-#' @param y               Second raster for comparison, SpatialPixelsDataFrame or 
-#'                        SpatialGridDataFrame object 
-#' @param x.idx           Index for the column in the x raster object  
-#' @param y.idx           Index for the column in the y raster object  
-#' @param d               Distance for finding neighbors, the default "AUTO" will derive 
-#'                        a distance
-#' @param stat            Statistic to use in comparison ("kappa", "t.test", "both")
-#' @param sub.sample      Should a subsampling approach be employed (FALSE/TRUE)  
-#' @param type            If sub.sample = TRUE, what type of sample ("random"  
-#'                        or "hexagon")
-#' @param p               If sub.sample = TRUE, what proportion of population 
-#'                        should be sampled
-#' @param size            If sub.sample = TRUE, alternate to proportion of population (p), 
-#'                        using fixed sample size               
+#' @param x          First raster for comparison, SpatialPixelsDataFrame or 
+#'                   SpatialGridDataFrame object    
+#' @param y          Second raster for comparison, SpatialPixelsDataFrame or 
+#'                   SpatialGridDataFrame object 
+#' @param x.idx      Index for the column in the x raster object  
+#' @param y.idx      Index for the column in the y raster object  
+#' @param d          Distance for finding neighbors, the default "AUTO" will derive 
+#'                   a distance
+#' @param stat       Statistic to use in comparison ("kappa", "t.test", "both")
+#' @param sub.sample Should a subsampling approach be employed (FALSE/TRUE)  
+#' @param type       If sub.sample = TRUE, what type of sample ("random"  
+#'                   or "hexagon")
+#' @param p          If sub.sample = TRUE, what proportion of population 
+#'                   should be sampled
+#' @param size       If sub.sample = TRUE, alternate to proportion of population (p), 
+#'                   using fixed sample size               
 #'
-#' @return A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
-#'         following attributes:
+#' @return 
+#' A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
+#' following attributes:
 #' \itemize{ 
 #' \item   x        x variable used to derive Kappa (d)
 #' \item   y        y variable used to derive Kappa (d)
@@ -56,11 +57,12 @@
 #'	r2@data$class2 <- round(runif(nrow(r2), 1,5),0)
 #'
 #'  d <- class.comparison(r1, r2, x.idx = 8, y.idx = 8, stat="both")
+#'  opar <- par(no.readonly=TRUE)
 #'    par(mfrow=c(2,2))
 #'      plot(raster(d, layer=3), main="Kappa")
-#'	  plot(raster(d, layer=4), main="t.test")
-#'	  plot(raster(d, layer=5), main="t.test p-value")
-#'
+#'	    plot(raster(d, layer=4), main="t.test")
+#'	    plot(raster(d, layer=5), main="t.test p-value")
+#'  par(opar)
 #'  # Hexagonal sampling	  
 #'  d.hex <- class.comparison(r1, r2, x.idx = 8, y.idx = 8, stat = "both",
 #'                            sub.sample = TRUE, d = 500, size = 1000)
