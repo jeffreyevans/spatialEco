@@ -33,8 +33,9 @@ correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = F
     # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if ((inherits(x, "SpatialPointsDataFrame")) == FALSE) 
         stop("x MUST BE SP SpatialPointsDataFrame OBJECT")
-    options(warn = -1)
-    options(scipen = 999)
+	oops <- options() 
+      on.exit(options(oops)) 
+        options(scipen = 999)		
     w <- sp::spDists(x, x, longlat = latlong)
     aa <- ceiling(max(w)/dist)
     bw <- seq(0, aa * dist, dist)
@@ -52,7 +53,7 @@ correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = F
         cors <- c(cors, stats::cor(v, lag, ...))
     }
     if (length(which(is.na(cors))) > 0) {
-      message(paste(length(which(is.na(cors))), "Spatial lag empty and dropped", sep = " "))
+      warning(paste(length(which(is.na(cors))), "Spatial lag empty and dropped", sep = " "))
       bw <- bw[-which(is.na(cors))]
      cors <- cors[-which(is.na(cors))]
     }
@@ -78,7 +79,9 @@ correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = F
     cg <- data.frame(cbind(cors, bw))
     cg <- cbind(cg, t(apply(mc, 2, stats::quantile, probs = c(0.025, 0.975))))
     names(cg) <- c("autocorrelation", "dist", "lci", "uci")
-    graphics::plot(cg$dist, cg$autocorrelation, type = "n", ylim = c(-1, 1), main = "Correlogram", xlab = "distance", ylab = "autocorrelation")
+    graphics::plot(cg$dist, cg$autocorrelation, type = "n", ylim = c(-1, 1), 
+	               main = "Correlogram", xlab = "distance", 
+				   ylab = "autocorrelation")
       graphics::polygon(c(rev(cg$dist), cg$dist), c(cg$uci, rev(cg$lci)), col = "blue")
         graphics::lines(cg$dist, cg$autocorrelation, type = "b", pch = 20)
     if (dmatrix == TRUE) {

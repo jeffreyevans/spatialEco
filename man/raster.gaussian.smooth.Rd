@@ -43,11 +43,13 @@ proj4string(r) <- crs("+proj=utm +zone=12 +datum=NAD83 +units=m +no_defs")
  g3 <- raster.gaussian.smooth(r, sigma=3, nc=11)
  g4 <- raster.gaussian.smooth(r, sigma=4, nc=11)
 
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(2,2)) 
   plot(g1, main="Gaussian smoothing sigma = 1") 
   plot(g2, main="Gaussian smoothing sigma = 2")
   plot(g3, main="Gaussian smoothing sigma = 3")
   plot(g4, main="Gaussian smoothing sigma = 4")
+par(opar)
 
 }
 \author{

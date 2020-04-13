@@ -36,6 +36,8 @@ matrix is returned and not the median of the matrix
  
  diss <- raster.mds(r)
  diss.med <- raster.mds(r, window.median = TRUE)
+
+opar <- par(no.readonly=TRUE)
    par(mfrow=c(2,2))
    plot(r)
      title("R logo band-1")
@@ -45,6 +47,7 @@ matrix is returned and not the median of the matrix
        title("MDS")
      plot(diss.med)
        title("Median MDS")
+par(opar)
 }
 
 }

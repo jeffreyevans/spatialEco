@@ -12,22 +12,24 @@ nni(x, win = "hull")
 \item{win}{Type of window 'hull' or 'extent'}
 }
 \value{
-list object containing NNI = nearest neighbor index, z.score = Z 
-Score value, p = p value, expected.mean.distance = Expected mean 
+list object containing NNI = nearest neighbor index, z.score = Z
+Score value, p = p value, expected.mean.distance = Expected mean
 distance, observed.mean.distance = Observed meand distance.
 }
 \description{
 Calculates the NNI as a measure of clustering or dispersal
 
-The nearest neighbor index is expressed as the ratio of the observed distance 
-divided by the expected distance. The expected distance is the average distance 
-between neighbors in a hypothetical random distribution. If the index is less than 1, 
-the pattern exhibits clustering; if the index is greater than 1, the trend is toward 
+The nearest neighbor index is expressed as the ratio of the observed distance
+divided by the expected distance. The expected distance is the average distance
+between neighbors in a hypothetical random distribution. If the index is less than 1,
+the pattern exhibits clustering; if the index is greater than 1, the trend is toward
 dispersion or competition. The Nearest Neighbor Index is calculated as:
-  Mean Nearest Neighbor Distance (observed) D(nn) = sum(min(Dij)/N) 
-  Mean Random Distance (expected) D(e) = 0.5 SQRT(A/N)
-  Nearest Neighbor Index NNI = D(nn)/D(e)
-      Where; D=neighbor distance, A=Area
+\itemize{
+\item Mean Nearest Neighbor Distance (observed) D(nn) = sum(min(Dij)/N)
+\item Mean Random Distance (expected) D(e) = 0.5 SQRT(A/N)
+\item Nearest Neighbor Index NNI = D(nn)/D(e)
+Where; D=neighbor distance, A=Area
+}
 }
 \examples{
 require(sp)
@@ -37,11 +39,11 @@ data(meuse)
 
 }
 \references{
-Clark, P.J., and F.C. Evans (1954) Distance to nearest neighbour as a measure 
-  of spatial relationships in populations. Ecology 35:445-453
+Clark, P.J., and F.C. Evans (1954) Distance to nearest neighbour as a measure
+of spatial relationships in populations. Ecology 35:445-453
 
 Cressie, N (1991) Statistics for spatial data. Wiley & Sons, New York.
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

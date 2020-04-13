@@ -27,7 +27,7 @@ partial.cor(
 \value{
 data.frame containing:
 \itemize{
-  \item {correlation} {correlation coefficent}
+  \item {correlation} {correlation coefficient}
   \item {p.value} {p-value of correlation}
   \item {test.statistic} {test statistic}
   \item {n} {sample size}

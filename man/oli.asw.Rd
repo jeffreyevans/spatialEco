@@ -57,11 +57,19 @@ Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
 # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20\% cloud cover    
 ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), 
                           cloud.cover = 20) )
+}
 
-# Download query images from query  
-  for( i in 1:length(p126r59.oli$download_url)) {
-    oli.url <- p126r59.oli$download_url[i]
-    try(utils::download.file(url=oli.url, destfile=getwd(), mode = "wb"))  
+\dontrun{
+# Download images from query
+ bands <- c("_B1.TIF", "_B2.TIF", "_B3.TIF", "_B4.TIF", "_B5.TIF", 
+            "_B6.TIF","_B7.TIF", "_B8.TIF", "_B9.TIF", "_B10.TIF",
+         "_B11.TIF", "_BQA.TIF","_MTL.txt") 
+  for(i in 1:length(p126r59.oli$download_url)) {
+    oli.url <- gsub("/index.html","",p126r59.oli$download_url[i])
+ all.bands <- paste(oli.url, paste0(unlist(strsplit(oli.url, "/"))[8], bands), sep="/")
+   for(j in all.bands) {  
+        try(utils::download.file(url=j, destfile=basename(j), mode = "wb"))
+       }		 
   }
 }
 

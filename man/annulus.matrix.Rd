@@ -19,15 +19,16 @@ annulus.matrix(scale = 3, inner.scale = 0, outer.scale = 0, null.value = 0)
 A matrix object with defined null.value and 1, representing retained rings
 }
 \description{
-Creates a square matrix representing annulus position values of 1 and defined null
+Creates a square matrix representing annulus position values of 1 
+             and defined null
 }
 \note{
 This function will return a matrix of 1 and defined null.value based on a specification
-      of the scale, inner scale and outer scale. The scale defines how many rings will be
-      represented in the matrix based on (2 * scale - 1). So, a scale of 3 will result in a
-      5x5 matrix. The inner.scale and outer.scale arguments represent the > and < rings that
-      will be set to the defined null.value (see examples). The resulting matrix can be used
-      as the specified window in a focal function.
+of the scale, inner scale and outer scale. The scale defines how many rings will be
+represented in the matrix based on (2 * scale - 1). So, a scale of 3 will result in a
+5x5 matrix. The inner.scale and outer.scale arguments represent the > and < rings that
+will be set to the defined null.value (see examples). The resulting matrix can be used
+as the specified window in a focal function.
 }
 \examples{
 annulus.matrix(5)                   # 5 concentric rings

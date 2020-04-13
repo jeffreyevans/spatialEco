@@ -32,10 +32,10 @@ raster.downscale(
 \value{
 A list object containing:
 \itemize{ 
-\item  downscale    downscaled raster (omitted if filename is defined)
-\item  model        rlm model object 
-\item  MSE          Mean Square Error
-\item  AIC          Akaike information criterion
+\item  downscale downscaled raster (omitted if filename is defined)
+\item  model     rlm model object 
+\item  MSE       Mean Square Error
+\item  AIC       Akaike information criterion
 }
 }
 \description{
@@ -51,10 +51,13 @@ Downscales a raster to a higher resolution raster using
    tmax <- crop(tmax[[1]], extent(elev))
  
  tmax.ds <- raster.downscale(elev, tmax, scatter=TRUE)
+
+ opar <- par(no.readonly=TRUE)
    par(mfrow=c(2,2))
    plot(tmax, main="Temp max")
    plot(elev, main="elevation")
      plot(tmax.ds$downscale, main="Downscaled Temp max")
+ par(opar)
 }
 
 }

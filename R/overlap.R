@@ -17,10 +17,10 @@
 #' predictions to create a single value representing the similarity of the two
 #' distributions. The I similarity statistic ranges from a value of 0, where
 #' two distributions have no overlap, to 1 where two distributions are
-#' identical (Warren et al., 2008). The function is based on code from 
-#' Jeremy VanDerWal
+#' identical (Warren et al., 2008). The function is based on code  
+#' from Jeremy VanDerWal
 #'
-#' @author Jeffrey Evans <jeffrey_evans@@tnc.org> 
+#' @author Jeffrey Evans <jeffrey_evans@@tnc.org> and Jeremy VanDerWal  
 #'
 #' @references 
 #' Warren, D. L., R. E. Glor, M. Turelli, and D. Funk. (2008).
@@ -38,7 +38,7 @@
 #' ( I <- overlap(p1,p2) ) 
 #' 
 #' @import raster
-#' @export 
+#' @export overlap 
 overlap <- function(x, y){
   classes = c("SpatialGridDataFrame", "SpatialPixelsDataFrame","RasterLayer", "matrix") 
   if(!any(class(x) %in% classes))

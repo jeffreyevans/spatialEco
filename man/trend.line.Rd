@@ -33,13 +33,14 @@ Calculated specified trend line of x,y
 \examples{
 x <- 1:10
 y <- jitter(x^2)
-  opar <- par
+
+opar <- par(no.readonly=TRUE)
   par(mfcol=c(2,2))
     trend.line(x,y,type='linear',plot=TRUE,pch=20,main='Linear')
     trend.line(x,y,type='exponential',plot=TRUE,pch=20,main='Exponential')
     trend.line(x,y,type='logarithmic',plot=TRUE,pch=20,main='Logarithmic')
     trend.line(x,y,type='polynomial',plot=TRUE,pch=20,main='Polynomial')
- par <- opar
+ par(opar)
 
 }
 \author{

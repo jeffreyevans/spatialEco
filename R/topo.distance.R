@@ -15,7 +15,8 @@
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
-#' \dontrun{       
+#' @examples
+#' \donttest{     
 #'  library(sp)
 #'  library(raster)
 #'  library(GeNetIt)
@@ -46,6 +47,7 @@
 #'  
 #'  # Percent increase in corrected distance
 #'  ((tdist - graph$length) / graph$length) * 100
+#'
 #' }
 #'
 #' @export topo.distance

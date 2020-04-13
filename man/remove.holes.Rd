@@ -27,9 +27,12 @@ A hole is considered a polygon within a polygon representing null geometry
  polys <- SpatialPolygons(list(Polygons(list(Sr1), "s1"),
                  Polygons(list(Sr2), "s2"),
                  Polygons(list(Sr3, Sr4), "s3/4")), 1:3)
+
+opar <- par(no.readonly=TRUE)
    par(mfrow=c(1,2))
      plot(polys, col = 1:3, main="with hole")
      plot(remove.holes(polys), col = 1:3, main="with hole removed")
+par(opar)
 
 }
 \author{

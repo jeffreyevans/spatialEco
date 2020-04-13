@@ -11,7 +11,7 @@ correlogram(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = FALSE, ...)
 
 \item{v}{Test variable in x@data}
 
-\item{dist}{Distance of correlation lags, if latlong=TRUE units are 
+\item{dist}{Distance of correlation lags, if latlong=TRUE units are
 in kilometers}
 
 \item{dmatrix}{Should the distance matrix be include in output (TRUE/FALSE)}
@@ -24,26 +24,18 @@ in kilometers}
 }
 \value{
 A list object containing:
-
-autocorrelation is a data.frame object with the following components
-
-autocorrelation - Autocorrelation value for each distance lag
-
-dist - Value of distance lag
-
-lci - Lower confidence interval (p=0.025)
-
-uci - Upper confidence interval (p=0.975)
-
-CorrPlot recordedplot object to recall plot
-
-dmatrix Distance matrix (if dmatrix=TRUE)
+\itemize{
+\item autocorrelation is a data.frame object with the following components
+\item autocorrelation - Autocorrelation value for each distance lag
+\item dist - Value of distance lag
+\item lci - Lower confidence interval (p=0.025)
+\item uci - Upper confidence interval (p=0.975)
+\item CorrPlot recordedplot object to recall plot
+\item dmatrix Distance matrix (if dmatrix=TRUE)
+}
 }
 \description{
 Calculates and plots a correlogram
-}
-\note{
-depends: sp
 }
 \examples{
 library(sp)
@@ -53,5 +45,5 @@ zinc.cg <- correlogram(x = meuse, v = meuse@data[,'zinc'], dist = 250, ns = 9)
 
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

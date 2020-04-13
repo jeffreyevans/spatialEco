@@ -12,6 +12,6 @@ mwCorr(...)
 of the function}
 }
 \description{
-A bivarate raster corrlation using Dutilleul's 
+A bivarate raster correlation using Dutilleul's 
              modified t-test
 }

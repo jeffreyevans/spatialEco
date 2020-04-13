@@ -29,6 +29,7 @@ The robust std method uses sqrt(sum(x^2)/(n-1)) to center the data before
    classBreaks(y, 10)  
    classBreaks(y, 10, type="quantile")
  
+opar <- par(no.readonly=TRUE)
    par(mfrow=c(2,2))
      d <- density(y)
      plot(d, type="n", main="Equal Area breaks")
@@ -43,7 +44,8 @@ The robust std method uses sqrt(sum(x^2)/(n-1)) to center the data before
      plot(d, type="n", main="Geometric interval breaks")
        polygon(d, col="cyan")
        abline(v=classBreaks(y, 10, type="geometric"))
- 	
+ par(opar)
+	
  ( y.breaks <- classBreaks(y, 10) )   	
  cut(y, y.breaks, include.lowest = TRUE, labels = 1:10)
 

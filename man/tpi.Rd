@@ -35,11 +35,14 @@ Calculates topographic position using mean deviations
   tpi025 <- tpi(elev, win = "circle", scale=0.025)
   tpi025.zc <- tpi(elev, win = "circle", scale=0.025, 
                    zero.correct = TRUE)
+
+opar <- par(no.readonly=TRUE)
     par(mfrow=c(2,2))
       plot(elev, main="original raster")
       plot(tpi7, main="tpi 7x7")
       plot(tpi025, main="tpi Circular window d=0.025")
    plot(tpi025, main="tpi Circular window d=0.025, zero correct")
+par(opar)
 }
 
 }

@@ -28,15 +28,15 @@ quantile function.}
 \item{na.rm}{(FALSE/TRUE) should NAs be omitted?}
 }
 \value{
-A transformed vector the same length as x, unless na.rm is TRUE, then x is length minus 
-number of NA's
+A transformed vector the same length as x, unless na.rm is TRUE, then x is length 
+minus number of NA's
 }
 \description{
 Removes extreme outliers using a winsorization transformation
 
-Winsorization is the transformation of a distribution by limiting extreme values to reduce 
-the effect of spurious outliers. This is done by shrinking outlying observations to the border 
-of the main part of the distribution.
+Winsorization is the transformation of a distribution by limiting extreme values 
+to reduce the effect of spurious outliers. This is done by shrinking outlying 
+observations to the border of the main part of the distribution.
 }
 \examples{
 set.seed(1234)     
@@ -48,6 +48,7 @@ plot(x, type="l", main="Winsorization transformation")
   lines(winsorize(x), col="red", lwd=2)
     legend("bottomright", legend=c("Original distribution","With outliers removed"),
         lty=c(1,1), col=c("black","red"))
+
 # Behavior with NA value(s)
 x[4] <- NA
 winsorize(x)             # returns x with original NA's 

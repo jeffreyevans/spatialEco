@@ -65,7 +65,8 @@ Project website with 10x10 degree granule index:
 tiles <- list(c('00N', '140E'), c('00N', '130E'))
   for( j in 1:length(tiles)){
     download.hansen(tile=tiles[[j]], data.type=c('loss'))  
- }
+  }
+
 }
 
 }

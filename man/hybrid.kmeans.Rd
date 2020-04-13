@@ -29,8 +29,8 @@ This method uses hierarchical clustering to define the cluster-centers in the K-
 clustering algorithm. This mitigates some of the know convergence issues in K-means.
 }
 \note{
-options for hmethod are: "ward.D", "ward.D2", "single", "complete", "average", 
-mcquitty", "median", "centroid"
+options for hmethod are: "ward.D", "ward.D2", "single", 
+"complete", "average", mcquitty", "median", "centroid"
 }
 \examples{
 x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
@@ -40,9 +40,11 @@ x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
 km <- kmeans(x, 4)		   
 hkm <- hybrid.kmeans(x,k=4)		   
 
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
   plot(x[,1],x[,2], col=km$cluster,pch=19, main="K-means")
   plot(x[,1],x[,2], col=hkm$cluster,pch=19, main="Hybrid K-means")
+par(opar)
 
 }
 \references{

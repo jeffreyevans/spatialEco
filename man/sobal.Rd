@@ -39,12 +39,15 @@ r <- brick(system.file("external/rlogo.grd", package="raster"))
 s.int <- sobal(r[[1]])
 s.dir <- sobal(r[[1]], method = "direction")
 s.edge <- sobal(r[[1]], method = "edge")
+
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(2,2))
   plot(r[[1]])
   plot(s.int, main="intensity") 
   plot(s.dir, main="direction") 
   plot(s.edge, main="edge")
-  
+par(opar)   
+
 }
 \references{
 Sobel, I., & G. Feldman, (1969) A 3x3 Isotropic Gradient Operator for Image Processing, 

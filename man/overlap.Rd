@@ -27,8 +27,8 @@ The I similarity statistic sums the pair-wise differences between two
 predictions to create a single value representing the similarity of the two
 distributions. The I similarity statistic ranges from a value of 0, where
 two distributions have no overlap, to 1 where two distributions are
-identical (Warren et al., 2008). The function is based on code from 
-Jeremy VanDerWal
+identical (Warren et al., 2008). The function is based on code  
+from Jeremy VanDerWal
 }
 \examples{
   
@@ -48,5 +48,5 @@ Warren, D. L., R. E. Glor, M. Turelli, and D. Funk. (2008).
   Approaches to Niche Evolution. Evolution 62:2868-2883.
 }
 \author{
-Jeffrey Evans <jeffrey_evans@tnc.org>
+Jeffrey Evans <jeffrey_evans@tnc.org> and Jeremy VanDerWal
 }

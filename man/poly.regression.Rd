@@ -43,13 +43,14 @@ inputed data
 Calculates a Local Polynomial Regression for smoothing
 or imputation of missing data.
 
-This is a wrapper function for loess that simplifies data smoothing and imputation of
-missing values. The function allows for smoothing a vector, based on an index
-(derived automatically) or covariates. If the impute option is TRUE NA values are imputed,
-otherwise the returned vector will still have NA's present. If impute and na.only are both
-TRUE the vector is returned, without being smoothed but with imputed NA values filled in.
-The loess weight function is defined using the tri-cube weight function w(x) = (1-|x|^3)^3
-where; x is the distance of a data point from the point on the curve being fitted.
+This is a wrapper function for loess that simplifies data smoothing and imputation
+of missing values. The function allows for smoothing a vector, based on an index
+(derived automatically) or covariates. If the impute option is TRUE NA values are
+imputed, otherwise the returned vector will still have NA's present. If impute and
+na.only are both TRUE the vector is returned, without being smoothed but with imputed
+NA values filled in. The loess weight function is defined using the tri-cube weight
+function w(x) = (1-|x|^3)^3 where; x is the distance of a data point from the point
+the curve being fitted.
 }
 \examples{
  x <- seq(-20, 20, 0.1)

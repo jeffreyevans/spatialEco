@@ -41,23 +41,24 @@ Autocorrelation plot (Anselin 1996), following Chen (2015),
              aka, Moran's-I plot (univariate or bivariate)
 }
 \details{
-The argument "type" controls the plot for x influencing y (type="xy") or y influencing 
-x (type="yx"). If y is not defined then the statistic is univariate and only the "xy" plot 
-will be available. The linear relationship between x and its spatial lag (Wx) is indicative 
-of the spatial autoregressive process, underlying the spatial dependence. The statistic can 
-be autocorrelation (univariate or cross-correlation (bivariate). The quadrants are the zero 
-intercept for random autocorrelation and the red line represents the trend in autocorrelation. 
-The quadrants in the plot indicate the type of spatial association/interaction (Anselin 1996). 
-For example the upper-left quadrant represents negative associations of low values surrounded 
-by high and the lower-right quadrant represents negative associations of high values surrounded 
-by low.
+The argument "type" controls the plot for x influencing y (type="xy") or y 
+influencing x (type="yx"). If y is not defined then the statistic is univariate 
+and only the "xy" plot will be available. The linear relationship between x and 
+its spatial lag (Wx) is indicative of the spatial autoregressive process, underlying 
+the spatial dependence. The statistic can be autocorrelation (univariate or 
+cross-correlation (bivariate). The quadrants are the zero intercept for random 
+autocorrelation and the red line represents the trend in autocorrelation. The quadrants 
+in the plot indicate the type of spatial association/interaction (Anselin 1996). 
+For example the upper-left quadrant represents negative associations of low values 
+surrounded by high and the lower-right quadrant represents negative associations of
+high values surrounded by low.
 }
 \note{
-if y is not specified the univariate statistic for x is returned. the coords argument is 
-only used if k = NULL. Can also be an sp object with relevant x,y coordinate slot (ie., 
-points or polygons). If w = NULL, the default method for deriving spatial weights matrix, 
-options are: inverse power or negative exponent. If scale.xy = FALSE it is assumed that 
-they are already scaled following Chen (2015).
+if y is not specified the univariate statistic for x is returned. the coords argument 
+is only used if k = NULL. Can also be an sp object with relevant x,y coordinate slot 
+(ie., points or polygons). If w = NULL, the default method for deriving spatial weights 
+matrix, options are: inverse power or negative exponent. If scale.xy = FALSE it is 
+assumed that they are already scaled following Chen (2015).
 }
 \examples{
  library(sp)
@@ -69,11 +70,13 @@ they are already scaled following Chen (2015).
    morans.plot(meuse$zinc, coords = coordinates(meuse))   
 
  # Cross-correlation of: x influencing y and y influencing x
+ opar <- par(no.readonly=TRUE)
    par(mfrow=c(1,2)) 
      morans.plot(x=meuse$zinc, y=meuse$copper, coords = coordinates(meuse), 
                  scale.morans = TRUE)
      morans.plot(x=meuse$zinc, y=meuse$copper, coords = coordinates(meuse),
                  scale.morans = TRUE, type.ac="yx") 
+ par(opar)
                        
 }
 \references{

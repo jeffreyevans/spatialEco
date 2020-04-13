@@ -40,11 +40,13 @@ with associated confidence intervals
    y <- y[-p]	
    x <- x[-p]
  
- par(mfrow=c(2,2))  
- lci <- loess.ci(y, x, plot=TRUE, span=0.10)
- lci <- loess.ci(y, x, plot=TRUE, span=0.30)
- lci <- loess.ci(y, x, plot=TRUE, span=0.50)
- lci <- loess.ci(y, x, plot=TRUE, span=0.80)
+opar <- par(no.readonly=TRUE)
+  par(mfrow=c(2,2))  
+    lci <- loess.ci(y, x, plot=TRUE, span=0.10)
+    lci <- loess.ci(y, x, plot=TRUE, span=0.30)
+    lci <- loess.ci(y, x, plot=TRUE, span=0.50)
+    lci <- loess.ci(y, x, plot=TRUE, span=0.80)
+par(opar)
 
 }
 \references{

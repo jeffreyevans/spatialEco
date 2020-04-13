@@ -55,12 +55,6 @@ tiles <- daymet.tiles(x = e, tiles = DAYMET_tiles, ids = "Id", sp = TRUE)
   plot(DAYMET_tiles)
     plot(tiles, col="red", add=TRUE)
 			 
-\dontrun{
-# batch download of DAYMET tiles using function
-  tile.ids = daymet.tiles(e)
-  download.daymet(years=2010, tile=tile.ids, data.type=c('tmin'))
- }
-
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

@@ -93,6 +93,7 @@ s = 11
  ( r.ce <- raster.change(r1, r2, d = s, stat = "cross-entropy", mask = TRUE) )
  ( r.kl <- raster.change(r1, r2, d = s, stat = "divergence", mask = TRUE) )	
      
+ opar <- par(no.readonly=TRUE)
  par(mfrow=c(3,2))
    plot(r.kappa, main="Kappa")
    plot(r.ttest[[1]], main="Paired t-test")
@@ -100,6 +101,7 @@ s = 11
    plot(r.cor, main="Rank Correlation")
    plot(r.kl, main="Kullback-Leibler")
    plot(r.ce, main="cross-entropy")
+ par(opar)
 
 }
 

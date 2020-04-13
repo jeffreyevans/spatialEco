@@ -16,5 +16,5 @@ A list object with 4 elements containing data.frames:
 \description{
 linear and nonlinear correlated data examples
 
-a list object with various linear and nonlinear correlation structures
+A list object with various linear and nonlinear correlation structures
 }

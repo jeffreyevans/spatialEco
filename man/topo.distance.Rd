@@ -23,14 +23,11 @@ Calculates topographic corrected distance for a
 \note{
 This function corrects straight-line (euclidean) distances for 
 topographic-slope effect.
-
-Depends: sp, raster
 }
 \examples{
-\dontrun{       
+\donttest{     
  library(sp)
  library(raster)
- library(spatialEco)
  library(GeNetIt)
  
  # create example data
@@ -59,6 +56,7 @@ Depends: sp, raster
  
  # Percent increase in corrected distance
  ((tdist - graph$length) / graph$length) * 100
+
 }
 
 }

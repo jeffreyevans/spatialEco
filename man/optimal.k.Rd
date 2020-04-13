@@ -35,7 +35,7 @@ require(cluster)
     plot(silhouette(clust), col = c('red', 'green'))
       plot(clust, which.plots=1, main='K-Medoid fit')
 
-# Extract multivariate and univariate mediods (class centres)
+# Extract multivariate and univariate mediods (class centers)
   clust$medoids
     pam(x[,1], 1)$medoids  
 
