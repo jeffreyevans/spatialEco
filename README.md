@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.3-0, developement 1.3-1) 
+# spatialEco (CRAN 1.3-1, developement 1.3-2) 
 
 [![CRAN
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -13,8 +13,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-# Available functions in spatialEco 1.3-0 are:
-
+# Available functions in spatialEco 1.3-2 are:
 
     annulus.matrix - Creates a 0,1 matrix based on defined annulus parameters, can be used as a window
 	                 matrix in a raster focal function
@@ -37,6 +36,11 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     conf.interval - Calculates confidence interval for the mean or median of a distribution with unknown 
                     population variance
+					
+	combine - Combines multiple rasters into an "all possible combinations" raster
+	          emulation the ESRI combine function, ratifies the output and includes
+			  a summary table of combinations and attributes that relates back to 
+			  the raster values					
     
     convexHull - Derives a convex hull of points using the alpha hull approach with adjustable tension. 
                 Please note that due to licensing reasons, this function is only available in the GitHub 
