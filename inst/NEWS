@@ -150,9 +150,20 @@ spatialEco_1.3-0
 
 spatialEco_1.3-1
 =================
-* Due to depreciation, changed velox dependency to exactextractr for raster extraction
+* Due to package depreciation, changed velox dependency to exactextractr for raster 
+  extraction
+
+* Depreciated two functions "land.metrics" and "focal.lmetrics" as there are now 
+  better alternatives in the landscapemetrics package. This removed the need for a 
+  C++ compile and also removed the associated SDMTools functions
+
+* Depreciated "download.daymet" function due to the THREDDS server moving 
+  to a NetCDF Markup Language (NcML) format
 
 spatialEco_1.3-2
 =================
 * Feature Enhancement "hli" added support for southern hemisphere
 
+* Added function "extract.vertices" for extracting (x,y) vertices coordinates from
+  polygons and lines 
+  

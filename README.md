@@ -74,6 +74,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     erase.points - Erases points inside or outside a polygon feature class
     
 	explode - Explodes multi-part to single-part feature geometry
+	
+	extract.vertices - extracts (x,y) vertices coordinates from polygons and lines 
     
     focal.lmetrics - Landscape metrics using a focal window
     

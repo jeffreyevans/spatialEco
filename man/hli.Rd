@@ -4,13 +4,17 @@
 \alias{hli}
 \title{Heat Load Index}
 \usage{
-hli(x, check = TRUE)
+hli(x, check = TRUE, force.hemisphere = c("none", "southern", "northern"))
 }
 \arguments{
-\item{x}{raster object}
+\item{x}{rasterLayer class object}
 
-\item{check}{(TRUE/FALSE) check for projection integrity in 
-northern latitudes}
+\item{check}{(TRUE/FALSE) check for projection integrity and
+calculate central latitude for non-geographic
+projections}
+
+\item{force.hemisphere}{If country is split at the equator, force southern 
+or northern hemisphere equation c("southern", "northern")}
 }
 \value{
 raster class object of McCune & Keon (2002) Heat Load Index
@@ -26,6 +30,12 @@ the aspect so that the highest values are southwest and the lowest values are
 northeast. Additionally, this method account for steepness of slope, which is 
 not addressed in most other aspect rescaling equations. HLI values range 
 from 0 (coolest) to 1 (hottest).
+
+The equations follow McCune (2007) and support northern and southern hemisphere 
+calculations. The folded aspect for northern hemispheres use (180 - (Aspect – 225) ) 
+and for Southern hemisphere  ( 180 - ( Aspect – 315) ). If a country is split at the 
+equator you can use the force.hemisphere argument to choose which equation to use. 
+Valid values for this argument are "southern" and "northern" with the default "none".
 }
 \examples{
   library(raster)
@@ -38,6 +48,10 @@ from 0 (coolest) to 1 (hottest).
 McCune, B., and D. Keon (2002) Equations for potential annual direct 
   incident radiation and heat load index. Journal of Vegetation 
   Science. 13:603-606.
+
+McCune, B. (2007). Improved estimates of incident radiation and heat load 
+  using non-parametric regression against topographic variables. Journal 
+  of Vegetation Science 18:751-754.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

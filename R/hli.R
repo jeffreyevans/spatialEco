@@ -83,7 +83,7 @@ hli <- function(x, check = TRUE, force.hemisphere = c("none", "southern", "north
       tmp6 <- raster::calc(tmp3, fun = cos)
     tmp7 <- raster::calc(tmp3, fun = sin)
 	h <- exp( -1.467 +  1.582 * cl * tmp4  - 1.5 * tmp6 * tmp5 * sl - 0.262 * 
-              sl * tmp5  + 0.607 * tmp7 * tmp5)
+             sl * tmp5  + 0.607 * tmp7 * tmp5)
 	if(cellStats(h,"max") > 1){
 	  h <- ( h / cellStats(h, "max", asSample=FALSE) ) 
     }		  

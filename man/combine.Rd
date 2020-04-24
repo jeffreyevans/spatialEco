@@ -21,6 +21,9 @@ and a data.frame of unique combinations.
 Combines rasters into all unique combinations of inputs
 }
 \details{
+Please note that this is not a memory safe function that utilizes
+rasters out of memory in the manner that the raster package does.
+
 If sp = TRUE the object will be a list with "combine", containing 
 the SpatialPixelsDataFrame with the value attribute containing the 
 unique combinations, and "summary" with the summary table of collapsed

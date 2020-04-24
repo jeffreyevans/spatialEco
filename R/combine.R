@@ -1,7 +1,7 @@
 #' @title raster combine
 #' @description Combines rasters into all unique combinations of inputs
 #'
-#' @param x  raster stack/brick or SpatialPixelsDataFrame object
+#' @param x         raster stack/brick or SpatialPixelsDataFrame object
 #' @param rnames    Column names to combine in raster stack or sp object
 #' @param sp        (FALSE/TRUE) output SpatialPixelsDataFrame 
 #'
