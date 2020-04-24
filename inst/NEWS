@@ -151,3 +151,8 @@ spatialEco_1.3-0
 spatialEco_1.3-1
 =================
 * Due to depreciation, changed velox dependency to exactextractr for raster extraction
+
+spatialEco_1.3-2
+=================
+* Feature Enhancement "hli" added support for southern hemisphere
+

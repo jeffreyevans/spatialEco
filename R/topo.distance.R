@@ -66,7 +66,7 @@ topo.distance <- function(x, r, echo = FALSE) {
   line.dist <- vector()
     for(i in 1:nrow(x)) {
 	  if(echo) cat("Calculating corrected distance for:", i, "of",  nrow(x), "\n")
-      graph.pts <- spatialEco::sample.line(x[i,], d = raster::res(r)[1] )     
+      graph.pts <- spatialEco::sample.line(x[i,], d = raster::res(r)[1] )
         graph.pts$elev <- raster::extract(r, graph.pts)
           z <- graph.pts[graph.pts$LID == i,]
           d <- step.dist(z)
@@ -80,7 +80,7 @@ topo.distance <- function(x, r, echo = FALSE) {
 	    line.dist[i] <- sl.length 
 	  } else { 
 	    line.dist[i] <- d 
-	  }				 
+	  }
     }
   return(line.dist)
 }

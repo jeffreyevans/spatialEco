@@ -85,7 +85,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     hexagons - Create hexagon polygon “fishnet” of defined size and extent.
     
-    hli - Heat Load Index
+    hli - Heat Load Index, now with support for southern hemisphere data
     
     hsp - Hierarchical Slope Position
     

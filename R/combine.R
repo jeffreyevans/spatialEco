@@ -10,11 +10,13 @@
 #' and a data.frame of unique combinations.
 #'
 #' @details
+#' Please note that this is not a memory safe function that utilizes
+#' rasters out of memory in the manner that the raster package does.
+#' @details
 #' If sp = TRUE the object will be a list with "combine", containing 
 #' the SpatialPixelsDataFrame with the value attribute containing the 
 #' unique combinations, and "summary" with the summary table of collapsed
 #' combinations and associated attributes. 
-#'
 #' @details
 #' If sp = FALSE the a single ratified rasterLayer class object is returned 
 #' with the summary table as the raster attribute table, this is most similar
