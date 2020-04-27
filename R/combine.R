@@ -84,7 +84,8 @@ combine <- function(x, rnames = NULL, sp = FALSE) {
 	        no floating point data is allowed")
     combine <- apply(r@data, 1, function(x) paste(x, collapse = "_"))
       r@data <- data.frame(value=as.numeric(factor(combine)), r@data)
-        s <- subset(as.data.frame(table(r@data)), subset = Freq != 0)	
+	    s <- as.data.frame(table(r@data))
+          s <- s[s$Freq != 0,]
     if(!sp) { 
       r <- raster::raster(r, layer = 1)
         r <- raster::ratify(r)
