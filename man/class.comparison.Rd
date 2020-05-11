@@ -70,7 +70,7 @@ capturing spatial process that includes nonstationarity and anisotropy.
 \donttest{
  library(sp)                                            
  library(raster)
-                                                                                               
+           
  data(meuse.grid)
  r1 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
                                   data = meuse.grid)
@@ -92,12 +92,6 @@ r2@data$class2 <- round(runif(nrow(r2), 1,5),0)
    sp::bubble(d.hex, "kappa")
     d.hex <- sp.na.omit(d.hex, col.name = "t.test")
   sp::bubble(d.hex, "t.test")
-
- # Random sampling		
- d.rand <- class.comparison(r1, r2, x.idx = 8, y.idx = 8, stat = "both", 
-                            sub.sample = TRUE, type = "random")	
-   sp::bubble(d.rand, "kappa")
-
 }
 
 }

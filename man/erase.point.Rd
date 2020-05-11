@@ -20,27 +20,35 @@ A SpatialPoints or SpatialPointsDataFrame
 Removes points intersecting a polygon feature class
 }
 \note{
-Provides the same functionality as the ESRI ArcGIS Erase Point tool
+Used to erase points that intersect polygon(s). If inside=FALSE then
+the function results in an intersection operation where points that
+intersect the polygon are retained. This function effectively duplicates
+the ESRI ArcGIS Erase Point tool.
 }
 \examples{
-require(sp)
+library(sp)
+library(raster)
+library(rgeos)
   data(meuse)
   coordinates(meuse) = ~x+y
-poly <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(
-            Polygon(cbind(c(180042, 180545, 180553, 180314, 179955,
-            179142, 179437, 179524, 179979, 180042), c(332373, 332026,
-			   331426, 330889, 330683, 331133, 331623, 332152, 332357,
-            332373)))),'1'))), data.frame(row.names=c('1'), PIDS=1))
 
-meuse.erase <- erase.point(meuse, poly)
+# Create systematic sample and polygons
+s <- spsample(x=as(extent(meuse), "SpatialPolygons"), n=1000,
+              type="regular")
+b <- rgeos::gBuffer(s[sample(1:length(s),5),],
+                    byid = FALSE, width = 300)
 
-opar <- par(no.readonly=TRUE)
-par(mfrow=c(1,2))
-  plot(poly,)
-    points(meuse, pch=20)
-  plot(poly)
-    points(meuse.erase, pch=20)
-par(opar)
+# Erase points based on polygons
+s.erase <- erase.point(s, b)
+ 
+ opar <- par(no.readonly=TRUE)
+ par(mfrow=c(2,2))
+   plot(s, pch=20, main="original data")
+   plot(b, main="erased data")
+     points(s.erase, pch=20)
+   plot(b, main="erased data using inside=FALSE")
+     points(erase.point(s, b, inside=FALSE), pch=20)
+ par(opar)
 
 }
 \author{

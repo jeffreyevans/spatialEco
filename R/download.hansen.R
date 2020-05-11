@@ -61,10 +61,10 @@
 #'
 #' @export
 download.hansen <- function(tile, data.type = c("loss"), 
-                            download.folder = c("current", "temp")) {
+                     download.folder = c("current", "temp")) {
     owd <- getwd()
       on.exit(setwd(owd))								
-	if(download.folder == "current") {
+	if(download.folder[1] == "current") {
 	  download.folder = getwd()
     } else if(download.folder == "temp") {
 	  download.folder = tempdir()

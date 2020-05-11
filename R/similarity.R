@@ -27,6 +27,7 @@
 #'   and a Sustainable Future. F. Huettman (eds). Springer, NY.   
 #'
 #' @examples
+#'  library(sp)
 #'  data(pu)
 #'  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = FALSE, 
 #'                    ID = pu@data$UNIT_ID)  

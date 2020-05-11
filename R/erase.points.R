@@ -7,41 +7,53 @@
 #'
 #' @return A SpatialPoints or SpatialPointsDataFrame  
 #' 
-#' @note Provides the same functionality as the ESRI ArcGIS Erase Point tool
+#' @note 
+#' Used to erase points that intersect polygon(s). If inside=FALSE then
+#' the function results in an intersection operation where points that
+#' intersect the polygon are retained. This function effectively duplicates
+#' the ESRI ArcGIS Erase Point tool.
 #'
 #' @author Jeffrey S. Evans    <jeffrey_evans<at>tnc.org>
 #'
 #' @examples 
-#' require(sp)
+#' library(sp)
+#' library(raster)
+#' library(rgeos)
 #'   data(meuse)
 #'   coordinates(meuse) = ~x+y
-#' poly <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(
-#'             Polygon(cbind(c(180042, 180545, 180553, 180314, 179955,
-#'             179142, 179437, 179524, 179979, 180042), c(332373, 332026,
-#' 			   331426, 330889, 330683, 331133, 331623, 332152, 332357,
-#'             332373)))),'1'))), data.frame(row.names=c('1'), PIDS=1))
-#'
-#' meuse.erase <- erase.point(meuse, poly)
 #' 
-#' opar <- par(no.readonly=TRUE)
-#' par(mfrow=c(1,2))
-#'   plot(poly,)
-#'     points(meuse, pch=20)
-#'   plot(poly)
-#'     points(meuse.erase, pch=20)
-#' par(opar)
-#'
+#' # Create systematic sample and polygons
+#' s <- spsample(x=as(extent(meuse), "SpatialPolygons"), n=1000,
+#'               type="regular")
+#' b <- rgeos::gBuffer(s[sample(1:length(s),5),],
+#'                     byid = FALSE, width = 300)
+#' 
+#' # Erase points based on polygons
+#' s.erase <- erase.point(s, b)
+#'  
+#'  opar <- par(no.readonly=TRUE)
+#'  par(mfrow=c(2,2))
+#'    plot(s, pch=20, main="original data")
+#'    plot(b, main="erased data")
+#'      points(s.erase, pch=20)
+#'    plot(b, main="erased data using inside=FALSE")
+#'      points(erase.point(s, b, inside=FALSE), pch=20)
+#'  par(opar)
+#' 
 #' @export erase.point
 erase.point <- function(y, x, inside = TRUE) {
-    #if(class(y) == "sf") {y <- as(y, "Spatial")}
-	#if(class(x) == "sf") {x <- as(x, "Spatial")}
-    if (!inherits(y, "SpatialPointsDataFrame") | !inherits(y, "SpatialPoints")) 
-      stop("y must be a SpatialPoints or SpatialPointsDataFrame")
-	if (!inherits(x, "SpatialPolygonsDataFrame") | !inherits(x, "SpatialPolygons")) 
-      stop("x must be a SpatialPolygons or SpatialPolygonsDataFrame")	
-  if(inside) {
-    return( y[-which(rgeos::gIntersects(y, x, byid = TRUE)),] )
-  } else {
-    return( y[which(rgeos::gIntersects(y, x, byid = TRUE)),] )  
+  if(class(y) == "sf") { y <- as(y, "Spatial") }
+  if(class(x) == "sf") { x <- as(x, "Spatial") }
+  if (!any(class(y) == c("SpatialPointsDataFrame","SpatialPoints")))
+    stop("y must be a SpatialPoints or SpatialPointsDataFrame")
+  if (!any(class(x) == c("SpatialPolygonsDataFrame","SpatialPolygons")))
+    stop("x must be a SpatialPolygons or SpatialPolygonsDataFrame")
+  idx <- rgeos::gIntersects(y, x, byid = TRUE) 
+    idx <- which(apply(idx, MARGIN=2, FUN=function(x) any(x==TRUE)))
+  if(inside) { 
+    y <- y[-idx,]
+  } else { 
+    y <- y[idx,]
   }
+  return(y)
 }

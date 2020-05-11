@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 1.3-2
-Date: 2020-04-24
+Date: 2020-05-11
 Authors@R: c(
   person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", role = c("aut", "cre")),
   person(family="Murphy", given="Melanie A.", role = "ctb"),			 
@@ -16,10 +16,8 @@ Description: Utilities to support spatial data manipulation, query, sampling
     exploratory tools and raster-based metrics.
 Depends: R (>= 3.6.0)
 Imports:
-    alphahull,
 	dplyr,
 	exactextractr,
-	fasterize,
     sp,
 	sf,
     raster,

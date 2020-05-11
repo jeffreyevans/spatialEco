@@ -40,6 +40,7 @@ This function uses row-based imputation to identify k similar neighbors for each
 observation. Has been used to identify offsets based on ecological similarity.
 }
 \examples{
+ library(sp)
  data(pu)
  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = FALSE, 
                    ID = pu@data$UNIT_ID)  

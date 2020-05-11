@@ -1,11 +1,14 @@
 #' @title Bearing and Distance
-#' @description Calculates a new point [X,Y] based on defined bearing and distance
+#' @description Calculates a new point [X,Y] based on defined 
+#'              bearing and distance
 #' 
 #' @param x             x coordinate
 #' @param y             y coordinate
 #' @param distance      Distance to new point (in same units as x,y)
 #' @param azimuth       Azimuth to new point
 #' @param EastOfNorth   Specified surveying convention
+#'
+#' @return a new point representing location of baring and distance 
 #'
 #' @note East of north is a surveying convention and defaults to true. 
 #'

@@ -61,7 +61,6 @@ raster.entropy <- function(x, d = 5, categorical = FALSE, global = FALSE,
         if (length(unique(x)) <= 1) { return(0) }
         return(-sum(prop.table(x) * log(prop.table(x))))
       }
-	  
     } else {
 	  entropy <- function(x, n = NULL) {  
         x <- x[!is.na(x)]
@@ -83,7 +82,7 @@ raster.entropy <- function(x, d = 5, categorical = FALSE, global = FALSE,
         raster::focal(x, w = d, fun = function(x) { entropy(x) }, filename = filename, ...)
           message(paste("Raster written to", filename, sep = ": "))	
 	  } else {  
-		return(raster::focal(x, w = d, fun = function(x) { entropy(x) }))  
+		return(raster::focal(x, w = d, fun = function(x) { entropy(x) }))
       }
   }	
 } 

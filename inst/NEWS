@@ -162,8 +162,15 @@ spatialEco_1.3-1
 
 spatialEco_1.3-2
 =================
+* Feature Enhancement "erase.points" changed the function to account for single 
+  and multi geometry
+
 * Feature Enhancement "hli" added support for southern hemisphere
+
+* Added function "background" for generating background point samples often used in SDM's 
 
 * Added function "extract.vertices" for extracting (x,y) vertices coordinates from
   polygons and lines 
   
+* Added function "insert" that inserts a row or column into a data.frame
+

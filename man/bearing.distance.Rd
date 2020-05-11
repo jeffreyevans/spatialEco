@@ -17,8 +17,12 @@ bearing.distance(x, y, distance, azimuth, EastOfNorth = TRUE)
 
 \item{EastOfNorth}{Specified surveying convention}
 }
+\value{
+a new point representing location of baring and distance
+}
 \description{
-Calculates a new point [X,Y] based on defined bearing and distance
+Calculates a new point [X,Y] based on defined 
+             bearing and distance
 }
 \note{
 East of north is a surveying convention and defaults to true.
