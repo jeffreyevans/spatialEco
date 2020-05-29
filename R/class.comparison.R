@@ -41,7 +41,7 @@
 #'                                                                           
 #' @references
 #' Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational 
-#'   and Psychological Measurement, 20:37-46 
+#' and Psychological Measurement, 20:37-46 
 #' 
 #' @examples
 #' \donttest{

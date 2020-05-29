@@ -150,7 +150,7 @@ raster.change <- function(x, y, d = c(3,3), stat = c("kappa", "wkappa", "t.test"
     #  }	
 	   
   r <- raster::stack(x,y)
-  if (!raster::canProcessInMemory(x) | !is.null(out.raster)) {
+  if (!raster::canProcessInMemory(r, n=d[1]^2) | !is.null(out.raster)) {
     if(force.memory) { pm = TRUE } else { pm = FALSE }
 	if(is.null(out.raster)) out.raster = "xxxx01.tif"
 	  if(stat == "t.test") {
@@ -229,6 +229,8 @@ raster.change <- function(x, y, d = c(3,3), stat = c("kappa", "wkappa", "t.test"
           if(stat == "t.test") mp <- rep(NA,nrow(v[[1]])) 
           for(i in 1:nrow(v[[1]]) ) {
   		    xy <- stats::na.omit( data.frame(x=v[[1]][i,],y=v[[2]][i,]))
+			  x.val = xy[,1] 
+			  y.val = xy[,2]  
           if(length(x.val) > 2) {
 		    if(stat == "kappa") {
 		      k <- cohens(x.val, y.val)

@@ -97,7 +97,7 @@ r2@data$class2 <- round(runif(nrow(r2), 1,5),0)
 }
 \references{
 Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational 
-  and Psychological Measurement, 20:37-46
+and Psychological Measurement, 20:37-46
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

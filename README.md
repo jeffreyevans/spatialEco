@@ -48,6 +48,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                 namespace using spatialEco:::convexHull  
     
     crossCorrelation - Calculates the partial spatial cross-correlation function
+	
+	cross.tab - Cross tabulate two rasters, labels outputs
     
     csi - Calculates the cosine similarity and angular similarity on two vectors or a matrix
     
@@ -82,7 +84,10 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     fuzzySum - Calculates the fuzzy sum of a vector
     
     gaussian.kernel - Creates a Gaussian Kernel of specified size and sigma
-    
+	
+	geo.buffer - Buffers data in geographic coordinate space using a temporary 
+	             projection
+
     group.pdf - Creates a probability density plot of y for each group of x           
     
     hexagons - Create hexagon polygon “fishnet” of defined size and extent.
@@ -99,6 +104,10 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     insert.values - Inserts new values into a vector at specified positions  
     
+	is.empty - Method, evaluates if vector is empty 
+
+	is.whole - Method, evaluates if numeric vector is whole or float 
+	
     kendall - Kendall tau trend with continuity correction for time-series
     
     kl.divergence - Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical 
@@ -124,6 +133,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     logistic.regression - Performs a logistic (binomial) and autologistic (spatially lagged binomial) regression 
                          using maximum likelihood estimation or penalized maximum likelihood estimation.
     
+	max.extent - Returns the maximum extent of multiple spatial inputs
+	
     moments - Calculate statistical moments of a distribution including percentiles, arithmetic-geometric-harmonic 
              means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    
     

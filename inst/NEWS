@@ -162,6 +162,8 @@ spatialEco_1.3-1
 
 spatialEco_1.3-2
 =================
+* Bug fix "raster.change" was not correctly evaluating raster in memory 
+
 * Feature Enhancement "erase.points" changed the function to account for single 
   and multi geometry
 
@@ -169,8 +171,19 @@ spatialEco_1.3-2
 
 * Added function "background" for generating background point samples often used in SDM's 
 
+* Added function "cross.tab" cross tabulation of two nominal rasters
+
 * Added function "extract.vertices" for extracting (x,y) vertices coordinates from
   polygons and lines 
+
+* Added function "geo.buffer" that buffers data in geographic projection 
   
 * Added function "insert" that inserts a row or column into a data.frame
+
+* Added function "is.empty" method that evaluates if a vector is empty
+
+* Added function "is.whole" method that evaluates if a numeric vector is whole or float
+
+* Added function "max.extent" that returns the maximum extent of multiple spatial features
+
 
