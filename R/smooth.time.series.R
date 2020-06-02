@@ -43,10 +43,10 @@
 #'  
 #' @export smooth.time.series
 smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) { 
-  if(!any(class(x) %in% c("RasterStack", "RasterBrick",  
-                          "SpatialPixelsDataFrame", 
-						  "SpatialGridDataFrame")))
-    stop("x must be a raster stack, brick of sp raster class object")	
+  if(!any(class(x)[1] %in% c("RasterStack", "RasterBrick",  
+                             "SpatialPixelsDataFrame", 
+						     "SpatialGridDataFrame")))
+    stop("x must be a raster stack, brick of sp raster class object")
   impute.loess <- function(y, x.length = NULL, s = 0.2, 
                            sdata = FALSE, na.rm, ...) {		 
          if (is.null(x.length)) {
@@ -70,7 +70,7 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
   	   }
      return(y)
    }
-  if(any(class(x) == c("RasterStack", "RasterBrick"))) { 
+  if(any(class(x)[1] == c("RasterStack", "RasterBrick"))) { 
     if(raster::nlayers(x) < 8)
       warning("function is intended for imputing missing values 
 	           in multi-temporal data\n      < 8 observations is questionable\n")
