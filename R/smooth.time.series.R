@@ -43,8 +43,9 @@
 #'  
 #' @export smooth.time.series
 smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) { 
-  if(any(class(x) != c("RasterStack","RasterBrick", "SpatialPixelsDataFrame", 
-                       "SpatialGridDataFrame")))
+  if(!any(class(x) %in% c("RasterStack", "RasterBrick",  
+                          "SpatialPixelsDataFrame", 
+						  "SpatialGridDataFrame")))
     stop("x must be a raster stack, brick of sp raster class object")	
   impute.loess <- function(y, x.length = NULL, s = 0.2, 
                            sdata = FALSE, na.rm, ...) {		 

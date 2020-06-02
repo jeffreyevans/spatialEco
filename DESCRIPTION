@@ -17,7 +17,6 @@ Description: Utilities to support spatial data manipulation, query, sampling
 Depends: R (>= 3.6.0)
 Imports:
     alphahull,
-	dplyr,
 	exactextractr,
     sp,
 	sf,
