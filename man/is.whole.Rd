@@ -9,7 +9,7 @@ is.whole(a, tol = 0.0000001)
 \arguments{
 \item{a}{A numeric vector to evaluate, only first element will be evaluated}
 
-\item{tol}{numeric ≥ 0, differences smaller than tolerance are not reported}
+\item{tol}{numeric >= 0, differences smaller than tolerance are not reported}
 }
 \value{
 A Boolean indicating if number is whole or float

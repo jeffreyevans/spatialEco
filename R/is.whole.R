@@ -2,7 +2,7 @@
 #' @description Boolean for evaluating whole numbers
 #'  
 #' @param a  A numeric vector to evaluate, only first element will be evaluated
-#' @param tol numeric ≥ 0, differences smaller than tolerance are not reported
+#' @param tol numeric >= 0, differences smaller than tolerance are not reported
 #'
 #' @return A Boolean indicating if number is whole or float
 #' 
