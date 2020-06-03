@@ -42,7 +42,7 @@
 #' winsorize(x)             # returns x with original NA's 
 #' winsorize(x, na.rm=TRUE) # removes NA's 
 #' 
-#' @export
+#' @export winsorize
 winsorize <- function(x, min.value = NULL, max.value = NULL,  
                       p = c(0.05, 0.95), na.rm = FALSE) {			  
     if(na.rm == TRUE) { 

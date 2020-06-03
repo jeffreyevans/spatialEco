@@ -20,7 +20,6 @@
 #' Maximum entropy is reached when all values are different, same as log(m)
 #'   max.ent <- function(x) { log( length( unique(x) ) ) }
 #'
-
 #' @references
 #' Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS 
 #'   GIS - Comparison of images taken by different sensor. 
@@ -37,7 +36,7 @@
 #'         plot(rEnt)
 #'   par(opar)
 #'
-#' @export  
+#' @export raster.entropy  
 raster.entropy <- function(x, d = 5, categorical = FALSE, global = FALSE,  
                            filename = FALSE, ...) {
     if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")

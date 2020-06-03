@@ -50,9 +50,9 @@
 #'   plot(r.gdev.mean, main="local dev from global mean")
 #' par(opar)
 #'
-#' @export
+#' @export raster.deviation
 raster.deviation <- function(x, type = "trend", s = 3, degree = 1, global = FALSE) {  
-  if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")  
+  if (!inherits(x, "RasterLayer")) stop("x must by RasterLayer OBJECT")  
   if( type != "trend") {
      if( length(s) == 1) s = c(s[1],s[1])
        m <- matrix(1, nrow=s, ncol=s)

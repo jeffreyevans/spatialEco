@@ -101,6 +101,9 @@ Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the
 Dutilleul, P. (1993), Modifying the t test for assessing the correlation between 
   two spatial processes. Biometrics 49:305-314.
 }
+\seealso{
+\code{\link[SpatialPack]{modified.ttest}} for test details
+}
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

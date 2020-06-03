@@ -29,7 +29,7 @@ is 0-1. For regular or random.}
 regular sample results in a systematic, evenly spaced sample.}
 
 \item{longlat}{TRUE/FALSE is data in geographic units, if TRUE distance 
-is in kilometres}
+is in kilometers}
 
 \item{min.samp}{Minimal number of sample points for a given line 
 (default is 1 point)}

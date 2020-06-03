@@ -25,10 +25,10 @@
 #'        box()
 #'        title("Random sample (n=5) for each polygon")	   
 #'
-#' @export
+#' @export sample.poly
 sample.poly <- function(x, n = 10, type = "random", ...) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
-  if(!(class(x) == "SpatialPolygonsDataFrame" | class(x) == "SpatialPolygons"))
+  if(!(class(x)[1] == "SpatialPolygonsDataFrame" | class(x)[1] == "SpatialPolygons"))
     stop(deparse(substitute(x)), " MUST BE A sp spatialDataFrame OBJECT")
   sample.list <- sapply(x@polygons, sp::spsample, n = n, type = type, ...)
   return( do.call(rbind, sample.list) )

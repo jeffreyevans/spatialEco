@@ -56,13 +56,13 @@
 #' @export extract.vertices 
 extract.vertices <- function(x, as.sp = FALSE, rm.duplicates = FALSE,
                              join = FALSE) {
-  if(!any(class(x) == c("SpatialPolygonsDataFrame", "SpatialPolygons",
+  if(!any(class(x)[1] == c("SpatialPolygonsDataFrame", "SpatialPolygons",
                         "SpatialLinesDataFrame", "SpatialLines")))
     stop("x must be an sp Polygons or Lines feature class")
-  if(any(class(x) == c("SpatialPolygonsDataFrame", "SpatialPolygons")) ){ 
+  if(any(class(x)[1] == c("SpatialPolygonsDataFrame", "SpatialPolygons")) ){ 
     xy <- lapply(methods::slot(x, "polygons"), function(x) lapply(methods::slot(x,"Polygons"), 
                  function(y) methods::slot(y, "coords"))) 
-  } else if(any(class(x) == c("SpatialLinesDataFrame", "SpatialLines")) ){
+  } else if(any(class(x)[1] == c("SpatialLinesDataFrame", "SpatialLines")) ){
     xy <- lapply(methods::slot(x, "lines"), function(x) lapply(methods::slot(x,"Lines"), 
                  function(y) methods::slot(y, "coords"))) 
   } 	 

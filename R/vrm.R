@@ -29,9 +29,9 @@
 #'    vrm5 <- vrm(elev, s=5)
 #'    plot(stack(vrm3, vrm5))
 #'
-#' @export
+#' @export vrm
 vrm <- function(x, s = 3, file.name = NULL, ...) {
-    if (class(x) != "RasterLayer") 
+    if (class(x)[1] != "RasterLayer") 
         stop("x must be a raster object")
 	if(length(s) > 2) stop( "Specified window exceeds 2 dimensions")   
       if(length(s) == 1) s = rep(s,2)

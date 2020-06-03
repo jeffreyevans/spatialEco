@@ -38,7 +38,7 @@
 #'  par(opar)
 #' }
 #' 
-#' @export
+#' @export raster.downscale
 raster.downscale <- function(x, y, p = NULL, n = NULL, filename = FALSE, 
                              scatter = FALSE, ...) {
 	if(!class(y) == "RasterLayer") stop( "y is not a raster object")

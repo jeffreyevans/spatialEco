@@ -120,7 +120,10 @@
 logistic.regression <- function(ldata, y, x, penalty = TRUE, autologistic = FALSE, 
                                 coords = NULL, bw = NULL, type = "inverse", style = "W",  
                                 longlat = FALSE, ...) {
-	if(  substr(class(ldata),1,7)  == "Spatial"  ) { ldata <- ldata@data }
+    if(!any(which(utils::installed.packages()[,1] %in% "rms")))
+      stop("please install rms package before running this function")
+								
+	if(substr(class(ldata),1,7)  == "Spatial"  ) { ldata <- ldata@data }
       if (is.na(match(y, names(ldata)))) 
         stop("Dependent variable not present in data")
     xNames <- intersect(x, names(ldata))

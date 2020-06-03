@@ -72,6 +72,8 @@ kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE,
 	if( intercept ) pass.sum = pass.sum + 1
       fit.results <- c(rep(NA,pass.sum + 1))
     if(!prewhiten) {
+      if(!any(which(utils::installed.packages()[,1] %in% "EnvStats")))
+        stop("please install EnvStats package before running this function")	
       fit <- EnvStats::kendallTrendTest(y ~ 1)
       fit.results <- fit$estimate[2]
         if(tau == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }

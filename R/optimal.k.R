@@ -37,12 +37,14 @@
 #'
 #' @export  
 optimal.k <- function(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ...) {
+    if(!any(which(utils::installed.packages()[,1] %in% "cluster")))
+      stop("please install cluster package before running this function")
     asw <- numeric(nk)
     for (k in 2:nk) {
         if (clara == TRUE) {
-            asw[k] <- cluster::clara(x, k, ...)$silinfo$avg.width
+          asw[k] <- cluster::clara(x, k, ...)$silinfo$avg.width
         } else {
-            asw[k] <- cluster::pam(x, k, ...)$silinfo$avg.width
+          asw[k] <- cluster::pam(x, k, ...)$silinfo$avg.width
         }
         k.best <- which.max(asw)
     }

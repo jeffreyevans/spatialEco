@@ -55,9 +55,9 @@
 #' @export
 cross.tab <- function(x, y, values = NULL, labs = NULL,  
                       pct = FALSE, ...) {
-  if(class(x) != "RasterLayer")
+  if(class(x)[1] != "RasterLayer")
     stop("x must be a raster class object")  
-  if(class(y) != "RasterLayer")
+  if(class(y)[1] != "RasterLayer")
     stop("y must be a raster class object")	
   if(!is.null(labs)){
     if(length(labs) != length(values))

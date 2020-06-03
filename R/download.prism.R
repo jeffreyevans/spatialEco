@@ -44,6 +44,8 @@ download.prism <- function(data.type, date.range, time.step = "monthly",
                            download.folder = c("current", "temp"), 
 						   by.year = FALSE, unzip.file = TRUE, 
 						   ftp.site = "ftp://prism.oregonstate.edu") {
+    if(!any(which(utils::installed.packages()[,1] %in% "RCurl")))
+      stop("please install RCurl package before running this function")						   
     if (!any(data.type == c("ppt", "tmin", "tmax", "tmean"))) 
       stop("Not a valid dataset")
     owd <- getwd()

@@ -5,7 +5,8 @@
 #' @param lag   Number of lagged offsets, default is 1
 #' @param pad   Value to fill the lagged offset with, default is NA
 #' 
-#' @return a vector, length equal to x, with offset length filled with pad values
+#' @return a vector, length equal to x, with offset length filled 
+#'         with pad values
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

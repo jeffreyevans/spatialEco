@@ -51,10 +51,12 @@
 #'    box()
 #' }
 #'  
-#' @export
+#' @export similarity
 similarity <- function(x, k=4, method="mahalanobis", frequency = TRUE, 
                       scale = TRUE, ID = NULL) {
-  if(!class(x) == "data.frame") stop( "x is not a data.frame")
+  if(!any(which(utils::installed.packages()[,1] %in% "yaImpute")))
+    stop("please install yaImpute package before running this function")
+  if(!class(x)[1] == "data.frame") stop( "x is not a data.frame")
     if(!is.null(x)) {  
       if(!length(unique(ID)) == nrow(x) ) stop("ID's are not unique")
 	  rownames(x) <- ID

@@ -66,6 +66,8 @@
 oli.asw <- function(path, row, dates, cloud.cover = 10, 
                     processing) {
     aws.url <- "http://landsat-pds.s3.amazonaws.com/scene_list.gz"
+  if(!any(which(utils::installed.packages()[,1] %in% "readr")))
+    stop("please install readr package before running this function")
 	if( missing(path) ) stop("Must specify landsat path")
       if( missing(row) ) stop("Must specify landsat row")
         if(!missing(processing)) {

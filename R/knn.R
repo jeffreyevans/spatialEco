@@ -63,7 +63,9 @@
 #' @export knn
 knn <- function(y, x, k = 1, d = NULL, ids = NULL, 
                 weights.y = NULL, weights.x = NULL,
-                indexes = FALSE) { 
+                indexes = FALSE) {
+    if(!any(which(utils::installed.packages()[,1] %in% "RANN")))
+      stop("please install RANN package before running this function")				
   if(!is.null(ids)) { 
     if(!ids %in% names(x)) 
       stop("ids do not exist in data")

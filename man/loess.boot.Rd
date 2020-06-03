@@ -58,7 +58,7 @@ is truncated.
  y <- sin(2*x)+ 0.5*x + rnorm(n, sd=0.5)
  sb <- loess.boot(x, y, nreps=99, confidence=0.90, span=0.40)
  plot(sb)
-
+                     	
 }
 \references{
 Cleveland, WS, (1979) Robust Locally Weighted Regression and Smoothing Plots Journal

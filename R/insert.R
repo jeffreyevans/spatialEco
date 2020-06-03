@@ -36,7 +36,7 @@
 #'
 #' @export insert
 insert <- function(x, MARGIN = 1, value = NULL, idx, name=NULL) {
-  if(class(x) != "data.frame")
+  if(class(x)[1] != "data.frame")
     stop("x must be data.frame object")
   if(missing(idx))
     stop("idx argument must be supplied")

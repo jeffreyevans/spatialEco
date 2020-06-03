@@ -51,7 +51,7 @@
 #' 
 #' @export
 breeding.density <- function(x, pop, p = 0.75, bw = 6400, b = 8500, self = TRUE) {
-    #if(class(x) == "sf") { x <- as(x, "Spatial") }
+    if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame")) 
         stop("must be a SpatialPointsDataFrame object")
     if (is.na(match(pop, names(x@data)))) 

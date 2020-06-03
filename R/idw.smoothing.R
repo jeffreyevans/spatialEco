@@ -35,6 +35,8 @@
 #'
 #' @export
 idw.smoothing <- function(x, y, d, k) {
+    if(!any(which(utils::installed.packages()[,1] %in% "RANN")))
+      stop("please install RANN package before running this function")
     # if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame")) 
         stop(deparse(substitute(x)), " MUST BE A sp SpatialPointsDataFrame OBJECT")

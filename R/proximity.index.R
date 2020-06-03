@@ -48,11 +48,11 @@
 #' forest <- meuse_poly[meuse_poly$LU == "forest",]
 #'   spplot(forest, "cpidx")
 #'   
-#' @export
+#' @export proximity.index
 proximity.index <- function(x, y = NULL, min.dist = 0, max.dist = 1000, 
                             background = NULL) {
-  if(any(class(x) == "sf")) { x <- as(x, "Spatial") }
-    if(!any(class(x) == "SpatialPolygonsDataFrame"))
+  if(any(class(x)[1] == "sf")) { x <- as(x, "Spatial") }
+    if(!any(class(x)[1] == "SpatialPolygonsDataFrame"))
       stop("x must be an sp SpatialPolygonsDataFrame object")  	  
   if(!is.null(y)) {  
     if(!any(y %in% names(x))) 

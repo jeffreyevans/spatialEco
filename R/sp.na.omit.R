@@ -34,7 +34,7 @@
 #'    head(meuse@@data)
 #'    head(meuse2@@data)
 #'
-#' @export
+#' @export sp.na.omit
 sp.na.omit <- function(x, col.name = NULL, margin = 1) {
     if (!inherits(x, "SpatialPointsDataFrame") & 
 	      !inherits(x, "SpatialPolygonsDataFrame") & 

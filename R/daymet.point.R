@@ -30,6 +30,8 @@
 #' @export
 daymet.point <- function (lat, long, start.year, end.year, site=NULL, 
                           files = FALSE, echo = FALSE) {
+    if(!any(which(utils::installed.packages()[,1] %in% "RCurl")))
+      stop("please install RCurl package before running this function")
     if(missing(lat)) stop("Please define lat") 
     if(missing(long)) stop("Please define long") 
 	if(missing(start.year)) stop("Please define start year") 

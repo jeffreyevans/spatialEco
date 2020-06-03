@@ -30,7 +30,6 @@
 #' values.By default this model test all values greater than 100%
 #' to 101% and flat areas (-1) to nodata.
 #'
-#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references 

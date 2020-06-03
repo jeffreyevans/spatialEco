@@ -7,7 +7,8 @@
 convexHull(x, alpha = 250000, sp = TRUE)
 }
 \arguments{
-\item{x}{SpatialPoints, SpatialPointsDataFrame, sf or matrix object representing [x,y] coordinates}
+\item{x}{SpatialPoints, SpatialPointsDataFrame, sf or matrix object 
+representing [x,y] coordinates}
 
 \item{alpha}{Alpha parameter for adjusting boundary tension}
 
@@ -17,14 +18,16 @@ convexHull(x, alpha = 250000, sp = TRUE)
 SpatialPolygons object
 }
 \description{
-Calculates a convex hull on a point feature class using the Pateiro-Lopez (2009) Alphahull model
+Calculates a convex hull on a point feature class using the Pateiro-Lopez (2009) 
+Alphahull model
 }
 \note{
-This method provides flexibility over traditional convex functions in that the the alpha parameter 
-      can be adjusted to relax or increase tension between boundary-edge points
-      Due to licensing constraints associated with the alphahull package, this function is not available 
-      in the CRAN release. The function must be called from the package NAMESPACE using: 
-      spatialEco:::convexHull. If sp = FALSE an sf polygon class object will be returned
+This method provides flexibility over traditional convex functions in that the the alpha 
+parameter can be adjusted to relax or increase tension between boundary-edge points
+Due to licensing constraints associated with the alphahull package, this function is not 
+available in the CRAN release. The function must be called from the package NAMESPACE 
+using:  spatialEco:::convexHull. If sp = FALSE an sf polygon class object will be 
+returned
 }
 \examples{
 library(sp)
@@ -54,12 +57,13 @@ data(meuse)
   meuse <- as(meuse, "sf")
   meuse_poly <- st_buffer(meuse, dist = meuse$elev*15)
 
-# Create [x,y] points representing polygon boundaries  
+# Create [x,y] points representing polygon boundaries 
+
 poly_points <- sf::st_segmentize(meuse_poly, dfMaxLength = 5) \%>\% 
-  sf::st_coordinates() \%>\% 
-  as.data.frame() \%>\% 
-  dplyr::select(X, Y) \%>\% 
-  sf::st_as_sf(coords = c("X", "Y"))  
+ sf::st_coordinates() \%>\% 
+   as.data.frame() \%>\% 
+     subset(select = c(X, Y)) \%>\% 
+       sf::st_as_sf(coords = c("X", "Y"))  
   			
 a <- spatialEco::convexHull(poly_points, alpha = 100000, 
                             sp=FALSE)
@@ -69,7 +73,8 @@ a <- spatialEco::convexHull(poly_points, alpha = 100000,
 
 }
 \references{
-Pateiro-Lopez & Rodriguez-Casal (2009) Generalizing the Convex Hull of a Sample: The R Package alphahull. Journal of Statistical Software 34(5):1-28 http://www.jstatsoft.org/v34/i05/paper
+Pateiro-Lopez & Rodriguez-Casal (2009) Generalizing the Convex Hull of a Sample: 
+  The R Package alphahull. Journal of Statistical Software 34(5):1-28
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

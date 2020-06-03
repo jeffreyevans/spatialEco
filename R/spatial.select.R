@@ -106,7 +106,7 @@ spatial.select <- function(x, y = NULL, distance = NULL, predicate = c("intersec
   if(!is.null(y)) {
   if(any(methods::is(x, "Spatial"), methods::is(y, "Spatial"))) {
     type="dsp"
-    if(!any(class(x) == c("SpatialPolygons", "SpatialPolygonsDataFrame"))) 
+    if(!any(class(x)[1] == c("SpatialPolygons", "SpatialPolygonsDataFrame"))) 
       stop("x must be a sp polygon object")
     if(!methods::is(y, "Spatial"))
       stop("y must be a sp polygon, point or line object")
@@ -122,11 +122,11 @@ spatial.select <- function(x, y = NULL, distance = NULL, predicate = c("intersec
   } else {
     if(!any(methods::is(x, "Spatial")))
 	  stop("x must be a spatial object")
-	if(!any(class(x) == c("SpatialPolygons", "SpatialPolygonsDataFrame"))) 
+	if(!any(class(x)[1] == c("SpatialPolygons", "SpatialPolygonsDataFrame"))) 
       stop("x must be a sp polygon object")  
 	if(predicate != "contingency")
       stop("The only predicate that supports self realization is contingency")	
-    if(!any(class(x) == c("SpatialPolygons", "SpatialPolygonsDataFrame"))) 
+    if(!any(class(x)[1] == c("SpatialPolygons", "SpatialPolygonsDataFrame"))) 
       stop("x must be a sp polygon object")	  
   }
   if(predicate == "intersect") {

@@ -28,8 +28,9 @@
 #'  r.cor <- rasterCorrelation(x, y, s = 5, type = "spearman")
 #'  plot(r.cor)
 #' }
-#' rasterCorrelation
-#' @export
+#' 
+#'
+#' @export rasterCorrelation
 rasterCorrelation <- function(x, y, s = 3, type = "pearson", file.name = NULL, ...) {
   if (!inherits(x, "RasterLayer")) 
       stop("Input must be RasterLayer objects")

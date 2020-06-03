@@ -51,6 +51,8 @@
 #'
 #' @export zonal.stats
 zonal.stats <- function(x, y, stats = c("min", "mean", "max")) {
+    if(!any(which(utils::installed.packages()[,1] %in% "exactextractr")))
+      stop("please install exactextractr before running this function")
     if (!any(class(y)[1] == c("RasterLayer", "RasterStack", "RasterBrick"))) 
       stop("y must be a raster (layer, stack, brick) class object")
     if (!any(class(x)[1] == c("SpatialPolygonsDataFrame", "sf"))) 

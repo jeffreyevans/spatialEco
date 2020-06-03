@@ -24,9 +24,9 @@ Messages and a vector of correlated variables
 Test for linear or nonlinear collinearity/correlation in data
 }
 \details{
-Evaluation of the pairwise linear correlated variables to remove is accomplished  
-through calculating the mean correlations of each variable and selecting the 
-variable with higher mean.
+Evaluation of the pairwise linear correlated variables to remove is 
+accomplished through calculating the mean correlations of each variable 
+and selecting the variable with higher mean.
 }
 \examples{
 data(cor.data)

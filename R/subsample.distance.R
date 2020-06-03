@@ -57,7 +57,7 @@ subsample.distance <- function(x, size, d, d.max = NULL, replacement = FALSE,
     if(d.max <= d) 
 	  stop("Maximum distance must be larger than minimum")
   }
-  if(!any(class(x) == c("SpatialPointsDataFrame", "SpatialPolygonsDataFrame")) )
+  if(!any(class(x)[1] == c("SpatialPointsDataFrame", "SpatialPolygonsDataFrame")) )
     stop("x must be sp class polygons or points")
   if(latlong == TRUE) {  
     message("geographic projection distances must be in kilometers")

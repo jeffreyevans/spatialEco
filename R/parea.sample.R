@@ -35,7 +35,7 @@
 #' @export
 parea.sample <- function(x, pct = 0.1, join = FALSE, msamp = 1, sf = 4046.86, 
                          stype = "hexagonal", ...) {
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
+  # if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPolygonsDataFrame")) 
         stop("Must be a SpatialPolygonsDataFrame object")
     pids <- rownames(x@data)	

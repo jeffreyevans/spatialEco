@@ -75,7 +75,7 @@
 #'           legend('bottomright', legend=c('Original sample', 'Subsample'), 
 #'                  col=c('black','red'),pch=c(19,19))   
 #'
-#' @export
+#' @export pp.subsample
 pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL, 
                         gradient = 1, edge = FALSE) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }

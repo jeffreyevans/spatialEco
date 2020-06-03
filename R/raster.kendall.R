@@ -65,7 +65,10 @@
 #' @export
 raster.kendall <- function(x, intercept = FALSE, p.value = FALSE,   
                            confidence = FALSE, tau = FALSE, ...) {
-  if(!any(class(x) %in% c("RasterBrick","RasterStack"))) stop("x is not a raster stack or brick object")
+  if(!any(which(utils::installed.packages()[,1] %in% "EnvStats")))
+    stop("please install EnvStats package before running this function")
+  if(!any(class(x)[1] %in% c("RasterBrick","RasterStack"))) 
+    stop("x is not a raster stack or brick object")
     if( raster::nlayers(x) < 5) stop("Too few layers (n<5) to calculate a trend")
   trend.slope <- function(y, p.value.pass = p.value, tau.pass = tau, confidence.pass = confidence,
                           intercept.pass = intercept) {

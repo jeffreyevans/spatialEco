@@ -1,22 +1,29 @@
 #' @title Alpha Convex Hull
 #'
-#' @description Calculates a convex hull on a point feature class using the Pateiro-Lopez (2009) Alphahull model 
+#' @description 
+#' Calculates a convex hull on a point feature class using the Pateiro-Lopez (2009) 
+#' Alphahull model 
 #' 
-#' @param x         SpatialPoints, SpatialPointsDataFrame, sf or matrix object representing [x,y] coordinates
+#' @param x         SpatialPoints, SpatialPointsDataFrame, sf or matrix object 
+#'                  representing [x,y] coordinates
 #' @param alpha     Alpha parameter for adjusting boundary tension
 #' @param sp        Output an sp SpatialPolygonsDataFrame object (TRUE/FALSE)
 #'
 #' @return SpatialPolygons object  
 #'
-#' @note This method provides flexibility over traditional convex functions in that the the alpha parameter 
-#'       can be adjusted to relax or increase tension between boundary-edge points
-#'       Due to licensing constraints associated with the alphahull package, this function is not available 
-#'       in the CRAN release. The function must be called from the package NAMESPACE using: 
-#'       spatialEco:::convexHull. If sp = FALSE an sf polygon class object will be returned 
+#' @note 
+#' This method provides flexibility over traditional convex functions in that the the alpha 
+#' parameter can be adjusted to relax or increase tension between boundary-edge points
+#' Due to licensing constraints associated with the alphahull package, this function is not 
+#' available in the CRAN release. The function must be called from the package NAMESPACE 
+#' using:  spatialEco:::convexHull. If sp = FALSE an sf polygon class object will be 
+#' returned 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
-#' @references Pateiro-Lopez & Rodriguez-Casal (2009) Generalizing the Convex Hull of a Sample: The R Package alphahull. Journal of Statistical Software 34(5):1-28 http://www.jstatsoft.org/v34/i05/paper
+#' @references 
+#' Pateiro-Lopez & Rodriguez-Casal (2009) Generalizing the Convex Hull of a Sample: 
+#'   The R Package alphahull. Journal of Statistical Software 34(5):1-28 
 #'                                                                    
 #' @examples 
 #' library(sp)
@@ -46,12 +53,13 @@
 #'   meuse <- as(meuse, "sf")
 #'   meuse_poly <- st_buffer(meuse, dist = meuse$elev*15)
 #' 
-#' # Create [x,y] points representing polygon boundaries  
+#' # Create [x,y] points representing polygon boundaries 
+#'
 #' poly_points <- sf::st_segmentize(meuse_poly, dfMaxLength = 5) %>% 
-#'   sf::st_coordinates() %>% 
-#'   as.data.frame() %>% 
-#'   dplyr::select(X, Y) %>% 
-#'   sf::st_as_sf(coords = c("X", "Y"))  
+#'  sf::st_coordinates() %>% 
+#'    as.data.frame() %>% 
+#'      subset(select = c(X, Y)) %>% 
+#'        sf::st_as_sf(coords = c("X", "Y"))  
 #'   			
 #' a <- spatialEco::convexHull(poly_points, alpha = 100000, 
 #'                             sp=FALSE)
@@ -61,6 +69,8 @@
 #'
 #' @export convexHull
 convexHull <- function(x, alpha = 250000, sp = TRUE)	{
+  if(!any(which(utils::installed.packages()[,1] %in% "alphahull")))
+     stop("please install alphahull package before running this function")
   if (!inherits(x, "SpatialPointsDataFrame") &  
         !inherits(x, "SpatialPoints") &
        	  !inherits(x, "sf") &

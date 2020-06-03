@@ -28,9 +28,9 @@
 #' coordinates(meuse) = ~x+y
 #' zinc.cg <- correlogram(x = meuse, v = meuse@@data[,'zinc'], dist = 250, ns = 9)
 #' 
-#' @export  
+#' @export correlogram  
 correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = FALSE, ...) {
-    # if(class(x) == "sf") { x <- as(x, "Spatial") }
+    # if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
     if ((inherits(x, "SpatialPointsDataFrame")) == FALSE) 
         stop("x MUST BE SP SpatialPointsDataFrame OBJECT")
 	oops <- options() 

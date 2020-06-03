@@ -70,7 +70,7 @@
 #'    points(meuse, pch=19)
 #' }
 #'
-#' @export
+#' @export sp.kde
 sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,  
                    standardize = FALSE, scale.factor = NULL, mask = TRUE) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }

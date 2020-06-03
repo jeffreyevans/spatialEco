@@ -65,7 +65,7 @@
 #'                  scale.morans = TRUE, type.ac="yx") 
 #'  par(opar)
 #'                        
-#' @export
+#' @export morans.plot
 morans.plot <- function(x, y = NULL, coords = NULL, 
                         type.ac = c("xy", "yx"), 
                         dist.function = "inv.power",   

@@ -97,9 +97,9 @@ raster.change <- function(x, y, d = c(3,3), stat = c("kappa", "wkappa", "t.test"
                           out.raster = NULL, mask = FALSE, force.memory = FALSE) {
 	stat = stat[1]
     if(stat == "wkappa") stop("Sorry, weighted kappa is not yet implemented")
-	if (class(x) != "RasterLayer")
+	if (class(x)[1] != "RasterLayer")
 	  stop(deparse(substitute(x)), " Must be a raster object")
-	if (class(y) != "RasterLayer") 
+	if (class(y)[1] != "RasterLayer") 
       stop(deparse(substitute(y)), " Must be a raster object")
     if( any( (dim(x)[1:2] == dim(y)[1:2]) == FALSE) ) 
 	  stop("Rasters dimensions do not match") 

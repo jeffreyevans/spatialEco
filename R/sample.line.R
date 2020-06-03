@@ -9,7 +9,7 @@
 #' @param p          Proportional sample size (length * p), expected value 
 #'                   is 0-1. For regular or random. 
 #' @param longlat    TRUE/FALSE is data in geographic units, if TRUE distance 
-#'                   is in kilometres
+#'                   is in kilometers
 #' @param type       Defines sample type. Options are "regular" or "random". A 
 #'                   regular sample results in a systematic, evenly spaced sample. 
 #' @param min.samp   Minimal number of sample points for a given line 
@@ -69,14 +69,14 @@
 #'	  title("rand p = 0.10")
 #' par(opar)
 #'	
-#' @export
+#' @export sample.line
 sample.line <- function(x, d = 100, p = NULL, n = NULL, type = "regular", 
                         longlat = FALSE, min.samp = 1, ...) {
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
+  # if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
   if (!inherits(x, "SpatialLinesDataFrame")) 
     stop("x is not a SpatialLinesDataFrame object")
   if( (!is.null(p) == TRUE) && (!is.null(n) == TRUE) ) 
-    stop( "Cannot have both a fixed and proportional sample") 
+    stop("Cannot have both a fixed and proportional sample") 
     lids <- rownames(x@data)   
       samp.size <- function(l, p.s = p, n.s = n, d.s = d, longlat.s = longlat,  
 	                        min.samp.s = min.samp) {

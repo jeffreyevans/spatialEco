@@ -54,7 +54,7 @@
 #'
 #' @export combine
 combine <- function(x, rnames = NULL, sp = FALSE) {
-  if(!any(class(x) %in% c("RasterStack", "RasterBrick",
+  if(!any(class(x)[1] %in% c("RasterStack", "RasterBrick",
      "SpatialPixelsDataFrame")))
     stop("x is not a raster stack or brick object")
   is.int <- function(x){
@@ -73,9 +73,9 @@ combine <- function(x, rnames = NULL, sp = FALSE) {
   } else {
     nidx <- 1:length(names(x))
   }  
-  if(any(class(x) %in% c("RasterStack", "RasterBrick"))) {
+  if(any(class(x)[1] %in% c("RasterStack", "RasterBrick"))) {
     r <- methods::as(x[[nidx]], "SpatialPixelsDataFrame")
-  } else if(any(class(x) %in% "SpatialPixelsDataFrame")){
+  } else if(any(class(x)[1] %in% "SpatialPixelsDataFrame")){
     r <- x
       x@data <- x@data[,nidx]
   }  

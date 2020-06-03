@@ -34,8 +34,7 @@
 #'  ( es <- effect.size(iris$Species, iris$Sepal.Length) )
 #'    plot(es)
 #'
-#' @exportClass effect.size 
-#' @export
+#' @export effect.size
 effect.size <- function(y, x, pooled = TRUE, conf.level = 0.95) {
   effectsize <- vector()
   low.ci <- vector()
@@ -68,6 +67,6 @@ effect.size <- function(y, x, pooled = TRUE, conf.level = 0.95) {
 	                      effect.size = abs(effectsize), lower.ci = low.ci,   
 	                      upper.ci = up.ci), 
 						  y = y, x = x, CI = conf.level)
-      class(effectsize) <- c("effect.size", "data.frame")
+    class(effectsize) <- c("effect.size", "data.frame")
   return( effectsize )
 }

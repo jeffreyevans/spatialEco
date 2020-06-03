@@ -27,9 +27,9 @@
 #'   plot(transects$transects)
 #'     plot(transects$samples, pch=20, add=TRUE)
 #'
-#' @export
+#' @export sampleTransect
 sampleTransect <- function(x, min.length, max.length, id = NULL, ...) {
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
+  # if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
   tlines <- list()   
   tpoints <- list()
     for(i in 1:nrow(x) ) {

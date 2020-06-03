@@ -56,8 +56,7 @@
 #'  y <- sin(2*x)+ 0.5*x + rnorm(n, sd=0.5)
 #'  sb <- loess.boot(x, y, nreps=99, confidence=0.90, span=0.40)
 #'  plot(sb)
-#' 
-#' @exportClass loess.boot                      	
+#'                      	
 #' @export    	                               
 loess.boot <- function(x, y, nreps=100, confidence=0.95, ...){
     dat <- stats::na.omit(data.frame(x=x,y=y))

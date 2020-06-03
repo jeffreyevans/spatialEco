@@ -41,7 +41,8 @@ Depends: raster
  r.cor <- rasterCorrelation(x, y, s = 5, type = "spearman")
  plot(r.cor)
 }
-rasterCorrelation
+
+
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

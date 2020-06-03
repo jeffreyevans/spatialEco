@@ -83,7 +83,6 @@ s <- background(ext=c(178605, 181390, 329714, 333611),
   plot(s,pch=20)
     points(locs, pch=20, col="red")
 
-
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

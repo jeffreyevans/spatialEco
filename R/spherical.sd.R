@@ -48,8 +48,8 @@
 #' 
 #' @export
 spherical.sd <- function(r, d, variance = FALSE, ...) {
-  if(class(r) != "RasterLayer") stop("r argument must be a rasterLayer class object")
-    if(class(d) != "matrix") { d = matrix(1,d,d) }
+  if(class(r)[1] != "RasterLayer") stop("r argument must be a rasterLayer class object")
+    if(class(d)[1] != "matrix") { d = matrix(1,d,d) }
   s <- raster::terrain(r, opt='slope', unit='radians') 
     a <- raster::terrain(r, opt='aspect', unit='radians')
       x <- raster::overlay(a,s, fun=function(x,y) {cos(x) * sin(y) } )

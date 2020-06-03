@@ -13,9 +13,9 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'
 #' @details  
-#' Evaluation of the pairwise linear correlated variables to remove is accomplished  
-#' through calculating the mean correlations of each variable and selecting the 
-#' variable with higher mean. 
+#' Evaluation of the pairwise linear correlated variables to remove is 
+#' accomplished through calculating the mean correlations of each variable 
+#' and selecting the variable with higher mean. 
 #' 
 #' @examples 
 #' data(cor.data)
@@ -35,7 +35,7 @@
 #'
 #' @export collinear
 collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
-  if(!class(x) == "matrix" && !class(x) == "data.frame")
+  if(!class(x)[1] == "matrix" && !class(x)[1] == "data.frame")
     stop("x does not appear to be a matrix or data.frame object") 
   if(any(sapply(x, is.numeric) == FALSE)) 
     stop("x contains non-numeric data") 
@@ -43,6 +43,8 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
       colnames(x) <- paste0("X", 1:ncol(x))
     }	
   if(nonlinear == TRUE) {
+    if(!any(which(utils::installed.packages()[,1] %in% "mgcv")))
+      stop("please install mgcv package for nonlinear option")  
     nlcor <- function(x, y, pv = 0.05) {
       g <- mgcv::gam(y ~ s(x))
       g.summ <- summary(g)

@@ -42,11 +42,11 @@
 #' 
 #' @export erase.point
 erase.point <- function(y, x, inside = TRUE) {
-  if(class(y) == "sf") { y <- as(y, "Spatial") }
-  if(class(x) == "sf") { x <- as(x, "Spatial") }
-  if (!any(class(y) == c("SpatialPointsDataFrame","SpatialPoints")))
+  if(class(y)[1] == "sf") { y <- as(y, "Spatial") }
+  if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
+  if (!any(class(y)[1] == c("SpatialPointsDataFrame","SpatialPoints")))
     stop("y must be a SpatialPoints or SpatialPointsDataFrame")
-  if (!any(class(x) == c("SpatialPolygonsDataFrame","SpatialPolygons")))
+  if (!any(class(x)[1] == c("SpatialPolygonsDataFrame","SpatialPolygons")))
     stop("x must be a SpatialPolygons or SpatialPolygonsDataFrame")
   idx <- rgeos::gIntersects(y, x, byid = TRUE) 
     idx <- which(apply(idx, MARGIN=2, FUN=function(x) any(x==TRUE)))

@@ -36,7 +36,7 @@
 #'   legend("topright", legend=c("50-100m", "100-200m", "source"), 
 #'          pch=c(20,20,20), col=c("blue","red","black"))
 #'
-#' @export
+#' @export sample.annulus
 sample.annulus <- function(x, r1, r2, n = 10, ...) {
   # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(r1 >= r2) stop("inner radius (r1) must be smaller than outer (r2)")

@@ -71,8 +71,9 @@
 #'    s2 <- c (1362,1411,1457,10030,1621,1621,1791,1863,1863,1838)
 #'      separability(s1, s2, plot=TRUE) 
 #'       
-#' @export                            
-separability <- function(x, y, plot = FALSE, cols = c("red", "blue"), clabs = c("Class1", "Class2"), ...) {
+#' @export separability                            
+separability <- function(x, y, plot = FALSE, cols = c("red", "blue"), 
+                         clabs = c("Class1", "Class2"), ...) {
     if (length(cols) > 2) 
       stop("Too many colors")
     if (length(clabs) > 2) 

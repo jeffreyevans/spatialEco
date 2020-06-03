@@ -29,7 +29,7 @@
 #'   s <- trasp(elev)
 #'     plot(s)
 #'     
-#' @export
+#' @export trasp
 trasp <- function(x, ...) {  
   if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
     asp <- raster::terrain(x, out='aspect', unit='degrees') 

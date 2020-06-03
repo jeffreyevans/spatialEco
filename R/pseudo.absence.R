@@ -121,10 +121,10 @@
 #' @export     
 pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma = "Scott", 
                            wts = NULL, KDE = FALSE, gradient = 1, p = NULL, edge = FALSE) {
-    if (!class(x) == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
+    if (!class(x)[1] == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
         stop(deparse(substitute(x)), " MUST BE A sp POINTS OBJECT")
     if (!is.null(Mask)) {
-        if (!class(Mask) == "RasterLayer") 
+        if (!class(Mask)[1] == "RasterLayer") 
             stop(deparse(substitute(Mask)), " MUST BE A RasterLayer OBJECT")
     }
     if (is.null(p)) p <- 1e-09

@@ -30,9 +30,9 @@
 #' legend('topleft', legend=c('all','copper', 'zinc'), 
 #'        pch=c(20,19,19),col=c('black','red','blue'))
 #'
-#' @export                                                                                   
+#' @export wt.centroid                                                                                   
 wt.centroid <- function(x, p, sp = TRUE) {
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
+  # if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPointsDataFrame")) 
         stop(deparse(substitute(x)), " MUST BE A SpatialPointsDataFrame OBJECT")
     p <- x@data[, p]

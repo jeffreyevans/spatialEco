@@ -43,7 +43,7 @@
 #' par(opar)  
 #' }
 #'
-#' @export    	
+#' @export raster.vol    	
 raster.vol <- function(x, p = 0.95, sample = FALSE, spct = 0.05) {
   if( sample == FALSE ) {
     den <- raster::getValues(x)

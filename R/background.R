@@ -64,7 +64,6 @@
 #'   plot(s,pch=20)
 #'     points(locs, pch=20, col="red")
 #' 
-#'
 #' @export
 background <- function(x, ext=NULL, p=1000, known=NULL, d=NULL, 
                 type=c("regular", "random", "hexagon", "nonaligned")) {
@@ -72,7 +71,7 @@ background <- function(x, ext=NULL, p=1000, known=NULL, d=NULL,
     stop("extent argument (x or ext) must be defined")	
   if(!missing(x)){
     if(class(x)[1] == "sf") x <- as(x, "sf")
-    if(!any(class(x) == c("SpatialPolygons", "SpatialPolygonsDataFrame")))
+    if(!any(class(x)[1] == c("SpatialPolygons", "SpatialPolygonsDataFrame")))
       stop("known must be sp class polygons object")
   }  
   if(!is.null(ext)){
@@ -81,7 +80,7 @@ background <- function(x, ext=NULL, p=1000, known=NULL, d=NULL,
     x <- as(raster::extent(ext), "SpatialPolygons")	   
   }    
   if(!is.null(known)){
-    if(!any(class(known) == c("SpatialPoints", "SpatialPointsDataFrame")))
+    if(!any(class(known)[1] == c("SpatialPoints", "SpatialPointsDataFrame")))
       stop("known must be sp class points object")
     if(is.null(d)) 
       stop("distance (d) must be defined")  

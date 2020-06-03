@@ -65,7 +65,7 @@
 #' ssample@@data$REP <- factor(ssample@@data$REP)
 #'   spplot(ssample, 'REP', col.regions=c('red','blue'))
 #'
-#' @export
+#' @export stratified.random
 stratified.random <- function(x, strata, n = 10, reps = 1, replace = TRUE) {
     if (!methods::is(x, "Spatial")) 
       stop(deparse(substitute(x)), " Must be an sp class spatial object")

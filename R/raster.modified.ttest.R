@@ -75,10 +75,14 @@
 #'     bubble(corr.hex, "corr") 
 #' }
 #' 
+#' @seealso \code{\link[SpatialPack]{modified.ttest}} for test details
+#'
 #' @export raster.modified.ttest
 raster.modified.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", 
                                   sub.sample = FALSE, type = "hexagon", p = 0.10, 
 								  size = NULL) {
+    if(!any(which(utils::installed.packages()[,1] %in% "SpatialPack")))
+      stop("please install SpatialPack package before running this function")							  
 	if (!sp::gridded(x))
 	  stop(deparse(substitute(x)), " Must be an sp raster object")
     if (!sp::gridded(y)) 
