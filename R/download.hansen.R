@@ -46,7 +46,7 @@
 #'   of 21st-Century Forest Cover Change. Science 342:850-53. 
 #'
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' # Download single tile
 #'  download.hansen(tile=c('00N', '130E'), data.type=c('loss', 'lossyear'), 
 #'                  download.folder=getwd())

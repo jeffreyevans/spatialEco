@@ -29,7 +29,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' # Download monthly precipitation data Jan 1st 2000 to Dec 30th 2001 (n=24)
 #'     my.dates <- c('2000/1/1', '2001/12/30')
 #'     download.prism('ppt', date.range=my.dates, time.step='monthly', by.year=TRUE)

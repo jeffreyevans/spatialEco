@@ -42,13 +42,11 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20% cloud cover    
 #' ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), 
 #'                           cloud.cover = 20) )
-#' }
 #'
-#' \dontrun{
 #' # Download images from query
 #'  bands <- c("_B1.TIF", "_B2.TIF", "_B3.TIF", "_B4.TIF", "_B5.TIF", 
 #'             "_B6.TIF","_B7.TIF", "_B8.TIF", "_B9.TIF", "_B10.TIF",

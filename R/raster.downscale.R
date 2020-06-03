@@ -21,21 +21,21 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #'  library(raster)
 #'  elev <- raster::getData('alt', country='SWZ', mask=TRUE)
 #'  tmax <- raster::getData('worldclim', var='tmax', res=10, 
 #'                          lon=8.25, lat=46.8)
-#'    tmax <- crop(tmax[[1]], extent(elev))
+#'  tmax <- crop(tmax[[1]], extent(elev))
 #'  
+#'  # Downscale temperature
 #'  tmax.ds <- raster.downscale(elev, tmax, scatter=TRUE)
-#'
-#'  opar <- par(no.readonly=TRUE)
-#'    par(mfrow=c(2,2))
-#'    plot(tmax, main="Temp max")
-#'    plot(elev, main="elevation")
-#'      plot(tmax.ds$downscale, main="Downscaled Temp max")
-#'  par(opar)
+#'    opar <- par(no.readonly=TRUE)
+#'      par(mfrow=c(2,2))
+#'      plot(tmax, main="Temp max")
+#'      plot(elev, main="elevation")
+#'        plot(tmax.ds$downscale, main="Downscaled Temp max")
+#'    par(opar)
 #' }
 #' 
 #' @export raster.downscale
