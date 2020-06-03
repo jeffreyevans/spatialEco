@@ -119,8 +119,7 @@
 #'     spplot(oregon.tract, "lisa.clust")   
 #' } 
 #' 
-#' @exportClass cross.cor
-#' @export
+#' @export crossCorrelation
 crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI", "GSCI"), k = 1000, 
                              dist.function = "inv.power", scale.xy = TRUE, scale.partial = FALSE, 
 							 scale.matrix = FALSE, alpha = 0.05, clust = TRUE, return.sims = FALSE) {
