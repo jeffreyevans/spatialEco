@@ -75,7 +75,7 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
       warning("function is intended for imputing missing values 
 	           in multi-temporal data\n      < 8 observations is questionable\n")
 	return( raster::overlay(x, fun = impute.loess, unstack = TRUE, forcefun = FALSE, ...) )
-  } else if(any(class(x) == c("SpatialPixelsDataFrame","SpatialGridDataFrame"))) {
+  } else if(any(class(x)[1] == c("SpatialPixelsDataFrame","SpatialGridDataFrame"))) {
       if(raster::ncol(x) < 8)
         warning("function is intended for imputing missing values 
 	             in multi-temporal data\n      < 8 observations is questionable\n")
