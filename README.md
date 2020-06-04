@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.3-1, developement 1.3-2) 
+# spatialEco (CRAN 1.3-2, developement 1.3-2) 
 
 [![CRAN
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -13,7 +13,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-# Available functions in spatialEco 1.3-2 are:
+# Available functions in spatialEco 1.3-3 are:
 
     annulus.matrix - Creates a 0,1 matrix based on defined annulus parameters, can be used as a window
 	                 matrix in a raster focal function
