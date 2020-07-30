@@ -8,6 +8,7 @@ raster.kendall(
   x,
   intercept = FALSE,
   p.value = FALSE,
+  z.value = FALSE,
   confidence = FALSE,
   tau = FALSE,
   ...
@@ -22,11 +23,14 @@ wise intercept values}
 \item{p.value}{(FALSE/TRUE) return a raster with the pixel 
 wise p.values}
 
+\item{z.value}{(FALSE/TRUE) return a raster with the pixel 
+wise z.values}
+
 \item{confidence}{(FALSE/TRUE) return a raster with the pixel 
 wise 95 pct confidence levels}
 
 \item{tau}{(FALSE/TRUE) return a raster with the pixel wise 
-tau values}
+tau correlation values}
 
 \item{...}{Additional arguments passed to the raster 
 overlay function}
@@ -37,11 +41,12 @@ Depending on arguments, a raster layer or rasterBrick object containing:
   \item {raster layer 1} {slope for trend, always returned}
   \item {raster layer 2} {intercept for trend if intercept TRUE}
   \item {raster layer 3} {p value for trend fit if p.value TRUE}
-  \item {raster layer 4} {lower confidence level at 95 pct, if 
+  \item {raster layer 4} {z value for trend fit if z.value TRUE}
+  \item {raster layer 5} {lower confidence level at 95 pct, if 
                           confidence TRUE}
-  \item {raster layer 5} {upper confidence level at 95 pct, if 
+  \item {raster layer 6} {upper confidence level at 95 pct, if 
                           confidence TRUE}
-  \item {raster layer 6} {Kendall's tau two-sided test, reject null at 0, 
+  \item {raster layer 7} {Kendall's tau two-sided test, reject null at 0, 
                           if tau TRUE}
 }
 }
@@ -63,9 +68,11 @@ the slope and related confidence intervals.
  			    system.file("external/rlogo.grd", package="raster")) 
  
  # Calculate trend slope with p-value and confidence level(s)
- logo.trend <- raster.kendall(r.logo, p.value=TRUE, confidence=TRUE)
-   names(logo.trend) <- c("slope","p.value","LCI","UCI")
-     plot(logo.trend)
+ # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
+   k <- raster.kendall(r.logo, p.value=TRUE, z.value=TRUE, 
+                       intercept=TRUE, confidence=TRUE, 
+                       tau=TRUE)
+     plot(k)
 }
 
 }

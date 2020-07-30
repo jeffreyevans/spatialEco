@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.3-2, developement 1.3-2) 
+# spatialEco (CRAN 1.3-2, developement 1.3-3) 
 
 [![CRAN
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -242,6 +242,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     sobal - Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window  
     
     spatial.select - Performs a spatial select (feature subset) similar to ArcGIS
+	
+	spectral.separability - Calculates class-wise multivariate spectral separability 
 		
 	sp.kde - A weighted or un-weighted kernel density estimate
     

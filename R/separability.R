@@ -13,7 +13,7 @@
 #' * JM - Jeffries-Matusita distance statistic
 #' *  M - M-Statistic
 #' *  D - Divergence index
-#' *  TD - Transformed Divergence index
+#' * TD - Transformed Divergence index
 #' @md
 #'
 #' @description
@@ -32,7 +32,7 @@
 #'   where values of v2 suggest complete separability
 #'    
 #' * Divergence and transformed Divergence (Du et al., 2004) - Maximum likelihood approach. 
-#'   Transformed divergence gives an exponentially decreasing weight to increasing distances 
+#'   Transformed divergence gives an exponentially decreasing weight to increasing distances
 #'   between the classes.
 #'
 #' @md 
@@ -67,8 +67,8 @@
 #'    norm2 <- dnorm(seq(-20,20,length=5000),mean=0.2,sd=2)                          
 #'      separability(norm1, norm2) 
 #'            
-#'    s1 <- c (1362,1411,1457,1735,1621,1621,1791,1863,1863,1838)
-#'    s2 <- c (1362,1411,1457,10030,1621,1621,1791,1863,1863,1838)
+#'    s1 <- c(1362,1411,1457,1735,1621,1621,1791,1863,1863,1838)
+#'    s2 <- c(1362,1411,1457,10030,1621,1621,1791,1863,1863,1838)
 #'      separability(s1, s2, plot=TRUE) 
 #'       
 #' @export separability                            
@@ -87,12 +87,14 @@ separability <- function(x, y, plot = FALSE, cols = c("red", "blue"),
     
 	mdif <- mean(x) - mean(y)
     p <- (stats::cov(x) + stats::cov(y))/2
-    bh.distance <- 0.125 * t(mdif) * p^(-1) * mdif + 0.5 * log(det(p)/sqrt(det(stats::cov(x)) * det(stats::cov(y))))
+    bh.distance <- 0.125 * t(mdif) * p^(-1) * mdif + 0.5 * log(det(p)/sqrt(det(stats::cov(x)) * 
+	               det(stats::cov(y))))
     
 	m <- (abs(mean(x) - mean(y)))/(stats::sd(x) + stats::sd(y))
-    jm.distance <- 2 * (1 - exp(-bh.distance))
+    jm.distance <- 2 * (1 - exp(-bh.distance)) # bound 0 - 1414
     
-	dt1 <- 1/2 * trace.of.matrix((stats::cov(x) - stats::cov(y)) * (stats::cov(y)^(-1) - stats::cov(x)^(-1)))
+	dt1 <- 1/2 * trace.of.matrix((stats::cov(x) - stats::cov(y)) *  
+	       (stats::cov(y)^(-1) - stats::cov(x)^(-1)))
     dt2 <- 1/2 * trace.of.matrix((stats::cov(x)^(-1) + stats::cov(y)^(-1)) * 
 	                            (mean(x) - mean(y)) * t(mean(x) - mean(y)))
     divergence <- dt1 + dt2
