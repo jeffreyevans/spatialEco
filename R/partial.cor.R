@@ -1,5 +1,5 @@
 #' @title Partial and Semi-partial correlation
-#' @description Calculates a partial or semi-partial correlation using 
+#' @description Calculates a partial or semi-partial correlation  
 #'              with parametric and nonparametric options
 #'
 #' @param x          A vector, data.frame or matrix with 3 columns

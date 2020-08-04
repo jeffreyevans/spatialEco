@@ -1,6 +1,5 @@
 #' @title Class comparison between two nominal rasters
-#' @description Compares two categorical rasters using Cohen's Kappa (d) 
-#'              or paired t-test statistic(s)
+#' @description Creates a labeled cross tabulation between two nominal rasters 
 #'       
 #' @param x          rasterLayer class object   
 #' @param y          rasterLayer class object to compare to x

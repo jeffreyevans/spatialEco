@@ -40,7 +40,7 @@
 #' }
 #' @description
 #' Kappa and t-test values < 0 are reported as 0. For a weighted kappa, a matrix must 
-#' ne provided that correspond to the pairwise weights for all values in both rasters. 
+#' be provided that correspond to the pairwise weights for all values in both rasters. 
 #' Delta entropy is derived by calculating Shannon's on each focal window then 
 #' differencing  them (e(x) - e(y))
 #' 

@@ -1,5 +1,5 @@
 #' @title spectral separability
-#' @description Calculates by class spectral separability 
+#' @description Calculates spectral separability by class  
 #'           
 #' @param x                   data.frame, matrix or vector of spectral values must,
 #'                              match classes defined in y
@@ -12,13 +12,12 @@
 #'
 #' @description
 #' Available statistics:
-#' * Jeffries-Matusita (default) distance (Bruzzone et al., 2005; Swain et al., 1971)  
-#'   is a function of separability that directly relates to the probability of how  
-#'   good a resultant classification will be. The J-M distance is asymptotic to v2, 
-#'   where values of v2 suggest complete separability
-#'
 #' * Bhattacharyya distance (Bhattacharyya 1943; Harold 2003) measures the similarity
-#'   of two discrete or continuous probability distributions.   
+#'   of two discrete or continuous probability distributions.
+#'
+#' * Jeffries-Matusita (default) distance (Bruzzone et al., 2005; Swain et al., 1971)  
+#'   is a scaled (0-2) version of Bhattacharyya. The J-M distance is asymptotic to 2, 
+#'   where 2 suggest complete separability.
 #' @md 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>

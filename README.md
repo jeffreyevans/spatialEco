@@ -79,7 +79,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 	
 	extract.vertices - extracts (x,y) vertices coordinates from polygons and lines 
     
-    focal.lmetrics - Landscape metrics using a focal window
+    focal.lmetrics (depreciated, moved to landmetrics package) - Landscape metrics using a focal window
     
     fuzzySum - Calculates the fuzzy sum of a vector
     
@@ -117,7 +117,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     knn - returns ids, rownames and distance of nearest neighbors in two (or single) spatial objects. 
           Optional radius distance constraint. Added optional covariates (weights).
    
-    land.metrics - Calculates a variety of landscape metrics, on binary rasters, for polygons or points with a buffer 
+    land.metrics (depreciated, moved to landmetrics package) - Calculates a variety of landscape metrics, on binary rasters, for polygons or points with a buffer 
                   distance. This is similar to the moving window in Fragstats but, uses either a buffer for each 
                   point or a zonal approach with polygons, to derive local metrics. 
     
@@ -226,7 +226,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     sampleTransect - Creates random transects from points and generates sample points along each transect
     
-    separability - Calculates variety of univariate or multivariate separability metrics for nominal class samples
+    separability - Calculates variety of univariate separability metrics for nominal class samples
+
+    spectral.separability - Calculates univariate or multivariate separability for nominal class samples
     
     sg.smooth - Smoothing time-series data using a Savitzky-Golay filter 
     
