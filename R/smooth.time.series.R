@@ -47,6 +47,7 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
                              "SpatialPixelsDataFrame", 
 						     "SpatialGridDataFrame")))
     stop("x must be a raster stack, brick of sp raster class object")
+	
   impute.loess <- function(y, x.length = NULL, s = 0.2, 
                            sdata = FALSE, na.rm, ...) {		 
          if (is.null(x.length)) {
@@ -60,26 +61,28 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
              p <- suppressWarnings( stats::loess(y ~ x, span = s, 
   		                            data.frame(x = x, y = y)) )
          if (sdata == TRUE) {
-             y <- stats::predict(p, x)
+           y <- stats::predict(p, x)
          } else {
-             na.idx <- which(is.na(y))
+           na.idx <- which(is.na(y))
              if (length(na.idx) > 1) {
                y[na.idx] <- stats::predict(p, data.frame(x = na.idx))
              }
-           } 
+          } 
   	   }
      return(y)
-   }
+   }   
   if(any(class(x)[1] == c("RasterStack", "RasterBrick"))) { 
     if(raster::nlayers(x) < 8)
       warning("function is intended for imputing missing values 
 	           in multi-temporal data\n      < 8 observations is questionable\n")
-	return( raster::overlay(x, fun = impute.loess, unstack = TRUE, forcefun = FALSE, ...) )
+  i <- function(yd) { impute.loess(y=yd, x.length = NULL, s = f, 
+                                  sdata = smooth.data, na.rm, ...) } 
+	return( raster::overlay(x, fun = i, unstack = TRUE, forcefun = FALSE, ...) )
   } else if(any(class(x)[1] == c("SpatialPixelsDataFrame","SpatialGridDataFrame"))) {
       if(raster::ncol(x) < 8)
         warning("function is intended for imputing missing values 
 	             in multi-temporal data\n      < 8 observations is questionable\n")
     return( x@data <- as.data.frame(t(apply(x@data, MARGIN=1, FUN = impute.loess, 
-	                               x.length = ncol(x)))) ) 
+	                                x.length = ncol(x), sdata = smooth.data, s = f))) ) 
   }  
 }
