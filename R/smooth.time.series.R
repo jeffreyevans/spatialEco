@@ -29,13 +29,26 @@
 #'  }
 #'  r <- random.raster()
 #'
-#'  # Smooth time-series 
-#'  r.smooth <- smooth.time.series(r, f = 0.2, smooth.data = TRUE)  
+#'  #### Smooth time-series using raster stack/brick 
+#'  r.smooth <- smooth.time.series(r, f = 0.6, smooth.data = TRUE)  
 #'  
-#'  # sp SpatialPixelsDataFrame example
+#'  #### sp SpatialPixelsDataFrame example
 #'  r <- as(r, "SpatialPixelsDataFrame")
-#'  r@data <- smooth.time.series(r, f = 0.2, smooth.data = TRUE)
-#'  r <- stack(r) # coerce back to raster stack object
+#'  
+#'  # extract pixel 100 for plotting
+#'  y <- as.numeric(r@data[100,])
+#'  
+#'  # Smooth data
+#'  r@data <- smooth.time.series(r, f = 0.6, smooth.data = TRUE)
+#'  	
+#'  # plot results	
+#'  plot(y, type="l")
+#'    lines(as.numeric(r@data[100,]), col="red")
+#'      legend("bottomright", legend=c("original","smoothed"),
+#'	         lty=c(1,1), col=c("black","red"))	
+#'	
+#'  # coerce back to raster stack object	
+#'  r <- stack(r) 
 #'
 #' }
 #' @seealso \code{\link[stats]{loess}} for details on the loess regression  
@@ -48,8 +61,8 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
 						     "SpatialGridDataFrame")))
     stop("x must be a raster stack, brick of sp raster class object")
 	
-  impute.loess <- function(y, x.length = NULL, s = 0.2, 
-                           sdata = FALSE, na.rm, ...) {		 
+  impute.loess <- function(y, x.length = NULL, s = f, 
+                           sdata = smooth.data, na.rm, ...) {
          if (is.null(x.length)) {
             x.length = length(y)
          }
@@ -73,16 +86,13 @@ smooth.time.series <- function(x, f = 0.80, smooth.data = FALSE, ...) {
    }   
   if(any(class(x)[1] == c("RasterStack", "RasterBrick"))) { 
     if(raster::nlayers(x) < 8)
-      warning("function is intended for imputing missing values 
+      warning("function is intended for fitting a distribution 
 	           in multi-temporal data\n      < 8 observations is questionable\n")
-  i <- function(yd) { impute.loess(y=yd, x.length = NULL, s = f, 
-                                  sdata = smooth.data, na.rm, ...) } 
-	return( raster::overlay(x, fun = i, unstack = TRUE, forcefun = FALSE, ...) )
+	return( raster::overlay(x, fun = impute.loess, unstack = TRUE, forcefun = FALSE, ...) )
   } else if(any(class(x)[1] == c("SpatialPixelsDataFrame","SpatialGridDataFrame"))) {
       if(raster::ncol(x) < 8)
-        warning("function is intended for imputing missing values 
+        warning("function is intended for fitting a distribution 
 	             in multi-temporal data\n      < 8 observations is questionable\n")
-    return( x@data <- as.data.frame(t(apply(x@data, MARGIN=1, FUN = impute.loess, 
-	                                x.length = ncol(x), sdata = smooth.data, s = f))) ) 
+    return( x@data <- as.data.frame(t(apply(x@data, MARGIN=1, FUN = impute.loess))) ) 
   }  
 }
