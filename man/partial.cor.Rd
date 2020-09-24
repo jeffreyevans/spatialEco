@@ -36,7 +36,7 @@ data.frame containing:
 }
 }
 \description{
-Calculates a partial or semi-partial correlation using 
+Calculates a partial or semi-partial correlation  
              with parametric and nonparametric options
 }
 \details{

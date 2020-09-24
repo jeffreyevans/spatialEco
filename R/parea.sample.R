@@ -33,22 +33,25 @@
 #'     plot(ars, pch=20, add=TRUE)
 #'
 #' @export
-parea.sample <- function(x, pct = 0.1, join = FALSE, msamp = 1, sf = 4046.86, 
-                         stype = "hexagonal", ...) {
+parea.sample <- function(x, pct = 0.1, join = FALSE, min.samp = 1, max.samp = NULL,  
+                         sf = 4046.86, stype = "hexagonal", ...) {
   # if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
     if (!inherits(x, "SpatialPolygonsDataFrame")) 
         stop("Must be a SpatialPolygonsDataFrame object")
-    pids <- rownames(x@data)	
+    pids <- row.names(x)	
 	samp.list <- list()	
-      for (i in 1:nrow(x)) {
-        psub <- x[rownames(x@data) == pids[i],]
-	    ns <- round( (rgeos::gArea(psub) / sf) * pct, 0)
-        if (ns < msamp) { ns <- msamp }
+      j=0	
+      for (i in row.names(x)) {
+	   j=j+1
+	   cat("sampling", j, "of", nrow(x), "\n") 
+        psub <- x[grep(i, row.names(x)),]
+		  ns <- round( (rgeos::gArea(psub) / sf) * pct, 0)
+            ns[ns < min.samp] <- min.samp
+	        if(!is.null(max.samp)) ns[ns > max.samp] <- max.samp 	
           psamp <- try( sp::spsample(psub, n = ns, type = stype, iter = 10) )
 		  if(class(psamp) != "try-error") {
             samp.list[[i]] <- sp::SpatialPointsDataFrame(psamp, 
-			  data = data.frame(ID = rep(as.numeric(pids[i]), 
-	  	      dim(sp::coordinates(psamp))[1])))
+			  data = data.frame(ID = rep(i,length(psamp))))
 		  } else {
 		    samp.list[[i]] <- NULL
           }			

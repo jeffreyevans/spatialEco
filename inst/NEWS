@@ -186,4 +186,11 @@ spatialEco_1.3-2
 
 * Added function "max.extent" that returns the maximum extent of multiple spatial features
 
+spatialEco_1.3-3
+=================
+* Bug fix "smooth.time.series" was not accepting smoothing parameter (thanks to Eileen Perry)
+
+* Added function "rotate.polygon" rotates a polygon by specified angle
+
+
 

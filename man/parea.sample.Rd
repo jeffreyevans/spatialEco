@@ -8,7 +8,8 @@ parea.sample(
   x,
   pct = 0.1,
   join = FALSE,
-  msamp = 1,
+  min.samp = 1,
+  max.samp = NULL,
   sf = 4046.86,
   stype = "hexagonal",
   ...
@@ -21,13 +22,13 @@ parea.sample(
 
 \item{join}{Join polygon attributed to point sample}
 
-\item{msamp}{Minimum samples}
-
 \item{sf}{Scaling factor (default is meters to acres conversion factor)}
 
 \item{stype}{Sampling type ('random', 'regular', 'nonaligned', 'hexagonal')}
 
 \item{...}{Additional arguments passed to spsample}
+
+\item{msamp}{Minimum samples}
 }
 \value{
 A SpatialPointsDataFrame with polygon samples

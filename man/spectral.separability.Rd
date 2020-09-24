@@ -20,20 +20,19 @@ A matrix of class-wise Jeffries-Matusita or Bhattacharyya distance
 separability values
 }
 \description{
-Calculates by class spectral separability
+Calculates spectral separability by class
 
 Available statistics:
 \itemize{
-\item Jeffries-Matusita (default) distance (Bruzzone et al., 2005; Swain et al., 1971)
-is a function of separability that directly relates to the probability of how
-good a resultant classification will be. The J-M distance is asymptotic to v2,
-where values of v2 suggest complete separability
 \item Bhattacharyya distance (Bhattacharyya 1943; Harold 2003) measures the similarity
 of two discrete or continuous probability distributions.
+\item Jeffries-Matusita (default) distance (Bruzzone et al., 2005; Swain et al., 1971)
+is a scaled (0-2) version of Bhattacharyya. The J-M distance is asymptotic to 2,
+where 2 suggest complete separability.
 }
 }
 \examples{
-# Create example data 
+#' # Create example data 
 require(MASS)                
 d <- 6                 # Number of bands
 n.class <- 5           # Number of classes
@@ -49,7 +48,6 @@ x <- matrix(double(), ncol=d, nrow=0)
       x <- rbind(x, mvrnorm(n[i], mu[, i], sigma))
       classes <- c(classes, rep(i, n[i]))
     }
-
 colnames(x) <- paste0("band", 1:6)
 classes <- factor(classes, labels=c("water", "forest",
                   "shrub", "urban", "ag"))

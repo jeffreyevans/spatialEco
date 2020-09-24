@@ -35,7 +35,7 @@
 #'   selection. IEEE Transactions on Communication Theory 15:52-60  
 #' 
 #' @examples 
-#' # Create example data 
+#'#' # Create example data 
 #' require(MASS)                
 #' d <- 6                 # Number of bands
 #' n.class <- 5           # Number of classes
@@ -51,7 +51,6 @@
 #'       x <- rbind(x, mvrnorm(n[i], mu[, i], sigma))
 #'       classes <- c(classes, rep(i, n[i]))
 #'     }
-#' 
 #' colnames(x) <- paste0("band", 1:6)
 #' classes <- factor(classes, labels=c("water", "forest",
 #'                   "shrub", "urban", "ag"))

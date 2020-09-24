@@ -23,8 +23,7 @@ cross.tab(x, y, values = NULL, labs = NULL, pct = FALSE, ...)
 a table with the cross tabulated counts
 }
 \description{
-Compares two categorical rasters using Cohen's Kappa (d) 
-             or paired t-test statistic(s)
+Creates a labeled cross tabulation between two nominal rasters
 }
 \note{
 This function returns a cross tabulation between two nominal rasters. 

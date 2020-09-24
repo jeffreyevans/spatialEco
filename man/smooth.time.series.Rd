@@ -39,13 +39,26 @@ pixel data (NA) in raster time-series (stacks/bricks).
  }
  r <- random.raster()
 
- # Smooth time-series 
- r.smooth <- smooth.time.series(r, f = 0.2, smooth.data = TRUE)  
+ #### Smooth time-series using raster stack/brick 
+ r.smooth <- smooth.time.series(r, f = 0.6, smooth.data = TRUE)  
  
- # sp SpatialPixelsDataFrame example
+ #### sp SpatialPixelsDataFrame example
  r <- as(r, "SpatialPixelsDataFrame")
- r@data <- smooth.time.series(r, f = 0.2, smooth.data = TRUE)
- r <- stack(r) # coerce back to raster stack object
+ 
+ # extract pixel 100 for plotting
+ y <- as.numeric(r@data[100,])
+ 
+ # Smooth data
+ r@data <- smooth.time.series(r, f = 0.6, smooth.data = TRUE)
+ 	
+ # plot results	
+ plot(y, type="l")
+   lines(as.numeric(r@data[100,]), col="red")
+     legend("bottomright", legend=c("original","smoothed"),
+         lty=c(1,1), col=c("black","red"))	
+
+ # coerce back to raster stack object	
+ r <- stack(r) 
 
 }
 }
