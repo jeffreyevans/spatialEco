@@ -19,9 +19,10 @@ rotate.polygon(
 \item{sp}{(FALSE | TRUE) Output sp class object}
 
 \item{anchor}{Location to rotate polygon on options are "center", 
-              "lower.left" and "upper.right" 
-
-#' @return an sp or sf polygon object with rotated polygon}
+"lower.left" and "upper.right"}
+}
+\value{
+an sp or sf polygon object with rotated polygon
 }
 \description{
 rotates polygon by specified angle

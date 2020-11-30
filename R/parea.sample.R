@@ -2,13 +2,14 @@
 #' @description Creates a point sample of polygons where n is based 
 #'              on percent area
 #'
-#' @param x sp SpatialPolygonsDataFrame object
-#' @param pct Percent of area sampled
-#' @param join Join polygon attributed to point sample
-#' @param msamp Minimum samples
-#' @param sf Scaling factor (default is meters to acres conversion factor)
-#' @param stype Sampling type ('random', 'regular', 'nonaligned', 'hexagonal')
-#' @param ... Additional arguments passed to spsample
+#' @param x         sp SpatialPolygonsDataFrame object
+#' @param pct       Percent of area sampled
+#' @param join      Join polygon attributed to point sample
+#' @param min.samp  Minimum number of samples
+#' @param max.samp  Maximum number of samples
+#' @param sf        Scaling factor (default is meters to acres conversion factor)
+#' @param stype     Sampling type ('random', 'regular', 'nonaligned', 'hexagonal')
+#' @param ...       Additional arguments passed to spsample
 #'
 #' @note This function results in an adaptive sample based on the area of 
 #'       each polygon

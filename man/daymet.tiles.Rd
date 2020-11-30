@@ -4,20 +4,10 @@
 \alias{daymet.tiles}
 \title{DAYMET Tile ID's}
 \usage{
-daymet.tiles(x, tiles, ids, coords, sp = FALSE)
+daymet.tiles(...)
 }
 \arguments{
-\item{x}{A sp, raster or extent object (with same projection as tiles)}
-
-\item{tiles}{A SpatialPolygonsDataFrame tile index (see notes)}
-
-\item{ids}{A tile id field in the tiles index}
-
-\item{coords}{A vector of xmin, xmax, ymin, ymax coordinates, in same 
-projection as tiles}
-
-\item{sp}{(TRUE/FALSE) Should an sp class SpatialPolygonsDataFrame 
-object of associate tiles be returned}
+\item{...}{ignored}
 }
 \value{
 Vector of DAYMET tile IDS or if sp = TRUE a sp class SpatialPolygonsDataFrame
@@ -30,31 +20,6 @@ Function accepts sp, raster or extent class object or bounding coordinates.
 All input must be in the same projection as the tile index SpatialPolygonsDataFrame. 
 The library includes the DAYMAT tile index "DAYMET_tiles" which can be add using 
 data(), see examples.
-}
-\examples{
-library(sp)
-library(raster)
-data(DAYMET_tiles)
-e <- extent(-117.2567, -104.7523, 36.62797, 47.68194) 
-  plot(DAYMET_tiles)
-    plot(e, col="red", add=TRUE)
-
-# Using extent object	
-daymet.tiles(x = e, tiles = DAYMET_tiles, ids = "Id")
-
-# Using sp object
-e <- as(e, "SpatialPolygons")	
-daymet.tiles(e, tiles = DAYMET_tiles, ids = "Id")
-
-# Using bounding coordinates	
-daymet.tiles(coords=c(-117.2567, -104.7523, 36.62797, 47.68194),
-             tiles = DAYMET_tiles, ids = "Id" )
-
-# Return sp polygons object
-tiles <- daymet.tiles(x = e, tiles = DAYMET_tiles, ids = "Id", sp = TRUE)
-  plot(DAYMET_tiles)
-    plot(tiles, col="red", add=TRUE)
-			 
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

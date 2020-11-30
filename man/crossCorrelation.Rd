@@ -111,44 +111,7 @@ Calculates univariate or bivariate spatial cross-correlation using
     meuse$lisa.clust <- as.factor(I$cluster)
       spplot(meuse, "lisa")
       spplot(meuse, "lisa.clust")	  
- }
-\dontrun{
-  #### Simulate spatially autocorrelated random normal variables 
-  ####   using eigen-decomposition, requires ncf package
-  library(sp)
-  library(ncf)
-  x=expand.grid(1:20, 1:20)[,1]
-  y=expand.grid(1:20, 1:20)[,2]
-  sdat <- data.frame(x =x,y=y,
-                    z1=ncf::rmvn.spa(x=x, y=y, p=2, method="exp"),
-                    z2=ncf::rmvn.spa(x=x, y=y, p=2, method="exp"))  
-  coordinates(sdat) <- ~x+y
-  ( I <- crossCorrelation(sdat$z1, sdat$z2, coords=coordinates(sdat), 
-                          k=99, clust = TRUE) )
-    sdat$lisa <- I$SCI[,"lsci.xy"]
-    sdat$lisa.clust <- as.factor(I$cluster)
-      spplot(sdat, "lisa")
-      spplot(sdat, "lisa.clust")    
-    
-  #### 1st order polygon contingency example 
-  ####   requires UScensus2000tract package
-  library(sp)
-  library(spdep)
-  library(UScensus2000tract)
-  
-  data(oregon.tract)
-  nb <- spdep::nb2listw(poly2nb(oregon.tract), style = "B", zero.policy = TRUE)
-    Wij <- as.matrix( as(nb, "symmetricMatrix") )
-  
-  X = oregon.tract$white
-  Y = oregon.tract$black  
-    
-  # Simulated bivariate lisa
-  I <- crossCorrelation(X, Y, w=Wij, k=99)
-  oregon.tract$lisa <-I$SCI[,"lsci.xy"]
-  oregon.tract$lisa.clust <- as.factor(I$cluster)
-    spplot(oregon.tract, "lisa")
-    spplot(oregon.tract, "lisa.clust")   
+
 } 
 
 }

@@ -42,6 +42,7 @@
 #' increases with an increase in canopy density. The modified version of the index accounts 
 #' for the background signature of soils while preserving sensitivity to LAI  and resistance 
 #' to the influence of chlorophyll. 
+#'
 #' @description
 #' The Normalized difference senescent vegetation index (NDSVI) follows methods from 
 #' Qi et a., (2000). The senescence is used to threshold the NDSVI. Values less then this value 

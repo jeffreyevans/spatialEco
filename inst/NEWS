@@ -192,5 +192,12 @@ spatialEco_1.3-3
 
 * Added function "rotate.polygon" rotates a polygon by specified angle
 
+* Added function "quadrats" for quadrat sampling or analysis
 
+* Added function "impute.loess" for imputing NA's or smoothing data
 
+* Added function "dahi" Diurnal Anisotropic Heat Index
+
+* Added function "built.index" remote sensing built-up index
+
+* Added function "chae" Canine-Human Age Equivalent (for fun)
