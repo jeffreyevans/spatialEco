@@ -16,7 +16,7 @@
 #' 
 #' @details
 #' Monthly data 1895-1980 is available in a single zip file on the ftp site
-#' PRISM URL: \url{http://prism.nacse.org/}
+#' PRISM URL: \url{https://prism.oregonstate.edu/}
 #' FTP download sites for 400m gridded daily/monthly climate data
 #'   \url{ftp://prism.oregonstate.edu/daily}
 #'    \url{ftp://prism.oregonstate.edu/monthly}
@@ -24,7 +24,7 @@
 #" Naming convention: PRISM_<var>_<stability>_<scale&version>_<date>_bil.zip
 #' i.e., 'PRISM_ppt_stable_4kmD1_20100208_bil.zip' 
 #' Data description: 
-#' \url{http://prism.nacse.org/documents/PRISM_datasets_aug2013.pdf}   
+#' \url{https://prism.oregonstate.edu/documents/PRISM_datasets_aug2013.pdf}   
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

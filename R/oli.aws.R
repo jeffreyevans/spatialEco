@@ -29,10 +29,10 @@
 #'
 #' @note 
 #' Amazons AWS cloud service is hosting OLI Landsat 8 data granules
-#'   \url{https://aws.amazon.com/public-datasets/landsat/}
+#'   \url{https://registry.opendata.aws/landsat-8}
 #'   \url{https://aws.amazon.com/blogs/aws/start-using-landsat-on-aws/}
 #'
-#' USGS Landsat collections: \url{https://www.usgs.gov/land-resources/nli/landsat}
+#' USGS Landsat collections: \url{https://www.usgs.gov/core-science-systems/nli/landsat}
 #' Pre-collection processing levels: "L1T", "L1GT", "L1G"
 #' Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
 #'     "L1T" and "L1TP" - Radiomertically calibrated and orthorectified (highest level processing) 
