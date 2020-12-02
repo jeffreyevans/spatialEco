@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.3-2, developement 1.3-3) 
+# spatialEco (CRAN 1.3-3, developement 1.3-4) 
 
 [![CRAN
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -18,11 +18,18 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     annulus.matrix - Creates a 0,1 matrix based on defined annulus parameters, can be used as a window
 	                 matrix in a raster focal function
     
+	background - Creates a point sample that can be used as a NULL for SDM's and other  
+	             modeling approaches (see pseudo.absence for alternate approach). 
+	
 	bearing.distance - Calculate new point based on bearing/distance
     
     breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of 
                        population counts.     
     
+	built.index - remote sensing built-up index
+	
+	chae - The Canine-Human Age Equivalent (for fun)
+	
     classBreaks - for finding class breaks in a distribution
     
     class.comparison - Compares two nominal rasters
@@ -55,7 +62,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     curvature - Zevenbergen & Thorne, McNab's or Bolstad's surface (raster) curvature  
     
-    daymet.point - Downloads DAYMET climate variables for specified point and timeperiod
+    dahi - Calculates the DAHI (Diurnal Anisotropic Heat Index)
+	
+	daymet.point - Downloads DAYMET climate variables for specified point and timeperiod
     
     daymet.tiles - Returns a vector of DAYMET tile id's within a specified extent
     
@@ -99,9 +108,14 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     hybrid.kmeans - Clustering using hierarchical clustering to define cluster-centers in k-means 
     
     idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. 
-                   The function is a smoothing interpolator at the point observation(s) level using 
-                   a distance-weighted mean.   
+                    The function is a smoothing interpolator at the point observation(s) level using 
+                    a distance-weighted mean.   
     
+	impute.loess - Imputes NA's or smooths data (or both) for a vector, intended
+	               mostly for time-series or serial data. 
+	
+	insert - Inserts a row or column into a data.frame
+	
     insert.values - Inserts new values into a vector at specified positions  
     
 	is.empty - Method, evaluates if vector is empty 
@@ -183,6 +197,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                     This is akin to distance constrained but is informed by the spatial process of the observed data 
                     and is drawn from a probabilistic sample following the intensity function.       
 
+    quadrats - Quadrat sampling or analysis, variable size and angle options
+
     random.raster - creates random rasters or stacks of defined dimensions and statistical distributions
     
     raster.change - Compares two categorical rasters with a variety of statistical options 
@@ -215,6 +231,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     remove.holes - Removes all holes (null geometry) in polygon sp class objects 
     
+	rotate.polygon - Rotates a polygon by specified angle
+	
     sa.trans - Trigonometric transformation of a slope and aspect interaction 
     
     sample.annulus - Creates sample points based on annulus with defined inner and outer radius
