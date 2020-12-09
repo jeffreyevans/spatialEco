@@ -205,6 +205,12 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     raster.deviation - Local deviation from the raster based on specified global statistic or a polynomial trend.                          
     
+	rasterDistance - This replicates the raster distanceFromPoints function but uses the Arya & Mount
+                     Approximate Near Neighbor (ANN) C++ library for calculating distances. Where this
+                     results in a notable increase in performance it is not memory safe, needing to read
+                     in the entire raster and does not use the GeographicLib (Karney, 2013) spheroid 
+                     distance method for geographic data.  
+	
     raster.downscale - Downscale raster to a higher resolution raster using robust regression
     
     raster.entropy - Calculates entropy on integer raster (i.e., 8 bit 0-255)  
