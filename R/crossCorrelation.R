@@ -65,21 +65,20 @@
 #'                     coordinates(meuse))))  
 #'   nb <- nb2listw(dnearneigh(meuse, 0, all.linked), style = "B", zero.policy = TRUE)  
 #'     Wij <- as.matrix( as(nb, "symmetricMatrix") ) 	
-#'    ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
-#'                            clust=TRUE, k=99) )
+#'    I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
+#'                            clust=TRUE, k=99) 
 #'     meuse$lisa <-  I$SCI[,"lsci.xy"]
-#'     meuse$lisa.clust <- as.factor(I$cluster)
-#'       spplot(meuse, "lisa")
-#'       spplot(meuse, "lisa.clust") 
+#'	   spplot(meuse, "lisa")
+#'    #meuse$lisa.clust <- as.factor(I$cluster)
+#'      #spplot(meuse, "lisa.clust") 
 #'	   
 #'   #### Using a default spatial weights matrix method (inverse power function)
-#'   ( I <- crossCorrelation(meuse$zinc, meuse$copper, coords = coordinates(meuse), 
-#'                           clust = TRUE, k=99) )
+#'   I <- crossCorrelation(meuse$zinc, meuse$copper, coords = coordinates(meuse), 
+#'                           clust = TRUE, k=99)
 #'     meuse$lisa <- I$SCI[,"lsci.xy"]
-#'     meuse$lisa.clust <- as.factor(I$cluster)
 #'       spplot(meuse, "lisa")
-#'       spplot(meuse, "lisa.clust")	  
-#'
+#'     #meuse$lisa.clust <- as.factor(I$cluster)
+#'     #  spplot(meuse, "lisa.clust")	  
 #' } 
 #' 
 #' @export crossCorrelation

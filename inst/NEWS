@@ -162,6 +162,8 @@ spatialEco_1.3-1
 
 spatialEco_1.3-2
 =================
+* Feature Enhancement "hli" added support for southern hemisphere
+  
 * Bug fix "raster.change" was not correctly evaluating raster in memory 
 
 * Feature Enhancement "erase.points" changed the function to account for single 
@@ -184,20 +186,29 @@ spatialEco_1.3-2
 
 * Added function "is.whole" method that evaluates if a numeric vector is whole or float
 
-* Added function "max.extent" that returns the maximum extent of multiple spatial features
-
 spatialEco_1.3-3
 =================
-* Bug fix "smooth.time.series" was not accepting smoothing parameter (thanks to Eileen Perry)
-
-* Added function "rotate.polygon" rotates a polygon by specified angle
-
-* Added function "quadrats" for quadrat sampling or analysis
-
-* Added function "impute.loess" for imputing NA's or smoothing data
-
-* Added function "dahi" Diurnal Anisotropic Heat Index
-
 * Added function "built.index" remote sensing built-up index
 
 * Added function "chae" Canine-Human Age Equivalent (for fun)
+
+* Added function "dahi" Diurnal Anisotropic Heat Index
+
+* Added function "impute.loess" for imputing NA's or smoothing data
+
+* Added function "max_extent" returns polygon representing maximum extent 
+                  of defined rasters
+
+* Added function "quadrats" for quadrat sampling or analysis
+
+* Added function "rotate.polygon" rotates a polygon by specified angle 
+                 (also used by quadrats function)
+
+* Bug fix "smooth.time.series" was not accepting smoothing parameter 
+          (thanks to Eileen Perry)
+
+spatialEco_1.3-4
+=================
+* Added function "rasterDistance" for calculating fast point to raster distances
+
+* Bug fix in print method for crossCorrelation function 

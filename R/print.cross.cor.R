@@ -17,9 +17,10 @@ print.cross.cor <- function(x, ...) {
         cat("", "\n")  
   	cat("  p-value based on 2-tailed t-test: ", x$local.p, "\n")	
     cat("  p-value based on 2-tailed t-test observations above/below CI: ", x$range.p, "\n")	
-    if( exists(x$clusters) )
+    if(!is.null(x[["clusters"]])){
 	  cat("\n", "Counts of cluster types")
 	    print(table(x$cluster))
+	}
   } else {
   cat("Moran's-I...", "\n")
       cat("  First-order Moran's-I: ", x$I, "\n")
@@ -31,8 +32,9 @@ print.cross.cor <- function(x, ...) {
 	    cat("", "\n") 
   	cat("    non-simulated second-order p-value based on 2-tailed t-test: ", x$t.test, "\n")
 	cat("    p-value based on 2-tailed t-test observations above/below CI: ", x$p, "\n")	
-    if( exists(x$clusters) )
+    if(!is.null(x[["clusters"]])) {
 	  cat("\n", "Counts of cluster types")
 	    print(table(x$cluster))
+	}
   }
 }
