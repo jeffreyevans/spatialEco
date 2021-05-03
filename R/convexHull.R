@@ -28,7 +28,6 @@
 #' @examples 
 #' library(sp)
 #' library(sf)
-#' library(dplyr)
 #' 
 #' #### points example
 #'  data(meuse)
@@ -50,8 +49,9 @@
 #' #### Polygon example
 #' data(meuse)
 #'   coordinates(meuse) = ~x+y
-#'   meuse <- as(meuse, "sf")
-#'   meuse_poly <- st_buffer(meuse, dist = meuse$elev*15)
+#'     meuse <- as(meuse, "sf")
+#'       meuse_poly <- st_buffer(meuse[sample(1:nrow(meuse),10),], 
+#'	                           dist = meuse$elev*15)
 #' 
 #' # Create [x,y] points representing polygon boundaries 
 #'
@@ -61,8 +61,7 @@
 #'      subset(select = c(X, Y)) %>% 
 #'        sf::st_as_sf(coords = c("X", "Y"))  
 #'   			
-#' a <- spatialEco::convexHull(poly_points, alpha = 100000, 
-#'                             sp=FALSE)
+#' a <- convexHull(poly_points, alpha = 100000, sp=FALSE)
 #'  plot(sf::st_geometry(a), cex=1.5, col="red") 
 #'     plot(sf::st_geometry(meuse_poly), col="black", add=TRUE)
 #'}

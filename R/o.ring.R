@@ -36,19 +36,19 @@
 #' pattern analysis in ecology. Oikos 104:209-229
 #'
 #' @examples
-#' library(spatstat) 
+#' library(spatstat.core) 
 #' data(lansing)
-#'     x  <- spatstat::unmark(split(lansing)$maple)
+#'     x  <- spatstat.geom::unmark(split(lansing)$maple)
 #'     o.ring(x)
 #'
 #' @export
 o.ring <- function(x, inhomogeneous = FALSE, ...) {
   if( inhomogeneous ) { 
-    g <- spatstat::pcfinhom(x, ...)
+      g <- spatstat.core::pcfinhom(x, ...)
     } else {
-	g <- spatstat::pcf(x, ...)
+	  g <- spatstat.core::pcf(x, ...)
 	}
-    lambda <- summary(x)$intensity
-    O <- spatstat::eval.fv(lambda * g)
-    graphics::plot(O, ylab = "O-ring(r)", main = "O-ring")
-} 
+      lambda <- summary(x)$intensity
+    O <- spatstat.core::eval.fv(lambda * g)
+  graphics::plot(O, ylab = "O-ring(r)", main = "O-ring")
+}

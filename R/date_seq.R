@@ -9,31 +9,27 @@
 #'
 #' @return 
 #' A date vector of class POSIXct for minute and Date for other options 
-#'
-#' @details
-#' Please note that this is not a memory safe function that utilizes
-#' rasters out of memory in the manner that the raster package does.
 #'     
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
 #' # monthly steps 1990/01/01 - 2019/12/31
-#'d <- date.seq("1990/01/01", "2019/12/31", step="month")
+#' d <- date_seq("1990/01/01", "2019/12/31", step="month")
 #'
 #' # daily steps 1990/01/01 - 2019/12/31
-#'d <- date.seq("1990/01/01", "2019/12/31", step="day")
+#' d <- date_seq("1990/01/01", "2019/12/31", step="day")
 #'
 #' # daily steps 1990/01/01 - 2019/12/31 with leap days removed
-#'d <- date.seq("1990/01/01", "2019/12/31", step="day", rm.leap=TRUE)
+#' d <- date_seq("1990/01/01", "2019/12/31", step="day", rm.leap=TRUE)
 #'
 #' # daily step 2008/12/29 - 2008/12/31, 2008 is leap year
-#'d <- date.seq("2008/12/29", "2008/12/31")
+#' d <- date_seq("2008/12/29", "2008/12/31")
 #'
 #' # minutes step 2008/12/29 - 2008/12/31, 2008 is leap year
-#'d <- date.seq("2008/12/29", "2008/12/31", step="minute")
+#' d <- date_seq("2008/12/29", "2008/12/31", step="minute")
 #'
-#' @export date.seq 
-date.seq <- function(start, end, step = c("day", "week", "month", "quarter", "year", "minute"),
+#' @export date_seq 
+date_seq <- function(start, end, step = c("day", "week", "month", "quarter", "year", "minute"),
                      rm.leap = FALSE){
   is.leap <- function(year) {
     return(ifelse((year %%4 == 0 & year %%100 != 0) | year %%400 == 0, TRUE, FALSE))

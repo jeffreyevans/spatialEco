@@ -21,7 +21,7 @@
 #' @examples
 #' library(sp)
 #' library(raster)
-#' library(GeNetIt)
+#' library(sf)
 #' 
 #' # For polygons
 #' r <- raster(xmn=-11.69, xmx=2988.31, ymn=-749.97, ymx=1650.03,
@@ -41,16 +41,17 @@
 #'     points(v, pch=20, cex=2, col="red")
 #' 
 #' # For lines
-#' pts <- sampleRandom(r, 10, sp=TRUE)
-#'   graph <- GeNetIt::knn.graph(pts)
+#' nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
+#'   nc <- sf::st_cast(sf::st_cast(nc, "POLYGON"), "LINESTRING")
+#'     nc <- as(nc, "Spatial")
 #'  
-#' extract.vertices(graph)
-#' extract.vertices(graph, join=TRUE, rm.duplicates=TRUE)
+#' extract.vertices(nc)
+#' extract.vertices(nc, join=TRUE, rm.duplicates=TRUE)
 #' 
-#' v <- extract.vertices(graph, as.sp=TRUE, join=TRUE)
+#' v <- extract.vertices(nc, as.sp=TRUE, join=TRUE)
 #'   head(v@data)
 #' 
-#'   plot(graph)
+#'   plot(nc)
 #'     points(v, pch=20, cex=2, col="red")
 #' 
 #' @export extract.vertices 

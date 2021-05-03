@@ -62,7 +62,7 @@
 #'   Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
 #'
 #' @examples  
-#' require(spatstat)
+#' require(spatstat.core)
 #' require(sp) 
 #' data(bei)  
 #'   trees <- as(bei, 'SpatialPoints')
@@ -82,23 +82,23 @@ pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL,
     if (is.null(window)) 
         stop("Please specify a valid window type hull | extent")
     bw.Scott <- function(X) {
-        stopifnot(spatstat::is.ppp(X))
-        n <- spatstat::npoints(X)
+        stopifnot(spatstat.geom::is.ppp(X))
+        n <- spatstat.geom::npoints(X)
         sdx <- sqrt(stats::var(X$x))
         sdy <- sqrt(stats::var(X$y))
         return(c(sdx, sdy) * n^(-1/6))
     }
     bw.Stoyan <- function(X, co = 0.15) {
-        stopifnot(spatstat::is.ppp(X))
-        n <- spatstat::npoints(X)
-        W <- spatstat::as.owin(X)
-        a <- spatstat::area.owin(W)
+        stopifnot(spatstat.geom::is.ppp(X))
+        n <- spatstat.geom::npoints(X)
+        W <- spatstat.geom::as.owin(X)
+        a <- spatstat.geom::area.owin(W)
         stoyan <- co/sqrt(5 * n/a)
         return(stoyan)
     }
     bw.geometry <- function(X, f = 1/4) {
-        X <- spatstat::as.owin(X)
-        g <- spatstat::distcdf(X)
+        X <- spatstat.geom::as.owin(X)
+        g <- spatstat.core::distcdf(X)
         r <- with(g, .x)
         Fr <- with(g, .y)
         iopt <- min(which(Fr >= f))
@@ -113,34 +113,34 @@ pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL,
           stop(paste(xname, "should be a vector of length 2 giving (min, max)"))
         return(FALSE)
       }
-        stopifnot(spatstat::is.ppp(X))
+        stopifnot(spatstat.geom::is.ppp(X))
         if (!is.null(srange)) 
             check.range(srange) else {
-            nnd <- spatstat::nndist(X)
-            srange <- c(min(nnd[nnd > 0]), spatstat::diameter(spatstat::as.owin(X))/2)
+            nnd <- spatstat.geom::nndist(X)
+            srange <- c(min(nnd[nnd > 0]), spatstat.geom::diameter(spatstat.geom::as.owin(X))/2)
         }
         sigma <- exp(seq(log(srange[1]), log(srange[2]), length = ns))
         cv <- numeric(ns)
         for (i in 1:ns) {
             si <- sigma[i]
-            lamx <- spatstat::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
-            lam <- spatstat::density.ppp(X, sigma = si)
-            cv[i] <- sum(log(lamx)) - spatstat::integral.im(lam)
+            lamx <- spatstat.core::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
+            lam <- spatstat.core::density.ppp(X, sigma = si)
+            cv[i] <- sum(log(lamx)) - spatstat.geom::integral.im(lam)
         }
-        result <- spatstat::bw.optim(cv, sigma, iopt = which.max(cv), criterion = "Likelihood Cross-Validation")
+        result <- spatstat.core::bw.optim(cv, sigma, iopt = which.max(cv), criterion = "Likelihood Cross-Validation")
         return(result)
     }
     if (window == "hull") {
-        win <- spatstat::convexhull.xy(sp::coordinates(x))
+        win <- spatstat.geom::convexhull.xy(sp::coordinates(x))
     } else {
         if (window == "extent") {
             e <- as.vector(sp::bbox(x))
-            win <- spatstat::as.owin(c(e[1], e[3], e[2], e[4]))
+            win <- spatstat.geom::as.owin(c(e[1], e[3], e[2], e[4]))
         }
     }
-    x.ppp <- spatstat::as.ppp(sp::coordinates(x), win)
+    x.ppp <- spatstat.geom::as.ppp(sp::coordinates(x), win)
     if (sigma == "Diggle") {
-        bw <- spatstat::bw.diggle(x.ppp)
+        bw <- spatstat.core::bw.diggle(x.ppp)
     } else {
         if (sigma == "Scott") {
             bw <- bw.Scott(x.ppp)
@@ -162,12 +162,12 @@ pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL,
             }
         }
     }
-    den <- spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge, at = "points")
+  den <- spatstat.core::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge, at = "points")
     point.den <- data.frame(X = x.ppp$x, Y = x.ppp$y, KDE = as.vector(den * 10000))
-    point.den$KDE <- point.den$KDE/max(point.den$KDE)
-    point.den <- point.den[order(point.den[["KDE"]]), ]
-    point.den$KDE <- rev(point.den$KDE)
-    sp::coordinates(point.den) <- ~X + Y
+      point.den$KDE <- point.den$KDE/max(point.den$KDE)
+        point.den <- point.den[order(point.den[["KDE"]]), ]
+        point.den$KDE <- rev(point.den$KDE)
+      sp::coordinates(point.den) <- ~X + Y
     point.rs <- point.den[sample(seq(1:nrow(point.den)), n, prob = point.den@data$KDE), ]
-    point.rs
+  return( point.rs )
 } 

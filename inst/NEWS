@@ -212,3 +212,19 @@ spatialEco_1.3-4
 * Added function "rasterDistance" for calculating fast point to raster distances
 
 * Bug fix in print method for crossCorrelation function 
+
+spatialEco_1.3-5
+=================
+* Fixed bug in crossCorrelation print method
+
+spatialEco_1.3-6
+=================
+* Addressed changes to spatstat package dependencies
+
+spatialEco_1.3-7
+=================
+* Added function "polygon_extract" for a fast method for extracting raster values to polygons  
+
+* Added function "time.to.event" returning the time (sum to position) to a specified value 
+
+* Added function "cgls_urls" for returning download URL from CGLS query

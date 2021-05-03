@@ -41,9 +41,9 @@ conditioned probability spectrum) with the interpretation of a neighborhood
 density, which is more intuitive than an accumulative measure.
 }
 \examples{
-library(spatstat) 
+library(spatstat.core) 
 data(lansing)
-    x  <- spatstat::unmark(split(lansing)$maple)
+    x  <- spatstat.geom::unmark(split(lansing)$maple)
     o.ring(x)
 
 }

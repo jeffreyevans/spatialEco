@@ -109,7 +109,7 @@ finally, the 'stoyan' method will produce very strong 2nd order results.
 
  # With clustered data
  library(sp)
- library(spatstat)
+ library(spatstat.core)
  data(bei)
    trees <- as(bei, 'SpatialPoints')
      trees <- SpatialPointsDataFrame(coordinates(trees), 

@@ -31,9 +31,8 @@ library(sp)
 
 # skewness function
 skew <- function(x, na.rm = FALSE) { 
-   if (na.rm) 
-       x <- x[!is.na(x)]
-  sum( (x - mean(x)) ^ 3) / ( length(x) * sd(x) ^ 3 )  
+   if (na.rm) x <- x[!is.na(x)]
+   sum( (x - mean(x)) ^ 3) / ( length(x) * sd(x) ^ 3 )  
   }   
 
 # percent x >= p function

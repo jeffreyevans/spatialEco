@@ -41,15 +41,15 @@ nni <- function(x, win = "hull") {
     if (!class(x) == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
         stop(deparse(substitute(x)), " MUST BE A sp POINTS OBJECT")
     if (win == "hull") {
-        w <- spatstat::convexhull.xy(sp::coordinates(x))
+        w <- spatstat.geom::convexhull.xy(sp::coordinates(x))
     }
     if (win == "extent") {
         e <- as.vector(sp::bbox(x))
-        w <- spatstat::as.owin(c(e[1], e[3], e[2], e[4]))
+        w <- spatstat.geom::as.owin(c(e[1], e[3], e[2], e[4]))
     }
-    x <- spatstat::as.ppp(sp::coordinates(x), w)
-    A <- spatstat::area.owin(w)
-      obsMeanDist <- sum(spatstat::nndist(x))/x$n
+    x <- spatstat.geom::as.ppp(sp::coordinates(x), w)
+    A <- spatstat.geom::area.owin(w)
+      obsMeanDist <- sum(spatstat.geom::nndist(x))/x$n
       expMeanDist <- 0.5 * sqrt(A / x$n)
       se <- 0.26136 / ((x$n**2.0 / A)**0.5)
       nni <- obsMeanDist / expMeanDist
@@ -57,4 +57,4 @@ nni <- function(x, win = "hull") {
     return(list(NNI = nni, z.score = z, p = 2*stats::pnorm(-abs(z)),  
 	       expected.mean.distance = expMeanDist,
 		   observed.mean.distance = obsMeanDist))
-} 
+}

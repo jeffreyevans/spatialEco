@@ -104,7 +104,7 @@
 #'
 #'  # With clustered data
 #'  library(sp)
-#'  library(spatstat)
+#'  library(spatstat.core)
 #'  data(bei)
 #'    trees <- as(bei, 'SpatialPoints')
 #'      trees <- SpatialPointsDataFrame(coordinates(trees), 
@@ -135,46 +135,46 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
       dm <- dim(im)[2:1]
         xx <- unname(orig[1] + cumsum(c(0, rep(r[1], dm[1] - 1))))
         yy <- unname(orig[2] + cumsum(c(0, rep(r[2], dm[2] - 1))))
-      return(spatstat::im(matrix(raster::values(im), ncol = dm[1], 
+      return(spatstat.geom::im(matrix(raster::values(im), ncol = dm[1], 
              nrow = dm[2], byrow = TRUE)[dm[2]:1, ], 
 		     xcol = xx, yrow = yy))
     }
 	  
 	if (is.null(Mask)) {
       if (window == "hull") {
-        win <- spatstat::convexhull.xy(sp::coordinates(x))
-        win <- spatstat::as.mask(win, eps = s)
+        win <- spatstat.geom::convexhull.xy(sp::coordinates(x))
+        win <- spatstat.geom::as.mask(win, eps = s)
         }
       if (window == "extent") {
         e <- as.vector(sp::bbox(x))
-        win <- spatstat::as.owin(c(e[1], e[3], e[2], e[4]))
-        win <- spatstat::as.mask(win, eps = s)
+        win <- spatstat.geom::as.owin(c(e[1], e[3], e[2], e[4]))
+        win <- spatstat.geom::as.mask(win, eps = s)
         }
     } else {
         win <- raster.as.im(Mask)
-        win <- spatstat::as.mask(win, eps = raster::res(Mask)[1])
+        win <- spatstat.geom::as.mask(win, eps = raster::res(Mask)[1])
     }
 	
-  x.ppp <- spatstat::as.ppp(sp::coordinates(x), win)
+  x.ppp <- spatstat.geom::as.ppp(sp::coordinates(x), win)
 	
     bw.Scott <- function(X) {
-        stopifnot(spatstat::is.ppp(X))
-        n <- spatstat::npoints(X)
+        stopifnot(spatstat.geom::is.ppp(X))
+        n <- spatstat.geom::npoints(X)
         sdx <- sqrt(stats::var(X$x))
         sdy <- sqrt(stats::var(X$y))
         return(c(sdx, sdy) * n^(-1/6))
     }
     bw.Stoyan <- function(X, co = 0.15) {
-        stopifnot(spatstat::is.ppp(X))
-        n <- spatstat::npoints(X)
-        W <- spatstat::as.owin(X)
-        a <- spatstat::area.owin(W)
+        stopifnot(spatstat.geom::is.ppp(X))
+        n <- spatstat.geom::npoints(X)
+        W <- spatstat.geom::as.owin(X)
+        a <- spatstat.geom::area.owin(W)
         stoyan <- co/sqrt(5 * n/a)
         return(stoyan)
     }
     bw.geometry <- function(X, f = 1/4) {
-        X <- spatstat::as.owin(X)
-        g <- spatstat::distcdf(X)
+        X <- spatstat.geom::as.owin(X)
+        g <- spatstat.core::distcdf(X)
         r <- with(g, .x)
         Fr <- with(g, .y)
         iopt <- min(which(Fr >= f))
@@ -189,27 +189,27 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
           stop(paste(xname, "should be a vector of length 2 giving (min, max)"))
         return(FALSE)
       }
-        stopifnot(spatstat::is.ppp(X))
+        stopifnot(spatstat.geom::is.ppp(X))
         if (!is.null(srange)) 
             check.range(srange) else {
-            nnd <- spatstat::nndist(X)
-            srange <- c(min(nnd[nnd > 0]), spatstat::diameter(spatstat::as.owin(X))/2)
+            nnd <- spatstat.geom::nndist(X)
+            srange <- c(min(nnd[nnd > 0]), spatstat.geom::diameter(spatstat.geom::as.owin(X))/2)
         }
         sigma <- exp(seq(log(srange[1]), log(srange[2]), length = ns))
         cv <- numeric(ns)
         for (i in 1:ns) {
             si <- sigma[i]
-            lamx <- spatstat::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
-            lam <- spatstat::density.ppp(X, sigma = si)
-            cv[i] <- sum(log(lamx)) - spatstat::integral.im(lam)
+            lamx <- spatstat.core::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
+            lam <- spatstat.core::density.ppp(X, sigma = si)
+            cv[i] <- sum(log(lamx)) - spatstat.geom::integral.im(lam)
         }
-      result <- spatstat::bw.optim(cv, sigma, iopt = which.max(cv), 
+      result <- spatstat.core::bw.optim(cv, sigma, iopt = which.max(cv), 
 	                    criterion = "Likelihood Cross-Validation")
     return(result)
     }
 	
     if (sigma == "Diggle") {
-        bw <- spatstat::bw.diggle(x.ppp)
+        bw <- spatstat.core::bw.diggle(x.ppp)
       } else if(sigma == "Scott") { 
           bw <- bw.Scott(x.ppp)
         } else if(sigma == "Stoyan") {
@@ -223,7 +223,7 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
                 } else {
 	              stop("Not a valid bandwidth option")
                 }  		
-      den <- raster::raster(spatstat::density.ppp(x.ppp, weights = wts, sigma = bw, 
+      den <- raster::raster(spatstat.core::density.ppp(x.ppp, weights = wts, sigma = bw, 
                                    adjust = gradient, diggle = edge)) * a
 
       den <- 1 - (den/raster::maxValue(den))
