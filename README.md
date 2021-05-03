@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.3-5, developement 1.3-6) 
+# spatialEco (CRAN 1.3-6, developement 1.3-7) 
 
 [![CRAN
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -13,13 +13,11 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
     
-# Available functions in spatialEco 1.3-6 are:
+# Available functions in spatialEco 1.3-7 are:
 
     annulus.matrix - Creates a 0,1 matrix based on defined annulus parameters, can be used as a window
 	                 matrix in a raster focal function
-    
-	approx.dd.res - Approximate raster (meters) resolution from decimal degrees 
-	
+    	
 	background - Creates a point sample that can be used as a NULL for SDM's and other  
 	             modeling approaches (see pseudo.absence for alternate approach). 
 	
@@ -29,6 +27,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
                        population counts.     
     
 	built.index - remote sensing built-up index
+	
+	cgls_urls - Based on query, provide URL's for Copernicus Global Land Service datasets
 	
 	chae - The Canine-Human Age Equivalent (for fun)
 	
@@ -65,6 +65,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     curvature - Zevenbergen & Thorne, McNab's or Bolstad's surface (raster) curvature  
     
     dahi - Calculates the DAHI (Diurnal Anisotropic Heat Index)
+
+    date_seq - Creates date sequence, given defined start and stop dates, with options for
+				day, week, month, quarter, year or, minute. 
 	
 	daymet.point - Downloads DAYMET climate variables for specified point and timeperiod
     
@@ -149,7 +152,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     logistic.regression - Performs a logistic (binomial) and autologistic (spatially lagged binomial) regression 
                          using maximum likelihood estimation or penalized maximum likelihood estimation.
     
-	max.extent - Returns the maximum extent of multiple spatial inputs
+	max_extent - Returns the maximum extent of multiple spatial inputs
 	
     moments - Calculate statistical moments of a distribution including percentiles, arithmetic-geometric-harmonic 
              means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    
@@ -185,7 +188,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     point.in.poly - Intersects point and polygon feature classes and adds polygon attributes to the points     
     
-    polyPerimeter - Calculates the perimeter length(s) for a polygon object
+    polygon_extract - Fast method for extracting raster values to polygons
+	
+	polyPerimeter - Calculates the perimeter length(s) for a polygon object
     
     poly.regression - smoothing data in time-series and imputing missing (NA) values using polynomial regression
     
@@ -287,7 +292,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     
     swvi - Senescence weighted MSAVI or MTVI
     
-    topo.distance - Calculates topographic corrected distance for a SpatialLinesDataFrame object  
+    time_to_event - Returns the time (sum to position) to a specified value 
+	
+	topo.distance - Calculates topographic corrected distance for a SpatialLinesDataFrame object  
     
     tpi - Calculates topographic position using mean deviations within specified window  
     
