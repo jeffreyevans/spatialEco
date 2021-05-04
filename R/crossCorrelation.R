@@ -15,9 +15,9 @@
 #'                        or Global Spatial cross-correlation Index (GSCI)
 #' @param k               Number of simulations for calculating permutation distribution  
 #'                        under the null hypothesis of no spatial autocorrelation
-#' @param dist.function   ("inv.power", "neg.exponent") If w = NULL, the default method 
+#' @param dist.function   ("inv.power", "neg.exponent", "none") If w = NULL, the default method 
 #'                        for deriving spatial weights matrix, options are: inverse power 
-#'                        or negative exponent    
+#'                        or negative exponent, none is for use with a provided matrix    
 #' @param scale.xy        (TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that  
 #'                        they are already scaled following Chen (2015) 
 #' @param scale.partial   (FALSE/TRUE) rescale partial spatial autocorrelation statistics [-1 - 1]
@@ -48,11 +48,22 @@
 #'   \item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
 #' }
 #'
+#' @references
+#' Chen, Y.G. (2012) On the four types of weight functions for spatial contiguity 
+#'    matrix. Letters in Spatial and Resource Sciences 5(2):65-72 
+#' @references
+#' Chen, Y.G. (2013) New approaches for calculating Moran’s index of spatial 
+#'   autocorrelation. PLoS ONE 8(7):e68336
 #' @references 
-#' Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
+#' Chen, Y.G. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
 #'   PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 #'
 #' @examples
+#'  data(chen)
+#' ( r <- crossCorrelation(x=chen[["X"]], y=chen[["Y"]], w = chen[["M"]],  
+#'                         clust=TRUE, type = "LSCI", k=0, 
+#'                         dist.function = "inv.power") ) 
+#'
 #' \donttest{
 #'   library(sp)
 #'   library(spdep)
@@ -82,21 +93,27 @@
 #' } 
 #' 
 #' @export crossCorrelation
-crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI", "GSCI"), k = 1000, 
-                             dist.function = "inv.power", scale.xy = TRUE, scale.partial = FALSE, 
-							 scale.matrix = FALSE, alpha = 0.05, clust = TRUE, return.sims = FALSE) {
+crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI", "GSCI"), k = 999, 
+                             dist.function = c("inv.power", "neg.exponent"), scale.xy = TRUE, 
+							 scale.partial = FALSE, scale.matrix = FALSE, alpha = 0.05, clust = TRUE, 
+							 return.sims = FALSE) {
 	if(missing(x)) stop("x must be specified")
     if(is.null(y)) y = x						 
       if(length(y) != length(x)) stop("[X,Y] are not equal")
         if( length(which(is.na(x))) != 0 | length(which(is.na(y))) != 0) 
 	      stop("NA's not permitted in [X,Y]")
-            if( k == 0) warning("Permutation is not being run, estimated p will be based on observed")
+            if( k == 0) message("Permutation is not being run, estimated p will be based on observed")
 	          if(scale.xy == FALSE) warning("It is assumed that x,v vectors are already scaled") 		
-    type = type[1]		  
+    type = type[1]; dist.function = dist.function[1]		  
 	  n <- length(x)
   if( is.null(w) ) {
     if( is.null(coords) ) stop("If no Wij matrix is provided, a coordinates matrix is required")
       w <- sp::spDists( coords ) 
+  } else {
+    if(!class(w)[1] == "matrix") stop("Spatial weights must be in matrix form")					   
+      if(ncol(w) != length(x) | nrow(w) != length(x)) stop("Spatial weights matrix must be symmetrical and match x")
+        w[which(is.na(w))] <- 0
+  }  
     if( dist.function == "inv.power" ) {
       message("Calculating spatial weights matrix using inverse power function")
 	    w <- 1 / w
@@ -112,17 +129,14 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
         }
       }  
       diag(w) <- 0
+    } else if (dist.function == "none") { 
+      message("Wij matrix is being left raw")	
     } else {
       stop("Not a valid matrix option")
-    }
-  } else {
-    if(!class(w)[1] == "matrix") stop("Spatial weights must be in matrix form")					   
-      if(ncol(w) != length(x) | nrow(w) != length(x)) stop("Spatial weights matrix must be symmetrical and match x")		   
-        w[which(is.na(w))] <- 0
-          if(scale.matrix) {
-            if(sum(w) > 0) { w <- as.matrix(w / sum(w))}
-          }
-  } 
+    }  
+    if(scale.matrix) {
+      if(sum(w) > 0) { w <- as.matrix(w / sum(w))}
+    }   
   if( scale.xy ){  
     x <- ( x - mean(x) ) / ( stats::sd(x) * sqrt((length(x)-1)/length(x)) )
     y <- ( y - mean(y) ) / ( stats::sd(y) * sqrt((length(y)-1)/length(y)) )
@@ -143,8 +157,8 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
     } 
     if( type.cc == "GSCI" ) {
 	# The global spatial crosscorrelation index (chen's SCI)
-      gsci.xy = as.numeric( x*W%*%y ) / ( length(x) - 1 )
-      gsci.yx = as.numeric( y*W%*%x ) / ( length(x) - 1 )
+      gsci.xy = as.numeric( x*W%*%y ) #/ ( length(x) - 1 )
+      gsci.yx = as.numeric( y*W%*%x ) #/ ( length(x) - 1 )
 	    if(scale.cc) {
          gsci.xy <- (gsci.xy - min(gsci.xy)) * (1 - -1) / (max(gsci.xy) - min(gsci.xy)) + -1
   	     gsci.yx <- (gsci.yx - min(gsci.yx)) * (1 - -1) / (max(gsci.yx) - min(gsci.yx)) + -1
@@ -152,11 +166,10 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
       sci = data.frame(gsci.xy = gsci.xy, gsci.yx = gsci.yx)	  
     }
     return(sci)	
-  }
-  
-  global.i <- as.numeric(x%*%w%*%y) / (length(x) - 1) 
+  } 
+  global.i <- as.numeric(x%*%w%*%y) #/ (length(x) - 1) 
     if(type == "LSCI") { tstat = "lsci.xy" } else { tstat = "gsci.xy" }  
-      sci.results <- SCI(x = x,  y = y,W = w, type.cc = type, scale.cc = scale.partial)   
+      sci.results <- SCI(x = x,  y = y, W = w, type.cc = type, scale.cc = scale.partial)   
       if(clust) {     
 	    lisa.clust <- as.character( interaction(x > 0, w %*% y > 0) ) 
           lisa.clust <- gsub("TRUE", "High", lisa.clust)
@@ -168,9 +181,8 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
 	 # Global Moran's-I p-value
        y.sim <- matrix(y[sample(1:n, size = n * k, replace = TRUE)], 
        		        nrow = n, ncol = k) 	
-       isim <- apply(y.sim, MARGIN=2, function(j) t(x[sample(1:length(x))]) %*% w %*% j /
-	                (length(x) - 1) )
-       ( global.p <- sum( abs(isim) > abs( global.i ) ) / length(isim) ) 	 
+       isim <- apply(y.sim, MARGIN=2, function(j) t(x[sample(1:length(x))]) %*% w %*% j )
+         ( global.p <- sum( abs(isim) > abs( global.i ) ) ) 	 
 
        # Local Moran's-I p-value	   
         y.sim <- matrix(y[sample(1:n, size = n * k, replace = TRUE)], 

@@ -10,8 +10,8 @@ crossCorrelation(
   coords = NULL,
   w = NULL,
   type = c("LSCI", "GSCI"),
-  k = 1000,
-  dist.function = "inv.power",
+  k = 999,
+  dist.function = c("inv.power", "neg.exponent"),
   scale.xy = TRUE,
   scale.partial = FALSE,
   scale.matrix = FALSE,
@@ -40,9 +40,9 @@ or Global Spatial cross-correlation Index (GSCI)}
 \item{k}{Number of simulations for calculating permutation distribution
 under the null hypothesis of no spatial autocorrelation}
 
-\item{dist.function}{("inv.power", "neg.exponent") If w = NULL, the default method 
+\item{dist.function}{("inv.power", "neg.exponent", "none") If w = NULL, the default method 
 for deriving spatial weights matrix, options are: inverse power 
-or negative exponent}
+or negative exponent, none is for use with a provided matrix}
 
 \item{scale.xy}{(TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that
 they are already scaled following Chen (2015)}
@@ -85,6 +85,11 @@ Calculates univariate or bivariate spatial cross-correlation using
              local Moran's-I (LISA), following Chen (2015)
 }
 \examples{
+ data(chen)
+( r <- crossCorrelation(x=chen[["X"]], y=chen[["Y"]], w = chen[["M"]],  
+                        clust=TRUE, type = "LSCI", k=0, 
+                        dist.function = "inv.power") ) 
+
 \donttest{
   library(sp)
   library(spdep)
@@ -115,6 +120,12 @@ Calculates univariate or bivariate spatial cross-correlation using
 
 }
 \references{
-Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
+Chen, Y.G. (2012) On the four types of weight functions for spatial contiguity 
+   matrix. Letters in Spatial and Resource Sciences 5(2):65-72
+
+Chen, Y.G. (2013) New approaches for calculating Moran’s index of spatial 
+  autocorrelation. PLoS ONE 8(7):e68336
+
+Chen, Y.G. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
   PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 }
