@@ -6,7 +6,7 @@
 #' @param y               Vector of y response variables, if not specified the 
 #'                        univariate  statistic is returned
 #' @param coords          A matrix of coordinates corresponding to [x,y], only 
-#'                        used if k = NULL. Can also be an sp object with relevant 
+#'                        used if w = NULL. Can also be an sp object with relevant 
 #'                        x,y coordinate slot (ie., points or polygons)
 #' @param w               Spatial neighbors/weights in matrix format. Dimensions 
 #'                        must match [n(x),n(y)] and be symmetrical. If w is not defined 
@@ -47,6 +47,27 @@
 #'   \item {range.p} {Probability based on range of probabilities resulting from paired t-test}
 #'   \item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
 #' }
+#'
+#'
+#' @details
+#' In specifying a distance matrix, you can pass a coordinates matrix or spatial
+#' object to coords or alternately, pass a distance or spatial weights matrix to
+#' the w argument. If the w matrix represents spatial weights dist.function="none"
+#' should be specified. Otherwise, w is assumed to represent distance and will be
+#' converted to spatial weights using inv.power or neg.exponent. The w distances
+#' can represent an alternate distance hypothesis (eg., road, stream, network distance)
+#' Here are example argument usages for defining a matrix.      
+#' * IF coords=x, w=NULL, dist.function= c("inv.power", "neg.exponent")
+#'    A distance matrix is derived using the data passed to coords then 
+#'    spatial weights derived using one of the dist.function options
+#' * IF cords=NULL, w=x, dist.function= c("inv.power", "neg.exponent")
+#'     It is expected that the distance matrix specified with w represent 
+#'     some form of distance then the spatial weights are derived using 
+#'     one of the dist.function options 
+#' * IF cords=NULL, w=x, dist.function="none" 
+#'     It is assumed that the matrix passed to w already represents 
+#'     the spatial weights
+#' @md  
 #'
 #' @references
 #' Chen, Y.G. (2012) On the four types of weight functions for spatial contiguity 

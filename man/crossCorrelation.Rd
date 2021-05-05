@@ -23,34 +23,34 @@ crossCorrelation(
 \arguments{
 \item{x}{Vector of x response variables}
 
-\item{y}{Vector of y response variables, if not specified the 
+\item{y}{Vector of y response variables, if not specified the
 univariate  statistic is returned}
 
-\item{coords}{A matrix of coordinates corresponding to [x,y], only 
-used if k = NULL. Can also be an sp object with relevant 
+\item{coords}{A matrix of coordinates corresponding to \link{x,y}, only
+used if w = NULL. Can also be an sp object with relevant
 x,y coordinate slot (ie., points or polygons)}
 
-\item{w}{Spatial neighbors/weights in matrix format. Dimensions 
-must match [n(x),n(y)] and be symmetrical. If w is not defined 
+\item{w}{Spatial neighbors/weights in matrix format. Dimensions
+must match \link{n(x),n(y)} and be symmetrical. If w is not defined
 then a default method is used.}
 
-\item{type}{c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) 
+\item{type}{c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI)
 or Global Spatial cross-correlation Index (GSCI)}
 
 \item{k}{Number of simulations for calculating permutation distribution
 under the null hypothesis of no spatial autocorrelation}
 
-\item{dist.function}{("inv.power", "neg.exponent", "none") If w = NULL, the default method 
-for deriving spatial weights matrix, options are: inverse power 
+\item{dist.function}{("inv.power", "neg.exponent", "none") If w = NULL, the default method
+for deriving spatial weights matrix, options are: inverse power
 or negative exponent, none is for use with a provided matrix}
 
 \item{scale.xy}{(TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that
 they are already scaled following Chen (2015)}
 
-\item{scale.partial}{(FALSE/TRUE) rescale partial spatial autocorrelation statistics [-1 - 1]}
+\item{scale.partial}{(FALSE/TRUE) rescale partial spatial autocorrelation statistics \link{-1 - 1}}
 
-\item{scale.matrix}{(FALSE/TRUE) If a neighbor/distance matrix is passed, should it 
-be scaled using [w/sum(w)]}
+\item{scale.matrix}{(FALSE/TRUE) If a neighbor/distance matrix is passed, should it
+be scaled using \link{w/sum(w)}}
 
 \item{alpha}{= 0.05     confidence interval (default is 95 pct)}
 
@@ -61,28 +61,49 @@ be scaled using [w/sum(w)]}
 \value{
 When not simulated k=0, a list containing:
 \itemize{
-  \item {I} {Global autocorrelation statistic}
-  \item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
-  \item {nsim} {value of NULL to represent p values were derived from observed data (k=0)}
-  \item {p} {Probability based observations above/below confidence interval}
-  \item {t.test} {Probability based on t-test}
-  \item {clusters} {If "clust" argument TRUE, vector representing LISA clusters}
+\item {I} {Global autocorrelation statistic}
+\item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
+\item {nsim} {value of NULL to represent p values were derived from observed data (k=0)}
+\item {p} {Probability based observations above/below confidence interval}
+\item {t.test} {Probability based on t-test}
+\item {clusters} {If "clust" argument TRUE, vector representing LISA clusters}
 }
 
-when simulated (k>0), a list containing: 
+when simulated (k>0), a list containing:
 \itemize{
-  \item {I} {Global autocorrelation statistic}
-  \item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
-  \item {nsim} {value representing number of simulations}
-  \item {global.p} {p-value of global autocorrelation statistic}
-  \item {local.p} {Probability based simulated data using successful rejection of t-test}
-  \item {range.p} {Probability based on range of probabilities resulting from paired t-test}
-  \item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
+\item {I} {Global autocorrelation statistic}
+\item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
+\item {nsim} {value representing number of simulations}
+\item {global.p} {p-value of global autocorrelation statistic}
+\item {local.p} {Probability based simulated data using successful rejection of t-test}
+\item {range.p} {Probability based on range of probabilities resulting from paired t-test}
+\item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
 }
 }
 \description{
-Calculates univariate or bivariate spatial cross-correlation using  
-             local Moran's-I (LISA), following Chen (2015)
+Calculates univariate or bivariate spatial cross-correlation using
+local Moran's-I (LISA), following Chen (2015)
+}
+\details{
+In specifying a distance matrix, you can pass a coordinates matrix or spatial
+object to coords or alternately, pass a distance or spatial weights matrix to
+the w argument. If the w matrix represents spatial weights dist.function="none"
+should be specified. Otherwise, w is assumed to represent distance and will be
+converted to spatial weights using inv.power or neg.exponent. The w distances
+can represent an alternate distance hypothesis (eg., road, stream, network distance)
+Here are example argument usages for defining a matrix.
+\itemize{
+\item IF coords=x, w=NULL, dist.function= c("inv.power", "neg.exponent")
+A distance matrix is derived using the data passed to coords then
+spatial weights derived using one of the dist.function options
+\item IF cords=NULL, w=x, dist.function= c("inv.power", "neg.exponent")
+It is expected that the distance matrix specified with w represent
+some form of distance then the spatial weights are derived using
+one of the dist.function options
+\item IF cords=NULL, w=x, dist.function="none"
+It is assumed that the matrix passed to w already represents
+the spatial weights
+}
 }
 \examples{
  data(chen)
@@ -120,12 +141,12 @@ Calculates univariate or bivariate spatial cross-correlation using
 
 }
 \references{
-Chen, Y.G. (2012) On the four types of weight functions for spatial contiguity 
-   matrix. Letters in Spatial and Resource Sciences 5(2):65-72
+Chen, Y.G. (2012) On the four types of weight functions for spatial contiguity
+matrix. Letters in Spatial and Resource Sciences 5(2):65-72
 
-Chen, Y.G. (2013) New approaches for calculating Moran’s index of spatial 
-  autocorrelation. PLoS ONE 8(7):e68336
+Chen, Y.G. (2013) New approaches for calculating Moran’s index of spatial
+autocorrelation. PLoS ONE 8(7):e68336
 
-Chen, Y.G. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
-  PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
+Chen, Y.G. (2015) A New Methodology of Spatial Cross-Correlation Analysis.
+PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 }
