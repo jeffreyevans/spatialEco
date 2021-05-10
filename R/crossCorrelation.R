@@ -114,10 +114,10 @@
 #' } 
 #' 
 #' @export crossCorrelation
-crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI", "GSCI"), k = 999, 
-                             dist.function = c("inv.power", "neg.exponent"), scale.xy = TRUE, 
-							 scale.partial = FALSE, scale.matrix = FALSE, alpha = 0.05, clust = TRUE, 
-							 return.sims = FALSE) {
+crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI", "GSCI"), 
+                             k = 999, dist.function = c("inv.power", "neg.exponent", "none"), 
+							 scale.xy = TRUE, scale.partial = FALSE, scale.matrix = FALSE, 
+							 alpha = 0.05, clust = TRUE, return.sims = FALSE) {
 	if(missing(x)) stop("x must be specified")
     if(is.null(y)) y = x						 
       if(length(y) != length(x)) stop("[X,Y] are not equal")
