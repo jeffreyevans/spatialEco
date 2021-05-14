@@ -89,7 +89,7 @@ breeding.density <- function(x, pop, p = 0.75, bw = 6400, b = 8500, self = TRUE)
     polys <- pop.buff@polygons[[1]]@Polygons
     pl <- vector("list", length(polys))
       for (i in 1:length(polys)) {
-          pl[i] <- sp::Polygons(list(polys[[i]]), i)
+          pl[[i]] <- sp::Polygons(list(polys[[i]]), i)
       }
     pop.buff <- sp::SpatialPolygons(pl)
     row.ids <- sapply(methods::slot(pop.buff, "polygons"), function(i) methods::slot(i, "ID"))
