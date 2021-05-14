@@ -11,7 +11,7 @@ crossCorrelation(
   w = NULL,
   type = c("LSCI", "GSCI"),
   k = 999,
-  dist.function = c("inv.power", "neg.exponent"),
+  dist.function = c("inv.power", "neg.exponent", "none"),
   scale.xy = TRUE,
   scale.partial = FALSE,
   scale.matrix = FALSE,
@@ -26,12 +26,12 @@ crossCorrelation(
 \item{y}{Vector of y response variables, if not specified the
 univariate  statistic is returned}
 
-\item{coords}{A matrix of coordinates corresponding to \link{x,y}, only
+\item{coords}{A matrix of coordinates corresponding to (x,y), only
 used if w = NULL. Can also be an sp object with relevant
 x,y coordinate slot (ie., points or polygons)}
 
 \item{w}{Spatial neighbors/weights in matrix format. Dimensions
-must match \link{n(x),n(y)} and be symmetrical. If w is not defined
+must match (n(x),n(y)) and be symmetrical. If w is not defined
 then a default method is used.}
 
 \item{type}{c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI)
@@ -47,10 +47,10 @@ or negative exponent, none is for use with a provided matrix}
 \item{scale.xy}{(TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that
 they are already scaled following Chen (2015)}
 
-\item{scale.partial}{(FALSE/TRUE) rescale partial spatial autocorrelation statistics \link{-1 - 1}}
+\item{scale.partial}{(FALSE/TRUE) rescale partial spatial autocorrelation statistics}
 
 \item{scale.matrix}{(FALSE/TRUE) If a neighbor/distance matrix is passed, should it
-be scaled using \link{w/sum(w)}}
+be scaled using (w/sum(w))}
 
 \item{alpha}{= 0.05     confidence interval (default is 95 pct)}
 

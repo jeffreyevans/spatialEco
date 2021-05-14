@@ -228,3 +228,8 @@ spatialEco_1.3-7
 * Added function "time.to.event" returning the time (sum to position) to a specified value 
 
 * Added function "cgls_urls" for returning download URL from CGLS query
+
+* Fixed bug in insert associated with MARGIN argument
+
+* Fixed bug in crossCorrelation where the I value was being erroneously
+  corrected for population (thanks to GitHub user MarHer90). 

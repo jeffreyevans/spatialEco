@@ -19,7 +19,7 @@ A value representing the I similarity statistic
 Similarity Statistic for Quantifying Niche Overlap using Warren's-I
 
 The overlap function computes the I similarity statistic (Warren et al. 2008)  
-of two overlaping niche estimates. Similarity is based on the Hellenger distance. 
+of two overlapping niche estimates. Similarity is based on the Hellenger distance. 
 It is assumed that the input data share the same extent and cellsize and all values 
 are positive.
 

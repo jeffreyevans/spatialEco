@@ -5,11 +5,11 @@
 #' @param x               Vector of x response variables
 #' @param y               Vector of y response variables, if not specified the 
 #'                        univariate  statistic is returned
-#' @param coords          A matrix of coordinates corresponding to [x,y], only 
+#' @param coords          A matrix of coordinates corresponding to (x,y), only 
 #'                        used if w = NULL. Can also be an sp object with relevant 
 #'                        x,y coordinate slot (ie., points or polygons)
 #' @param w               Spatial neighbors/weights in matrix format. Dimensions 
-#'                        must match [n(x),n(y)] and be symmetrical. If w is not defined 
+#'                        must match (n(x),n(y)) and be symmetrical. If w is not defined 
 #'                        then a default method is used.
 #' @param type            c("LSCI","GSCI") Return Local Spatial Cross-correlation Index (LSCI) 
 #'                        or Global Spatial cross-correlation Index (GSCI)
@@ -20,9 +20,9 @@
 #'                        or negative exponent, none is for use with a provided matrix    
 #' @param scale.xy        (TRUE/FALSE) scale the x,y vectors, if FALSE it is assumed that  
 #'                        they are already scaled following Chen (2015) 
-#' @param scale.partial   (FALSE/TRUE) rescale partial spatial autocorrelation statistics [-1 - 1]
+#' @param scale.partial   (FALSE/TRUE) rescale partial spatial autocorrelation statistics
 #' @param scale.matrix    (FALSE/TRUE) If a neighbor/distance matrix is passed, should it 
-#'                         be scaled using [w/sum(w)]
+#'                         be scaled using (w/sum(w))
 #' @param alpha = 0.05     confidence interval (default is 95 pct)
 #' @param clust           (FALSE/TRUE) Return approximated lisa clusters
 #' @param return.sims     (FALSE/TRUE) Return randomizations vector n = k
@@ -80,6 +80,7 @@
 #'   PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
 #'
 #' @examples
+#' # replicate Chen (2015)
 #'  data(chen)
 #' ( r <- crossCorrelation(x=chen[["X"]], y=chen[["Y"]], w = chen[["M"]],  
 #'                         clust=TRUE, type = "LSCI", k=0, 
@@ -91,26 +92,25 @@
 #'    
 #'   data(meuse)
 #'     coordinates(meuse) <- ~x+y  
-#'  
-#'   #### Providing a neighbor contiguity spatial weights matrix
-#'   all.linked <- max(unlist(nbdists(knn2nb(knearneigh(coordinates(meuse))), 
-#'                     coordinates(meuse))))  
-#'   nb <- nb2listw(dnearneigh(meuse, 0, all.linked), style = "B", zero.policy = TRUE)  
-#'     Wij <- as.matrix( as(nb, "symmetricMatrix") ) 	
-#'    I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
-#'                            clust=TRUE, k=99) 
-#'     meuse$lisa <-  I$SCI[,"lsci.xy"]
-#'	   spplot(meuse, "lisa")
-#'    #meuse$lisa.clust <- as.factor(I$cluster)
-#'      #spplot(meuse, "lisa.clust") 
-#'	   
+#'
 #'   #### Using a default spatial weights matrix method (inverse power function)
-#'   I <- crossCorrelation(meuse$zinc, meuse$copper, coords = coordinates(meuse), 
-#'                           clust = TRUE, k=99)
+#'   ( I <- crossCorrelation(meuse$zinc, meuse$copper, 
+#'                coords = coordinates(meuse), k=99) )
 #'     meuse$lisa <- I$SCI[,"lsci.xy"]
 #'       spplot(meuse, "lisa")
-#'     #meuse$lisa.clust <- as.factor(I$cluster)
-#'     #  spplot(meuse, "lisa.clust")	  
+#'  
+#'   #### Providing a distance matrix
+#'    Wij <- spDists(meuse) 	
+#'    ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, k=99) )
+#'
+#'   #### Providing an inverse power function weights matrix
+#'    Wij <- spDists(meuse)
+#'      Wij <- 1 / Wij
+#'            diag(Wij) <- 0 
+#'          Wij <- Wij / sum(Wij) 
+#'    diag(Wij) <- 0
+#'    ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
+#'                           dist.function = "none", k=99) )
 #' } 
 #' 
 #' @export crossCorrelation
@@ -120,9 +120,9 @@ crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSC
 							 alpha = 0.05, clust = TRUE, return.sims = FALSE) {
 	if(missing(x)) stop("x must be specified")
     if(is.null(y)) y = x						 
-      if(length(y) != length(x)) stop("[X,Y] are not equal")
+      if(length(y) != length(x)) stop("(X,Y) are not equal")
         if( length(which(is.na(x))) != 0 | length(which(is.na(y))) != 0) 
-	      stop("NA's not permitted in [X,Y]")
+	      stop("NA's not permitted in (X,Y)")
             if( k == 0) message("Permutation is not being run, estimated p will be based on observed")
 	          if(scale.xy == FALSE) warning("It is assumed that x,v vectors are already scaled") 		
     type = type[1]; dist.function = dist.function[1]		  

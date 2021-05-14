@@ -42,12 +42,18 @@ insert <- function(x, MARGIN = 1, value = NULL, idx, name=NULL) {
     stop("idx argument must be supplied")
   idx = idx[1]
   if(MARGIN == 1) {
-    if(is.null(value)) value = rep(NA, nrow(x))
+    cat("Inserting row", "\n")
+    if(is.null(value)) value = rep(NA, ncol(x))
+	  if(length(value) != ncol(x))
+	    stop("specified values not equal number of columns")
       x[seq(idx+1, nrow(x)+1),] <- x[seq(idx, nrow(x)),]
         x[idx,] <- value
   } else if(MARGIN == 2) {
+    cat("Inserting column", "\n")
     n <- names(x)
-    if(is.null(value)) value = rep(NA, ncol(x))
+    if(is.null(value)) value = rep(NA, nrow(x))
+	  if(length(value) != nrow(x))
+	    stop("specified values not equal number of columns")
       x[,seq(idx,ncol(x)+1)] <- x[,seq(idx, ncol(x))]
         x[,idx] <- value
 	    names(x)[-idx] <- n

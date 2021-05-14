@@ -57,7 +57,7 @@
 #'         col=c("red","blue"), pch=c(19,19))
 #'  }  
 #'  
-#' @export  
+#' @export optimized.sample.variance  
 optimized.sample.variance <- function(x, n, type = "maximized") {
   if(!is.numeric(x)) stop("x is not a numeric vector")
     non.na.idx <- which(!is.na(x))
