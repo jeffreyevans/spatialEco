@@ -4,9 +4,12 @@ spatialEco.ref <- c(
    bibentry(
      bibtype = "Manual",
      title = "spatialEco",
-     author = person(c("Jeffrey", "S."), "Evans", role = c("aut", "cre")),
-     year = "2020",
-     note = "R package version 1.3-4",
+     author = c(
+	    person(c("Jeffrey", "S."), "Evans", role = c("aut", "cre")),
+ 	    person(c("Melanie", "A."), "Murphy", role = c("aut"))
+     ),
+     year = "2021",
+     note = "R package version 1.3-6",
      url = "https://github.com/jeffreyevans/spatialEco",
      key = "spatialEco-package"
    )
