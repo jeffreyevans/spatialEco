@@ -1,0 +1,13 @@
+name: test_coverage
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Covr test_coverage
+      env:
+        DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
+        LANGSERVERSETUP_TOKEN_CODECOV: ${{ secrets.CODECOV_TOKEN }}
+        LANGSERVERSETUP_RUN_DEPLOY: true
+      run: sh ci/docker_stage.sh ci/test_coverage.R

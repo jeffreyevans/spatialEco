@@ -24,7 +24,7 @@ Imports:
   spdep,
   rgeos,
   MASS,
-  methods
+  methods,
   alphahull,
   exactextractr,
   cluster,
