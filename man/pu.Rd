@@ -56,7 +56,7 @@ A sp SpatialPolygonsDataFrame with 5919 rows and 46 variables:
 }
 }
 \source{
-\url{http://maps.tnc.org/gis_data.html}
+\url{https://www.conservationgateway.org}
 }
 \description{
 Subset of biodiversity planning units for Haiti ecoregional spatial reserve plan

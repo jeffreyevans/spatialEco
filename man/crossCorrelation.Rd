@@ -106,6 +106,7 @@ the spatial weights
 }
 }
 \examples{
+# replicate Chen (2015)
  data(chen)
 ( r <- crossCorrelation(x=chen[["X"]], y=chen[["Y"]], w = chen[["M"]],  
                         clust=TRUE, type = "LSCI", k=0, 
@@ -117,26 +118,25 @@ the spatial weights
    
   data(meuse)
     coordinates(meuse) <- ~x+y  
- 
-  #### Providing a neighbor contiguity spatial weights matrix
-  all.linked <- max(unlist(nbdists(knn2nb(knearneigh(coordinates(meuse))), 
-                    coordinates(meuse))))  
-  nb <- nb2listw(dnearneigh(meuse, 0, all.linked), style = "B", zero.policy = TRUE)  
-    Wij <- as.matrix( as(nb, "symmetricMatrix") ) 	
-   I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
-                           clust=TRUE, k=99) 
-    meuse$lisa <-  I$SCI[,"lsci.xy"]
-   spplot(meuse, "lisa")
-   #meuse$lisa.clust <- as.factor(I$cluster)
-     #spplot(meuse, "lisa.clust") 
-   
+
   #### Using a default spatial weights matrix method (inverse power function)
-  I <- crossCorrelation(meuse$zinc, meuse$copper, coords = coordinates(meuse), 
-                          clust = TRUE, k=99)
+  ( I <- crossCorrelation(meuse$zinc, meuse$copper, 
+               coords = coordinates(meuse), k=99) )
     meuse$lisa <- I$SCI[,"lsci.xy"]
       spplot(meuse, "lisa")
-    #meuse$lisa.clust <- as.factor(I$cluster)
-    #  spplot(meuse, "lisa.clust")	  
+ 
+  #### Providing a distance matrix
+   Wij <- spDists(meuse) 	
+   ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, k=99) )
+
+  #### Providing an inverse power function weights matrix
+   Wij <- spDists(meuse)
+     Wij <- 1 / Wij
+           diag(Wij) <- 0 
+         Wij <- Wij / sum(Wij) 
+   diag(Wij) <- 0
+   ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
+                          dist.function = "none", k=99) )
 } 
 
 }

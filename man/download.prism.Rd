@@ -4,62 +4,13 @@
 \alias{download.prism}
 \title{Download PRISM}
 \usage{
-download.prism(
-  data.type,
-  date.range,
-  time.step = "monthly",
-  download.folder = c("current", "temp"),
-  by.year = FALSE,
-  unzip.file = TRUE,
-  ftp.site = "ftp://prism.oregonstate.edu"
-)
+download.prism(...)
 }
 \arguments{
-\item{data.type}{Specify climate metric ('ppt','tmin','tmax','tmean')}
-
-\item{date.range}{A vector with start and end date in y/m/d format}
-
-\item{time.step}{Timestep of product ('daily'/'monthly')}
-
-\item{download.folder}{Local download directory, defaults to current 
-working directory}
-
-\item{by.year}{Create a directory for each year (TRUE/FALSE)}
-
-\item{unzip.file}{Unzip file on download (TRUE/FALSE)}
-
-\item{ftp.site}{PRISM ftp address to use, default: 
-\url{ftp://prism.oregonstate.edu}}
-}
-\value{
-Compressed or uncompressed PRISM monthly gridded 
-        data(bil raster format)
+\item{...}{Nonexistent parameters}
 }
 \description{
 Batch download of monthly gridded PRISM climate data
-}
-\details{
-Monthly data 1895-1980 is available in a single zip file on the ftp site
-PRISM URL: \url{https://prism.oregonstate.edu/}
-FTP download sites for 400m gridded daily/monthly climate data
-  \url{ftp://prism.oregonstate.edu/daily}
-   \url{ftp://prism.oregonstate.edu/monthly}
-   
-i.e., 'PRISM_ppt_stable_4kmD1_20100208_bil.zip' 
-Data description: 
-\url{https://prism.oregonstate.edu/documents/PRISM_datasets_aug2013.pdf}
-}
-\examples{
-\dontrun{
-# Download monthly precipitation data Jan 1st 2000 to Dec 30th 2001 (n=24)
-    my.dates <- c('2000/1/1', '2001/12/30')
-    download.prism('ppt', date.range=my.dates, time.step='monthly', by.year=TRUE)
- 
- # Download monthly precipitation data Jan 1st 2000 to Feb 10th 2000 (n=41)
-    my.dates <- c('2000/1/1', '2000/2/10')
-    download.prism('ppt', date.range=my.dates, time.step='daily', by.year=TRUE)
-}
-
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>
