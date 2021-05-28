@@ -1,12 +1,32 @@
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 name: R-CMD-check
-on: [push]
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  rcmdcheck:
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-    - uses: actions/checkout@v1
-    - name: Check for CRAN
-      env:
-        DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
-        LANGSERVERSETUP_RUN_DEPLOY: false
-      run: sh ci/docker_stage.sh ci/check_rhub.R "cran"
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Install spatial dependencies
+        run: sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev netcdf-bin
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes", "rcmdcheck"))
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+        
+      - name: Check
+        run: |
+          options(crayon.enabled = TRUE)
+          rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "error")
+        shell: Rscript {0}
