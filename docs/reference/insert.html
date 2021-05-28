@@ -170,53 +170,53 @@ vector of values is inserted into the 2nd position.</p>
 <span class='co'># insert row</span>
 <span class='fu'>insert</span><span class='op'>(</span><span class='va'>d</span>, idx<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Inserting row </div><div class='output co'>#&gt;    ID          y
-#&gt; 1   1 0.68355056
+#&gt; 1   1 0.27993559
 #&gt; 2  NA         NA
-#&gt; 3   2 0.97202445
-#&gt; 4   3 0.07438633
-#&gt; 5   4 0.72655659
-#&gt; 6   5 0.49678935
-#&gt; 7   6 0.55303877
-#&gt; 8   7 0.03892912
-#&gt; 9   8 0.67843460
-#&gt; 10  9 0.06465576
-#&gt; 11 10 0.74824150</div><div class='input'><span class='fu'>insert</span><span class='op'>(</span><span class='va'>d</span>, value<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>,<span class='fl'>0</span><span class='op'>)</span>, idx<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+#&gt; 3   2 0.78022466
+#&gt; 4   3 0.34410797
+#&gt; 5   4 0.08978361
+#&gt; 6   5 0.79301521
+#&gt; 7   6 0.85302540
+#&gt; 8   7 0.42590664
+#&gt; 9   8 0.78807564
+#&gt; 10  9 0.47899806
+#&gt; 11 10 0.59109823</div><div class='input'><span class='fu'>insert</span><span class='op'>(</span><span class='va'>d</span>, value<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>,<span class='fl'>0</span><span class='op'>)</span>, idx<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Inserting row </div><div class='output co'>#&gt;    ID          y
-#&gt; 1   1 0.68355056
+#&gt; 1   1 0.27993559
 #&gt; 2  20 0.00000000
-#&gt; 3   2 0.97202445
-#&gt; 4   3 0.07438633
-#&gt; 5   4 0.72655659
-#&gt; 6   5 0.49678935
-#&gt; 7   6 0.55303877
-#&gt; 8   7 0.03892912
-#&gt; 9   8 0.67843460
-#&gt; 10  9 0.06465576
-#&gt; 11 10 0.74824150</div><div class='input'>
+#&gt; 3   2 0.78022466
+#&gt; 4   3 0.34410797
+#&gt; 5   4 0.08978361
+#&gt; 6   5 0.79301521
+#&gt; 7   6 0.85302540
+#&gt; 8   7 0.42590664
+#&gt; 9   8 0.78807564
+#&gt; 10  9 0.47899806
+#&gt; 11 10 0.59109823</div><div class='input'>
 <span class='co'># insert column</span>
 <span class='fu'>insert</span><span class='op'>(</span><span class='va'>d</span>, MARGIN<span class='op'>=</span><span class='fl'>2</span>, idx<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Inserting column </div><div class='output co'>#&gt;    ID V1          y
-#&gt; 1   1 NA 0.68355056
-#&gt; 2   2 NA 0.97202445
-#&gt; 3   3 NA 0.07438633
-#&gt; 4   4 NA 0.72655659
-#&gt; 5   5 NA 0.49678935
-#&gt; 6   6 NA 0.55303877
-#&gt; 7   7 NA 0.03892912
-#&gt; 8   8 NA 0.67843460
-#&gt; 9   9 NA 0.06465576
-#&gt; 10 10 NA 0.74824150</div><div class='input'><span class='fu'>insert</span><span class='op'>(</span><span class='va'>d</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>10</span><span class='op'>)</span>, idx<span class='op'>=</span><span class='fl'>2</span>, name<span class='op'>=</span><span class='st'>"x"</span><span class='op'>)</span>
+#&gt; 1   1 NA 0.27993559
+#&gt; 2   2 NA 0.78022466
+#&gt; 3   3 NA 0.34410797
+#&gt; 4   4 NA 0.08978361
+#&gt; 5   5 NA 0.79301521
+#&gt; 6   6 NA 0.85302540
+#&gt; 7   7 NA 0.42590664
+#&gt; 8   8 NA 0.78807564
+#&gt; 9   9 NA 0.47899806
+#&gt; 10 10 NA 0.59109823</div><div class='input'><span class='fu'>insert</span><span class='op'>(</span><span class='va'>d</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>10</span><span class='op'>)</span>, idx<span class='op'>=</span><span class='fl'>2</span>, name<span class='op'>=</span><span class='st'>"x"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Inserting column </div><div class='output co'>#&gt;    ID x          y
-#&gt; 1   1 0 0.68355056
-#&gt; 2   2 0 0.97202445
-#&gt; 3   3 0 0.07438633
-#&gt; 4   4 0 0.72655659
-#&gt; 5   5 0 0.49678935
-#&gt; 6   6 0 0.55303877
-#&gt; 7   7 0 0.03892912
-#&gt; 8   8 0 0.67843460
-#&gt; 9   9 0 0.06465576
-#&gt; 10 10 0 0.74824150</div><div class='input'>
+#&gt; 1   1 0 0.27993559
+#&gt; 2   2 0 0.78022466
+#&gt; 3   3 0 0.34410797
+#&gt; 4   4 0 0.08978361
+#&gt; 5   5 0 0.79301521
+#&gt; 6   6 0 0.85302540
+#&gt; 7   7 0 0.42590664
+#&gt; 8   8 0 0.78807564
+#&gt; 9   9 0 0.47899806
+#&gt; 10 10 0 0.59109823</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

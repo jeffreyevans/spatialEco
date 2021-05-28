@@ -117,81 +117,21 @@
     <p>Batch download of monthly gridded PRISM climate data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>download.prism</span><span class='op'>(</span>
-  <span class='va'>data.type</span>,
-  <span class='va'>date.range</span>,
-  time.step <span class='op'>=</span> <span class='st'>"monthly"</span>,
-  download.folder <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"current"</span>, <span class='st'>"temp"</span><span class='op'>)</span>,
-  by.year <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  unzip.file <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  ftp.site <span class='op'>=</span> <span class='st'>"ftp://prism.oregonstate.edu"</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>download.prism</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data.type</th>
-      <td><p>Specify climate metric ('ppt','tmin','tmax','tmean')</p></td>
-    </tr>
-    <tr>
-      <th>date.range</th>
-      <td><p>A vector with start and end date in y/m/d format</p></td>
-    </tr>
-    <tr>
-      <th>time.step</th>
-      <td><p>Timestep of product ('daily'/'monthly')</p></td>
-    </tr>
-    <tr>
-      <th>download.folder</th>
-      <td><p>Local download directory, defaults to current 
-working directory</p></td>
-    </tr>
-    <tr>
-      <th>by.year</th>
-      <td><p>Create a directory for each year (TRUE/FALSE)</p></td>
-    </tr>
-    <tr>
-      <th>unzip.file</th>
-      <td><p>Unzip file on download (TRUE/FALSE)</p></td>
-    </tr>
-    <tr>
-      <th>ftp.site</th>
-      <td><p>PRISM ftp address to use, default: 
-<a href='ftp://prism.oregonstate.edu'>ftp://prism.oregonstate.edu</a></p></td>
+      <th>...</th>
+      <td><p>Nonexistent parameters</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Compressed or uncompressed PRISM monthly gridded 
-        data(bil raster format)</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Monthly data 1895-1980 is available in a single zip file on the ftp site
-PRISM URL: <a href='https://prism.oregonstate.edu/'>https://prism.oregonstate.edu/</a>
-FTP download sites for 400m gridded daily/monthly climate data
-  <a href='ftp://prism.oregonstate.edu/daily'>ftp://prism.oregonstate.edu/daily</a>
-   <a href='ftp://prism.oregonstate.edu/monthly'>ftp://prism.oregonstate.edu/monthly</a></p>   
-<p>i.e., 'PRISM_ppt_stable_4kmD1_20100208_bil.zip' 
-Data description: 
-<a href='https://prism.oregonstate.edu/documents/PRISM_datasets_aug2013.pdf'>https://prism.oregonstate.edu/documents/PRISM_datasets_aug2013.pdf</a></p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Jeffrey S. Evans  &lt;jeffrey_evans@tnc.org&gt;</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># Download monthly precipitation data Jan 1st 2000 to Dec 30th 2001 (n=24)</span>
-    <span class='va'>my.dates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'2000/1/1'</span>, <span class='st'>'2001/12/30'</span><span class='op'>)</span>
-    <span class='fu'>download.prism</span><span class='op'>(</span><span class='st'>'ppt'</span>, date.range<span class='op'>=</span><span class='va'>my.dates</span>, time.step<span class='op'>=</span><span class='st'>'monthly'</span>, by.year<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
- 
- <span class='co'># Download monthly precipitation data Jan 1st 2000 to Feb 10th 2000 (n=41)</span>
-    <span class='va'>my.dates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'2000/1/1'</span>, <span class='st'>'2000/2/10'</span><span class='op'>)</span>
-    <span class='fu'>download.prism</span><span class='op'>(</span><span class='st'>'ppt'</span>, date.range<span class='op'>=</span><span class='va'>my.dates</span>, time.step<span class='op'>=</span><span class='st'>'daily'</span>, by.year<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

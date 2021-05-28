@@ -162,33 +162,33 @@ angular similarity  = 1 - (cos(s)^-1/pi)</p>
   <span class='va'>y</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
   <span class='fu'>csi</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/as.matrix.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/pkg/raster/man/as.matrix.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         similarity angular.similarity 
-#&gt;         0.09173184         0.68034616 </div><div class='input'>  
+#&gt;        -0.01382014         0.68165971 </div><div class='input'>  
   <span class='co'>#' # Compare columns (vectors) in a matrix (centered using scale)</span>
   <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span>,nrow<span class='op'>=</span><span class='fl'>20</span>,ncol<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
   <span class='op'>(</span> <span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>csi</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>)</span>
 </div><div class='output co'>#&gt; $similarity
-#&gt;             [,1]          [,2]        [,3]          [,4]        [,5]
-#&gt; [1,]  1.00000000  6.579517e-02  0.21212121 -1.005038e-01  0.03160698
-#&gt; [2,]  0.06579517  1.000000e+00 -0.06579517 -1.168656e-17  0.25162996
-#&gt; [3,]  0.21212121 -6.579517e-02  1.00000000 -1.005038e-01 -0.03160698
-#&gt; [4,] -0.10050378 -1.168656e-17 -0.10050378  1.000000e+00  0.52414242
-#&gt; [5,]  0.03160698  2.516300e-01 -0.03160698  5.241424e-01  1.00000000
+#&gt;             [,1]        [,2]        [,3]       [,4]       [,5]
+#&gt; [1,]  1.00000000 -0.50442963 -0.06579517  0.2182179 0.06579517
+#&gt; [2,] -0.50442963  1.00000000 -0.01010101 -0.3015113 0.01010101
+#&gt; [3,] -0.06579517 -0.01010101  1.00000000  0.1005038 0.21212121
+#&gt; [4,]  0.21821789 -0.30151134  0.10050378  1.0000000 0.10050378
+#&gt; [5,]  0.06579517  0.01010101  0.21212121  0.1005038 1.00000000
 #&gt; 
 #&gt; $angular.similarity
 #&gt;           [,1]      [,2]      [,3]      [,4]      [,5]
-#&gt; [1,] 1.0000000 0.6809999 0.6743921 0.6800757 0.6815311
-#&gt; [2,] 0.6809999 1.0000000 0.6809999 0.6816901 0.6713399
-#&gt; [3,] 0.6743921 0.6809999 1.0000000 0.6800757 0.6815311
-#&gt; [4,] 0.6800757 0.6816901 0.6800757 1.0000000 0.6323319
-#&gt; [5,] 0.6815311 0.6713399 0.6815311 0.6323319 1.0000000
+#&gt; [1,] 1.0000000 0.6364044 0.6809999 0.6739580 0.6809999
+#&gt; [2,] 0.6364044 1.0000000 0.6816739 0.6666524 0.6816739
+#&gt; [3,] 0.6809999 0.6816739 1.0000000 0.6800757 0.6743921
+#&gt; [4,] 0.6739580 0.6666524 0.6800757 1.0000000 0.6800757
+#&gt; [5,] 0.6809999 0.6816739 0.6743921 0.6800757 1.0000000
 #&gt; </div><div class='input'>    
 <span class='co'># Compare vector (x) to each column in a matrix (y)</span>
 <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span>,<span class='fl'>3</span><span class='op'>)</span>,nrow<span class='op'>=</span><span class='fl'>100</span>,ncol<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
 <span class='va'>x</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span> 
 <span class='fu'>csi</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/as.matrix.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/pkg/raster/man/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                          [,1]        [,2]       [,3]       [,4]       [,5]
-#&gt; similarity         0.04670747 -0.08636181 0.03697387 -0.1701165 0.02584444
-#&gt; angular.similarity 0.68134259  0.68049938 0.68147241  0.6770280 0.68158378</div><div class='input'>
+</div><div class='output co'>#&gt;                          [,1]         [,2]      [,3]        [,4]       [,5]
+#&gt; similarity         0.05044759 -0.000619605 0.1838755 -0.02890784 0.02171927
+#&gt; angular.similarity 0.68128464  0.681690053 0.6762322  0.68155707 0.68161502</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

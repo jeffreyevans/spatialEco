@@ -255,7 +255,8 @@ autocorrelation. PLoS ONE 8(7):e68336</p>
 PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>chen</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># replicate Chen (2015)</span>
+ <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>chen</span><span class='op'>)</span>
 <span class='op'>(</span> <span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>crossCorrelation</span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>chen</span><span class='op'>[[</span><span class='st'>"X"</span><span class='op'>]</span><span class='op'>]</span>, y<span class='op'>=</span><span class='va'>chen</span><span class='op'>[[</span><span class='st'>"Y"</span><span class='op'>]</span><span class='op'>]</span>, w <span class='op'>=</span> <span class='va'>chen</span><span class='op'>[[</span><span class='st'>"M"</span><span class='op'>]</span><span class='op'>]</span>,  
                         clust<span class='op'>=</span><span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"LSCI"</span>, k<span class='op'>=</span><span class='fl'>0</span>, 
                         dist.function <span class='op'>=</span> <span class='st'>"inv.power"</span><span class='op'>)</span> <span class='op'>)</span> 
@@ -278,7 +279,7 @@ PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158</p>
 <span class='co'># \donttest{</span>
   <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/edzer/sp/'>sp</a></span><span class='op'>)</span>
   <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-spatial/spdep/'>spdep</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'spdep' was built under R version 4.0.5</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: spData</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'spData' was built under R version 4.0.5</span></div><div class='output co'>#&gt; <span class='message'>To access larger datasets in this package, install the spDataLarge</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: spData</span></div><div class='output co'>#&gt; <span class='message'>To access larger datasets in this package, install the spDataLarge</span>
 #&gt; <span class='message'>package with: `install.packages('spDataLarge',</span>
 #&gt; <span class='message'>repos='https://nowosad.github.io/drat/', type='source')`</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'spData'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:spatialEco':</span>
@@ -286,29 +287,71 @@ PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158</p>
 #&gt; <span class='message'>    elev</span></div><div class='input'>   
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>
     <span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='op'>~</span><span class='va'>x</span><span class='op'>+</span><span class='va'>y</span>  
- 
-  <span class='co'>#### Providing a neighbor contiguity spatial weights matrix</span>
-  <span class='va'>all.linked</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/spdep/man/nbdists.html'>nbdists</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/spdep/man/knn2nb.html'>knn2nb</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/spdep/man/knearneigh.html'>knearneigh</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>, 
-                    <span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>  
-  <span class='va'>nb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/spdep/man/nb2listw.html'>nb2listw</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/spdep/man/dnearneigh.html'>dnearneigh</a></span><span class='op'>(</span><span class='va'>meuse</span>, <span class='fl'>0</span>, <span class='va'>all.linked</span><span class='op'>)</span>, style <span class='op'>=</span> <span class='st'>"B"</span>, zero.policy <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>  
-    <span class='va'>Wij</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/as.matrix.html'>as.matrix</a></span><span class='op'>(</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/coerce-methods.html'>as</a></span><span class='op'>(</span><span class='va'>nb</span>, <span class='st'>"symmetricMatrix"</span><span class='op'>)</span> <span class='op'>)</span>   
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Function as_dsTMatrix_listw moved to the spatialreg package</span></div><div class='output co'>#&gt; <span class='warning'>Warning: install the spatialreg package</span></div><div class='input'>   <span class='va'>I</span> <span class='op'>&lt;-</span> <span class='fu'>crossCorrelation</span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>$</span><span class='va'>zinc</span>, <span class='va'>meuse</span><span class='op'>$</span><span class='va'>copper</span>, w <span class='op'>=</span> <span class='va'>Wij</span>, 
-                           clust<span class='op'>=</span><span class='cn'>TRUE</span>, k<span class='op'>=</span><span class='fl'>99</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; <span class='message'>Calculating spatial weights matrix using inverse power function</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> Computing Permutation Distribution </span></div><div class='output co'>#&gt; <span class='error'>Error in t.test.default(sci.results[, tstat], y = j, alternative = "two.sided",     paired = TRUE, conf.level = 1 - alpha): not enough 'x' observations</span></div><div class='input'>    <span class='va'>meuse</span><span class='op'>$</span><span class='va'>lisa</span> <span class='op'>&lt;-</span>  <span class='va'>I</span><span class='op'>$</span><span class='va'>SCI</span><span class='op'>[</span>,<span class='st'>"lsci.xy"</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in I$SCI: object of type 'closure' is not subsettable</span></div><div class='input'>   <span class='fu'><a href='https://rdrr.io/pkg/sp/man/spplot.html'>spplot</a></span><span class='op'>(</span><span class='va'>meuse</span>, <span class='st'>"lisa"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in create.z(as(obj, "data.frame"), zcol): no support for variable of this type</span></div><div class='input'>   <span class='co'>#meuse$lisa.clust &lt;- as.factor(I$cluster)</span>
-     <span class='co'>#spplot(meuse, "lisa.clust") </span>
-   
+
   <span class='co'>#### Using a default spatial weights matrix method (inverse power function)</span>
-  <span class='va'>I</span> <span class='op'>&lt;-</span> <span class='fu'>crossCorrelation</span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>$</span><span class='va'>zinc</span>, <span class='va'>meuse</span><span class='op'>$</span><span class='va'>copper</span>, coords <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>, 
-                          clust <span class='op'>=</span> <span class='cn'>TRUE</span>, k<span class='op'>=</span><span class='fl'>99</span><span class='op'>)</span>
+  <span class='op'>(</span> <span class='va'>I</span> <span class='op'>&lt;-</span> <span class='fu'>crossCorrelation</span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>$</span><span class='va'>zinc</span>, <span class='va'>meuse</span><span class='op'>$</span><span class='va'>copper</span>, 
+               coords <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>, k<span class='op'>=</span><span class='fl'>99</span><span class='op'>)</span> <span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Calculating spatial weights matrix using inverse power function</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> Computing Permutation Distribution </span></div><div class='input'>    <span class='va'>meuse</span><span class='op'>$</span><span class='va'>lisa</span> <span class='op'>&lt;-</span> <span class='va'>I</span><span class='op'>$</span><span class='va'>SCI</span><span class='op'>[</span>,<span class='st'>"lsci.xy"</span><span class='op'>]</span>
+#&gt; <span class='message'> Computing Permutation Distribution </span></div><div class='output co'>#&gt; Moran's-I under randomization assumptions... 
+#&gt;   First-order Moran's-I:  0.08906818 
+#&gt;   First-order p-value:  0 
+#&gt; Chen's SCI under randomization assumptions... 
+#&gt; 
+#&gt;  Summary statistics of local partial cross-correlation [xy] 
+#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+#&gt; -2.100e-03 -5.538e-06  3.498e-04  5.746e-04  8.350e-04  7.119e-03 
+#&gt;  
+#&gt;   p-value based on 2-tailed t-test:  0 
+#&gt;   p-value based on 2-tailed t-test observations above/below CI:  0 
+#&gt; 
+#&gt;  Counts of cluster types
+#&gt; High.High  High.Low  Low.High   Low.Low 
+#&gt;        44        16        25        70 </div><div class='input'>    <span class='va'>meuse</span><span class='op'>$</span><span class='va'>lisa</span> <span class='op'>&lt;-</span> <span class='va'>I</span><span class='op'>$</span><span class='va'>SCI</span><span class='op'>[</span>,<span class='st'>"lsci.xy"</span><span class='op'>]</span>
       <span class='fu'><a href='https://rdrr.io/pkg/sp/man/spplot.html'>spplot</a></span><span class='op'>(</span><span class='va'>meuse</span>, <span class='st'>"lisa"</span><span class='op'>)</span>
-</div><div class='img'><img src='crossCorrelation-1.png' alt='' width='700' height='433' /></div><div class='input'>    <span class='co'>#meuse$lisa.clust &lt;- as.factor(I$cluster)</span>
-    <span class='co'>#  spplot(meuse, "lisa.clust")    </span>
-<span class='co'># } </span>
+</div><div class='img'><img src='crossCorrelation-1.png' alt='' width='700' height='433' /></div><div class='input'> 
+  <span class='co'>#### Providing a distance matrix</span>
+   <span class='va'>Wij</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sp/man/spDistsN1.html'>spDists</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>   
+   <span class='op'>(</span> <span class='va'>I</span> <span class='op'>&lt;-</span> <span class='fu'>crossCorrelation</span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>$</span><span class='va'>zinc</span>, <span class='va'>meuse</span><span class='op'>$</span><span class='va'>copper</span>, w <span class='op'>=</span> <span class='va'>Wij</span>, k<span class='op'>=</span><span class='fl'>99</span><span class='op'>)</span> <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Calculating spatial weights matrix using inverse power function</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'> Computing Permutation Distribution </span></div><div class='output co'>#&gt; Moran's-I under randomization assumptions... 
+#&gt;   First-order Moran's-I:  0.08906818 
+#&gt;   First-order p-value:  0 
+#&gt; Chen's SCI under randomization assumptions... 
+#&gt; 
+#&gt;  Summary statistics of local partial cross-correlation [xy] 
+#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+#&gt; -2.100e-03 -5.538e-06  3.498e-04  5.746e-04  8.350e-04  7.119e-03 
+#&gt;  
+#&gt;   p-value based on 2-tailed t-test:  0 
+#&gt;   p-value based on 2-tailed t-test observations above/below CI:  0 
+#&gt; 
+#&gt;  Counts of cluster types
+#&gt; High.High  High.Low  Low.High   Low.Low 
+#&gt;        44        16        25        70 </div><div class='input'>
+  <span class='co'>#### Providing an inverse power function weights matrix</span>
+   <span class='va'>Wij</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sp/man/spDistsN1.html'>spDists</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>
+     <span class='va'>Wij</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>Wij</span>
+           <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>Wij</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>0</span> 
+         <span class='va'>Wij</span> <span class='op'>&lt;-</span> <span class='va'>Wij</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>Wij</span><span class='op'>)</span> 
+   <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>Wij</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+   <span class='op'>(</span> <span class='va'>I</span> <span class='op'>&lt;-</span> <span class='fu'>crossCorrelation</span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>$</span><span class='va'>zinc</span>, <span class='va'>meuse</span><span class='op'>$</span><span class='va'>copper</span>, w <span class='op'>=</span> <span class='va'>Wij</span>, 
+                          dist.function <span class='op'>=</span> <span class='st'>"none"</span>, k<span class='op'>=</span><span class='fl'>99</span><span class='op'>)</span> <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Wij matrix is being left raw</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'> Computing Permutation Distribution </span></div><div class='output co'>#&gt; Moran's-I under randomization assumptions... 
+#&gt;   First-order Moran's-I:  0.08906818 
+#&gt;   First-order p-value:  0 
+#&gt; Chen's SCI under randomization assumptions... 
+#&gt; 
+#&gt;  Summary statistics of local partial cross-correlation [xy] 
+#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+#&gt; -2.100e-03 -5.538e-06  3.498e-04  5.746e-04  8.350e-04  7.119e-03 
+#&gt;  
+#&gt;   p-value based on 2-tailed t-test:  0 
+#&gt;   p-value based on 2-tailed t-test observations above/below CI:  0 
+#&gt; 
+#&gt;  Counts of cluster types
+#&gt; High.High  High.Low  Low.High   Low.Low 
+#&gt;        44        16        25        70 </div><div class='input'><span class='co'># } </span>
 
 </div></pre>
   </div>

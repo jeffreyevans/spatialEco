@@ -181,51 +181,29 @@
 <span class='co'># Subsample with a 500m minimum sample spread </span>
 <span class='va'>sub.meuse</span> <span class='op'>&lt;-</span> <span class='fu'>subsample.distance</span><span class='op'>(</span><span class='va'>meuse</span>, size <span class='op'>=</span> <span class='fl'>10</span>, d <span class='op'>=</span> <span class='fl'>500</span>, echo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>  
 </div><div class='output co'>#&gt; Sample iteration= 1 
-#&gt; 
-#&gt;  Min distance for 2 = 3081.302 
-#&gt;  Max distance for 2 = 3081.302 
-#&gt; Sample iteration= 1 
-#&gt; 
-#&gt;  Min distance for 3 = 1249.682 
-#&gt;  Max distance for 3 = 1988.497 
-#&gt; Sample iteration= 1 
-#&gt; 
-#&gt;  Min distance for 4 = 539.1892 
-#&gt;  Max distance for 4 = 1782.97 
-#&gt; Sample iteration= 1 
-#&gt; Sample iteration= 2 
-#&gt; 
-#&gt;  Min distance for 5 = 509.8284 
-#&gt;  Max distance for 5 = 1561.51 
-#&gt; Sample iteration= 1 
-#&gt; Sample iteration= 2 
-#&gt; Sample iteration= 3 
-#&gt; Sample iteration= 4 
-#&gt; Sample iteration= 5 
-#&gt; Sample iteration= 6 
-#&gt; Sample iteration= 7 
-#&gt; Sample iteration= 8 
-#&gt; 
-#&gt;  Min distance for 6 = 680.7173 
-#&gt;  Max distance for 6 = 2479.823 
-#&gt; Sample iteration= 1 
 #&gt; Sample iteration= 2 
 #&gt; Sample iteration= 3 
 #&gt; 
-#&gt;  Min distance for 7 = 526.3658 
-#&gt;  Max distance for 7 = 2002.225 
+#&gt;  Min distance for 2 = 625.6597 
+#&gt;  Max distance for 2 = 625.6597 
 #&gt; Sample iteration= 1 
 #&gt; 
-#&gt;  Min distance for 8 = 506.3882 
-#&gt;  Max distance for 8 = 3564.352 
+#&gt;  Min distance for 3 = 761.3475 
+#&gt;  Max distance for 3 = 1191.008 
 #&gt; Sample iteration= 1 
 #&gt; Sample iteration= 2 
-#&gt; Sample iteration= 3 
-#&gt; Sample iteration= 4 
-#&gt; Sample iteration= 5 
 #&gt; 
-#&gt;  Min distance for 9 = 797.9505 
-#&gt;  Max distance for 9 = 2058.642 
+#&gt;  Min distance for 4 = 2110.756 
+#&gt;  Max distance for 4 = 3301.708 
+#&gt; Sample iteration= 1 
+#&gt; 
+#&gt;  Min distance for 5 = 780.1775 
+#&gt;  Max distance for 5 = 1969.913 
+#&gt; Sample iteration= 1 
+#&gt; Sample iteration= 2 
+#&gt; 
+#&gt;  Min distance for 6 = 593.7424 
+#&gt;  Max distance for 6 = 3890.498 
 #&gt; Sample iteration= 1 
 #&gt; Sample iteration= 2 
 #&gt; Sample iteration= 3 
@@ -237,8 +215,32 @@
 #&gt; Sample iteration= 9 
 #&gt; Sample iteration= 10 
 #&gt; 
-#&gt;  Min distance for 10 = 566.4848 
-#&gt;  Max distance for 10 = 2302.745 </div><div class='input'>  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>meuse</span>, pch<span class='op'>=</span><span class='fl'>19</span>, main<span class='op'>=</span><span class='st'>"min dist = 500"</span><span class='op'>)</span>
+#&gt;  Min distance for 7 = 607.3977 
+#&gt;  Max distance for 7 = 3606.854 
+#&gt; Sample iteration= 1 
+#&gt; Sample iteration= 2 
+#&gt; Sample iteration= 3 
+#&gt; Sample iteration= 4 
+#&gt; Sample iteration= 5 
+#&gt; Sample iteration= 6 
+#&gt; Sample iteration= 7 
+#&gt; Sample iteration= 8 
+#&gt; Sample iteration= 9 
+#&gt; Sample iteration= 10 
+#&gt; Sample iteration= 11 
+#&gt; Sample iteration= 12 
+#&gt; 
+#&gt;  Min distance for 8 = 613.8607 
+#&gt;  Max distance for 8 = 2101.733 
+#&gt; Sample iteration= 1 
+#&gt; Sample iteration= 2 
+#&gt; 
+#&gt;  Min distance for 9 = 664.8045 
+#&gt;  Max distance for 9 = 2968.147 
+#&gt; Sample iteration= 1 
+#&gt; 
+#&gt;  Min distance for 10 = 549.1311 
+#&gt;  Max distance for 10 = 4385.566 </div><div class='input'>  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>meuse</span>, pch<span class='op'>=</span><span class='fl'>19</span>, main<span class='op'>=</span><span class='st'>"min dist = 500"</span><span class='op'>)</span>
 </div><div class='input'>    <span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>sub.meuse</span>, pch<span class='op'>=</span><span class='fl'>19</span>, col<span class='op'>=</span><span class='st'>"red"</span><span class='op'>)</span> 
 </div><div class='img'><img src='subsample.distance-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Check distances  </span>
@@ -246,8 +248,8 @@
   <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>dm</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
 <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"\n"</span>, <span class='st'>"Min distance for subsample"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>dm</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>  
 </div><div class='output co'>#&gt; 
-#&gt;  Min distance for subsample 506.3882 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Max distance for subsample"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>dm</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; Max distance for subsample 3564.352 </div><div class='input'>
+#&gt;  Min distance for subsample 549.1311 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Max distance for subsample"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>dm</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span> 
+</div><div class='output co'>#&gt; Max distance for subsample 4385.566 </div><div class='input'>
   <span class='co'># Subsample with a 500m minimum and 3500m maximum sample spread   </span>
   <span class='va'>sub.meuse</span> <span class='op'>&lt;-</span> <span class='fu'>subsample.distance</span><span class='op'>(</span><span class='va'>meuse</span>, size <span class='op'>=</span> <span class='fl'>10</span>, d <span class='op'>=</span> <span class='fl'>500</span>, d.max <span class='op'>=</span> <span class='fl'>3500</span><span class='op'>)</span>  
     <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>meuse</span>,pch<span class='op'>=</span><span class='fl'>19</span>, main<span class='op'>=</span><span class='st'>"min dist = 500, max dist = 3500"</span><span class='op'>)</span>
@@ -257,8 +259,8 @@
   <span class='va'>dm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sp/man/spDistsN1.html'>spDists</a></span><span class='op'>(</span><span class='va'>sub.meuse</span><span class='op'>)</span>
     <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>dm</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
   <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Min distance for subsample"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>dm</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>  
-</div><div class='output co'>#&gt; Min distance for subsample 503.1352 </div><div class='input'>  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Max distance for subsample"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>dm</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>    
-</div><div class='output co'>#&gt; Max distance for subsample 3427 </div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; Min distance for subsample 519.3573 </div><div class='input'>  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Max distance for subsample"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>dm</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>    
+</div><div class='output co'>#&gt; Max distance for subsample 3436.324 </div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>

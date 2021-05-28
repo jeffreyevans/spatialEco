@@ -184,27 +184,27 @@ the function.</p>
 #&gt; crs        : NA 
 #&gt; source     : memory
 #&gt; names      : layer 
-#&gt; values     : 2, 13  (min, max)
+#&gt; values     : 2, 14  (min, max)
 #&gt; </div><div class='input'>
 <span class='co'># Continuous threshold instance</span>
 <span class='op'>(</span> <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>0</span>,<span class='fl'>7</span><span class='op'>)</span> <span class='op'>)</span> 
-</div><div class='output co'>#&gt;   [1] 1.07396994 5.70921598 5.55369217 1.30501700 4.58921485 3.22395906
-#&gt;   [7] 0.67182842 4.52615698 1.95761455 6.64697271 4.53199079 0.47777812
-#&gt;  [13] 6.47031219 4.14591552 3.89770455 0.78113859 1.68307554 2.23647627
-#&gt;  [19] 3.80515944 6.87421845 3.78753266 2.29460205 0.95003337 4.80559262
-#&gt;  [25] 1.28342069 6.04114354 6.32295695 5.44153554 1.37412579 1.14233735
-#&gt;  [31] 3.77863480 0.63453013 5.44423631 0.65680388 0.64408868 0.86140983
-#&gt;  [37] 1.13985652 3.35195038 3.95084955 5.67568747 5.00147117 4.62782958
-#&gt;  [43] 6.94450252 0.17641038 6.22974357 1.81386573 5.17411717 6.11439222
-#&gt;  [49] 1.64346204 0.41451328 0.17077338 6.35674847 5.75852600 3.79772506
-#&gt;  [55] 5.41608223 4.20062447 1.49360474 6.60480713 2.45339776 5.58663507
-#&gt;  [61] 4.42058480 5.53521921 2.25281942 5.78511271 4.08347124 3.41045610
-#&gt;  [67] 3.42510275 2.98933848 0.02570184 5.45582732 6.05942256 6.16285084
-#&gt;  [73] 0.26911113 4.65030289 6.33381557 2.06937244 0.36090119 4.78668165
-#&gt;  [79] 4.99216313 3.42889945 6.55607370 6.88947469 6.22435794 2.39618316
-#&gt;  [85] 0.72807553 0.90011868 5.78320981 1.40506663 6.14158755 3.42067389
-#&gt;  [91] 5.42493981 2.04106386 4.62411418 6.25058059 5.87053715 0.25641993
-#&gt;  [97] 1.64831922 2.51730922 3.85065175 6.94500737</div><div class='input'><span class='fu'>time_to_event</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fl'>5</span>, int<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1] 4.22189523 4.52724934 4.31672756 0.27001891 4.01617737 4.28468772
+#&gt;   [7] 3.86045417 3.19841076 5.04859500 3.06946302 2.40071753 6.33778185
+#&gt;  [13] 4.36438634 3.47155253 1.22275435 6.16059056 1.49698242 4.80692251
+#&gt;  [19] 5.08763741 5.41926183 5.69556307 3.01656034 2.48089580 4.11315308
+#&gt;  [25] 0.07450751 1.58848645 3.75966879 5.64553650 2.79889624 1.15528882
+#&gt;  [31] 4.82511322 0.95870079 2.01191785 0.37243058 1.43621046 6.38207603
+#&gt;  [37] 6.02667199 0.94848120 1.50525433 4.30201261 6.91679739 0.02618177
+#&gt;  [43] 5.28434486 5.99257844 6.84423880 1.68422542 2.24345676 0.81776021
+#&gt;  [49] 1.83894428 2.70539222 5.59089807 6.80262377 4.18653360 6.00546687
+#&gt;  [55] 2.90964909 4.78125007 0.57634292 6.38334392 3.63073704 5.41464169
+#&gt;  [61] 4.21722458 4.17600321 1.85661126 4.16207615 3.50256902 6.41467098
+#&gt;  [67] 1.41463633 2.79590890 5.32632177 0.21890119 4.12447328 0.08517882
+#&gt;  [73] 6.31313306 2.28068044 3.36635507 0.68339149 0.55726945 0.93456627
+#&gt;  [79] 3.01118174 0.38870338 4.89045025 4.73433872 2.96027734 0.16014138
+#&gt;  [85] 6.11948113 1.41867028 1.57962462 3.37031520 3.72156478 2.98745638
+#&gt;  [91] 4.69411627 2.95378887 1.18777857 4.03201406 2.09582595 4.66871990
+#&gt;  [97] 2.75389826 0.12588129 5.58897285 3.35055411</div><div class='input'><span class='fu'>time_to_event</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fl'>5</span>, int<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 2</div><div class='input'>
 <span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='fu'>raster</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>20</span>,<span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>
              <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>7</span><span class='op'>)</span>, <span class='fl'>100</span>, <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
@@ -217,7 +217,7 @@ the function.</p>
 #&gt; crs        : NA 
 #&gt; source     : memory
 #&gt; names      : layer 
-#&gt; values     : 2, 5  (min, max)
+#&gt; values     : 2, 4  (min, max)
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

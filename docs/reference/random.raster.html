@@ -205,14 +205,14 @@ gaussian and sample raster(s)</p>
 <span class='co'># Using existing raster to create random binominal  </span>
 <span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"external/rlogo.grd"</span>, package<span class='op'>=</span><span class='st'>"raster"</span><span class='op'>)</span><span class='op'>)</span> 
 <span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>random.raster</span><span class='op'>(</span><span class='va'>r</span>, distribution<span class='op'>=</span><span class='st'>"binominal"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Calculating binominal distribution with 77 x 101 x 1 dimensions</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Calculating binominal distribution with 77 x 101 x 1 dimensions</span></div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'raster': Not an available distribution</span></div><div class='input'>
 <span class='co'># default; random, nrows=50, ncols=50, nlayers=1</span>
 <span class='va'>rr</span> <span class='op'>&lt;-</span> <span class='fu'>random.raster</span><span class='op'>(</span>n.layer<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Calculating random distribution with 50 x 50 x 5 dimensions</span></div><div class='input'>
 <span class='co'># specified; binominal, nrows=20, ncols=20, nlayers=5</span>
 <span class='va'>rr</span> <span class='op'>&lt;-</span> <span class='fu'>random.raster</span><span class='op'>(</span>n.layer<span class='op'>=</span><span class='fl'>5</span>, n.col<span class='op'>=</span><span class='fl'>20</span>, n.row<span class='op'>=</span><span class='fl'>20</span>,  
                     distribution<span class='op'>=</span><span class='st'>"binominal"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Calculating binominal distribution with 20 x 20 x 5 dimensions</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Calculating binominal distribution with 20 x 20 x 5 dimensions</span></div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'raster': Not an available distribution</span></div><div class='input'>
 <span class='co'># specified; gaussian, nrows=50, ncols=50, nlayers=1</span>
 <span class='va'>rr</span> <span class='op'>&lt;-</span> <span class='fu'>random.raster</span><span class='op'>(</span>n.col<span class='op'>=</span><span class='fl'>50</span>, n.row<span class='op'>=</span><span class='fl'>50</span>, s<span class='op'>=</span><span class='fl'>8</span>,  
                     distribution<span class='op'>=</span><span class='st'>"gaussian"</span><span class='op'>)</span>
@@ -222,10 +222,10 @@ gaussian and sample raster(s)</p>
 </div><div class='output co'>#&gt; <span class='message'>Calculating sample distribution with 50 x 50 x 1 dimensions</span></div><div class='input'>  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/freq.html'>freq</a></span><span class='op'>(</span><span class='va'>rr</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $layer
 #&gt;      value count
-#&gt; [1,]     2   658
-#&gt; [2,]     6   613
-#&gt; [3,]    10   612
-#&gt; [4,]    15   617
+#&gt; [1,]     2   666
+#&gt; [2,]     6   646
+#&gt; [3,]    10   603
+#&gt; [4,]    15   585
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

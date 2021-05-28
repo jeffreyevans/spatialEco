@@ -186,18 +186,23 @@ pattern analysis in ecology. Oikos 104:209-229</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://spatstat.org/'>spatstat.core</a></span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'spatstat.core' was built under R version 4.0.5</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: spatstat.data</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'spatstat.data' was built under R version 4.0.5</span></div><div class='output co'>#&gt; <span class='message'></span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: spatstat.data</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'spatstat.data'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:spatialEco':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    ants</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: spatstat.geom</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'spatstat.geom' was built under R version 4.0.5</span></div><div class='output co'>#&gt; <span class='message'>spatstat.geom 2.1-0</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'spatstat.geom'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:raster':</span>
+#&gt; <span class='message'>    ants</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: spatstat.geom</span></div><div class='output co'>#&gt; <span class='message'>spatstat.geom 2.1-0</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'spatstat.geom'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:rms':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    perimeter</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:raster':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    area, rotate, shift</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:spatialEco':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    is.empty, quadrats, shift</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: nlme</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'nlme'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:raster':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    getData</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: rpart</span></div><div class='output co'>#&gt; <span class='message'>spatstat.core 2.1-2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>lansing</span><span class='op'>)</span>
+#&gt; <span class='message'>    getData</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: rpart</span></div><div class='output co'>#&gt; <span class='message'>spatstat.core 2.1-2</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'spatstat.core'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:lattice':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    panel.histogram</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>lansing</span><span class='op'>)</span>
     <span class='va'>x</span>  <span class='op'>&lt;-</span> <span class='fu'>spatstat.geom</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/spatstat.geom/man/unmark.html'>unmark</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>lansing</span><span class='op'>)</span><span class='op'>$</span><span class='va'>maple</span><span class='op'>)</span>
     <span class='fu'>o.ring</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='img'><img src='o.ring-1.png' alt='' width='700' height='433' /></div><div class='input'>

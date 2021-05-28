@@ -204,12 +204,12 @@ polygon intersection</p></td>
 #&gt; 5     2.8     48  117  269 7.480 0.27709000  8.7     1    2    0      Ah    380
 #&gt; 6     3.0     61  137  281 7.791 0.36406700  7.8     1    2    0      Ga    470
 #&gt;   test.na PIDS         y pid
-#&gt; 1      NA    1 0.2872907 101
-#&gt; 2      NA    1 0.2872907 101
-#&gt; 3      NA    1 0.2872907 101
-#&gt; 4      NA    1 0.2872907 101
-#&gt; 5      NA    1 0.2872907 101
-#&gt; 6      NA    1 0.2872907 101</div><div class='input'> 
+#&gt; 1      NA    1 0.6715948 101
+#&gt; 2      NA    1 0.6715948 101
+#&gt; 3      NA    1 0.6715948 101
+#&gt; 4      NA    1 0.6715948 101
+#&gt; 5      NA    1 0.6715948 101
+#&gt; 6      NA    1 0.6715948 101</div><div class='input'> 
  <span class='co'># Count points in each polygon</span>
  <span class='fu'><a href='https://rdrr.io/r/base/tapply.html'>tapply</a></span><span class='op'>(</span><span class='va'>pts.poly</span><span class='op'>$</span><span class='va'>cadmium</span>, <span class='va'>pts.poly</span><span class='op'>$</span><span class='va'>pid</span>, FUN<span class='op'>=</span><span class='va'>length</span><span class='op'>)</span>    
 </div><div class='output co'>#&gt; 101 102 103 
@@ -223,13 +223,13 @@ polygon intersection</p></td>
  <span class='co'># Duplicates points for each new polygon, no attributes so returns IDs for features    </span>
  <span class='va'>pts.poly.dup</span> <span class='op'>&lt;-</span>  <span class='fu'>point.in.poly</span><span class='op'>(</span><span class='va'>pts</span>, <span class='va'>polys</span><span class='op'>)</span>
    <span class='fu'><a href='https://rdrr.io/pkg/raster/man/headtail.html'>head</a></span><span class='op'>(</span><span class='va'>pts.poly.dup</span><span class='op'>@</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   pt.ids poly.ids
-#&gt; 1      1        2
-#&gt; 2      2        1
-#&gt; 3      3        2
-#&gt; 4      4        1
-#&gt; 5      5        2
-#&gt; 6      6        2</div><div class='input'>   
+</div><div class='output co'>#&gt;     pt.ids poly.ids
+#&gt; 1        1        1
+#&gt; 1.1      1        3
+#&gt; 2        2        1
+#&gt; 3        3        1
+#&gt; 3.1      3        2
+#&gt; 4        4        1</div><div class='input'>   
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
  <span class='co'># **** Should throw error due to lack of attributes ****  </span>
    <span class='va'>pts.poly</span> <span class='op'>&lt;-</span> <span class='fu'>point.in.poly</span><span class='op'>(</span><span class='va'>pts</span>, <span class='va'>polys</span>, duplicate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> 
@@ -244,27 +244,27 @@ polygon intersection</p></td>
  <span class='co'># Returns point attributes with column for each unique polygon   </span>
  <span class='va'>pts.poly</span> <span class='op'>&lt;-</span> <span class='fu'>point.in.poly</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, duplicate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
    <span class='fu'><a href='https://rdrr.io/pkg/raster/man/headtail.html'>head</a></span><span class='op'>(</span><span class='va'>pts.poly</span><span class='op'>@</span><span class='va'>data</span><span class='op'>)</span>  
-</div><div class='output co'>#&gt;   IDS       pty    p pid1 pid2 pid3
-#&gt; 1   1 0.6857465    1    2 &lt;NA&gt; &lt;NA&gt;
-#&gt; 2   2 0.0477987    2    1 &lt;NA&gt; &lt;NA&gt;
-#&gt; 3   3 0.5875794    3    2 &lt;NA&gt; &lt;NA&gt;
-#&gt; 4   4 0.2458273 &lt;NA&gt;    1 &lt;NA&gt; &lt;NA&gt;
-#&gt; 5   5 0.6966104 &lt;NA&gt;    2 &lt;NA&gt; &lt;NA&gt;
-#&gt; 6   6 0.4998012 &lt;NA&gt;    2 &lt;NA&gt; &lt;NA&gt;</div><div class='input'>   
+</div><div class='output co'>#&gt;   IDS        pty    p pid1 pid2 pid3
+#&gt; 1   1 0.99692867    1    1    3 &lt;NA&gt;
+#&gt; 2   2 0.02802265    2    1 &lt;NA&gt; &lt;NA&gt;
+#&gt; 3   3 0.02596293    3    1    2 &lt;NA&gt;
+#&gt; 4   4 0.02129025 &lt;NA&gt;    1 &lt;NA&gt; &lt;NA&gt;
+#&gt; 5   5 0.83191578 &lt;NA&gt;    2 &lt;NA&gt; &lt;NA&gt;
+#&gt; 6   6 0.95174343 &lt;NA&gt;    1    3 &lt;NA&gt;</div><div class='input'>   
  <span class='co'># Duplicates points for each new polygon, joins all attributes  </span>
  <span class='va'>pts.poly.dup</span> <span class='op'>&lt;-</span>  <span class='fu'>point.in.poly</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
    <span class='fu'><a href='https://rdrr.io/pkg/raster/man/headtail.html'>head</a></span><span class='op'>(</span><span class='va'>pts.poly.dup</span><span class='op'>@</span><span class='va'>data</span><span class='op'>)</span>  
-</div><div class='output co'>#&gt;   IDS.x       pty IDS.y         py
-#&gt; 1     1 0.6857465     2 0.42169964
-#&gt; 2     2 0.0477987     1 0.09122571
-#&gt; 3     3 0.5875794     2 0.42169964
-#&gt; 4     4 0.2458273     1 0.09122571
-#&gt; 5     5 0.6966104     2 0.42169964
-#&gt; 6     6 0.4998012     2 0.42169964</div><div class='input'> 
+</div><div class='output co'>#&gt;     IDS.x        pty IDS.y        py
+#&gt; 1       1 0.99692867     1 0.8987087
+#&gt; 1.1     1 0.99692867     3 0.9064305
+#&gt; 2       2 0.02802265     1 0.8987087
+#&gt; 3       3 0.02596293     1 0.8987087
+#&gt; 3.1     3 0.02596293     2 0.9470662
+#&gt; 4       4 0.02129025     1 0.8987087</div><div class='input'> 
  <span class='co'># Count points in each polygon</span>
  <span class='fu'><a href='https://rdrr.io/r/base/tapply.html'>tapply</a></span><span class='op'>(</span><span class='va'>pts.poly.dup</span><span class='op'>$</span><span class='va'>IDS.x</span>, <span class='va'>pts.poly.dup</span><span class='op'>$</span><span class='va'>IDS.y</span>, FUN<span class='op'>=</span><span class='va'>length</span><span class='op'>)</span>      
 </div><div class='output co'>#&gt;  1  2  3 
-#&gt; 36 38 41 </div><div class='input'>
+#&gt; 46 43 34 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

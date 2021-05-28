@@ -151,12 +151,12 @@ dissaggregates the data into a one-to-one match.</p>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/edzer/sp/'>sp</a></span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/pkg/raster/man/dimensions.html'>dim</a></span><span class='op'>(</span> <span class='va'>p.sf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"shapes/sids.shp"</span>, package <span class='op'>=</span> <span class='st'>"spData"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; Reading layer `sids' from data source `C:\Program Files\R\R-4.0.3\library\spData\shapes\sids.shp' using driver `ESRI Shapefile'
+</div><div class='output co'>#&gt; Reading layer `sids' from data source `C:\Program Files\R\R-4.0.5\library\spData\shapes\sids.shp' using driver `ESRI Shapefile'
 #&gt; Simple feature collection with 100 features and 22 fields
-#&gt; geometry type:  MULTIPOLYGON
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
-#&gt; CRS:            NA</div><div class='output co'>#&gt; [1] 100  23</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/dimensions.html'>dim</a></span><span class='op'>(</span> <span class='va'>p.sf</span> <span class='op'>&lt;-</span> <span class='fu'>explode</span><span class='op'>(</span><span class='va'>p.sf</span><span class='op'>)</span> <span class='op'>)</span>
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+#&gt; CRS:           NA</div><div class='output co'>#&gt; [1] 100  23</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/dimensions.html'>dim</a></span><span class='op'>(</span> <span class='va'>p.sf</span> <span class='op'>&lt;-</span> <span class='fu'>explode</span><span class='op'>(</span><span class='va'>p.sf</span><span class='op'>)</span> <span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Converting multipart MULTIPOLYGON to single part POLYGON</span></div><div class='output co'>#&gt; [1] 108  23</div><div class='input'><span class='co'># }</span>
 
 </div></pre>

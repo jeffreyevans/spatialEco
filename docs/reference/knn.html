@@ -187,7 +187,7 @@ coordinates matrix</p></td>
 distance of k</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>nn2</code> for details on search algorithm</p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/RANN/man/nn2.html'>nn2</a></code> for details on search algorithm</p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Jeffrey S. Evans  &lt;jeffrey_evans@tnc.org&gt;</p>
@@ -204,23 +204,53 @@ distance of k</p>
  
  <span class='co'># Find 2 neighbors in meuse</span>
  <span class='op'>(</span> <span class='va'>nn</span> <span class='op'>&lt;-</span> <span class='fu'>knn</span><span class='op'>(</span><span class='va'>pts</span>, <span class='va'>meuse</span>, k<span class='op'>=</span><span class='fl'>2</span>, ids <span class='op'>=</span> <span class='st'>"IDS"</span>, indexes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in knn(pts, meuse, k = 2, ids = "IDS", indexes = TRUE): please install RANN package before running this function</span></div><div class='input'>    <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>pts</span>, pch<span class='op'>=</span><span class='fl'>19</span>, main<span class='op'>=</span><span class='st'>"KNN"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    idx1 idx2 ids1 ids2     dist1     dist2
+#&gt; 1   135  136  135  136 125.03200 181.10770
+#&gt; 2    55   50   55   50 133.76472 136.61625
+#&gt; 3    97   65   97   65 183.35757 270.22398
+#&gt; 4    65  102   65  102 131.02671 137.31715
+#&gt; 5    31   33   31   33  62.62587 169.00000
+#&gt; 6    56   57   56   57 110.72488 117.54574
+#&gt; 7   103   65  103   65 107.37784 114.72576
+#&gt; 8    48   47   48   47 167.19450 207.32824
+#&gt; 9    32   31   32   31  81.02469 117.79643
+#&gt; 10   22   21   22   21  53.00000  76.02631</div><div class='input'>    <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>pts</span>, pch<span class='op'>=</span><span class='fl'>19</span>, main<span class='op'>=</span><span class='st'>"KNN"</span><span class='op'>)</span>
 </div><div class='input'>      <span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>[</span><span class='va'>nn</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>,<span class='op'>]</span>, pch<span class='op'>=</span><span class='fl'>19</span>, col<span class='op'>=</span><span class='st'>"red"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'i' in selecting a method for function '[': object 'nn' not found</span></div><div class='input'>
+</div><div class='img'><img src='knn-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using covariates (weights)</span>
 <span class='va'>wx</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/as.matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>wy</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/as.matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>pts</span><span class='op'>@</span><span class='va'>data</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
 
 <span class='op'>(</span> <span class='va'>nn</span> <span class='op'>&lt;-</span> <span class='fu'>knn</span><span class='op'>(</span><span class='va'>pts</span>, <span class='va'>meuse</span>, k<span class='op'>=</span><span class='fl'>2</span>, ids <span class='op'>=</span> <span class='st'>"IDS"</span>, indexes <span class='op'>=</span> <span class='cn'>TRUE</span>,
             weights.y<span class='op'>=</span><span class='va'>wy</span>, weights.x<span class='op'>=</span><span class='va'>wx</span><span class='op'>)</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in knn(pts, meuse, k = 2, ids = "IDS", indexes = TRUE, weights.y = wy,     weights.x = wx): please install RANN package before running this function</span></div><div class='input'>    <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>pts</span>, pch<span class='op'>=</span><span class='fl'>19</span>, main<span class='op'>=</span><span class='st'>"KNN"</span><span class='op'>)</span>
-</div><div class='img'><img src='knn-1.png' alt='' width='700' height='433' /></div><div class='input'>      <span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>[</span><span class='va'>nn</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>,<span class='op'>]</span>, pch<span class='op'>=</span><span class='fl'>19</span>, col<span class='op'>=</span><span class='st'>"red"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'i' in selecting a method for function '[': object 'nn' not found</span></div><div class='input'>    
+</div><div class='output co'>#&gt;    idx1 idx2 ids1 ids2     dist1    dist2
+#&gt; 1   135  136  135  136 129.88518 181.3386
+#&gt; 2    55   51   55   51 177.17847 229.8103
+#&gt; 3    97  144   97  144 184.14712 353.7544
+#&gt; 4   102  103  102  103 137.37918 253.7815
+#&gt; 5    31   33   31   33  64.24671 170.2551
+#&gt; 6   113   57  113   57 159.33926 173.6855
+#&gt; 7   103   64  103   64 108.83033 194.1445
+#&gt; 8    48   98   48   98 172.64487 223.2444
+#&gt; 9    32   31   32   31  81.05652 118.9832
+#&gt; 10   22   21   22   21  54.57115 114.7465</div><div class='input'>    <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>pts</span>, pch<span class='op'>=</span><span class='fl'>19</span>, main<span class='op'>=</span><span class='st'>"KNN"</span><span class='op'>)</span>
+</div><div class='input'>      <span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>[</span><span class='va'>nn</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>,<span class='op'>]</span>, pch<span class='op'>=</span><span class='fl'>19</span>, col<span class='op'>=</span><span class='st'>"red"</span><span class='op'>)</span>
+</div><div class='img'><img src='knn-2.png' alt='' width='700' height='433' /></div><div class='input'>    
  <span class='co'># Using coordinate matrices</span>
  <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>pts</span><span class='op'>)</span>
  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>
  <span class='fu'>knn</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span>, k<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in knn(y, x, k = 2): please install RANN package before running this function</span></div><div class='input'>  
+</div><div class='output co'>#&gt;    ids1 ids2     dist1     dist2
+#&gt; 1   149  151 125.03200 181.10770
+#&gt; 2    60   54 133.76472 136.61625
+#&gt; 3   105   76 183.35757 270.22398
+#&gt; 4    76  114 131.02671 137.31715
+#&gt; 5    32   37  62.62587 169.00000
+#&gt; 6    61   62 110.72488 117.54574
+#&gt; 7   116   76 107.37784 114.72576
+#&gt; 8    52   51 167.19450 207.32824
+#&gt; 9    35   32  81.02469 117.79643
+#&gt; 10   22   21  53.00000  76.02631</div><div class='input'>  
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

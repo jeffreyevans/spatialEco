@@ -73,314 +73,315 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="spatialeco-cran-13-6-developement-13-7" class="section level1">
+<div id="spatialeco-cran-1-3-6-developement-1-3-7" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#spatialeco-cran-13-6-developement-13-7" class="anchor"></a>spatialEco (CRAN 1.3-6, developement 1.3-7)</h1></div>
+<a href="#spatialeco-cran-1-3-6-developement-1-3-7" class="anchor"></a>spatialEco (CRAN 1.3-6, developement 1.3-7)</h1></div>
+<!-- badges: start -->
 
-<p>spatialEco R package with utilities to support spatial data manipulation, query, sampling and modelling. Functions include models for species population density, download utilities for climate and global deforestation spatial products, spatial smoothing, multivariate separability, point process model for creating pseudo- absences and sub-sampling, polygon and point-distance landscape metrics, auto-logistic model, sampling models, cluster optimization and statistical exploratory tools.</p>
+<p><a href="https://cran.r-project.org/package=spatialEco"><img src="http://www.r-pkg.org/badges/version/spatialEco" alt="CRAN status"></a> <a href="https://cran.r-project.org/package=spatialEco"><img src="http://cranlogs.r-pkg.org/badges/grand-total/spatialEco" alt="CRAN RStudio mirror downloads"></a> <a href="https://codecov.io/gh/jeffreyevans/spatialEco"><img src="https://codecov.io/gh/jeffreyevans/spatialEco/branch/master/graph/badge.svg?token=9xZBT87IlM" alt="codecov"></a> <!-- badges: end --> spatialEco R package with utilities to support spatial data manipulation, query, sampling and modeling. Functions include models for species population density, download utilities for climate and global deforestation spatial products, spatial smoothing, multivariate separability, point process model for creating pseudo- absences and sub-sampling, polygon and point-distance landscape metrics, auto-logistic model, sampling models, cluster optimization and statistical exploratory tools.</p>
 </div>
-<div id="available-functions-in-spatialeco-13-7-are" class="section level1">
+<div id="available-functions-in-spatialeco-1-3-7-are" class="section level1">
 <h1 class="hasAnchor">
-<a href="#available-functions-in-spatialeco-13-7-are" class="anchor"></a>Available functions in spatialEco 1.3-7 are:</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>annulus.matrix <span class="sc">-</span> Creates a <span class="dv">0</span>,<span class="dv">1</span> matrix based on defined annulus parameters, can be used as a window</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                 matrix <span class="cf">in</span> a raster focal <span class="cf">function</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>background <span class="sc">-</span> Creates a point sample that can be used as a <span class="cn">NULL</span> <span class="cf">for</span> SDM<span class="st">'s and other  </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">             modeling approaches (see pseudo.absence for alternate approach). </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">bearing.distance - Calculate new point based on bearing/distance</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">                   population counts.     </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">built.index - remote sensing built-up index</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">cgls_urls - Based on query, provide URL'</span>s <span class="cf">for</span> Copernicus Global Land Service datasets</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>chae <span class="sc">-</span> The Canine<span class="sc">-</span>Human Age <span class="fu">Equivalent</span> (<span class="cf">for</span> fun)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>classBreaks <span class="sc">-</span> <span class="cf">for</span> finding class breaks <span class="cf">in</span> a distribution</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>class.comparison <span class="sc">-</span> Compares two nominal rasters</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>colinear <span class="sc">-</span> Test <span class="cf">for</span> linear or nonlinear collinearity<span class="sc">/</span>correlation <span class="cf">in</span> data</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>correlogram <span class="sc">-</span> Calculates and plots a <span class="fu">correlogram</span> (spatially lagged correlations, <span class="st">"pearson"</span>, </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>             <span class="st">"kendall"</span> or <span class="st">"spearman"</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>concordance <span class="sc">-</span> Performs a concordance<span class="sc">/</span><span class="fu">disconcordance</span> (C<span class="sc">-</span>statistic) test on binomial models.</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>conf.interval <span class="sc">-</span> Calculates confidence interval <span class="cf">for</span> the mean or median of a distribution with unknown </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                population variance</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>combine <span class="sc">-</span> Combines multiple rasters into an <span class="st">"all possible combinations"</span> raster</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>          emulation the ESRI combine <span class="cf">function</span>, ratifies the output and includes</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>          a summary table of combinations and attributes that relates back to </span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>          the raster values                 </span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>convexHull <span class="sc">-</span> Derives a convex hull of points using the alpha hull approach with adjustable tension. </span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            Please note that due to licensing reasons, this <span class="cf">function</span> is only available <span class="cf">in</span> the GitHub </span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            development version and not on CRAN. You must call the <span class="cf">function</span> from the package </span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            namespace using spatialEco<span class="sc">:::</span>convexHull  </span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>crossCorrelation <span class="sc">-</span> Calculates the partial spatial cross<span class="sc">-</span>correlation <span class="cf">function</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>cross.tab <span class="sc">-</span> Cross tabulate two rasters, labels outputs</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>csi <span class="sc">-</span> Calculates the cosine similarity and angular similarity on two vectors or a matrix</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>curvature <span class="sc">-</span> Zevenbergen <span class="sc">&amp;</span> Thorne, McNab<span class="st">'s or Bolstad'</span>s <span class="fu">surface</span> (raster) curvature  </span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>dahi <span class="sc">-</span> Calculates the <span class="fu">DAHI</span> (Diurnal Anisotropic Heat Index)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>date_seq <span class="sc">-</span> Creates date sequence, given defined start and stop dates, with options <span class="cf">for</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>            day, week, month, quarter, year or, minute. </span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>daymet.point <span class="sc">-</span> Downloads DAYMET climate variables <span class="cf">for</span> specified point and timeperiod</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>daymet.tiles <span class="sc">-</span> Returns a vector of DAYMET tile id<span class="st">'s within a specified extent</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="st">dispersion - Calculates the dispersion ("rarity") of targets associated with planning units</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="st">dissection - Evans (1972) Martonne'</span>s modified dissection                                  </span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>divergence <span class="sc">-</span> Kullback<span class="sc">-</span>Leibler <span class="fu">Divergence</span> (Cross<span class="sc">-</span>entropy)                               </span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>download.daymet <span class="sc">-</span> Batch download of daily gridded DAYMET climate data    </span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>download.hansen <span class="sc">-</span> Download of Hansen Global Forest Change <span class="dv">2000-2013</span>  </span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>download.prism <span class="sc">-</span> Batch download of monthly gridded PRISM climate data</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>effect.size <span class="sc">-</span> Cohen<span class="st">'s-d effect size with pooled sd for a control and experimental group </span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="st">erase.points - Erases points inside or outside a polygon feature class</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="st">explode - Explodes multi-part to single-part feature geometry</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="st">extract.vertices - extracts (x,y) vertices coordinates from polygons and lines </span></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="st">focal.lmetrics (depreciated, moved to landmetrics package) - Landscape metrics using a focal window</span></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="st">fuzzySum - Calculates the fuzzy sum of a vector</span></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="st">gaussian.kernel - Creates a Gaussian Kernel of specified size and sigma</span></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="st">geo.buffer - Buffers data in geographic coordinate space using a temporary </span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="st">             projection</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="st">group.pdf - Creates a probability density plot of y for each group of x           </span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="st">hexagons - Create hexagon polygon “fishnet” of defined size and extent.</span></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="st">hli - Heat Load Index, now with support for southern hemisphere data</span></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="st">hsp - Hierarchical Slope Position</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="st">hybrid.kmeans - Clustering using hierarchical clustering to define cluster-centers in k-means </span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="st">idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. </span></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="st">                The function is a smoothing interpolator at the point observation(s) level using </span></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="st">                a distance-weighted mean.   </span></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="st">impute.loess - Imputes NA'</span>s or smooths <span class="fu">data</span> (or both) <span class="cf">for</span> a vector, intended</span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>               mostly <span class="cf">for</span> time<span class="sc">-</span>series or serial data. </span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>insert <span class="sc">-</span> Inserts a row or column into a data.frame</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>insert.values <span class="sc">-</span> Inserts new values into a vector at specified positions  </span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>is.empty <span class="sc">-</span> Method, evaluates <span class="cf">if</span> vector is empty </span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>is.whole <span class="sc">-</span> Method, evaluates <span class="cf">if</span> numeric vector is whole or float </span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>kendall <span class="sc">-</span> Kendall tau trend with continuity correction <span class="cf">for</span> time<span class="sc">-</span>series</span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>kl.divergence <span class="sc">-</span> Calculates the Kullback<span class="sc">-</span>Leibler <span class="fu">divergence</span> (relative entropy) between unweighted theoretical </span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>               component distributions. Divergence is calculated as<span class="sc">:</span> int [<span class="fu">f</span>(x) (log <span class="fu">f</span>(x) <span class="sc">-</span> log <span class="fu">g</span>(x)) dx]</span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>               <span class="cf">for</span> distributions with densities <span class="fu">f</span>() and <span class="fu">g</span>().       </span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>knn <span class="sc">-</span> returns ids, rownames and distance of nearest neighbors <span class="cf">in</span> <span class="fu">two</span> (or single) spatial objects. </span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>      Optional radius distance constraint. Added optional <span class="fu">covariates</span> (weights).</span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="fu">land.metrics</span> (depreciated, moved to landmetrics package) <span class="sc">-</span> Calculates a variety of landscape metrics, on binary rasters, <span class="cf">for</span> polygons or points with a buffer </span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>              distance. This is similar to the moving window <span class="cf">in</span> Fragstats but, uses either a buffer <span class="cf">for</span> each </span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>              point or a zonal approach with polygons, to derive local metrics. </span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>libraries <span class="sc">-</span> Checks <span class="fu">package</span>(s) install, optionally installs and adds to namespace environment</span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>local.min.max <span class="sc">-</span> Calculates the local minimums and maximums <span class="cf">in</span> a numeric vector, indicating inflection points </span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>               <span class="cf">in</span> the distribution.   </span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>loess.boot <span class="sc">-</span> Bootstrap of a Local Polynomial <span class="fu">Regression</span> (loess)</span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>loess.ci <span class="sc">-</span> Calculates a local polynomial regression fit with associated confidence intervals   </span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>logistic.regression <span class="sc">-</span> Performs a <span class="fu">logistic</span> (binomial) and <span class="fu">autologistic</span> (spatially lagged binomial) regression </span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>                     using maximum likelihood estimation or penalized maximum likelihood estimation.</span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>max_extent <span class="sc">-</span> Returns the maximum extent of multiple spatial inputs</span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>moments <span class="sc">-</span> Calculate statistical moments of a distribution including percentiles, arithmetic<span class="sc">-</span>geometric<span class="sc">-</span>harmonic </span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>         means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    </span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>morans.plot <span class="sc">-</span> Autocorrelation plot </span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>nni <span class="sc">-</span> Calculates the nearest neighbor <span class="fu">index</span> (NNI) as a measure of clustering or dispersal</span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>nth.vlaue <span class="sc">-</span> Returns the <span class="fu">Nth</span> (smallest<span class="sc">/</span>largest) values <span class="cf">in</span> a numeric vector</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>oli.aws <span class="sc">-</span> Download Landsat <span class="dv">8</span> <span class="sc">-</span> OLI from AWS.   </span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>o.ring <span class="sc">-</span> Calculates the inhomogeneous O<span class="sc">-</span>ring point pattern <span class="fu">statistic</span> (Wiegand <span class="sc">&amp;</span> Maloney <span class="dv">2004</span>)               </span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>optimal.k <span class="sc">-</span> Find optimal k of k<span class="sc">-</span>Medoid partitions using silhouette widths </span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>optimized.sample.variance <span class="sc">-</span> Draws an optimal sample that minimizes or maximizes the sample variance </span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>outliers <span class="sc">-</span> Identify outliers using modified Z<span class="sc">-</span>score  </span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>overlap <span class="sc">-</span> For comparing the similarity of two niche estimates using Warren<span class="st">'s-I</span></span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a><span class="st">parea.sample - Creates a systematic or random point sample of polygons where n is based on percent area of </span></span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a><span class="st">              each polygon</span></span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a><span class="st">parse.bits - Based on integer value, pulls value(s) of specified bit(s)</span></span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a><span class="st">parial.cor - Partial and Semi-partial correlation</span></span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="st">plot.effect.size - Plot generic for effect size</span></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="st">plot.loess.boot - Plot generic for loess boot     </span></span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="st">point.in.poly - Intersects point and polygon feature classes and adds polygon attributes to the points     </span></span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a><span class="st">polygon_extract - Fast method for extracting raster values to polygons</span></span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="st">polyPerimeter - Calculates the perimeter length(s) for a polygon object</span></span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="st">poly.regression - smoothing data in time-series and imputing missing (NA) values using polynomial regression</span></span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a><span class="st">pp.subsample - Generates random subsample based on point process intensity function of the observed data. </span></span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a><span class="st">              This is a spatially informed data thinning model that can be used to reduce pseudo-replication </span></span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="st">              or autocorrelation.  </span></span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="st">proximity.index - Proximity index for a set of polygons                             </span></span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a><span class="st">pseudo.absence - Generates pseudo-absence samples based on the spatial intensity function of known species locations. </span></span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a><span class="st">                This is akin to distance constrained but is informed by the spatial process of the observed data </span></span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="st">                and is drawn from a probabilistic sample following the intensity function.       </span></span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a><span class="st">quadrats - Quadrat sampling or analysis, variable size and angle options</span></span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="st">random.raster - creates random rasters or stacks of defined dimensions and statistical distributions</span></span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="st">raster.change - Compares two categorical rasters with a variety of statistical options </span></span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a><span class="st">raster.deviation - Local deviation from the raster based on specified global statistic or a polynomial trend.                          </span></span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="st">rasterDistance - This replicates the raster distanceFromPoints function but uses the Arya &amp; Mount</span></span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a><span class="st">                 Approximate Near Neighbor (ANN) C++ library for calculating distances. Where this</span></span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a><span class="st">                 results in a notable increase in performance it is not memory safe, needing to read</span></span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a><span class="st">                 in the entire raster and does not use the GeographicLib (Karney, 2013) spheroid </span></span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="st">                 distance method for geographic data.  </span></span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a><span class="st">raster.downscale - Downscale raster to a higher resolution raster using robust regression</span></span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a><span class="st">raster.entropy - Calculates entropy on integer raster (i.e., 8 bit 0-255)  </span></span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a><span class="st">raster.gaussian.smooth - Applies a Gaussian smoothing kernel to smooth raster.</span></span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="st">raster.invert - Inverts value of a raster                              </span></span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a><span class="st">raster.kendall - Calculates Kendall'</span>s tau trend with continuity correction <span class="cf">for</span> raster time<span class="sc">-</span>series</span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>raster.mds <span class="sc">-</span> Multidimensional scaling of raster values within an N x N focal window                                 </span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>raster.modified.ttest <span class="sc">-</span> Bivariate moving window correlation using Dutilleul<span class="st">'s modified t-test </span></span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a><span class="st">raster.moments - Calculates focal statistical moments of a raster                              </span></span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a><span class="st">raster.transformation - Applies specified statistical transformation to a raster                       </span></span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a><span class="st">raster.vol - Calculates a percent volume on a raster or based on the entire raster or a systematic sample</span></span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="st">raster.Zscore - Calculates the modified z-score for all cells in a raster                               </span></span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="st">rasterCorrelation - Performs a simple moving window correlation between two rasters       </span></span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="st">remove.holes - Removes all holes (null geometry) in polygon sp class objects </span></span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="st">rotate.polygon - Rotates a polygon by specified angle</span></span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a><span class="st">sa.trans - Trigonometric transformation of a slope and aspect interaction </span></span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a><span class="st">sample.annulus - Creates sample points based on annulus with defined inner and outer radius</span></span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a><span class="st">sample.line - Creates a systematic or random point sample of an sp SpatialLinesDataFrame object based on </span></span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="st">             distance spacing, fixed size or proportional size</span></span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a><span class="st">sample.poly - Creates an equal sample of n for each polygon in an sp Polygon class object</span></span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a><span class="st">sampleTransect - Creates random transects from points and generates sample points along each transect</span></span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a><span class="st">separability - Calculates variety of univariate separability metrics for nominal class samples</span></span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a><span class="st">spectral.separability - Calculates univariate or multivariate separability for nominal class samples</span></span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a><span class="st">sg.smooth - Smoothing time-series data using a Savitzky-Golay filter </span></span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a><span class="st">shannons - Calculates Shannon'</span>s Diversity Index and Shannon<span class="st">'s Evenness Index</span></span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a><span class="st">shift - Shifts a vector by n lags without changing its length, can specify fill values </span></span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a><span class="st">similarity - Uses row imputation to identify "k" ecological similar observations</span></span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a><span class="st">smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series </span></span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a><span class="st">                     using (local polynomial) LOESS regression</span></span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a><span class="st">sobal - Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window  </span></span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a><span class="st">spatial.select - Performs a spatial select (feature subset) similar to ArcGIS</span></span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a><span class="st">spectral.separability - Calculates class-wise multivariate spectral separability </span></span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a><span class="st">sp.kde - A weighted or un-weighted kernel density estimate</span></span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a><span class="st">sp.na.omit  - Removes row or column NA'</span>s <span class="cf">in</span> sp object. The standard R na.omit <span class="cf">function</span> will not propagate through </span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>             all slots of an sp class object. This <span class="cf">function</span> removes the spatial objects, <span class="cf">in</span> all slots, corresponding </span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>             to NA<span class="st">'s in the @data data.frame object.        </span></span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a><span class="st">srr - Surface Relief Ratio </span></span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a><span class="st">stratified.random - Creates a stratified random sample of an sp class object using a factor.</span></span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a><span class="st">subsample.distance - Minimum, and optional maximum, distance constrained sub-sampling</span></span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a><span class="st">swvi - Senescence weighted MSAVI or MTVI</span></span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a><span class="st">time_to_event - Returns the time (sum to position) to a specified value </span></span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a><span class="st">topo.distance - Calculates topographic corrected distance for a SpatialLinesDataFrame object  </span></span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="st">tpi - Calculates topographic position using mean deviations within specified window  </span></span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a><span class="st">trasp - Solar-radiation Aspect Index </span></span>
-<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a><span class="st">trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y </span></span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a><span class="st">               and plots results.</span></span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a><span class="st">tri - Implementation of the Riley et al (1999) Terrain Ruggedness Index</span></span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a><span class="st">vrm - Implementation of the Sappington et al., (2007) vector ruggedness measure</span></span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a><span class="st">winsorize - Removes extreme outliers using a winsorization transformation</span></span>
-<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a><span class="st">wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in </span></span>
-<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a><span class="st">             a point sample.      </span></span>
-<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a><span class="st">zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. </span></span></code></pre></div>
-<p><strong>Bugs</strong>: Users are encouraged to report bugs here. Go to <a href="https://github.com/jeffreyevans/spatialEco/issues">issues</a> in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <a href="mailto:jeffrey_evans@tnc.org" class="email">jeffrey_evans@tnc.org</a>.</p>
+<a href="#available-functions-in-spatialeco-1-3-7-are" class="anchor"></a>Available functions in spatialEco 1.3-7 are:</h1>
+<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">annulus.matrix <span class="op">-</span><span class="st"> </span>Creates a <span class="dv">0</span>,<span class="dv">1</span> matrix based on defined annulus parameters, can be used as a window
+                 matrix <span class="cf">in</span> a raster focal <span class="cf">function</span>
+    
+background <span class="op">-</span><span class="st"> </span>Creates a point sample that can be used as a <span class="ot">NULL</span> <span class="cf">for</span> SDM<span class="st">'s and other  </span>
+<span class="st">             modeling approaches (see pseudo.absence for alternate approach). </span>
+
+<span class="st">bearing.distance - Calculate new point based on bearing/distance</span>
+
+<span class="st">breeding.density - Calculates n-th percent breeding density areas base on a kernel density estimate of </span>
+<span class="st">                   population counts.     </span>
+
+<span class="st">built.index - remote sensing built-up index</span>
+
+<span class="st">cgls_urls - Based on query, provide URL'</span>s <span class="cf">for</span> Copernicus Global Land Service datasets
+
+chae <span class="op">-</span><span class="st"> </span>The Canine<span class="op">-</span>Human Age <span class="kw">Equivalent</span> (<span class="cf">for</span> fun)
+
+classBreaks <span class="op">-</span><span class="st"> </span><span class="cf">for</span> finding class breaks <span class="cf">in</span> a distribution
+
+class.comparison <span class="op">-</span><span class="st"> </span>Compares two nominal rasters
+    
+colinear <span class="op">-</span><span class="st"> </span>Test <span class="cf">for</span> linear or nonlinear collinearity<span class="op">/</span>correlation <span class="cf">in</span> data
+    
+correlogram <span class="op">-</span><span class="st"> </span>Calculates and plots a <span class="kw">correlogram</span> (spatially lagged correlations, <span class="st">"pearson"</span>, 
+             <span class="st">"kendall"</span> or <span class="st">"spearman"</span>)
+
+concordance <span class="op">-</span><span class="st"> </span>Performs a concordance<span class="op">/</span><span class="kw">disconcordance</span> (C<span class="op">-</span>statistic) test on binomial models.
+
+conf.interval <span class="op">-</span><span class="st"> </span>Calculates confidence interval <span class="cf">for</span> the mean or median of a distribution with unknown 
+                population variance
+                
+combine <span class="op">-</span><span class="st"> </span>Combines multiple rasters into an <span class="st">"all possible combinations"</span> raster
+          emulation the ESRI combine <span class="cf">function</span>, ratifies the output and includes
+          a summary table of combinations and attributes that relates back to 
+          the raster values                 
+
+convexHull <span class="op">-</span><span class="st"> </span>Derives a convex hull of points using the alpha hull approach with adjustable tension. 
+            Please note that due to licensing reasons, this <span class="cf">function</span> is only available <span class="cf">in</span> the GitHub 
+            development version and not on CRAN. You must call the <span class="cf">function</span> from the package 
+            namespace using spatialEco<span class="op">:::</span>convexHull  
+
+crossCorrelation <span class="op">-</span><span class="st"> </span>Calculates the partial spatial cross<span class="op">-</span>correlation <span class="cf">function</span>
+
+cross.tab <span class="op">-</span><span class="st"> </span>Cross tabulate two rasters, labels outputs
+
+csi <span class="op">-</span><span class="st"> </span>Calculates the cosine similarity and angular similarity on two vectors or a matrix
+
+curvature <span class="op">-</span><span class="st"> </span>Zevenbergen <span class="op">&amp;</span><span class="st"> </span>Thorne, McNab<span class="st">'s or Bolstad'</span>s <span class="kw">surface</span> (raster) curvature  
+
+dahi <span class="op">-</span><span class="st"> </span>Calculates the <span class="kw">DAHI</span> (Diurnal Anisotropic Heat Index)
+
+date_seq <span class="op">-</span><span class="st"> </span>Creates date sequence, given defined start and stop dates, with options <span class="cf">for</span>
+            day, week, month, quarter, year or, minute. 
+
+daymet.point <span class="op">-</span><span class="st"> </span>Downloads DAYMET climate variables <span class="cf">for</span> specified point and timeperiod
+
+daymet.tiles <span class="op">-</span><span class="st"> </span>Returns a vector of DAYMET tile id<span class="st">'s within a specified extent</span>
+
+<span class="st">dispersion - Calculates the dispersion ("rarity") of targets associated with planning units</span>
+
+<span class="st">dissection - Evans (1972) Martonne'</span>s modified dissection                                  
+
+divergence <span class="op">-</span><span class="st"> </span>Kullback<span class="op">-</span>Leibler <span class="kw">Divergence</span> (Cross<span class="op">-</span>entropy)                               
+
+download.daymet <span class="op">-</span><span class="st"> </span>Batch download of daily gridded DAYMET climate data    
+
+download.hansen <span class="op">-</span><span class="st"> </span>Download of Hansen Global Forest Change <span class="dv">2000</span><span class="op">-</span><span class="dv">2013</span>  
+
+download.prism <span class="op">-</span><span class="st"> </span>Batch download of monthly gridded PRISM climate data
+
+effect.size <span class="op">-</span><span class="st"> </span>Cohen<span class="st">'s-d effect size with pooled sd for a control and experimental group </span>
+
+<span class="st">erase.points - Erases points inside or outside a polygon feature class</span>
+
+<span class="st">explode - Explodes multi-part to single-part feature geometry</span>
+
+<span class="st">extract.vertices - extracts (x,y) vertices coordinates from polygons and lines </span>
+
+<span class="st">focal.lmetrics (depreciated, moved to landmetrics package) - Landscape metrics using a focal window</span>
+
+<span class="st">fuzzySum - Calculates the fuzzy sum of a vector</span>
+
+<span class="st">gaussian.kernel - Creates a Gaussian Kernel of specified size and sigma</span>
+
+<span class="st">geo.buffer - Buffers data in geographic coordinate space using a temporary </span>
+<span class="st">             projection</span>
+
+<span class="st">group.pdf - Creates a probability density plot of y for each group of x           </span>
+
+<span class="st">hexagons - Create hexagon polygon “fishnet” of defined size and extent.</span>
+
+<span class="st">hli - Heat Load Index, now with support for southern hemisphere data</span>
+
+<span class="st">hsp - Hierarchical Slope Position</span>
+
+<span class="st">hybrid.kmeans - Clustering using hierarchical clustering to define cluster-centers in k-means </span>
+
+<span class="st">idw.smoothing - Distance weighted smoothing (IDW) of a variable in a spatial point object. </span>
+<span class="st">                The function is a smoothing interpolator at the point observation(s) level using </span>
+<span class="st">                a distance-weighted mean.   </span>
+
+<span class="st">impute.loess - Imputes NA'</span>s or smooths <span class="kw">data</span> (or both) <span class="cf">for</span> a vector, intended
+               mostly <span class="cf">for</span> time<span class="op">-</span>series or serial data. 
+
+insert <span class="op">-</span><span class="st"> </span>Inserts a row or column into a data.frame
+
+insert.values <span class="op">-</span><span class="st"> </span>Inserts new values into a vector at specified positions  
+
+is.empty <span class="op">-</span><span class="st"> </span>Method, evaluates <span class="cf">if</span> vector is empty 
+
+is.whole <span class="op">-</span><span class="st"> </span>Method, evaluates <span class="cf">if</span> numeric vector is whole or float 
+
+kendall <span class="op">-</span><span class="st"> </span>Kendall tau trend with continuity correction <span class="cf">for</span> time<span class="op">-</span>series
+
+kl.divergence <span class="op">-</span><span class="st"> </span>Calculates the Kullback<span class="op">-</span>Leibler <span class="kw">divergence</span> (relative entropy) between unweighted theoretical 
+               component distributions. Divergence is calculated as<span class="op">:</span><span class="st"> </span>int [<span class="kw">f</span>(x) (log <span class="kw">f</span>(x) <span class="op">-</span><span class="st"> </span>log <span class="kw">g</span>(x)) dx]
+               <span class="cf">for</span> distributions with densities <span class="kw">f</span>() and <span class="kw">g</span>().       
+
+knn <span class="op">-</span><span class="st"> </span>returns ids, rownames and distance of nearest neighbors <span class="cf">in</span> <span class="kw">two</span> (or single) spatial objects. 
+      Optional radius distance constraint. Added optional <span class="kw">covariates</span> (weights).
+
+<span class="kw">land.metrics</span> (depreciated, moved to landmetrics package) <span class="op">-</span><span class="st"> </span>Calculates a variety of landscape metrics, on binary rasters, <span class="cf">for</span> polygons or points with a buffer 
+              distance. This is similar to the moving window <span class="cf">in</span> Fragstats but, uses either a buffer <span class="cf">for</span> each 
+              point or a zonal approach with polygons, to derive local metrics. 
+
+libraries <span class="op">-</span><span class="st"> </span>Checks <span class="kw">package</span>(s) install, optionally installs and adds to namespace environment
+
+local.min.max <span class="op">-</span><span class="st"> </span>Calculates the local minimums and maximums <span class="cf">in</span> a numeric vector, indicating inflection points 
+               <span class="cf">in</span> the distribution.   
+
+loess.boot <span class="op">-</span><span class="st"> </span>Bootstrap of a Local Polynomial <span class="kw">Regression</span> (loess)
+
+loess.ci <span class="op">-</span><span class="st"> </span>Calculates a local polynomial regression fit with associated confidence intervals   
+
+logistic.regression <span class="op">-</span><span class="st"> </span>Performs a <span class="kw">logistic</span> (binomial) and <span class="kw">autologistic</span> (spatially lagged binomial) regression 
+                     using maximum likelihood estimation or penalized maximum likelihood estimation.
+
+max_extent <span class="op">-</span><span class="st"> </span>Returns the maximum extent of multiple spatial inputs
+
+moments <span class="op">-</span><span class="st"> </span>Calculate statistical moments of a distribution including percentiles, arithmetic<span class="op">-</span>geometric<span class="op">-</span>harmonic 
+         means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes.    
+
+morans.plot <span class="op">-</span><span class="st"> </span>Autocorrelation plot 
+
+nni <span class="op">-</span><span class="st"> </span>Calculates the nearest neighbor <span class="kw">index</span> (NNI) as a measure of clustering or dispersal
+
+nth.vlaue <span class="op">-</span><span class="st"> </span>Returns the <span class="kw">Nth</span> (smallest<span class="op">/</span>largest) values <span class="cf">in</span> a numeric vector
+
+oli.aws <span class="op">-</span><span class="st"> </span>Download Landsat <span class="dv">8</span> <span class="op">-</span><span class="st"> </span>OLI from AWS.   
+
+o.ring <span class="op">-</span><span class="st"> </span>Calculates the inhomogeneous O<span class="op">-</span>ring point pattern <span class="kw">statistic</span> (Wiegand <span class="op">&amp;</span><span class="st"> </span>Maloney <span class="dv">2004</span>)               
+
+optimal.k <span class="op">-</span><span class="st"> </span>Find optimal k of k<span class="op">-</span>Medoid partitions using silhouette widths 
+
+optimized.sample.variance <span class="op">-</span><span class="st"> </span>Draws an optimal sample that minimizes or maximizes the sample variance 
+
+outliers <span class="op">-</span><span class="st"> </span>Identify outliers using modified Z<span class="op">-</span>score  
+
+overlap <span class="op">-</span><span class="st"> </span>For comparing the similarity of two niche estimates using Warren<span class="st">'s-I</span>
+
+<span class="st">parea.sample - Creates a systematic or random point sample of polygons where n is based on percent area of </span>
+<span class="st">              each polygon</span>
+
+<span class="st">parse.bits - Based on integer value, pulls value(s) of specified bit(s)</span>
+
+<span class="st">parial.cor - Partial and Semi-partial correlation</span>
+
+<span class="st">plot.effect.size - Plot generic for effect size</span>
+
+<span class="st">plot.loess.boot - Plot generic for loess boot     </span>
+
+<span class="st">point.in.poly - Intersects point and polygon feature classes and adds polygon attributes to the points     </span>
+
+<span class="st">polygon_extract - Fast method for extracting raster values to polygons</span>
+
+<span class="st">polyPerimeter - Calculates the perimeter length(s) for a polygon object</span>
+
+<span class="st">poly.regression - smoothing data in time-series and imputing missing (NA) values using polynomial regression</span>
+
+<span class="st">pp.subsample - Generates random subsample based on point process intensity function of the observed data. </span>
+<span class="st">              This is a spatially informed data thinning model that can be used to reduce pseudo-replication </span>
+<span class="st">              or autocorrelation.  </span>
+
+<span class="st">proximity.index - Proximity index for a set of polygons                             </span>
+
+<span class="st">pseudo.absence - Generates pseudo-absence samples based on the spatial intensity function of known species locations. </span>
+<span class="st">                This is akin to distance constrained but is informed by the spatial process of the observed data </span>
+<span class="st">                and is drawn from a probabilistic sample following the intensity function.       </span>
+
+<span class="st">quadrats - Quadrat sampling or analysis, variable size and angle options</span>
+
+<span class="st">random.raster - creates random rasters or stacks of defined dimensions and statistical distributions</span>
+
+<span class="st">raster.change - Compares two categorical rasters with a variety of statistical options </span>
+
+<span class="st">raster.deviation - Local deviation from the raster based on specified global statistic or a polynomial trend.                          </span>
+
+<span class="st">rasterDistance - This replicates the raster distanceFromPoints function but uses the Arya &amp; Mount</span>
+<span class="st">                 Approximate Near Neighbor (ANN) C++ library for calculating distances. Where this</span>
+<span class="st">                 results in a notable increase in performance it is not memory safe, needing to read</span>
+<span class="st">                 in the entire raster and does not use the GeographicLib (Karney, 2013) spheroid </span>
+<span class="st">                 distance method for geographic data.  </span>
+
+<span class="st">raster.downscale - Downscale raster to a higher resolution raster using robust regression</span>
+
+<span class="st">raster.entropy - Calculates entropy on integer raster (i.e., 8 bit 0-255)  </span>
+
+<span class="st">raster.gaussian.smooth - Applies a Gaussian smoothing kernel to smooth raster.</span>
+
+<span class="st">raster.invert - Inverts value of a raster                              </span>
+
+<span class="st">raster.kendall - Calculates Kendall'</span>s tau trend with continuity correction <span class="cf">for</span> raster time<span class="op">-</span>series
+
+raster.mds <span class="op">-</span><span class="st"> </span>Multidimensional scaling of raster values within an N x N focal window                                 
+
+raster.modified.ttest <span class="op">-</span><span class="st"> </span>Bivariate moving window correlation using Dutilleul<span class="st">'s modified t-test </span>
+
+<span class="st">raster.moments - Calculates focal statistical moments of a raster                              </span>
+
+<span class="st">raster.transformation - Applies specified statistical transformation to a raster                       </span>
+
+<span class="st">raster.vol - Calculates a percent volume on a raster or based on the entire raster or a systematic sample</span>
+
+<span class="st">raster.Zscore - Calculates the modified z-score for all cells in a raster                               </span>
+
+<span class="st">rasterCorrelation - Performs a simple moving window correlation between two rasters       </span>
+
+<span class="st">remove.holes - Removes all holes (null geometry) in polygon sp class objects </span>
+
+<span class="st">rotate.polygon - Rotates a polygon by specified angle</span>
+
+<span class="st">sa.trans - Trigonometric transformation of a slope and aspect interaction </span>
+
+<span class="st">sample.annulus - Creates sample points based on annulus with defined inner and outer radius</span>
+
+<span class="st">sample.line - Creates a systematic or random point sample of an sp SpatialLinesDataFrame object based on </span>
+<span class="st">             distance spacing, fixed size or proportional size</span>
+
+<span class="st">sample.poly - Creates an equal sample of n for each polygon in an sp Polygon class object</span>
+
+<span class="st">sampleTransect - Creates random transects from points and generates sample points along each transect</span>
+
+<span class="st">separability - Calculates variety of univariate separability metrics for nominal class samples</span>
+
+<span class="st">spectral.separability - Calculates univariate or multivariate separability for nominal class samples</span>
+
+<span class="st">sg.smooth - Smoothing time-series data using a Savitzky-Golay filter </span>
+
+<span class="st">shannons - Calculates Shannon'</span>s Diversity Index and Shannon<span class="st">'s Evenness Index</span>
+
+<span class="st">shift - Shifts a vector by n lags without changing its length, can specify fill values </span>
+
+<span class="st">similarity - Uses row imputation to identify "k" ecological similar observations</span>
+
+<span class="st">smooth.time.series - Smoothing and imputing missing (NA) of pixel-level data in raster time-series </span>
+<span class="st">                     using (local polynomial) LOESS regression</span>
+
+<span class="st">sobal - Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window  </span>
+
+<span class="st">spatial.select - Performs a spatial select (feature subset) similar to ArcGIS</span>
+
+<span class="st">spectral.separability - Calculates class-wise multivariate spectral separability </span>
+<span class="st">    </span>
+<span class="st">sp.kde - A weighted or un-weighted kernel density estimate</span>
+
+<span class="st">sp.na.omit  - Removes row or column NA'</span>s <span class="cf">in</span> sp object. The standard R na.omit <span class="cf">function</span> will not propagate through 
+             all slots of an sp class object. This <span class="cf">function</span> removes the spatial objects, <span class="cf">in</span> all slots, corresponding 
+             to NA<span class="st">'s in the @data data.frame object.        </span>
+
+<span class="st">srr - Surface Relief Ratio </span>
+
+<span class="st">stratified.random - Creates a stratified random sample of an sp class object using a factor.</span>
+
+<span class="st">subsample.distance - Minimum, and optional maximum, distance constrained sub-sampling</span>
+
+<span class="st">swvi - Senescence weighted MSAVI or MTVI</span>
+
+<span class="st">time_to_event - Returns the time (sum to position) to a specified value </span>
+
+<span class="st">topo.distance - Calculates topographic corrected distance for a SpatialLinesDataFrame object  </span>
+
+<span class="st">tpi - Calculates topographic position using mean deviations within specified window  </span>
+
+<span class="st">trasp - Solar-radiation Aspect Index </span>
+
+<span class="st">trend.line - Calculated specified (linear, exponential, logarithmic, polynomial) trend line of x,y </span>
+<span class="st">               and plots results.</span>
+
+<span class="st">tri - Implementation of the Riley et al (1999) Terrain Ruggedness Index</span>
+
+<span class="st">vrm - Implementation of the Sappington et al., (2007) vector ruggedness measure</span>
+
+<span class="st">winsorize - Removes extreme outliers using a winsorization transformation</span>
+
+<span class="st">wt.centroid - Creates centroid of [x,y] coordinates, of a random field, based on a weights field in </span>
+<span class="st">             a point sample.      </span>
+
+<span class="st">zonal.stats - Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function. </span></code></pre></div>
+<p><strong>Bugs</strong>: Users are encouraged to report bugs here. Go to <a href="https://github.com/jeffreyevans/spatialEco/issues">issues</a> in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <a href="mailto:jeffrey_evans@tnc.org">jeffrey_evans@tnc.org</a>.</p>
 <p><strong>To install <code>spatialEco</code> in R use install.packages() to download current stable release from CRAN</strong></p>
 <p><strong>or, for the development version, run the following (requires the remotes package):</strong> <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("jeffreyevans/spatialEco")</a></code></p>
 </div>
@@ -422,8 +423,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=spatialEco"><img src="http://www.r-pkg.org/badges/version/spatialEco" alt="CRAN status"></a></li>
-<li><a href="https://cran.r-project.org/package=spatialEco"><img src="http://cranlogs.r-pkg.org/badges/grand-total/spatialEco" alt="CRAN RStudio mirror downloads"></a></li>
+<li><a href="https://github.com/jeffreyevans/spatialEco/actions"><img src="https://github.com/jeffreyevans/spatialEco/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 </div>

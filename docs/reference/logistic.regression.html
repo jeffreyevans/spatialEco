@@ -232,7 +232,7 @@ Applied Statistics 41:191-201</p>
 <p>Shao, J., (1993) Linear model selection by cross-validation. JASA 88:486-494</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>lrm</code></p>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/rms/man/lrm.html'>lrm</a></code></p>
 <p><code><a href='https://rdrr.io/pkg/spdep/man/autocov_dist.html'>autocov_dist</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -241,8 +241,21 @@ Applied Statistics 41:191-201</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/edzer/sp/'>sp</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-spatial/spdep/'>spdep</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>rms</span><span class='op'>)</span>                                                                       
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: rms</span></div><div class='output co'>#&gt; <span class='warning'>Warning: there is no package called 'rms'</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://hbiostat.org/R/rms/'>rms</a></span><span class='op'>)</span>                                                                       
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: rms</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Hmisc</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: survival</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'survival'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:spatialEco':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    concordance</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Formula</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'Hmisc'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:rgeos':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    translate</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:raster':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    mask, zoom</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:base':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    format.pval, units</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: SparseM</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'SparseM'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:base':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    backsolve</span></div><div class='output co'>#&gt; <span class='warning'>Warning: undefined subclass "numericVector" of class "Mnumeric"; definition not updated</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='op'>~</span><span class='va'>x</span><span class='op'>+</span><span class='va'>y</span>  
     <span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>DepVar<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/dimensions.html'>dim</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span><span class='op'>)</span>, 
                               <span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span><span class='op'>)</span>
@@ -250,50 +263,188 @@ Applied Statistics 41:191-201</p>
 <span class='co'>#### Logistic model</span>
 <span class='va'>lmodel</span> <span class='op'>&lt;-</span> <span class='fu'>logistic.regression</span><span class='op'>(</span><span class='va'>meuse</span>, y<span class='op'>=</span><span class='st'>'DepVar'</span>, 
                   x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'dist'</span>,<span class='st'>'cadmium'</span>,<span class='st'>'copper'</span><span class='op'>)</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; <span class='error'>Error in logistic.regression(meuse, y = "DepVar", x = c("dist", "cadmium",     "copper")): please install rms package before running this function</span></div><div class='input'>  <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>    <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>diagTable</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>      <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>coefTable</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>
+  <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>
+</div><div class='output co'>#&gt; Logistic Regression Model
+#&gt;  
+#&gt;  rms::lrm(formula = form, data = ldata, x = TRUE, y = TRUE, penalty = bf$penalty)
+#&gt;  
+#&gt;  
+#&gt;  Penalty factors
+#&gt;  
+#&gt;   simple nonlinear interaction nonlinear.interaction
+#&gt;        1         1           1                     1
+#&gt;  
+#&gt;                       Model Likelihood    Discrimination    Rank Discrim.    
+#&gt;                             Ratio Test           Indexes          Indexes    
+#&gt;  Obs           155    LR chi2     7.39    R2       0.061    C       0.616    
+#&gt;   0             88    d.f.       2.623    g        0.483    Dxy     0.232    
+#&gt;   1             67    Pr(&gt; chi2)0.0447    gr       1.621    gamma   0.232    
+#&gt;  max |deriv| 2e-09    Penalty     0.24    gp       0.110    tau-a   0.115    
+#&gt;                                           Brier    0.235                     
+#&gt;  
+#&gt;            Coef    S.E.   Wald Z Pr(&gt;|Z|) Penalty Scale
+#&gt;  Intercept  0.7961 0.5882  1.35  0.1759    0.0000      
+#&gt;  dist      -1.0084 1.0439 -0.97  0.3340    0.1977      
+#&gt;  cadmium   -0.0440 0.1173 -0.38  0.7076    3.5237      
+#&gt;  copper    -0.0175 0.0171 -1.03  0.3037   23.6804      
+#&gt;  </div><div class='input'>    <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>diagTable</span>
+</div><div class='output co'>#&gt;         Names        Value
+#&gt; 1         Obs 1.550000e+02
+#&gt; 2   Max Deriv 2.107191e-09
+#&gt; 3  Model L.R. 7.393192e+00
+#&gt; 4        d.f. 2.623476e+00
+#&gt; 5           P 4.466970e-02
+#&gt; 6           C 6.159261e-01
+#&gt; 7         Dxy 2.318521e-01
+#&gt; 8       Gamma 2.320489e-01
+#&gt; 9       Tau-a 1.145371e-01
+#&gt; 10         R2 6.054035e-02
+#&gt; 11      Brier 2.346796e-01
+#&gt; 12          g 4.832799e-01
+#&gt; 13         gr 1.621384e+00
+#&gt; 14         gp 1.098474e-01
+#&gt; 15        PEN 1.000000e+00
+#&gt; 16        AIC 2.146239e+00</div><div class='input'>      <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>coefTable</span>
+</div><div class='output co'>#&gt;    Variable        Coef   StdError       Wald      Prob
+#&gt; 1 Intercept  0.79612771 0.58816259  1.3535844 0.1758690
+#&gt; 2      dist -1.00843098 1.04392027 -0.9660038 0.3340423
+#&gt; 3   cadmium -0.04401098 0.11731756 -0.3751440 0.7075534
+#&gt; 4    copper -0.01753671 0.01705085 -1.0284945 0.3037173</div><div class='input'>
 <span class='co'>#### Logistic model with factorial variable</span>
 <span class='va'>lmodel</span> <span class='op'>&lt;-</span> <span class='fu'>logistic.regression</span><span class='op'>(</span><span class='va'>meuse</span>, y<span class='op'>=</span><span class='st'>'DepVar'</span>, 
             x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'dist'</span>,<span class='st'>'cadmium'</span>,<span class='st'>'copper'</span>, <span class='st'>'soil'</span><span class='op'>)</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; <span class='error'>Error in logistic.regression(meuse, y = "DepVar", x = c("dist", "cadmium",     "copper", "soil")): please install rms package before running this function</span></div><div class='input'>  <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>    <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>diagTable</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>      <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>coefTable</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>
+  <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>
+</div><div class='output co'>#&gt; Logistic Regression Model
+#&gt;  
+#&gt;  rms::lrm(formula = form, data = ldata, x = TRUE, y = TRUE, penalty = bf$penalty)
+#&gt;  
+#&gt;  
+#&gt;  Penalty factors
+#&gt;  
+#&gt;   simple nonlinear interaction nonlinear.interaction
+#&gt;        1         1           1                     1
+#&gt;  
+#&gt;                       Model Likelihood    Discrimination    Rank Discrim.    
+#&gt;                             Ratio Test           Indexes          Indexes    
+#&gt;  Obs           155    LR chi2     7.65    R2       0.062    C       0.612    
+#&gt;   0             88    d.f.       4.278    g        0.495    Dxy     0.224    
+#&gt;   1             67    Pr(&gt; chi2)0.1231    gr       1.640    gamma   0.225    
+#&gt;  max |deriv| 2e-09    Penalty     0.27    gp       0.113    tau-a   0.111    
+#&gt;                                           Brier    0.234                     
+#&gt;  
+#&gt;            Coef    S.E.   Wald Z Pr(&gt;|Z|) Penalty Scale
+#&gt;  Intercept  0.8395 0.5969  1.41  0.1596    0.0000      
+#&gt;  dist      -1.0111 1.2272 -0.82  0.4100    0.1977      
+#&gt;  cadmium   -0.0443 0.1176 -0.38  0.7064    3.5237      
+#&gt;  copper    -0.0179 0.0171 -1.04  0.2965   23.6804      
+#&gt;  soil=2    -0.1259 0.4050 -0.31  0.7559    0.8165      
+#&gt;  soil=3     0.1227 0.6643  0.18  0.8535    0.8165      
+#&gt;  </div><div class='input'>    <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>diagTable</span>
+</div><div class='output co'>#&gt;         Names         Value
+#&gt; 1         Obs  1.550000e+02
+#&gt; 2   Max Deriv  1.865718e-09
+#&gt; 3  Model L.R.  7.652394e+00
+#&gt; 4        d.f.  4.278462e+00
+#&gt; 5           P  1.230936e-01
+#&gt; 6           C  6.121947e-01
+#&gt; 7         Dxy  2.243894e-01
+#&gt; 8       Gamma  2.245036e-01
+#&gt; 9       Tau-a  1.108504e-01
+#&gt; 10         R2  6.236510e-02
+#&gt; 11      Brier  2.342899e-01
+#&gt; 12          g  4.945176e-01
+#&gt; 13         gr  1.639707e+00
+#&gt; 14         gp  1.126479e-01
+#&gt; 15        PEN  1.000000e+00
+#&gt; 16        AIC -9.045299e-01</div><div class='input'>      <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>coefTable</span>
+</div><div class='output co'>#&gt;    Variable        Coef   StdError       Wald      Prob
+#&gt; 1 Intercept  0.83948551 0.59687893  1.4064586 0.1595880
+#&gt; 2      dist -1.01106194 1.22716994 -0.8238973 0.4099979
+#&gt; 3   cadmium -0.04428282 0.11755836 -0.3766880 0.7064055
+#&gt; 4    copper -0.01788235 0.01712859 -1.0440063 0.2964825
+#&gt; 5    soil=2 -0.12589581 0.40497832 -0.3108705 0.7558991
+#&gt; 6    soil=3  0.12268901 0.66429948  0.1846893 0.8534727</div><div class='input'>
 <span class='co'>### Auto-logistic model using 'autocov_dist' in 'spdep' package</span>
 <span class='va'>lmodel</span> <span class='op'>&lt;-</span> <span class='fu'>logistic.regression</span><span class='op'>(</span><span class='va'>meuse</span>, y<span class='op'>=</span><span class='st'>'DepVar'</span>, 
             x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'dist'</span>,<span class='st'>'cadmium'</span>,<span class='st'>'copper'</span><span class='op'>)</span>, autologistic<span class='op'>=</span><span class='cn'>TRUE</span>, 
             coords<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/sp/man/coordinates.html'>coordinates</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>)</span>, bw<span class='op'>=</span><span class='fl'>5000</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; <span class='error'>Error in logistic.regression(meuse, y = "DepVar", x = c("dist", "cadmium",     "copper"), autologistic = TRUE, coords = coordinates(meuse),     bw = 5000): please install rms package before running this function</span></div><div class='input'>  <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>    <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>diagTable</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>      <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>coefTable</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>  <span class='va'>est</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>, type<span class='op'>=</span><span class='st'>'fitted.ind'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'predict': object 'lmodel' not found</span></div><div class='input'>
+  <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>
+</div><div class='output co'>#&gt; Logistic Regression Model
+#&gt;  
+#&gt;  rms::lrm(formula = form, data = ldata, x = TRUE, y = TRUE, penalty = bf$penalty)
+#&gt;  
+#&gt;  
+#&gt;  Penalty factors
+#&gt;  
+#&gt;   simple nonlinear interaction nonlinear.interaction
+#&gt;        1         1           1                     1
+#&gt;  
+#&gt;                       Model Likelihood    Discrimination    Rank Discrim.    
+#&gt;                             Ratio Test           Indexes          Indexes    
+#&gt;  Obs           155    LR chi2    10.49    R2       0.085    C       0.628    
+#&gt;   0             88    d.f.       3.577    g        0.602    Dxy     0.256    
+#&gt;   1             67    Pr(&gt; chi2)0.0240    gr       1.825    gamma   0.256    
+#&gt;  max |deriv| 1e-08    Penalty     0.41    gp       0.136    tau-a   0.126    
+#&gt;                                           Brier    0.230                     
+#&gt;  
+#&gt;            Coef    S.E.   Wald Z Pr(&gt;|Z|) Penalty Scale
+#&gt;  Intercept  3.7502 1.8505  2.03  0.0427    0.0000      
+#&gt;  dist      -1.0663 1.0486 -1.02  0.3092    0.1977      
+#&gt;  cadmium   -0.0286 0.1195 -0.24  0.8112    3.5237      
+#&gt;  copper    -0.0220 0.0176 -1.25  0.2122   23.6804      
+#&gt;  AutoCov   -6.5606 3.8810 -1.69  0.0909    0.0434      
+#&gt;  </div><div class='input'>    <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>diagTable</span>
+</div><div class='output co'>#&gt;         Names        Value
+#&gt; 1         Obs 1.550000e+02
+#&gt; 2   Max Deriv 1.480466e-08
+#&gt; 3  Model L.R. 1.049036e+01
+#&gt; 4        d.f. 3.577436e+00
+#&gt; 5           P 2.403887e-02
+#&gt; 6           C 6.279681e-01
+#&gt; 7         Dxy 2.559362e-01
+#&gt; 8       Gamma 2.560665e-01
+#&gt; 9       Tau-a 1.264349e-01
+#&gt; 10         R2 8.450814e-02
+#&gt; 11      Brier 2.303498e-01
+#&gt; 12          g 6.015511e-01
+#&gt; 13         gr 1.824947e+00
+#&gt; 14         gp 1.356461e-01
+#&gt; 15        PEN 1.000000e+00
+#&gt; 16        AIC 3.335485e+00</div><div class='input'>      <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>coefTable</span>
+</div><div class='output co'>#&gt;    Variable        Coef   StdError       Wald       Prob
+#&gt; 1 Intercept  3.75019690 1.85052025  2.0265636 0.04270707
+#&gt; 2      dist -1.06628332 1.04859510 -1.0168685 0.30921599
+#&gt; 3   cadmium -0.02855437 0.11952431 -0.2389001 0.81118303
+#&gt; 4    copper -0.02196396 0.01760738 -1.2474288 0.21224033
+#&gt; 5   AutoCov -6.56060992 3.88103656 -1.6904272 0.09094625</div><div class='input'>  <span class='va'>est</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>, type<span class='op'>=</span><span class='st'>'fitted.ind'</span><span class='op'>)</span>
+
 <span class='co'>#### Add residuals, standardized residuals and estimated probabilities</span>
 <span class='va'>VarNames</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span><span class='op'>$</span><span class='va'>var</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in rownames(lmodel$model$var): object 'lmodel' not found</span></div><div class='input'>  <span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span><span class='op'>$</span><span class='va'>AutoCov</span> <span class='op'>&lt;-</span> <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>AutoCov</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lmodel' not found</span></div><div class='input'>    <span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span>, Residual<span class='op'>=</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>Residuals</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, 
+  <span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span><span class='op'>$</span><span class='va'>AutoCov</span> <span class='op'>&lt;-</span> <span class='va'>lmodel</span><span class='op'>$</span><span class='va'>AutoCov</span>
+    <span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span>, Residual<span class='op'>=</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>Residuals</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, 
                      StdResid<span class='op'>=</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>Residuals</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, Probs<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>, 
                      <span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span><span class='op'>[</span>,<span class='va'>VarNames</span><span class='op'>]</span>,type<span class='op'>=</span><span class='st'>'fitted'</span><span class='op'>)</span> <span class='op'>)</span>  
-</div><div class='output co'>#&gt; <span class='error'>Error in data.frame(meuse@data, Residual = lmodel$Residuals[, 1], StdResid = lmodel$Residuals[,     2], Probs = predict(lmodel$model, meuse@data[, VarNames],     type = "fitted")): object 'lmodel' not found</span></div><div class='input'>
+
 <span class='co'>#### Plot fit and probabilities</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>resid</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>, <span class='st'>"partial"</span>, pl<span class='op'>=</span><span class='st'>"loess"</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; <span class='error'>Error in resid(lmodel$model, "partial", pl = "loess"): object 'lmodel' not found</span></div><div class='input'><span class='co'># plot residuals</span>
+</div><div class='img'><img src='logistic.regression-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='logistic.regression-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='logistic.regression-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='logistic.regression-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># plot residuals</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>resid</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>, <span class='st'>"partial"</span>, pl<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; <span class='error'>Error in resid(lmodel$model, "partial", pl = TRUE): object 'lmodel' not found</span></div><div class='input'>
+</div><div class='img'><img src='logistic.regression-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='logistic.regression-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='logistic.regression-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='logistic.regression-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># global test of goodness of fit </span>
 <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>resid</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>, <span class='st'>"gof"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in resid(lmodel$model, "gof"): object 'lmodel' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; Sum of squared errors     Expected value|H0                    SD 
+#&gt;            35.7042169            35.7891682             0.1244555 
+#&gt;                     Z                     P 
+#&gt;            -0.6825841             0.4948697 </div><div class='input'>
 <span class='co'># Approx. leave-out linear predictors</span>
 <span class='va'>lp1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>resid</a></span><span class='op'>(</span><span class='va'>lmodel</span><span class='op'>$</span><span class='va'>model</span>, <span class='st'>"lp1"</span><span class='op'>)</span>            
-</div><div class='output co'>#&gt; <span class='error'>Error in resid(lmodel$model, "lp1"): object 'lmodel' not found</span></div><div class='input'>
+
 <span class='co'># Approx leave-out-1 deviance            </span>
 <span class='op'>-</span><span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>meuse</span><span class='op'>@</span><span class='va'>data</span><span class='op'>$</span><span class='va'>DepVar</span> <span class='op'>*</span> <span class='va'>lp1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='va'>lp1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'lp1' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; [1] 211.513</div><div class='input'>
 <span class='co'># plot estimated probabilities at points</span>
 <span class='fu'><a href='https://rdrr.io/pkg/sp/man/spplot.html'>spplot</a></span><span class='op'>(</span><span class='va'>meuse</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'Probs'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in create.z(as(obj, "data.frame"), zcol): no support for variable of this type</span></div><div class='input'>
+</div><div class='img'><img src='logistic.regression-9.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></pre>
   </div>
