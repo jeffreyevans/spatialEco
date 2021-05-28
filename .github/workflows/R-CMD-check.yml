@@ -1,8 +1,8 @@
-name: R-CMD-check
+name: check_cran
 on: [push]
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Check for CRAN
