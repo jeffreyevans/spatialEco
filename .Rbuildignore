@@ -1,5 +1,7 @@
 cran-comments.md
+codecov.R.Rproj
 README.md
+.travis.yml
 LICENSE
 .git
 ^CRAN-RELEASE$

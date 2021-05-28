@@ -4,9 +4,10 @@
 status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/grand-total/spatialEco)](https://cran.r-project.org/package=spatialEco)
+[![codecov](https://codecov.io/gh/jeffreyevans/spatialEco/branch/master/graph/badge.svg?token=9xZBT87IlM)](https://codecov.io/gh/jeffreyevans/spatialEco)
 
 spatialEco R package with utilities to support spatial data manipulation, query, sampling
-    and modelling. Functions include models for species population density, download
+    and modeling. Functions include models for species population density, download
     utilities for climate and global deforestation spatial products, spatial
     smoothing, multivariate separability, point process model for creating pseudo-
     absences and sub-sampling, polygon and point-distance landscape metrics,

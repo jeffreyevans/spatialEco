@@ -1,0 +1,10 @@
+language: r
+
+r_packages:
+  - covr
+
+r_github_packages:
+  - jeffreyevans/spatialEco
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
