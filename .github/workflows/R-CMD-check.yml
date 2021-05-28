@@ -6,7 +6,7 @@
 # See https://github.com/r-lib/actions/tree/master/examples#readme for
 # additional example workflows available for the R community.
 
-name: R
+name: R-CMD-check
 
 on:
   push:
@@ -15,11 +15,16 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    runs-on: macOS-latest
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
     strategy:
+      fail-fast: false
       matrix:
-        r-version: [4.0.5]
+        config:
+          - {os: windows-latest, r: 'release'}
 
     steps:
       - uses: actions/checkout@v2
