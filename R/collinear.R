@@ -46,7 +46,15 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
     stop("x contains non-numeric data") 
     if(is.null(colnames(x))) { 
       colnames(x) <- paste0("X", 1:ncol(x))
-    }	
+    }
+  sd.check <- unlist(suppressWarnings(lapply(x, stats::sd)))
+    sd.check <- which(sd.check == 0)
+    if(length(sd.check) > 0) {
+	  cn <- names(sd.check)
+	  warning("removing columns: ", paste(cn, collapse=", "), 
+	          ", due to zero variance") 
+	  x <- x[,-which(names(x) %in% cn)] 
+	}
   if(nonlinear == TRUE) {
     if(!any(which(utils::installed.packages()[,1] %in% "mgcv")))
       stop("please install mgcv package for nonlinear option")  

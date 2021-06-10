@@ -34,7 +34,7 @@
 #' @export 
 moments <- function(x, plot = FALSE) {
     if (!length(x) >= 3) 
-        stop("Not enought values to represent a distribution")
+        stop("Not enough values to represent a distribution")
     .skew <- function(x, na.rm = FALSE) {
         if (na.rm) 
             x <- x[!is.na(x)]
@@ -93,7 +93,7 @@ moments <- function(x, plot = FALSE) {
         graphics::abline(v = min(x), lty = 1, lwd = 1, col = "black")
         graphics::abline(v = max(x), lty = 1, lwd = 1, col = "black")
         graphics::abline(v = stats::quantile(x, 0.25), lty = 2, lwd = 1, col = "black")
-       graphics::abline(v = stats::quantile(x, 0.75), lty = 2, lwd = 1, col = "black")
+        graphics::abline(v = stats::quantile(x, 0.75), lty = 2, lwd = 1, col = "black")
         graphics::abline(v = .dmode(x), lty = 3, lwd = 1, col = "red")
         graphics::legend("topright", lty = c(1, 1, 2, 2, 3), lwd = c(1, 1, 1, 1, 1), bty = "n", legend = c("MIN", "MAX", "25th", 
             "75th", "MODE"), col = c("black", "black", "black", "black", "red"))
