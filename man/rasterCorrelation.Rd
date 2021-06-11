@@ -7,9 +7,9 @@
 rasterCorrelation(x, y, s = 3, type = "pearson", file.name = NULL, ...)
 }
 \arguments{
-\item{x}{raster class object for x}
+\item{x}{raster or terra class object for x}
 
-\item{y}{raster class object for y}
+\item{y}{raster or terra class object for y}
 
 \item{s}{Scale of window. Can be a single value, two 
 values for uneven window or a custom matrix. 
@@ -23,25 +23,25 @@ s=c(3,5) for 3 x 5 window)}
 \item{...}{Additional arguments passed to writeRaster}
 }
 \value{
-raster class object or raster written to disk
+raster or terra class object or raster written to disk
 }
 \description{
 Performs a simple moving window correlation 
              between two rasters
 }
 \note{
-Depends: raster
+The NA behavior is set to na.rm = TRUE to make default outputs
+      consistent between the terra and raster packages.
 }
 \examples{
 \donttest{
- library(raster)                                                                    
- b <- brick(system.file("external/rlogo.grd", package="raster"))
- x <- b[[1]]
- y <- b[[3]]
+ library(terra)                                                                    
+ s <- rast(system.file("ex/logo.tif", package="terra"))
+   x <- s[[1]]
+   y <- s[[3]]
  r.cor <- rasterCorrelation(x, y, s = 5, type = "spearman")
  plot(r.cor)
 }
-
 
 }
 \author{

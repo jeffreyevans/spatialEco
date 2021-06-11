@@ -11,36 +11,36 @@ optimal.k(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ...)
 
 \item{nk}{Number of clusters to test (2:nk)}
 
-\item{plot}{Plot cluster silhouettes(TRUE/FALSE)}
+\item{plot}{(TRUE / FALSE) Plot cluster silhouettes(TRUE/FALSE)}
 
-\item{cluster}{Create cluster object with optimal k}
+\item{cluster}{(TRUE / FALSE) Create cluster object with optimal k}
 
-\item{clara}{Use clara model for large data}
+\item{clara}{(FALSE / TRUE) Use clara model for large data}
 
 \item{...}{Additional arguments passed to clara}
 }
 \value{
-Object of class clust "pam" or "clara"
+Object of class clust "pam" or "clara" with tested silhouette values
 }
 \description{
 Find optimal k of k-Medoid partitions using 
              silhouette widths
 }
 \examples{
-require(cluster)
+library(cluster)
   x <- rbind(cbind(rnorm(10,0,0.5), rnorm(10,0,0.5)),
              cbind(rnorm(15,5,0.5), rnorm(15,5,0.5)))
 
   clust <- optimal.k(x, 20, plot=TRUE, cluster=TRUE)
-    plot(silhouette(clust), col = c('red', 'green'))
-      plot(clust, which.plots=1, main='K-Medoid fit')
+    plot(silhouette(clust$model), col = c('red', 'green'))
+      plot(clust$model, which.plots=1, main='K-Medoid fit')
 
 # Extract multivariate and univariate mediods (class centers)
-  clust$medoids
+  clust$model$medoids
     pam(x[,1], 1)$medoids  
 
 # join clusters to data
-  x <- data.frame(x, k=clust$clustering) 
+  x <- data.frame(x, k=clust$model$clustering) 
 
 }
 \references{

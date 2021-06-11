@@ -233,3 +233,12 @@ spatialEco_1.3-7
 
 * Fixed bug in crossCorrelation where the I value was being erroneously
   corrected for population (thanks to GitHub user MarHer90). 
+ 
+spatialEco_1.3-8
+================= 
+ 
+* Added zero covariance error check in collinear  
+ 
+* Added support for terra class objects in rasterCorrelation  
+
+* Added silhouettes to optimal.k output    

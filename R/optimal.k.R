@@ -26,11 +26,11 @@
 #'       plot(clust$model, which.plots=1, main='K-Medoid fit')
 #' 
 #' # Extract multivariate and univariate mediods (class centers)
-#'   clust$medoids
+#'   clust$model$medoids
 #'     pam(x[,1], 1)$medoids  
 #'
 #' # join clusters to data
-#'   x <- data.frame(x, k=clust$clustering) 
+#'   x <- data.frame(x, k=clust$model$clustering) 
 #'
 #' @seealso \code{\link[cluster]{pam}} for details on Partitioning Around Medoids (PAM)  
 #' @seealso \code{\link[cluster]{clara}} for details on Clustering Large Applications (clara) 
@@ -56,7 +56,7 @@ optimal.k <- function(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ..
     }
     if (cluster == TRUE) {
         if (clara == TRUE) {
-          k.solution <- cluster::clara(x, k.best, silhouette, ...)
+          k.solution <- cluster::clara(x, k.best, asw, ...)
         } else {
           k.solution <- cluster::pam(x, k.best, ...)
         }
