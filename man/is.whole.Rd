@@ -4,7 +4,7 @@
 \alias{is.whole}
 \title{is.whole}
 \usage{
-is.whole(a, tol = 0.0000001)
+is.whole(a, tol = 1e-07)
 }
 \arguments{
 \item{a}{A numeric vector to evaluate, only first element will be evaluated}
