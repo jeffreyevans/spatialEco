@@ -17,7 +17,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' p = c("sp" "raster", "exactextractr")
+#' p = c("sp", "raster", "exactextractr")
 #'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
 #'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
 #'    stop("Can't run examples, please install ", paste(p[m], collapse = " "))
