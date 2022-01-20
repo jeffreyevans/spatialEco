@@ -30,4 +30,3 @@ bearing.distance <- function(x, y, distance, azimuth, EastOfNorth = TRUE) {
   }
   return(pt)
 }
-

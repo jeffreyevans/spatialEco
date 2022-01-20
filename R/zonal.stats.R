@@ -17,8 +17,12 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' library(raster)
-#' library(sp)                                                                          
+#' p = c("sp" "raster", "exactextractr")
+#'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+#'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+#'    stop("Can't run examples, please install ", paste(p[m], collapse = " "))
+#'  } else {
+#'    invisible(lapply(p, require, character.only=TRUE))
 #'
 #' # skewness function
 #' skew <- function(x, na.rm = FALSE) { 
@@ -47,6 +51,7 @@
 #' z.pct <- zonal.stats(x=p, y=r, stats = "pct")
 #'   ( z <- data.frame(ID = as.numeric(as.character(row.names(p@@data))), 
 #'                     SKEW=z.skew, PCT=z.pct) )  
+#' }
 #'
 #' @export zonal.stats
 zonal.stats <- function(x, y, stats = c("min", "mean", "max")) {

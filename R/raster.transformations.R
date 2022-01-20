@@ -83,10 +83,10 @@ raster.transformation <- function(x, trans = "norm", smin=0, smax=255) {
 			  message("applying log transformation", "\n")
 			  return(  raster::calc(x, fun=log) )
 			  } else if ( trans == "slog") {
-			    message("applying singned-log10 transformation", "\n")
+			    message("applying signed-log10 transformation", "\n")
 			    return(raster::calc(x, fun=slog) )
 			    } else if ( trans == "sr") {
-				  message("applying sqare-root transformation", "\n")
+				  message("applying square-root transformation", "\n")
 			      return(  raster::calc(x, fun=sqrt) )		  
 		          } else {
                     stop("Not a valid transformation") 

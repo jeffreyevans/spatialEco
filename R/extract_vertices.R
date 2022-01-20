@@ -58,7 +58,7 @@
 extract.vertices <- function(x, as.sp = FALSE, rm.duplicates = FALSE,
                              join = FALSE) {
   if(!any(class(x)[1] == c("SpatialPolygonsDataFrame", "SpatialPolygons",
-                        "SpatialLinesDataFrame", "SpatialLines")))
+                           "SpatialLinesDataFrame", "SpatialLines")))
     stop("x must be an sp Polygons or Lines feature class")
   if(any(class(x)[1] == c("SpatialPolygonsDataFrame", "SpatialPolygons")) ){ 
     xy <- lapply(methods::slot(x, "polygons"), function(x) lapply(methods::slot(x,"Polygons"), 

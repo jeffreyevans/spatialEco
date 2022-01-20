@@ -32,9 +32,12 @@
 #' @export vrm
 vrm <- function(x, s = 3, file.name = NULL, ...) {
     if (class(x)[1] != "RasterLayer") 
-        stop("x must be a raster object")
-	if(length(s) > 2) stop( "Specified window exceeds 2 dimensions")   
-      if(length(s) == 1) s = rep(s,2)
+      stop("x must be a raster object")
+	if(length(s) > 2) 
+	  stop( "Specified window exceeds 2 dimensions") 
+    if(any((s %% 2) == 0))
+      stop( "Specified window must be odd number(s)") 
+    if(length(s) == 1) s = rep(s,2)
   scale.factor <- round(s[1] * s[2], 0)
   sa <- raster::terrain(x, opt=c("slope", "aspect"), unit="radians", 
                         neighbors=8) 					

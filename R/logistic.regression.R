@@ -57,9 +57,13 @@
 #' Shao, J., (1993) Linear model selection by cross-validation. JASA 88:486-494
 #'
 #' @examples
-#' require(sp)
-#' require(spdep)
-#' require(rms)                                                                       
+#' 
+#' p = c("sp" "spdep", "rms")
+#'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+#'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+#'    stop("Can't run examples, please install ", paste(p[m], collapse = " "))
+#'  } else {
+#'    invisible(lapply(p, require, character.only=TRUE))                                                                  
 #' data(meuse)
 #'   coordinates(meuse) <- ~x+y  
 #'     meuse@@data <- data.frame(DepVar=rbinom(dim(meuse)[1], 1, 0.5), 
@@ -112,7 +116,7 @@
 #' # plot estimated probabilities at points
 #' spplot(meuse, c('Probs'))
 #'
-#'
+#' }
 #' @seealso \code{\link[rms]{lrm}}
 #' @seealso \code{\link[spdep]{autocov_dist}}
 #'

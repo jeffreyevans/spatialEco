@@ -31,8 +31,12 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
-#'  library(sf)
-#'  library(raster)
+#' p = c("sf" "raster", "tabularaster")
+#'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+#'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+#'    stop("Can't run examples, please install ", paste(p[m], collapse = " "))
+#'  } else {
+#'    invisible(lapply(p, require, character.only=TRUE))
 #'  
 #'  nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
 #'    nc <- sf::st_cast(nc, "POLYGON")
@@ -87,6 +91,7 @@
 #'  })
 #'
 #' }
+#'  }
 #'
 #' @export polygon_extract 
 polygon_extract <- function(r, p, ids = NULL, cells = FALSE, asList = TRUE,  

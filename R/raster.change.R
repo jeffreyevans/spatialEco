@@ -96,7 +96,7 @@ raster.change <- function(x, y, d = c(3,3), stat = c("kappa", "wkappa", "t.test"
                           "cor", "entropy", "cross-entropy", "divergence"), w = NULL,
                           out.raster = NULL, mask = FALSE, force.memory = FALSE) {
 	stat = stat[1]
-    if(stat == "wkappa") stop("Sorry, weighted kappa is not yet implemented")
+    if(stat == "wkappa") stop("Sorry; weighted kappa is not yet implemented")
 	if (class(x)[1] != "RasterLayer")
 	  stop(deparse(substitute(x)), " Must be a raster object")
 	if (class(y)[1] != "RasterLayer") 

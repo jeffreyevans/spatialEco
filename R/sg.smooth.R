@@ -63,11 +63,13 @@ sg.smooth <- function(x, f = 4, l = 51, d = 1, na.rm, ...) {
   na.idx <- which(is.na(x))
     x <- stats::na.omit(x)
   fc <- (l-1)/2                       
-    X  <- outer(-fc:fc, 0:f, FUN="^") 
+    X  <- outer(-fc:fc, 0:f, FUN="^")
       s <- svd(X)
       Y  <- s$v %*% diag(1/s$d) %*% t(s$u)
     T2 <- stats::convolve(x, rev(Y[d,]), type="o")
     sg <- T2[(fc+1):(length(T2)-fc)]
-  if(length(na.idx) > 0) { sg <- spatialEco::insert.values(sg, NA, na.idx) }	
+      if(length(na.idx) > 0) { 
+	    sg <- spatialEco::insert.values(sg, NA, na.idx)
+	  }	
   return( sg ) 
 }
