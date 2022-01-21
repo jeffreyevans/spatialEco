@@ -61,7 +61,7 @@
 #' p = c("sp", "spdep", "rms")
 #'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
 #'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
-#'    stop("Can't run examples, please install ", paste(p[m], collapse = " "))
+#'    message("Can't run examples, please install ", paste(p[m], collapse = " "))
 #'  } else {
 #'    invisible(lapply(p, require, character.only=TRUE))                                                                  
 #' data(meuse)
