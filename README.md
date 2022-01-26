@@ -41,8 +41,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 | `conf.interval`              | Calculates confidence interval for the mean or median of a distribution with      |
 |                              | with unknown population variance                                                  |
 | `combine`                    | Combines multiple rasters into an "all possible combinations" raster              |
-|                              | emulation the ESRI combine function, ratifies the output and includes             |
-|					           | a summary table of combinations and attributes that relates back to               |
+| emulation the ESRI combine function, ratifies the output and includes a summary table of combinations and        | 
+| attributes that relates back to                                                                                  |
 |                              | the raster values					                                               |
 | `convexHull`                 | Derives a convex hull of points using the alpha hull approach with adjustable     |
 |                              | tension. Please note that due to licensing reasons, this function is only         |
