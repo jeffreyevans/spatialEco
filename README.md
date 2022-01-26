@@ -22,8 +22,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
 | `spatialEco` Function        | Description                                                                       |
 | -----------------------------|-----------------------------------------------------------------------------------|
-| `annulus.matrix` Creates a 0,1 matrix based on defined annulus parameters, can be used as a window               |
-|  matrix in a raster focal function                                                                               |
+| `annulus.matrix`             | Creates a 0,1 matrix based on defined annulus parameters, can be used as a window               |
+matrix in a raster focal function                                                                                  |
 | `background`                 | Creates a point sample that can be used as a NULL for SDM's and other             |
 |                              | modeling approaches (see pseudo.absence for alternate approach).                  |
 | `bearing.distance`           | Calculate new point based on bearing/distance                                     |
