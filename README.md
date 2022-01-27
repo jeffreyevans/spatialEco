@@ -21,9 +21,9 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 ## Available functions in spatialEco 1.3-8
 
 | `spatialEco` Function        | Description                                                                       |
-| -----------------------------|-----------------------------------------------------------------------------------|
+|:-----------------------------|:----------------------------------------------------------------------------------|
 | `annulus.matrix`             | Creates a 0,1 matrix based on defined annulus parameters, can be used as a window |
-|                              |:matrix in a raster focal function                                                 |
+|                              | matrix in a raster focal function                                                 |
 | `background`                 | Creates a point sample that can be used as a NULL for SDM's and other             |
 |                              | modeling approaches (see pseudo.absence for alternate approach).                  |
 | `bearing.distance`           | Calculate new point based on bearing/distance                                     |
@@ -41,8 +41,8 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 | `conf.interval`              | Calculates confidence interval for the mean or median of a distribution with      |
 |                              | with unknown population variance                                                  |
 | `combine`                    | Combines multiple rasters into an "all possible combinations" raster              |
-| emulation the ESRI combine function, ratifies the output and includes a summary table of combinations and        | 
-| attributes that relates back to                                                                                  |
+|                              |  emulation the ESRI combine function, ratifies the output and includes a summary  |
+|                              | table of combinations and attributes that relates back to                         |
 |                              | the raster values					                                               |
 | `convexHull`                 | Derives a convex hull of points using the alpha hull approach with adjustable     |
 |                              | tension. Please note that due to licensing reasons, this function is only         |
