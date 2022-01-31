@@ -50,8 +50,12 @@ The cells = TRUE argument will return the cell indices which could be
 used at a later time.
 }
 \examples{
- library(sf)
- library(raster)
+p = c("sf", "raster", "tabularaster")
+ if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+   m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+   message("Can't run examples, please install ", paste(p[m], collapse = " "))
+ } else {
+   invisible(lapply(p, require, character.only=TRUE))
  
  nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
    nc <- sf::st_cast(nc, "POLYGON")
@@ -106,6 +110,7 @@ used at a later time.
  })
 
 }
+ }
 
 }
 \author{

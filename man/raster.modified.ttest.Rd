@@ -84,11 +84,11 @@ gridded(G2) <- TRUE
 G2@data <- as.data.frame(G2@data[,-2])
 G2@data[,1] <- G2@data[,1]
 
-corr <- raster.modifed.ttest(G1, G2)
+corr <- raster.modified.ttest(G1, G2)
   plot(raster::raster(corr,1))
   
-corr.rand <- raster.modifed.ttest(G1, G2, sub.sample = TRUE, type = "random")	 
-corr.hex <- raster.modifed.ttest(G1, G2, sub.sample = TRUE, d = 500, size = 1000)	
+corr.rand <- raster.modified.ttest(G1, G2, sub.sample = TRUE, type = "random")	 
+corr.hex <- raster.modified.ttest(G1, G2, sub.sample = TRUE, d = 500, size = 1000)	
   head(corr.hex@data)
     bubble(corr.hex, "corr") 
 }

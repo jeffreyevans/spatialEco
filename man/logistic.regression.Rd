@@ -75,9 +75,13 @@ If the object passed to the function is an sp class there is no need to call the
 slot directly via "object@data", just pass the object name.
 }
 \examples{
-require(sp)
-require(spdep)
-require(rms)                                                                       
+
+p = c("sp", "spdep", "rms")
+ if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+   m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+   message("Can't run examples, please install ", paste(p[m], collapse = " "))
+ } else {
+   invisible(lapply(p, require, character.only=TRUE))                                                                  
 data(meuse)
   coordinates(meuse) <- ~x+y  
     meuse@data <- data.frame(DepVar=rbinom(dim(meuse)[1], 1, 0.5), 
@@ -130,7 +134,7 @@ lp1 <- resid(lmodel$model, "lp1")
 # plot estimated probabilities at points
 spplot(meuse, c('Probs'))
 
-
+}
 }
 \references{
 Besag, J.E., (1972) Nearest-neighbour systems and the auto-logistic model for binary

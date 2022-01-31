@@ -37,11 +37,11 @@ data(meuse)
 
 # All polygon proximity index 1000 radius	
 ( pidx <-proximity.index(meuse_poly, min.dist = 1) )
-  pidx[pidx > 100] <- 100
+  pidx[pidx > 1000] <- 1000
 
 # Class-level proximity index 1000 radius
 ( pidx.class <- proximity.index(meuse_poly, y = "LU", min.dist = 1) )
-  pidx.class[pidx.class > 100] <- 100  
+  pidx.class[pidx.class > 1000] <- 1000  
   
 # plot index for all polygons
 meuse_poly$pidx <- pidx
