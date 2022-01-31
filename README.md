@@ -1,4 +1,4 @@
-# spatialEco (CRAN 1.3-7, developement 1.3-8) <img src="man/figures/spatialEco_logo.jpg" align="right" alt="" width="120" />
+# spatialEco (dev 1.3-8) <img src="man/figures/spatialEco_logo.png" align="right" alt="" width="120" />
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/jeffreyevans/spatialEco/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions)
