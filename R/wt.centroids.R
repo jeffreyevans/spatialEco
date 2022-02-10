@@ -18,7 +18,7 @@
 #' @note Depends: sp
 #'                                                                  
 #' @examples 
-#' require(sp)
+#' library(sp)
 #'  data(meuse)
 #'  coordinates(meuse) = ~x+y
 #'  wt.copper <- wt.centroid(meuse, 'copper', sp=TRUE) 

@@ -23,8 +23,9 @@
 #'     
 #' @export
 sar <- function(x, s = NULL, ...) {  
-  if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
-  if (length(grep("longlat", sp::proj4string(x))) > 0 && is.null(s))
+  if (!inherits(x, "RasterLayer")) 
+    stop("MUST BE RasterLayer OBJECT")
+  if (length(grep("longlat", raster::crs(x))) > 0 && is.null(s))
     stop("Projection is geographic, must define cell size argument in planar units")
     if( is.null(s) ) s = raster::res(x)[1] * raster::res(x)[2] 
       saf <- function(x, cs = s) { cs * cos(x) } 

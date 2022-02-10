@@ -68,6 +68,6 @@ quadrats <- function(x, s = 250, n = 100, r = NULL) {
 	  }
     }
       quadrat <- do.call("rbind", quadrat)
-    sp::proj4string(quadrat) <- sp::proj4string(x) 
+	slot(quadrat, "proj4string") <- sp::CRS(sp::wkt(x))
   return(quadrat)   
 }

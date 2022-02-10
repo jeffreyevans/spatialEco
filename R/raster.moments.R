@@ -22,7 +22,7 @@
 #'   library(raster)
 #'   r <- raster(nrows=100, ncols=100, xmn=571823, xmx=616763, 
 #'               ymn=4423540, ymx=4453690)
-#'   proj4string(r) <- crs("+proj=utm +zone=12 +datum=NAD83 +units=m +no_defs")
+#'     crs(r) <- crs("+proj=utm +zone=12 +datum=NAD83 +units=m +no_defs")
 #'   r[] <- runif(ncell(r), 1000, 2500)
 #'   r <- focal(r, focalWeight(r, 150, "Gauss") )
 #' 

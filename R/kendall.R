@@ -54,13 +54,22 @@
 #' the influence of serial correlation on the Mann-Kendall test. Water 
 #' Resources Research, 38(6):41-47. 
 #'
+#' @examples
+data(EuStockMarkets)
+d <- as.vector(EuStockMarkets[,1])
+kendall(d)
+
+
 #' @export kendall
-kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE, 
-                    confidence = TRUE, intercept = TRUE,
+kendall <- function(y, tau = TRUE, intercept = TRUE, p.value = TRUE, 
+                    z.value = TRUE, confidence = TRUE, 
 					prewhiten = FALSE, na.rm, ...) {
     if(length(y[!is.na(y)]) < 8) 
       stop("The Kendall Tau needs at least 8 observations")
     pass.sum <- 0
+	out.names <- 
+	c("slope", "tau", "intercept", "p-value", "z-value", "limits.LCL", "limits.UCL")[
+	  which(c(TRUE, tau, intercept, p.value, z.value,  rep(confidence,2)))]
 	if(prewhiten) {
 	  confidence = FALSE
 	  intercept = FALSE 
@@ -156,7 +165,9 @@ kendall <- function(y, tau = TRUE, p.value = TRUE, z.value = TRUE,
         if(p.value == TRUE) { fit.results <- c(fit.results, pval) } 
           if(z.value == TRUE) { fit.results <- c(fit.results, z) }
 	  fit.results <- as.numeric(fit.results) 
+	    
     }
-  return(c(fit.results))
+	names(fit.results) <- out.names
+  return(fit.results)
 }	
   

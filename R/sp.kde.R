@@ -61,7 +61,7 @@
 #'  # Weighted KDE using cadmium and SpatialPixelsDataFrame object to define grid
 #'  data(meuse.grid)
 #'  coordinates(meuse.grid) = ~x+y
-#'  proj4string(meuse.grid) <- CRS("+init=epsg:28992")
+#'  slot(meuse.grid, "proj4string") <- CRS(SRS_string = "EPSG:28992")
 #'  gridded(meuse.grid) = TRUE
 #'  cadmium.kde <- sp.kde(x = meuse, y = meuse$cadmium, bw = 1000,  
 #'                        newdata = meuse.grid, standardize = TRUE, 
@@ -146,7 +146,7 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,
 	                          data.frame(kde = as.vector(array(k$z,length(k$z))))))
       if(is.null(newdata) == FALSE & mask == TRUE) {
 	    kde.est <- raster::mask(raster::resample(kde.est, newdata), newdata) 
-	  }
-    sp::proj4string(kde.est) <- sp::proj4string(x)  
+	  }  
+    raster::crs(kde.est) <- raster::crs(x)
   return( kde.est )  
 }  

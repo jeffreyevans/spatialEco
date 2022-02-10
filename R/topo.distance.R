@@ -30,10 +30,10 @@
 #'        names(elev) <- "elev"
 #'  pts <- sampleRandom(elev, 10, sp=TRUE)
 #'    pts$ID <- LETTERS[seq( from = 1, to = nrow(pts) )]
-#'    
+#'      slot(pts, "proj4string") <- sp::CRS(sp::wkt(raster::crs(elev)))
 #'  graph <- GeNetIt::knn.graph(pts, row.names=pts@data[,"ID"])
-#'    proj4string(graph) <- proj4string(elev)
-#'    head(graph@data)
+#'      slot(graph, "proj4string") <- sp::CRS(sp::wkt(raster::crs(elev)))
+#'        head(graph@data)
 #'   
 #'  plot(elev)
 #'    plot(graph, cex=0.5, add=TRUE)

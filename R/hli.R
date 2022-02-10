@@ -46,11 +46,12 @@
 hli <- function(x, check = TRUE, force.hemisphere = c("none", "southern", "northern")) {
   if (!inherits(x, "RasterLayer")) stop("x must be a RasterLayer object") 
   if(check) {
-    if (is.na(sp::proj4string(x))) stop("Projection must be defined")
+    if (is.na(slot(e, "proj4string"))) 
+	  stop("Projection must be defined")
     if (length(grep("longlat", sp::proj4string(x))) <= 0) {
 	  geo.prj = "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
       e <- as(raster::extent(x), "SpatialPolygons")
-        sp::proj4string(e) <- sp::proj4string(x)	  
+        slot(e, "proj4string") <- sp::CRS(sp::wkt(x))		
           e <- sp::spTransform(e, geo.prj )
 	  l = sp::coordinates(e)[2]
     } else {
