@@ -55,11 +55,10 @@
 #' Resources Research, 38(6):41-47. 
 #'
 #' @examples
-data(EuStockMarkets)
-d <- as.vector(EuStockMarkets[,1])
-kendall(d)
-
-
+#' data(EuStockMarkets)
+#' d <- as.vector(EuStockMarkets[,1])
+#' kendall(d)
+#' 
 #' @export kendall
 kendall <- function(y, tau = TRUE, intercept = TRUE, p.value = TRUE, 
                     z.value = TRUE, confidence = TRUE, 
