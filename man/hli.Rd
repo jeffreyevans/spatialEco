@@ -42,7 +42,7 @@ Valid values for this argument are "southern" and "northern" with the default "n
   data(elev)
   heat.load <- hli(elev)
     plot(heat.load, main="Heat Load Index") 
-    
+   
 }
 \references{
 McCune, B., and D. Keon (2002) Equations for potential annual direct 

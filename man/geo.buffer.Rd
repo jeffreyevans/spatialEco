@@ -30,9 +30,8 @@ library(sp)
 library(raster)
 
 s <- spsample(as(extent(61.87125, 76.64458, 23.90153, 37.27042), 
-              "SpatialPolygons"), n=100, type="random")
-  proj4string(s) <- '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'  
-  
+              "SpatialPolygons"), n=100, type="random")  
+  slot(s, "proj4string") <- CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs') 
 b <- geo.buffer(x=s, r=1000, quadsegs=100)
   plot(b[1,])
     points(s[1,], pch=20,cex=2)

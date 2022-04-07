@@ -93,7 +93,7 @@ finally, the 'stoyan' method will produce very strong 2nd order results.
  data(meuse.grid)
    coordinates(meuse) = ~x+y   
    coordinates(meuse.grid) = ~x+y
-   proj4string(meuse.grid) <- CRS("+init=epsg:28992")
+   slot(meuse, "proj4string") <- CRS(SRS_string = "EPSG:28992")   
    gridded(meuse.grid) = TRUE
    r <- raster(meuse.grid)
 

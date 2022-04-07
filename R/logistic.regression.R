@@ -24,7 +24,7 @@
 #' * bandwidth - If AutoCov = TRUE returns the distance bandwidth used for the 
 #'   auto-covariance function
 #' * diagTable - data.frame of regression diagnostics
-#' * coefTable - data.frame of regression coefficients
+#' * coefTable - data.frame of regression coefficients (log-odds)
 #' * Residuals - data.frame of residuals and standardized residuals
 #' * AutoCov - If an auto-logistic model, AutoCov represents lagged 
 #'             auto-covariance term
@@ -176,10 +176,12 @@ logistic.regression <- function(ldata, y, x, penalty = TRUE, autologistic = FALS
     d[, 2] <- sqrt(diag(fit$var))
     d[, 3] <- d[, 1]/d[, 2]
     d[, 4] <- stats::pnorm(abs(d[, 3]), lower.tail = FALSE) * 2
-    coefList <- list(Variable = allIndVars, Coef = d[, 1], StdError = d[, 2], Wald = d[, 3], Prob = d[, 4])
+    coefList <- list(Variable = allIndVars, Coef = d[, 1], StdError = d[, 2], 
+	                 Wald = d[, 3], Prob = d[, 4])
 	coefList$Variable <- names(fit$coefficients)
     coefFrame <- data.frame(coefList)
-    diagFrame <- data.frame(Names = c(names(fit$stats), "PEN", "AIC"), Value = c(as.vector(fit$stats), pen, aic))
+    diagFrame <- data.frame(Names = c(names(fit$stats), "PEN", "AIC"), 
+	                        Value = c(as.vector(fit$stats), pen, aic))
     if (autologistic == TRUE) {
       return(list(model = fit, bandwidth=bw, diagTable = diagFrame, coefTable = coefFrame,  
              Residuals = data.frame(res = res, resSTD = resSTD), AutoCov = ldata$AutoCov))

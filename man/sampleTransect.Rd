@@ -30,7 +30,7 @@ by arguments passed to the sample.line function
 library(sp)
 data(meuse)
 coordinates(meuse) <- ~x+y
-proj4string(meuse) <- CRS("+init=epsg:28992")
+slot(meuse, "proj4string") <- CRS(SRS_string = "EPSG:28992")
 meuse <- meuse[sample(1:nrow(meuse),10),]
 
 transects <- sampleTransect(meuse, min.length=200, 

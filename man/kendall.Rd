@@ -7,10 +7,10 @@
 kendall(
   y,
   tau = TRUE,
+  intercept = TRUE,
   p.value = TRUE,
   z.value = TRUE,
   confidence = TRUE,
-  intercept = TRUE,
   prewhiten = FALSE,
   na.rm,
   ...
@@ -21,13 +21,13 @@ kendall(
 
 \item{tau}{(FALSE/TRUE) return tau values}
 
+\item{intercept}{(FALSE/TRUE) return intercept values}
+
 \item{p.value}{(FALSE/TRUE) return p.values}
 
 \item{z.value}{(FALSE/TRUE) return z values}
 
 \item{confidence}{(FALSE/TRUE) return 95 pct confidence levels}
-
-\item{intercept}{(FALSE/TRUE) return intercept values}
 
 \item{prewhiten}{(FALSE/TRUE) Apply autocorrelation correction using 
 pre-whitening}
@@ -63,6 +63,12 @@ representing a significant increasing trend and a Z < -1.96 a significant
 decreasing trend (p < 0.05). The null hypothesis can be rejected if Tau = 0. 
 There is also an option for autocorrelation correction using the method proposed 
 in Yue & Wang (2002).
+}
+\examples{
+data(EuStockMarkets)
+d <- as.vector(EuStockMarkets[,1])
+kendall(d)
+
 }
 \references{
 Theil, H. (1950) A rank invariant method for linear and polynomial regression 

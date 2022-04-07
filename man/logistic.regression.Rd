@@ -52,7 +52,7 @@ A list class object with the following components:
 \item bandwidth - If AutoCov = TRUE returns the distance bandwidth used for the
 auto-covariance function
 \item diagTable - data.frame of regression diagnostics
-\item coefTable - data.frame of regression coefficients
+\item coefTable - data.frame of regression coefficients (log-odds)
 \item Residuals - data.frame of residuals and standardized residuals
 \item AutoCov - If an auto-logistic model, AutoCov represents lagged
 auto-covariance term

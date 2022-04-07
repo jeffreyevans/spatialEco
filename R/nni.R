@@ -37,7 +37,7 @@
 #'
 #' @export
 nni <- function(x, win = "hull") {
-    # if(class(x) == "sf") { x <- as(x, "Spatial") }
+    if(class(x) == "sf") { x <- as(x, "Spatial") }
     if (!class(x) == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
         stop(deparse(substitute(x)), " MUST BE A sp POINTS OBJECT")
     if (win == "hull") {

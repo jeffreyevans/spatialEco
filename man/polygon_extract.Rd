@@ -60,14 +60,14 @@ p = c("sf", "raster", "tabularaster")
  nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
    nc <- sf::st_cast(nc, "POLYGON")
  
- #### multi-band 
- i=100; j=100
- r <- do.call(raster::stack, replicate(20, 
- 	         raster::raster(matrix(runif(i*j), i, j))))
-       names(r) <- paste0("time", 1:nlayers(r))			 
-     extent(r) <- extent(nc)
- 	  proj4string(r) <- st_crs(nc)$proj4string
- 
+#### multi-band 
+i=100; j=100
+r <- do.call(raster::stack, replicate(20, 
+	         raster::raster(matrix(runif(i*j), i, j))))
+      names(r) <- paste0("time", 1:nlayers(r))			 
+    extent(r) <- extent(nc)
+	  proj(r) <- sf::st_crs(nc)
+
  plot(r[[1]])
    plot(st_geometry(nc), add=TRUE)
  

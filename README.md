@@ -67,7 +67,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 | `insert`                     | Inserts a row or column into a data.frame                                         
 | `insert.values`              | Inserts new values into a vector at specified positions                           
 | `is.empty`                   | Method, evaluates if vector is empty                                              
-| `is.whole`                   | Method, evaluates if numeric vector is whole or float                             
+| `is.whole`                   | Depreciated after R release of base::is.whole in 4.1.0                             
 | `kendall`                    | Kendall tau trend with continuity correction for time-series                      
 | `kl.divergence`              | Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical component distributions. Divergence is calculated as: int[f(x) (log f(x) |log g(x)) dx] for distributions with densities f() and g().
 | `knn`                        | returns ids, rownames and distance of nearest neighbors in two (or single) spatial objects. Optional radius distance constraint. Added optional covariates (weights)
@@ -76,6 +76,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 | `loess.ci`                   | Calculates a local polynomial regression fit with associated confidence intervals 
 | `logistic.regression`        | Performs a logistic (binomial) and autologistic (spatially lagged binomial) regression using maximum likelihood estimation or penalized maximum likelihood estimation.
 | `max_extent`                 | Returns the maximum extent of multiple spatial inputs                             
+| `mean_angle`                 | Returns the mean of a vector of angles. Intended for focal and zonal functions on slope or aspect                           
 | `moments`                    | Calculate statistical moments of a distribution including percentiles, arithmetic-geometric-harmonic means, coefficient of variation, median absolute deviation, skewness, kurtosis, mode and number of modes. 
 | `morans.plot`                | Autocorrelation plot                                                              
 | `nni`                        | Calculates the nearest neighbor index (NNI) measure of clustering or dispersal    

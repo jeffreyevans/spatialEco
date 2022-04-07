@@ -35,7 +35,7 @@ library(sp)
 library(rgeos)
 data(meuse)
 coordinates(meuse) <- ~x+y
-proj4string(meuse) <- CRS("+init=epsg:28992")
+slot(meuse, "proj4string") <- CRS(SRS_string = "EPSG:28992")
 xy <- meuse[2,]
 
 rs100 <- sample.annulus(xy, r1=50, r2=100, n = 50, type = "random")

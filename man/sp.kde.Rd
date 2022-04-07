@@ -87,7 +87,7 @@ A weighted or unweighted Gaussian Kernel Density estimate
  # Weighted KDE using cadmium and SpatialPixelsDataFrame object to define grid
  data(meuse.grid)
  coordinates(meuse.grid) = ~x+y
- proj4string(meuse.grid) <- CRS("+init=epsg:28992")
+ slot(meuse.grid, "proj4string") <- CRS(SRS_string = "EPSG:28992")
  gridded(meuse.grid) = TRUE
  cadmium.kde <- sp.kde(x = meuse, y = meuse$cadmium, bw = 1000,  
                        newdata = meuse.grid, standardize = TRUE, 

@@ -41,7 +41,7 @@
 #'   data(elev)
 #'   heat.load <- hli(elev)
 #'     plot(heat.load, main="Heat Load Index") 
-#'     
+#'    
 #' @export hli
 hli <- function(x, check = TRUE, force.hemisphere = c("none", "southern", "northern")) {
   if (!inherits(x, "RasterLayer")) stop("x must be a RasterLayer object") 
