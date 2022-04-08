@@ -4,7 +4,7 @@
 \alias{quadrats}
 \title{Quadrats}
 \usage{
-quadrats(x, s = 250, n = 100, r = NULL)
+quadrats(x, s = 250, n = 100, r = NULL, sp = FALSE)
 }
 \arguments{
 \item{x}{A sp or sf polygon object defining extent}
@@ -14,9 +14,11 @@ quadrats(x, s = 250, n = 100, r = NULL)
 \item{n}{Number of quadrats}
 
 \item{r}{A rotation factor for random rotation, default is NULL}
+
+\item{sp}{(FALSE | TRUE) Output sp class object}
 }
 \value{
-an sp or sf polygon object with rotated polygon
+an sf or sp polygon object with rotated polygon(s)
 }
 \description{
 Creates quadrat polygons for sampling or analysis
@@ -29,23 +31,25 @@ random range of quadrat rotations. You can specify each of these parameters
 using an explicit vector that will be sampled eg., seq(100,300,0.5)
 }
 \examples{
-library(sp)
-library(raster)
-library(rgeos)
-data(meuse)
-  coordinates(meuse) <- ~x+y
-  e <- gConvexHull(meuse)
+library(sf)
+library(terra) 
 
-# Fixed size 250 and no rotation 
-s <- quadrats(e, s = 250, n = 50)
-  spplot(s, "ID")
+# read meuse data and create convex hull 
+ data(meuse, package = "sp")
+   meuse <- st_as_sf(meuse, coords = c("x", "y"), 
+                     crs = 28992, agr = "constant") 
+     e <- st_convex_hull(st_union(meuse))
 
-# Variable sizes 100-300 and rotation of 0-45 degrees
-s <- quadrats(e, s = c(100,300), n = 50, r = c(0,45))
-  spplot(s, "ID")
-
-# Variable sizes 100-300 and no rotation 
-s <- quadrats(e, s = c(100,300), n = 50)
-  spplot(s, "ID")
-
+ # Fixed size 250 and no rotation 
+ s <- quadrats(e, s = 250, n = 50)
+   plot(st_geometry(s))
+ 
+ # Variable sizes 100-300 and rotation of 0-45 degrees
+ s <- quadrats(e, s = c(100,300), n = 50, r = c(0,45))
+   plot(st_geometry(s))
+ 
+ # Variable sizes 100-300 and no rotation 
+ s <- quadrats(e, s = c(100,300), n = 50)
+  plot(st_geometry(s))
+ 
 }

@@ -33,16 +33,16 @@ is the centroid where the lower.left and upper.right are based on the
 min or max of the coordinates respectively.
 }
 \examples{
-library(sp)
-library(rgeos)
-
-data(meuse)
-  coordinates(meuse) <- ~x+y
-
-e <- gConvexHull(meuse)
-  e30 <- rotate.polygon(e, angle=30, sp=TRUE)
-
-plot(e, main="rotated 30 degrees")
-  plot(e30, add=TRUE)
-
+library(sf)
+ 
+data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), 
+                    crs = 28992, agr = "constant")
+ 
+ e <- st_convex_hull(st_union(meuse))
+   e30 <- rotate.polygon(e, angle=30)
+ 
+ plot(e, main="rotated 30 degrees")
+   plot(e30, add=TRUE)
+ 
 }
