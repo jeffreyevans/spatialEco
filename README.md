@@ -96,6 +96,7 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 | `polygon_extract`            | Fast method for extracting raster values to polygons                              
 | `polyPerimeter`              | Calculates the perimeter length(s) for a polygon object                           
 | `poly.regression`            | smoothing data in time-series and imputing missing (NA) values using polynomial regression
+| `poly_trend`                 | Derives Nth order polynomial trend with confidence intervals                        
 | `pp.subsample`               | Generates random subsample based on point process intensity function of the observed data. This is a spatially informed data thinning model that can be used to reduce pseudo-replication or autocorrelation.
 | `proximity.index`            | Proximity index for a set of polygons                                             
 | `pseudo.absence`             | Generates pseudo-absence samples based on the spatial intensity function of known species locations. This is akin to distance constrained but is informed by the spatial process of the observed data and is drawn from a probabilistic sample following the intensity function.
