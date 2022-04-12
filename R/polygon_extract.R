@@ -37,9 +37,9 @@
 #'    message("Can't run examples, please install ", paste(p[m], collapse = " "))
 #'  } else {
 #'    invisible(lapply(p, require, character.only=TRUE))
-#'  
+#'
 #'  nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
-#'    nc <- sf::st_cast(nc, "POLYGON")
+#'    nc <- suppressWarnings(sf::st_cast(nc, "POLYGON"))
 #'  
 #' #### multi-band 
 #' i=100; j=100
@@ -47,7 +47,7 @@
 #' 	         raster::raster(matrix(runif(i*j), i, j))))
 #'       names(r) <- paste0("time", 1:nlayers(r))			 
 #'     extent(r) <- extent(nc)
-#' 	  proj(r) <- sf::st_crs(nc)
+#' 	  crs(r) <- crs(sf::st_crs(nc))
 #' 
 #'  plot(r[[1]])
 #'    plot(st_geometry(nc), add=TRUE)
@@ -90,7 +90,7 @@
 #'    e <- raster::extract(r, nc)
 #'  })
 #'
-#' }
+#'    }
 #'  }
 #'
 #' @export polygon_extract 

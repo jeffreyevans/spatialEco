@@ -19,6 +19,8 @@
 #' A fit using a lm(y ~ x + I(X^2) + I(X^3)) form will be correlated which,  
 #' can cause problems. The function avoids undue correlation using orthogonal 
 #' polynomials
+#' 
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
 #'  set.seed(42)
@@ -39,8 +41,7 @@
 #' cat("Confidence intervals for", "1 -", p$order, "polynomials",  "\n")
 #'   p$prameterCI
 #'
-#' @method print poly.trend
-#' @export
+#' @export poly_trend
 poly_trend <- function(x, y, degree, ci = 0.95, plot=TRUE, ...) {
   poly.f <- function(x, a, b, d) {
     (a * x^2) + (b * x) + d
@@ -51,7 +52,8 @@ poly_trend <- function(x, y, degree, ci = 0.95, plot=TRUE, ...) {
                        interval='confidence',
                        level=ci)
   if (plot == TRUE) { 
-    dots <- as.list(match.call(expand.dots = TRUE)[-1])
+    #dots <- as.list(match.call(expand.dots = TRUE)[-1])
+	dots <- list(...)
 	if(any(names(dots) %in% c("degree", "ci"))) {
 	  dots <- dots[-which(names(dots) %in% c("degree", "ci"))]
 	}  

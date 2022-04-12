@@ -41,15 +41,17 @@ library(terra)
      e <- st_convex_hull(st_union(meuse))
 
  # Fixed size 250 and no rotation 
- s <- quadrats(e, s = 250, n = 50)
+ s <- quadrats(e, s = 250, n = 10)
    plot(st_geometry(s))
  
+\donttest{   
  # Variable sizes 100-300 and rotation of 0-45 degrees
- s <- quadrats(e, s = c(100,300), n = 50, r = c(0,45))
+ s <- quadrats(e, s = c(100,300), n = 10, r = c(0,45))
    plot(st_geometry(s))
  
  # Variable sizes 100-300 and no rotation 
- s <- quadrats(e, s = c(100,300), n = 50)
+ s <- quadrats(e, s = c(100,300), n = 10)
   plot(st_geometry(s))
+}   
  
 }

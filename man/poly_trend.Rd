@@ -4,7 +4,7 @@
 \alias{poly_trend}
 \title{Polynomial trend}
 \usage{
-\method{print}{poly.trend}(x, y, degree, ci = 0.95, plot = TRUE, ...)
+poly_trend(x, y, degree, ci = 0.95, plot = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector of x}
@@ -55,4 +55,7 @@ polynomials
 cat("Confidence intervals for", "1 -", p$order, "polynomials",  "\n")
   p$prameterCI
 
+}
+\author{
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

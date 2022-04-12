@@ -25,39 +25,36 @@ This function corrects straight-line (euclidean) distances for
 topographic-slope effect.
 }
 \examples{
-\donttest{     
- library(sp)
+ library(sf)
  library(raster)
- library(GeNetIt)
+ library(terra)
  
  # create example data
  data(elev)
    r <- projectRaster(elev, res=c(1000,1000), 
-                      crs="+proj=aea +lat_1=29.5 +lat_2=42.5")
-   e <- extent(616893.6,714697.3,5001027,5080542)
-     elev <- crop(r,e) 
-       names(elev) <- "elev"
- pts <- sampleRandom(elev, 10, sp=TRUE)
-   pts$ID <- LETTERS[seq( from = 1, to = nrow(pts) )]
-     slot(pts, "proj4string") <- sp::CRS(sp::wkt(raster::crs(elev)))
- graph <- GeNetIt::knn.graph(pts, row.names=pts@data[,"ID"])
-     slot(graph, "proj4string") <- sp::CRS(sp::wkt(raster::crs(elev)))
-       head(graph@data)
+       crs=crs("EPSG:5070"))
+r <- crop(r, extent(6482554, 6536750, 6615538, 6667271))
+ elev <- rast(r)
+   names(elev) <- "elev"
+
+ lns <- lapply(1:5, function(i) {
+   p <- st_combine(st_as_sf(spatSample(elev, size=2, as.points=TRUE)))
+   st_as_sf(st_cast(p, "LINESTRING")) }) 
+ lns <- do.call(rbind, lns) 
   
- plot(elev)
-   plot(graph, cex=0.5, add=TRUE)
-   plot(pts,pch=19,col="red",add=TRUE)
- 
+  plot(elev)
+    plot(st_geometry(lns), add=TRUE)
+      
  # Calculate topographical distance  
- ( tdist <- topo.distance(graph, elev) )
+ ( tdist <- topo.distance(lns, elev) )
+ ( lgt <- as.numeric(st_length(lns)) ) 
  
  # Increase in corrected distance
- tdist - graph$length
+ tdist - lgt
  
  # Percent increase in corrected distance
- ((tdist - graph$length) / graph$length) * 100
+ ((tdist - lgt) / lgt) * 100
 
-}
 
 }
 \author{

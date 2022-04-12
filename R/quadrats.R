@@ -27,22 +27,26 @@
 #'      e <- st_convex_hull(st_union(meuse))
 #' 
 #'  # Fixed size 250 and no rotation 
-#'  s <- quadrats(e, s = 250, n = 50)
+#'  s <- quadrats(e, s = 250, n = 10)
 #'    plot(st_geometry(s))
 #'  
+#' \donttest{   
 #'  # Variable sizes 100-300 and rotation of 0-45 degrees
-#'  s <- quadrats(e, s = c(100,300), n = 50, r = c(0,45))
+#'  s <- quadrats(e, s = c(100,300), n = 10, r = c(0,45))
 #'    plot(st_geometry(s))
 #'  
 #'  # Variable sizes 100-300 and no rotation 
-#'  s <- quadrats(e, s = c(100,300), n = 50)
+#'  s <- quadrats(e, s = c(100,300), n = 10)
 #'   plot(st_geometry(s))
+#' }   
 #'  
 #' @export quadrats
 quadrats <- function(x, s = 250, n = 100, r = NULL, sp = FALSE) { 
-  	rrange = range(r)
-	if(min(rrange) < 0 | max(rrange) > 360)
-	  stop("rotation parameter is out of range")
+  	if(!is.null(r)){
+	  rrange = range(r)
+	    if(min(rrange) < 0 | max(rrange) > 360)
+	      stop("rotation parameter is out of 0-360 range")
+	}	  
     quadrat <- list()
     for(i in 1:n) {
 	  if(length(s) == 1) {
@@ -60,13 +64,14 @@ quadrats <- function(x, s = 250, n = 100, r = NULL, sp = FALSE) {
 	    } else if(length(rr) > 2) {
           rr = sample(rr,1)	    
 	    }
-	  }       
+	  }	 
        p <- sf::st_buffer(sf::st_sample(x, size=1, type="random"), ss)
 	     p <- sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(p)))
-		   p$angle <- rr
 		     p$dist <- ss
-	  if(!is.null(r)) {	
-        quadrat[[i]] <- rotate.polygon(p, angle = rr)
+	  if(!is.null(r)) {
+        p <- rotate.polygon(p, angle = rr)
+          p$angle <- rr		
+            quadrat[[i]] <- p
       } else {
 	    quadrat[[i]] <- p
 	  }

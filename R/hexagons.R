@@ -44,6 +44,6 @@ hexagons <- function(x, res = 100, ...) {
     for (i in 1:npoly) Srl[[i]] <- sp::Polygons(list(sp::Polygon(ret[[i]])), IDS[i])
         res <- sp::SpatialPolygonsDataFrame(sp::SpatialPolygons(Srl), 
 		                              data = data.frame(HEXID = IDS))
-	  slot(res, "proj4string") <- sp::CRS(sp::wkt(x))
+	  #slot(res, "proj4string") <- sp::CRS(sp::wkt(x))
     return(res)
 } 
