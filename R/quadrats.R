@@ -40,7 +40,10 @@
 #'  
 #' @export quadrats
 quadrats <- function(x, s = 250, n = 100, r = NULL, sp = FALSE) { 
-  quadrat <- list()
+  	rrange = range(r)
+	if(min(rrange) < 0 | max(rrange) > 360)
+	  stop("rotation parameter is out of range")
+    quadrat <- list()
     for(i in 1:n) {
 	  if(length(s) == 1) {
 	    ss = s
@@ -50,9 +53,6 @@ quadrats <- function(x, s = 250, n = 100, r = NULL, sp = FALSE) {
         ss = sample(s,1)	    
 	  }
 	  if(!is.null(r)){
-	    rrange = range(r)
-	    if(min(rrange) < 0 | max(rrange) > 360)
-	      stop("rotation parameter is out of range")
 	    if(length(r) == 1) {
 	      rr = r
 	    } else if(length(r) == 2) {
@@ -64,7 +64,7 @@ quadrats <- function(x, s = 250, n = 100, r = NULL, sp = FALSE) {
        p <- sf::st_buffer(sf::st_sample(x, size=1, type="random"), ss)
 	     p <- sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(p)))
 		   p$angle <- rr
-		   p$dist <- ss
+		     p$dist <- ss
 	  if(!is.null(r)) {	
         quadrat[[i]] <- rotate.polygon(p, angle = rr)
       } else {
