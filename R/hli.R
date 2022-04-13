@@ -51,7 +51,7 @@ hli <- function(x, check = TRUE, force.hemisphere = c("none", "southern", "north
     if (length(grep("longlat", sp::proj4string(x))) <= 0) {
 	  geo.prj = "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
       e <- as(raster::extent(x), "SpatialPolygons")
-        #slot(e, "proj4string") <- sp::CRS(sp::wkt(x))		
+        methods::slot(e, "proj4string") <- sp::CRS(sp::wkt(x))		
           e <- sp::spTransform(e, geo.prj )
 	  l = sp::coordinates(e)[2]
     } else {

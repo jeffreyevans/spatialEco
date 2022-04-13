@@ -91,6 +91,6 @@ background <- function(x, ext=NULL, p=1000, known=NULL, d=NULL,
 	  idx <- which(rgeos::gIntersects(s, rm.buff, byid = TRUE))
     s <- s[-idx,] 
   }
-    #slot(s, "proj4string") <- sp::CRS(s) 
+    methods::slot(s, "proj4string") <- sp::CRS(s) 
   return(s)
 }
