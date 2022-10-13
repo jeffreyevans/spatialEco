@@ -7,12 +7,12 @@
 max_extent(x, ...)
 }
 \arguments{
-\item{x}{raster class object}
+\item{x}{terra SpatRaster class object}
 
-\item{...}{additional raster class objects}
+\item{...}{additional SpatRaster class objects in same projection}
 }
 \value{
-a SpatialPolygons sp class object
+An sf POLYGON class object representing maximum extents
 }
 \description{
 returns a extent polygon representing maximum extent of
@@ -22,17 +22,22 @@ returns a extent polygon representing maximum extent of
 Creates a maximum extent polygon of all specified rasters
 }
 \examples{
-library(raster)
+if(require(terra, quietly = TRUE)) { 
 
-r1 <- raster(extent(61.87125, 76.64458, 23.90153, 37.27042))
-r2 <- raster(extent(67.66625, 81.56847, 20.38458, 35.67347))
-r3 <- raster(extent(72.64792,84.38125,5.91125,28.13347 ))
+r1 <- rast(ext(61.87125, 76.64458, 23.90153, 37.27042))
+r2 <- rast(ext(67.66625, 81.56847, 20.38458, 35.67347))
+r3 <- rast(ext(72.64792,84.38125,5.91125,28.13347 ))
 
 ( e <- max_extent(r1, r2, r3) )
-plot(e)
-  plot(as(extent(r1),"SpatialPolygons"),col="red",add=TRUE)
-  plot(as(extent(r2),"SpatialPolygons"),col="red",add=TRUE)
-  plot(as(extent(r3),"SpatialPolygons"),col="red",add=TRUE)
+plot(e, border=NA)
+  plot(ext(r1), border="red", add=TRUE)
+  plot(ext(r2), border="green", add=TRUE)
+  plot(ext(r3), border="blue", add=TRUE)
+  plot(e, border="black", add=TRUE)
+		    
+ sf::st_bbox(e) # full extent
+
+}
 
 }
 \author{

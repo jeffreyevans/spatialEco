@@ -14,7 +14,7 @@ hsp(
 )
 }
 \arguments{
-\item{x}{Object of class raster (requires integer raster)}
+\item{x}{A terra SpatRaster class object}
 
 \item{min.scale}{Minimum scale (window size)}
 

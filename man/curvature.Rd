@@ -44,12 +44,10 @@ by dividing by the radius distance to the outermost cell (36.2m).
 }
 \examples{
 \donttest{
-  library(raster)
-  library(spatialEco)
-  data(elev)
-  elev <- projectRaster(elev, crs="+proj=robin +datum=WGS84", 
-                        res=1000, method='bilinear')
-curvature(elev, type="planform")
+  library(terra)
+  elev <- rast(system.file("data/elev.tif", package="spatialEco"))
+
+  crv <- curvature(elev, type="planform")
   mcnab.crv <- curvature(elev, type="mcnab")
       plot(mcnab.crv, main="McNab's curvature") 
 }

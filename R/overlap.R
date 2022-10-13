@@ -1,8 +1,8 @@
 #' @title Niche overlap (Warren's-I)
 #' @description Similarity Statistic for Quantifying Niche Overlap using Warren's-I
 #'
-#' @param x    A matrix, rasterLayer or sp raster class object
-#' @param y    A matrix, rasterLayer or sp raster class object
+#' @param x    A matrix or SpatRaster raster class object
+#' @param y    A matrix or SpatRaster raster class object
 #'             with the same dimensions of x
 #'
 #' @return A value representing the I similarity statistic
@@ -37,18 +37,14 @@
 #' # High overlap/similarity 
 #' ( I <- overlap(p1,p2) ) 
 #' 
-#' @import raster
 #' @export overlap 
 overlap <- function(x, y){
-  classes = c("SpatialGridDataFrame", "SpatialPixelsDataFrame","RasterLayer", "matrix") 
-  if(!any(class(x)[1] %in% classes))
-    stop("x must be sp raster, rasterLayer or matrix object")
-  if(!any(class(y)[1] %in% classes))
-    stop("y must be sp raster, rasterLayer or matrix object")	
-  if (any(class(x)[1] %in% "RasterLayer")) x <- as.matrix(x)
-    if (any(class(y)[1] %in% "RasterLayer")) y <- as.matrix(y) 
-      if (any(class(x)[1] %in% classes[1:2])) x <- as.matrix(raster::raster(x))
-    if (any(class(y)[1] %in% classes[1:2])) y <- as.matrix(raster::raster(y)) 
+  if(!inherits(x, c("SpatRaster", "matrix")))
+    stop(deparse(substitute(x)), " ust be a SpatRaster or matrix object")
+  if(!inherits(y, c("SpatRaster", "matrix")))
+   stop(deparse(substitute(y)), " ust be a SpatRaster or matrix object")
+  if (any(class(x) %in% "SpatRaster")) x <- terra::as.matrix(x)
+  if (any(class(y) %in% "SpatRaster")) y <- terra::as.matrix(y)     
   if(length(which(dim(x) == dim(y))) != 2) 
     stop('matrix / raster objects must be of the same extent')
   if (min(c(x, y), na.rm = TRUE) < 0) 

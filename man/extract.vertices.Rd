@@ -4,65 +4,34 @@
 \alias{extract.vertices}
 \title{Extract vertices for polygons or lines}
 \usage{
-extract.vertices(x, as.sp = FALSE, rm.duplicates = FALSE, join = FALSE)
+extract.vertices(x, join = TRUE)
 }
 \arguments{
-\item{x}{An sp class SpatialPolygonsDataFrame, SpatialPolygons,
-SpatialLinesDataFrame or SpatialLines object}
+\item{x}{An sf line or polygon class object}
 
-\item{as.sp}{(FALSE/TRUE) Output as sp SpatialPointsDataFrame}
-
-\item{rm.duplicates}{(FALSE/TRUE) remove duplicate (x,y) coordinates}
-
-\item{join}{(FALSE/TRUE) Joint attributes from original object}
+\item{join}{(TRUE/FALSE) Joint attributes from original object}
 }
 \value{
-A SpatialPointsDataFrame or data.frame with id, x, y and merged attributes
+An sf POINT object
 }
 \description{
-Extracts [x,y] vertices from an sp line or polygon object
+Extracts [x,y] vertices from an sf line or polygon object
 }
 \note{
 This function returns the vertices of a line or polygon object, as opposed
-to the polygon centroids or line start/stop coordinates available in 
-the @coords slot. This requires accessing the coordinates located in the 
-x@polygons@Polygons or x@lines@Lines slots
+to the polygon centroids or line start/stop coordinates
 }
 \examples{
-library(sp)
-library(raster)
-library(sf)
 
-# For polygons
-r <- raster(xmn=-11.69, xmx=2988.31, ymn=-749.97, ymx=1650.03,
-            resolution=c(100,100))
-  r[] <- runif(ncell(r))
-    names(r) <- "random_process"
+if(require(sf, quietly = TRUE)) {
+  nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
+    nc <- suppressWarnings(sf::st_cast(nc, "POLYGON"))
+      nc <- nc[c(10,50),]
   
-polys <- as(r, "SpatialPolygonsDataFrame")
-  polys <- polys[sample(1:nrow(polys),10),]
-
-extract.vertices(polys, join=TRUE, rm.duplicates=TRUE)
-
-v <- extract.vertices(polys, as.sp=TRUE, join=TRUE)
-  head(v@data)
-  
-  plot(polys)
-    points(v, pch=20, cex=2, col="red")
-
-# For lines
-nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
-  nc <- sf::st_cast(sf::st_cast(nc, "POLYGON"), "LINESTRING")
-    nc <- as(nc, "Spatial")
- 
-extract.vertices(nc)
-extract.vertices(nc, join=TRUE, rm.duplicates=TRUE)
-
-v <- extract.vertices(nc, as.sp=TRUE, join=TRUE)
-  head(v@data)
-
-  plot(nc)
-    points(v, pch=20, cex=2, col="red")
+  ( v <- extract.vertices(nc) )
+     plot(st_geometry(nc))
+       plot(st_geometry(v), pch=20, cex=2, col="red", add=TRUE)
+} 
 
 }
 \author{

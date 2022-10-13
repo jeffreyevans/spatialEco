@@ -4,16 +4,10 @@
 \alias{explode}
 \title{Explodes multipart features}
 \usage{
-explode(x, sp = FALSE)
+explode(...)
 }
 \arguments{
-\item{x}{sp or sf multipart (MULTIPOLYGON, MULTIPOINT, MULTILINE) 
-object}
-
-\item{sp}{(FALSE/TRUE) output as sp class object, else is sf class}
-}
-\value{
-A single part sp or sf object (polygons or points)
+\item{...}{Parameters to be passed to st_cast}
 }
 \description{
 Explodes multipart features into single part
@@ -26,10 +20,8 @@ dissaggregates the data into a one-to-one match.
 \examples{
 \donttest{
 library(sf)
-library(sp)
-
-dim( p.sf <- st_read(system.file("shapes/sids.shp", package = "spData")[1]) )
-dim( p.sf <- explode(p.sf) )
+nc <- st_read(system.file("shape/nc.shp", package="sf"))
+nc <- suppressWarnings(st_cast(nc, "POLYGON"))
 }
 
 }

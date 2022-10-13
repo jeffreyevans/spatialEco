@@ -1,45 +1,48 @@
 #' @title Correlogram
 #' @description Calculates and plots a correlogram
 #' 
-#' @param x         SpatialPointsDataFrame object
-#' @param v         Test variable in x@@data
+#' @param x         A sf POINT object
+#' @param v         Test variable in x
 #' @param dist      Distance of correlation lags, if latlong=TRUE units are 
-#'                  in kilometers
-#' @param latlong   Coordinates are in latlong (TRUE/FALSE)
-#' @param dmatrix   Should the distance matrix be include in output (TRUE/FALSE)
+#'                  great circle in kilometers
 #' @param ns        Number of simulations to derive simulation envelope 
 #' @param ...       Arguments passed to cor ('pearson', 'kendall' or 'spearman')
 #' 
 #' @return A list object containing: 
 #' * autocorrelation is a data.frame object with the following components
-#' * autocorrelation - Autocorrelation value for each distance lag 
-#' * dist - Value of distance lag
-#' * lci - Lower confidence interval (p=0.025)                
-#' * uci - Upper confidence interval (p=0.975)
+#' *   autocorrelation - Autocorrelation value for each distance lag 
+#' *   dist - Value of distance lag
+#' *   lci - Lower confidence interval (p=0.025)                
+#' *   uci - Upper confidence interval (p=0.975)
 #' * CorrPlot recordedplot object to recall plot
-#' * dmatrix Distance matrix (if dmatrix=TRUE)
 #' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                   
 #' @examples 
-#' library(sp)
-#'   data(meuse)
-#' coordinates(meuse) = ~x+y
-#' zinc.cg <- correlogram(x = meuse, v = meuse@@data[,'zinc'], dist = 250, ns = 9)
+#' library(sf)
+#' if(require(c(sp, quietly = TRUE)) {
+#'   data(meuse, package = "sp")
+#'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                     agr = "constant")
+#' }
+#' 
+#' zinc.cg <- correlogram(x = meuse, v = meuse$zinc, dist = 250, ns = 9)
 #' 
 #' @export correlogram  
-correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = FALSE, ...) {
-    # if(class(x)[1] == "sf") { x <- as(x, "Spatial") }
-    if ((inherits(x, "SpatialPointsDataFrame")) == FALSE) 
-        stop("x MUST BE SP SpatialPointsDataFrame OBJECT")
+correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, ...) {
+  if (!inherits(x, c("SpatialPointsDataFrame", "sf")))		
+    stop(deparse(substitute(x)), " x must be a sf or sp point object")
+  if(inherits(x, c("SpatialPointsDataFrame", "SpatialPoints"))) {
+     x <- sf::st_as_sf(x)
+  }
 	oops <- options() 
       on.exit(options(oops)) 
         options(scipen = 999)		
-    w <- sp::spDists(x, x, longlat = latlong)
-    aa <- ceiling(max(w)/dist)
-    bw <- seq(0, aa * dist, dist)
-    cors <- NULL
+    w <- units::drop_units(sf::st_distance(x))
+      aa <- ceiling(max(w)/dist)
+      bw <- seq(0, aa * dist, dist)
+      cors <- NULL
     for (i in 1:aa) {
         w1 <- ifelse(w > bw[i] & w <= bw[i + 1], 1, 0)
         w2 <- w1
@@ -59,7 +62,7 @@ correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = F
     }
     mc <- matrix(NA, nrow = ns, ncol = length(cors))
     for (s in 1:ns) {
-        x@data$rand <- sample(v, dim(x)[1], replace = FALSE)
+        x$rand <- sample(v, nrow(x), replace = FALSE)
         rcors <- NULL
         for (i in 1:aa) {
             w1 <- ifelse(w > bw[i] & w <= bw[i + 1], 1, 0)
@@ -70,8 +73,8 @@ correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = F
                   w2[j, ] <- w1[j, ]/nu
                 }
             }
-            lag <- w2 %*% x@data$rand
-            rcors <- c(rcors, stats::cor(x@data$rand, lag))
+            lag <- w2 %*% x$rand
+            rcors <- c(rcors, stats::cor(x$rand, lag))
         }
         mc[s, ] <- rcors
     }
@@ -84,9 +87,5 @@ correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, latlong = F
 				   ylab = "autocorrelation")
       graphics::polygon(c(rev(cg$dist), cg$dist), c(cg$uci, rev(cg$lci)), col = "blue")
         graphics::lines(cg$dist, cg$autocorrelation, type = "b", pch = 20)
-    if (dmatrix == TRUE) {
-        return(list(autocorrelation = cg, CorrPlot = grDevices::recordPlot(), dmatrix = w))
-    } else {
-        return(list(autocorrelation = cg, CorrPlot = grDevices::recordPlot()))
-    }
+  return(list(autocorrelation = cg, CorrPlot = grDevices::recordPlot()))
 } 

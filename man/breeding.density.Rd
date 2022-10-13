@@ -7,9 +7,9 @@
 breeding.density(x, pop, p = 0.75, bw = 6400, b = 8500, self = TRUE)
 }
 \arguments{
-\item{x}{sp SpatialPointsDataFrame object}
+\item{x}{sf POINT object}
 
-\item{pop}{Population count/density column in x@data}
+\item{pop}{Population count/density column in x}
 
 \item{p}{Target percent of population}
 
@@ -23,8 +23,8 @@ density (default TRUE)}
 \value{
 A list object with:
 \itemize{ 
-\item pop.pts   sp point object with points identified within the specified p
-\item pop.area  sp polygon object of buffered points specified by parameter b
+\item pop.pts   sf POINT object with points identified within the specified p
+\item pop.area  sf POLYGON object of buffered points specified by parameter b
 \item bandwidth Specified distance bandwidth used in identifying neighbor counts 
 \item buffer    Specified buffer distance used in buffering points for pop.area  
 \item p         Specified population percent
@@ -42,20 +42,27 @@ the results in Doherty et al., (2010), then define bw = 6400m and b[if p < 0.75
 b = 6400m, | p >= 0.75 b = 8500m]
 }
 \examples{
-require(sp)
+if(require(sf, quietly = TRUE)) { 
+
 n=1500
 bb <- rbind(c(-1281299,-761876.5),c(1915337,2566433.5))
-  bb.mat <- cbind(c(bb[1,1], bb[1,2], bb[1,2], bb[1,1]),   
-                  c(bb[2,1], bb[2,1], bb[2,2], bb[2,2]))  
-    bbp <- Polygon(bb.mat)
-     s <- spsample(bbp, n, type='random')
-        pop <- SpatialPointsDataFrame(s, data.frame(ID=1:length(s), 
-                                 counts=runif(length(s), 1,250)))
+bb.mat <- round(cbind(c(bb[1,1], bb[1,2], bb[1,2], bb[1,1]),
+                  c(bb[2,1], bb[2,1], bb[2,2], bb[2,2])),2)
+ bbp <- st_sfc(st_polygon(list(rbind(bb.mat, bb.mat[1,]))))
+   pop <- st_as_sf(st_sample(bbp, n, type = "random"))
+  st_geometry(pop) <- "geometry"
+     pop$ID <- 1:nrow(pop)
+  pop$counts <- round(runif(nrow(pop), 1,250),0)
+   
+    bd75 <- breeding.density(pop, pop='counts', p=0.75, b=8500, bw=6400)	 
+      plot(st_geometry(bd75$pop.area), border = NA,  
+        main='75\% breeding density areas', col="grey")
+         plot(st_geometry(pop), pch=20, col='black', add=TRUE)
+         plot(st_geometry(bd75$pop.pts), pch=20, col='red', add=TRUE)
+      legend("bottomright", legend=c("selected areas","selected sites", "all sites"),
+             bg="white", fill=c("grey","red", "black"), pt.cex = 2) 
 
-    bd75 <- breeding.density(pop, pop='counts', p=0.75, b=8500, bw=6400)
-     plot(bd75$pop.area, main='75\% breeding density areas')
-       plot(pop, pch=20, col='black', add=TRUE)
-         plot(bd75$pop.pts, pch=20, col='red', add=TRUE)
+}
 
 }
 \references{

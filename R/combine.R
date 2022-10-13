@@ -3,7 +3,6 @@
 #'
 #' @param x         raster stack/brick or SpatialPixelsDataFrame object
 #' @param rnames    Column names to combine in raster stack or sp object
-#' @param sp        (FALSE/TRUE) output SpatialPixelsDataFrame 
 #'
 #' @return 
 #' A  ratified rasterLayer or a list containing a SpatialPixelsDataFrame 
@@ -25,75 +24,60 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' library(raster)
+#' if(require(terra, quietly = TRUE)) { 
+#'
+#' # Create example data (with a few NA's introduced)
+#'  r1 <- rast(nrows=100, ncol=100)
+#'    names(r1) <- "LC1"
+#'    r1[] <- round(runif(ncell(r1), 1,4),0)
+#'      r1[c(8,10,50,100)] <- NA
+#'  r2 <- rast(nrows=100, ncol=100)
+#'    names(r2) <- "LC2"
+#'    r2[] <- round(runif(ncell(r2), 2,6),0)
+#'      r2[c(10,50,100)] <- NA   
+#'  r3 <- rast(nrows=100, ncol=100)
+#'    names(r3) <- "LC3"
+#'    r3[] <- round(runif(ncell(r3), 2,6),0)
+#'      r3[c(10,50,100)] <- NA   
+#'  r <- c(r1,r2,r3)  
+#'    names(r) <- c("LC1","LC2","LC3")
 #' 
-#' r1 <- raster(nrows=100, ncol=100)
-#'   r1[] <- round(runif(ncell(r1), 1,4),0)
-#' r2 <- raster(nrows=100, ncol=100)
-#'   r2[] <- round(runif(ncell(r2), 2,6),0)
-#' r3 <- raster(nrows=100, ncol=100)
-#'   r3[] <- round(runif(ncell(r3), 2,6),0)
-#' r <- stack(r1,r2,r3)  
-#'   names(r) <- c("LC1","LC2","LC3")
+#'  # Combine rasters with a multilayer stack
+#'  cr <- combine(r)
+#'    head(cr$summary)
+#'    plot(cr$combine)
+#'
+#' # or, from separate layers
+#'  cr <- combine(c(r1,r3))
 #' 
-#' # Combine rasters in stack
-#' ( cr <- combine(r) )
-#'   levels(cr)
-#'   
-#' # Combine rasters in stack, using specific rasters
-#' ( cr <- combine(r, rnames=c("LC1","LC3")) )
-#' 
-#' # Combine rasters in stack, output SpatialPixelsDataFrame
-#' cr.sp <- combine(r, sp = TRUE)
-#'   head(cr.sp$summary)
-#'   class(cr.sp$combine)
-#' 
-#' # Input SpatialPixelsDataFrame 
-#' r.sp <- as(r, "SpatialPixelsDataFrame")
-#' cr.sp <- combine(r.sp, sp = TRUE)
+#' }
 #'
 #' @export combine
-combine <- function(x, rnames = NULL, sp = FALSE) {
-  if(!any(class(x)[1] %in% c("RasterStack", "RasterBrick",
-     "SpatialPixelsDataFrame")))
-    stop("x is not a raster stack or brick object")
+combine <- function(x) {
+  if(!inherits(x, "SpatRaster"))
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+  if(terra::nlyr(x) < 2)
+    stop(deparse(substitute(x)), " needs > 1 layers to combine")  
   is.int <- function(x){
     e <- all.equal(x, as.integer(x), 
-           check.attributes = FALSE)
+          check.attributes = FALSE)
     if(e == TRUE){ 
       return(TRUE) 
     } else { 
       return(FALSE) 
     }
   }	
-  if(!is.null(rnames)){
-    nidx <- which(names(x) %in% rnames)
-    if(length(nidx) < 2)
-	  stop("Rasters do not exist in data")
-  } else {
-    nidx <- 1:length(names(x))
-  }  
-  if(any(class(x)[1] %in% c("RasterStack", "RasterBrick"))) {
-    r <- methods::as(x[[nidx]], "SpatialPixelsDataFrame")
-  } else if(any(class(x)[1] %in% "SpatialPixelsDataFrame")){
-    r <- x
-      x@data <- x@data[,nidx]
-  }  
-    if(any(apply(r@data, 2, is.int) == FALSE))
+  r <-  terra::as.data.frame(x, cells=TRUE) 
+    if(any(apply(r, 2, is.int) == FALSE))
 	  stop("All rasters must be integer, 
 	        no floating point data is allowed")
-    combine <- apply(r@data, 1, function(x) paste(x, collapse = "_"))
-      r@data <- data.frame(value=as.numeric(factor(combine)), r@data)
-	    s <- as.data.frame(table(r@data))
+    combine <- apply(r[,-1], 1, function(x) paste(x, collapse = "_"))
+      r$value=as.numeric(factor(combine))
+	    s <- as.data.frame(table(r[,-1]))
           s <- s[s$Freq != 0,]
-    if(!sp) { 
-      r <- raster::raster(r, layer = 1)
-        r <- raster::ratify(r)
-          rat <- s
-          names(rat)[1] <- "ID"
-        levels(r) <- rat
-    } else {
-      r <- list(combine = r, summary = s)
-    }
-  return(r)	
+		    names(s)[which(names(s) == "Freq")] <- "count"
+    r.combine <- x[[1]]
+      r.combine[as.numeric(r[,"cell"])] <- as.numeric(r[,"value"]) 
+      r.combine[which(!1:ncell(x) %in% as.numeric(r[,"cell"]))] <- NA
+   return(list(combine=r.combine, summary=s))	
 }

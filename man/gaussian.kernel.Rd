@@ -4,12 +4,12 @@
 \alias{gaussian.kernel}
 \title{Gaussian Kernel}
 \usage{
-gaussian.kernel(sigma = 2, n = 5)
+gaussian.kernel(sigma = 2, s = 5)
 }
 \arguments{
 \item{sigma}{sigma (standard deviation) of kernel (defaults 2)}
 
-\item{n}{size of symmetrical kernel (defaults to 5x5)}
+\item{s}{scale defining the number of rows and columns for kernel (default 5)}
 }
 \value{
 Symmetrical (NxN) matrix of a Gaussian distribution
@@ -19,15 +19,15 @@ Creates a Gaussian Kernel of specified size and sigma
 }
 \examples{
   par(mfrow=c(2,2))
-  persp(gaussian.kernel(sigma=1, n=27), theta = 135, 
+  persp(gaussian.kernel(sigma=1, s=27), theta = 135, 
         phi = 30, col = "grey", ltheta = -120, shade = 0.6, 
         border=NA )
-  persp(gaussian.kernel(sigma=2, n=27), theta = 135, phi = 30, 
-        col = "grey", ltheta = -120, shade = 0.6, border=NA )		
-  persp(gaussian.kernel(sigma=3, n=27), theta = 135, phi = 30, 
-        col = "grey", ltheta = -120, shade = 0.6, border=NA )				
-  persp(gaussian.kernel(sigma=4, n=27), theta = 135, phi = 30,
-        col = "grey", ltheta = -120, shade = 0.6, border=NA )					
+  persp(gaussian.kernel(sigma=2, s=27), theta = 135, phi = 30,
+        col = "grey", ltheta = -120, shade = 0.6, border=NA )	
+  persp(gaussian.kernel(sigma=3, s=27), theta = 135, phi = 30,
+        col = "grey", ltheta = -120, shade = 0.6, border=NA )	
+  persp(gaussian.kernel(sigma=4, s=27), theta = 135, phi = 30,
+        col = "grey", ltheta = -120, shade = 0.6, border=NA )	
 		
 }
 \author{

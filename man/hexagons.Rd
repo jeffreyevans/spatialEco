@@ -23,16 +23,21 @@ Create hexagon polygons
 depends: sp
 }
 \examples{
-require(sp)
-  data(meuse)
-    coordinates(meuse) <- ~x+y 
+ library(sf)
+ if(require(sp, quietly = TRUE)) {
+   data(meuse, package = "sp")
+   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                     agr = "constant")
+ }
 
-hex.polys <- hexagons(meuse, res=100)   
-  plot(hex.polys)
-    plot(meuse,pch=20,add=TRUE)
+hex <- hexagons(meuse, res=300)   
+  plot(st_geometry(hex))
+    plot(st_geometry(meuse),pch=20,add=TRUE)
 
-# Points intersecting hexagons  
-hex.pts <- na.omit(over(meuse,hex.polys))
-(hex.pts <- data.frame(PTID=rownames(hex.pts), hex.pts)) 
+# subset hexagons to intersection with points
+idx <- which(apply(st_intersects(hex.polys, meuse, sparse=FALSE), 1, any))
+hex.sub <- hex[idx,] 
+  plot(st_geometry(hex.sub))
+    plot(st_geometry(meuse),pch=20,add=TRUE)
 
 }

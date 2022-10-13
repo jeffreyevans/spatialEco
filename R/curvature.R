@@ -53,12 +53,10 @@
 #'
 #' @examples 
 #' \donttest{
-#'   library(raster)
-#'   library(spatialEco)
-#'   data(elev)
-#'   elev <- projectRaster(elev, crs="+proj=robin +datum=WGS84", 
-#'                         res=1000, method='bilinear')
-#' curvature(elev, type="planform")
+#'   library(terra)
+#'   elev <- rast(system.file("data/elev.tif", package="spatialEco"))
+#'
+#'   crv <- curvature(elev, type="planform")
 #'   mcnab.crv <- curvature(elev, type="mcnab")
 #'       plot(mcnab.crv, main="McNab's curvature") 
 #' }
@@ -67,12 +65,13 @@
 #'
 #' @export curvature
 curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolstad"), ...) { 
-  if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
+  if(!inherits(x, "SpatRaster"))
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")
     m <- matrix(1, nrow=3, ncol=3)
       type = type[1] 
 	if(!any(c("planform", "profile", "total", "mcnab", "bolstad") %in% type)  )
       stop("Not a valid curvature option")	
-    zt.crv <- function(m, method = type, res = raster::res(x)[1], ...) {
+    zt.crv <- function(m, method = type, res = terra::res(x)[1], ...) {
         p=(m[6]-m[4])/(2*res)
           q=(m[2]-m[8])/(2*res)
             r=(m[4]+m[6]-2*m[5])/(2*(res^2))
@@ -88,12 +87,13 @@ curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolsta
 	  }
 	}  
     if(type == "bolstad") {
-      return( 10000 * ((x - raster::focal(x, w=m, fun=mean)) / 1000 / 36.2) )  
+      return( 10000 * ((x - terra::focal(x, w=m, fun=mean)) / 1000 / 36.2) )  
     } else if(type == "mcnab") {
-      mcnab <- function(x, ...) (((x[5] - x) + (x[5] - x)) / 4) 
-      return( raster::focal(x, w=m, fun=mcnab, ...) ) 
+      # mcnab <- function(x, ...) (((x[5] - x) + (x[5] - x)) / 4)[5] 
+	  mcnab <- function(x, ...)  (( x[5] - x ) + x)[round((length(m)/2)/2,0)]
+        return( terra::focal(x, w=m, fun=mcnab, ...) ) 
     } else {  
-      return( raster::focal(x, w=m, fun = function(x) { zt.crv(m=x, type = type) }, pad = TRUE,  
-	                        padValue = 0, ...) )
+      return( terra::focal(x, w=m, fun = function(x) { zt.crv(m=x, type = type) }, 
+	                      fillvalue = 0, ...) )
     }
 }	

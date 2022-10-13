@@ -7,22 +7,21 @@
 polyPerimeter(x)
 }
 \arguments{
-\item{x}{sp class SpatialPolygonsDataFrame object}
+\item{x}{sf POLYGON class object}
 }
 \value{
-A vector of polygon perimeters
+A vector of polygon perimeters in projection units
 }
 \description{
 Calculates the perimeter length(s) for a polygon object
 }
 \examples{
-library(sp)
-p1 <- Polygons(list(Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))), "1")
-p2 <- Polygons(list(Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))), "2")
-p3 <- Polygons(list(Polygon(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))),"3")
-polys <- SpatialPolygons(list(p1,p2,p3), 1:3)
-
-polyPerimeter(polys)
+if(require(sf, quietly = TRUE)) {
+  polys <- st_read(system.file("shape/nc.shp", package="sf"))
+    polys <- suppressWarnings(st_cast(polys[c(10,100),], "POLYGON"))
+ 
+ polyPerimeter(polys)
+}
 
 }
 \author{

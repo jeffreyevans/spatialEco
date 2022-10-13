@@ -4,18 +4,16 @@
 \alias{convexHull}
 \title{Alpha Convex Hull}
 \usage{
-convexHull(x, alpha = 250000, sp = TRUE)
+convexHull(x, alpha = 250000)
 }
 \arguments{
-\item{x}{SpatialPoints, SpatialPointsDataFrame, sf or matrix object 
+\item{x}{sf, sfc, SpatialPoints, SpatialPointsDataFrame or matrix object 
 representing [x,y] coordinates}
 
 \item{alpha}{Alpha parameter for adjusting boundary tension}
-
-\item{sp}{Output an sp SpatialPolygonsDataFrame object (TRUE/FALSE)}
 }
 \value{
-SpatialPolygons object
+sf POLYGIN object
 }
 \description{
 Calculates a convex hull on a point feature class using the Pateiro-Lopez (2009) 
@@ -26,48 +24,53 @@ This method provides flexibility over traditional convex functions in that the t
 parameter can be adjusted to relax or increase tension between boundary-edge points
 Due to licensing constraints associated with the alphahull package, this function is not 
 available in the CRAN release. The function must be called from the package NAMESPACE 
-using:  spatialEco:::convexHull. If sp = FALSE an sf polygon class object will be 
-returned
+using:  spatialEco:::convexHull.
 }
 \examples{
-library(sp)
-library(sf)
+ library(sf)
+ 
+ #### points example
+if(require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
+}
+  
+  a <- convexHull(meuse, alpha=100000)
+    plot(a)
+      plot(st_geometry(meuse), pch=19, add=TRUE)
 
-#### points example
- data(meuse)
-  coordinates(meuse) = ~x+y
- a <- convexHull(meuse, alpha=100000)
-   plot(a)
-     points(meuse, pch=19)
+  # Test multiple alpha values
+   par(mfcol=c(2,2))
+     for (a in c(500, 1500, 5000, 100000)) {
+     ch <- convexHull(meuse, alpha = a)
+       plot(ch, key.pos = NULL, reset = FALSE)
+        plot(st_geometry(meuse), pch=19, add=TRUE)
+          title( paste0("alpha=", a))		 
+     }
 
- # Test multiple alpha values
-  par(mfcol=c(2,2))
-    for (a in c(500, 1500, 5000, 100000)) {
-    ch <- convexHull(meuse, alpha = a)
-      plot(ch)
-       points(meuse, pch=19)
-         title( paste0("alpha=", a))		 
-    }
+ \dontrun{
+  #### Polygon example (note, I draw a sample to make more tractable)
+  data(meuse, package = "sp")
+    meuse <- st_as_sf(meuse, coords = c("x", "y"), 
+                      crs = 28992, agr = "constant")
+       meuse_poly <- st_buffer(meuse[sample(1:nrow(meuse),10),], 
+	                           dist = meuse$elev*15)
+ 
+  # Create [x,y] points representing polygon boundaries 
+  poly_points <- sf::st_segmentize(meuse_poly, dfMaxLength = 5) |>
+    sf::st_coordinates() |> 
+      as.data.frame() |> 
+        subset(select = c(X, Y)) |> 
+          sf::st_as_sf(coords = c("X", "Y")) 
 
-\dontrun{
-#### Polygon example
-data(meuse)
-  coordinates(meuse) = ~x+y
-    meuse <- as(meuse, "sf")
-      meuse_poly <- st_buffer(meuse[sample(1:nrow(meuse),10),], 
-                           dist = meuse$elev*15)
+  # Draw random sample to make tractable
+  poly_points <- poly_points[sample(1:nrow(poly_points), 500),]
 
-# Create [x,y] points representing polygon boundaries 
-
-poly_points <- sf::st_segmentize(meuse_poly, dfMaxLength = 5) \%>\% 
- sf::st_coordinates() \%>\% 
-   as.data.frame() \%>\% 
-     subset(select = c(X, Y)) \%>\% 
-       sf::st_as_sf(coords = c("X", "Y"))  
-  			
-a <- convexHull(poly_points, alpha = 100000, sp=FALSE)
- plot(sf::st_geometry(a), cex=1.5, col="red") 
-    plot(sf::st_geometry(meuse_poly), col="black", add=TRUE)
+  # calculate convex hull		  
+  a <- convexHull(poly_points, alpha = 10000)
+    plot(sf::st_geometry(a), cex=1.5, col="red") 
+      plot(sf::st_geometry(poly_points), col="black", add=TRUE)
 }
 
 }

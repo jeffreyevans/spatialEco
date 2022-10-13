@@ -4,10 +4,10 @@
 \alias{nni}
 \title{Average Nearest Neighbor Index (NNI)}
 \usage{
-nni(x, win = "hull")
+nni(x, win = c("hull", "extent"))
 }
 \arguments{
-\item{x}{An sp point object}
+\item{x}{An sf point object}
 
 \item{win}{Type of window 'hull' or 'extent'}
 }
@@ -32,10 +32,19 @@ Where; D=neighbor distance, A=Area
 }
 }
 \examples{
-require(sp)
-data(meuse)
-  coordinates(meuse) <- ~x+y
-    nni(meuse)
+
+p = c("sf", "sp")
+  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+    message("Can't run examples, please install ", paste(p[m], collapse = " "))
+  } else {
+  invisible(lapply(p, require, character.only=TRUE))
+
+  data(meuse, package = "sp")
+  meuse <- sf::st_as_sf(meuse, coords = c("x", "y"),  
+                        crs = 28992, agr = "constant")
+  nni(meuse)
+  }
 
 }
 \references{

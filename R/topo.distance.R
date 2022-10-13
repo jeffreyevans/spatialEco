@@ -1,9 +1,9 @@
 #' @title Topographic distance
 #' @description Calculates topographic corrected distance for a 
-#'              SpatialLinesDataFrame object
+#'              LINESTRING object
 #'
-#' @param x     sp SpatialLinesDataFrame object
-#' @param r     raster class elevation raster
+#' @param x     sf LINESTRING object
+#' @param r     terra or raster class elevation raster
 #' @param echo  (FALSE/TRUE) print progress to screen
 #'
 #' @return 
@@ -45,7 +45,6 @@
 #'  
 #'  # Percent increase in corrected distance
 #'  ((tdist - lgt) / lgt) * 100
-#'
 #'
 #' @export topo.distance
 topo.distance <- function(x, r, echo = FALSE) {

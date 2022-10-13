@@ -1,29 +1,28 @@
 #' @title Polygon perimeter
 #' @description Calculates the perimeter length(s) for a polygon object
 #'
-#' @param x   sp class SpatialPolygonsDataFrame object 
+#' @param x   sf POLYGON class object 
 #'
-#' @return A vector of polygon perimeters
+#' @return A vector of polygon perimeters in projection units
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' library(sp)
-#' p1 <- Polygons(list(Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))), "1")
-#' p2 <- Polygons(list(Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))), "2")
-#' p3 <- Polygons(list(Polygon(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))),"3")
-#' polys <- SpatialPolygons(list(p1,p2,p3), 1:3)
-#' 
-#' polyPerimeter(polys)
+#' if(require(sf, quietly = TRUE)) {
+#'   polys <- st_read(system.file("shape/nc.shp", package="sf"))
+#'     polys <- suppressWarnings(st_cast(polys[c(10,100),], "POLYGON"))
+#'  
+#'  polyPerimeter(polys)
+#' }
 #'
 #' @export
 polyPerimeter <- function(x) {
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
-      p <- vector()
-          for(i in 1:length(x)) {
-           px <- as(x[i,], "SpatialLines")
-           p <- append(p, sp::LineLength(as.matrix(sp::coordinates(px)[[1]][[1]])))
-          }
-        return( p )
-      }  
-  
+  if (!inherits(x, "sf")) 
+    stop(deparse(substitute(x)), " must be an sf POLYGON object")
+  if(!unique(as.character(st_geometry_type(x))) %in% c("POLYGON", "MULTIPOLYGON"))
+    stop(deparse(substitute(x)), " must be an sf POLYGON object")		
+  if(unique(as.character(st_geometry_type(x))) %in% "MULTIPOLYGON")
+    stop("Function does not support multi-part MLTIPOLYGON objects")		
+  p <- suppressWarnings(sf::st_length(sf::st_cast(x, "LINESTRING")))
+  return( units::drop_units(p) )
+}  

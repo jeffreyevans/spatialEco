@@ -2,10 +2,10 @@
 #' @description returns a extent polygon representing maximum extent of
 #'              input rasters
 #'
-#' @param x    raster class object
-#' @param ...  additional raster class objects
+#' @param x    terra SpatRaster class object
+#' @param ...  additional SpatRaster class objects in same projection
 #'
-#' @return a SpatialPolygons sp class object
+#' @return An sf POLYGON class object representing maximum extents
 #'
 #' @note 
 #' Creates a maximum extent polygon of all specified rasters
@@ -13,32 +13,50 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' library(raster)
+#' if(require(terra, quietly = TRUE)) { 
 #' 
-#' r1 <- raster(extent(61.87125, 76.64458, 23.90153, 37.27042))
-#' r2 <- raster(extent(67.66625, 81.56847, 20.38458, 35.67347))
-#' r3 <- raster(extent(72.64792,84.38125,5.91125,28.13347 ))
+#' r1 <- rast(ext(61.87125, 76.64458, 23.90153, 37.27042))
+#' r2 <- rast(ext(67.66625, 81.56847, 20.38458, 35.67347))
+#' r3 <- rast(ext(72.64792,84.38125,5.91125,28.13347 ))
 #' 
 #' ( e <- max_extent(r1, r2, r3) )
-#' plot(e)
-#'   plot(as(extent(r1),"SpatialPolygons"),col="red",add=TRUE)
-#'   plot(as(extent(r2),"SpatialPolygons"),col="red",add=TRUE)
-#'   plot(as(extent(r3),"SpatialPolygons"),col="red",add=TRUE)
+#' plot(e, border=NA)
+#'   plot(ext(r1), border="red", add=TRUE)
+#'   plot(ext(r2), border="green", add=TRUE)
+#'   plot(ext(r3), border="blue", add=TRUE)
+#'   plot(e, border="black", add=TRUE)
+#'			    
+#'  sf::st_bbox(e) # full extent
+#'
+#' }
 #'
 #' @export max_extent
 max_extent <- function(x, ...) {
   if(length(list(...))){
     dots <- list(...)
+	dots[[length(dots)+1]] <- x
   } else {
     dots <- list()
+	dots[[1]] <- x
   }
-  dots[[length(dots)+1]] <- x
-  e <- list() 
-    for(i in 1:length(dots)){ e[[i]] <- raster::extent(dots[[i]]) }
-  if(length(e) < 2){
-    p <- as(e[[1]], "SpatialPolygons")
-  } else{
-    p <- as(do.call(raster::merge, e), "SpatialPolygons")	
+  for(i in dots) { 
+    if(!inherits(i, "SpatRaster"))		
+      stop("One of the rasters is not a terra SpatRaster object")	
+  } 
+  e <- lapply(dots, function(i) {
+    as.vector(terra::ext(i))[c(1,3,2,4)] 
+  })
+  if(length(dots) > 1) {  
+    e <- do.call("rbind", lapply(e, function(b) {
+      sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(c(b[1], 
+                   b[2], b[3], b[4]))))
+    }))
+  } else {
+    e <- e[[1]]
+    e <- sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(c(e[1], 
+                      e[2], e[3], e[4]))))
   }
-  return(p)
+  return(
+    sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(e)))
+  )
 }

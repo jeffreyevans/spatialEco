@@ -7,48 +7,59 @@
 erase.point(y, x, inside = TRUE)
 }
 \arguments{
-\item{y}{A SpatialPoints or SpatialPointsDataFrame}
+\item{y}{A sf POINT object}
 
-\item{x}{A SpatialPolygons or SpatialPolygonsDataFrame}
+\item{x}{A sf POLYGON object}
 
 \item{inside}{(TRUE/FALSE) Remove points inside polygon, else outside polygon}
 }
 \value{
-A SpatialPoints or SpatialPointsDataFrame
+A sf POINT object
 }
 \description{
 Removes points intersecting a polygon feature class
 }
 \note{
-Used to erase points that intersect polygon(s). If inside=FALSE then
-the function results in an intersection operation where points that
-intersect the polygon are retained. This function effectively duplicates
-the ESRI ArcGIS Erase Point tool.
+Used to erase points that intersect polygon(s). The default of inside=TRUE
+erases points inside the polygons however, if inside=FALSE then
+the function results in an intersection where points that
+intersect the polygon are retained.
 }
 \examples{
-library(sp)
-library(raster)
-library(rgeos)
-  data(meuse)
-  coordinates(meuse) = ~x+y
 
-# Create systematic sample and polygons
-s <- spsample(x=as(extent(meuse), "SpatialPolygons"), n=1000,
-              type="regular")
-b <- rgeos::gBuffer(s[sample(1:length(s),5),],
-                    byid = FALSE, width = 300)
+p = c("sf", "sp")
+  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+    message("Can't run examples, please install ", paste(p[m], collapse = " "))
+  } else {
+  invisible(lapply(p, require, character.only=TRUE))
+  
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
 
+  s <- st_as_sf(st_sample(st_as_sfc(st_bbox(meuse)), size=1000, 
+                 type = "regular"))
+    s$id <- 1:nrow(s)
+  b <- st_buffer(s[sample(1:nrow(s),5),], dist=300)
+    b$id <- 1:nrow(b)
+  
 # Erase points based on polygons
-s.erase <- erase.point(s, b)
- 
+in.erase <- erase.point(s, b)
+out.erase <- erase.point(s, b, inside = FALSE)
+
  opar <- par(no.readonly=TRUE)
  par(mfrow=c(2,2))
-   plot(s, pch=20, main="original data")
-   plot(b, main="erased data")
-     points(s.erase, pch=20)
-   plot(b, main="erased data using inside=FALSE")
-     points(erase.point(s, b, inside=FALSE), pch=20)
+   plot(st_geometry(s), pch=20, main="original data")
+     plot(st_geometry(b),add=TRUE)
+   plot(st_geometry(in.erase), pch=20, main="erased data")
+     plot(st_geometry(b),add=TRUE)
+   plot(st_geometry(out.erase), pch=20,  
+        main="erased data using inside=FALSE")
+     plot(st_geometry(b),add=TRUE)
  par(opar)
+
+}
 
 }
 \author{

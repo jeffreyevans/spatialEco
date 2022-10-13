@@ -4,16 +4,16 @@
 \alias{geo.buffer}
 \title{Buffer geographic data}
 \usage{
-geo.buffer(x, r, sf = FALSE, ...)
+geo.buffer(x, r, ...)
 }
 \arguments{
 \item{x}{A sf or sp vector class object}
 
 \item{r}{Buffer radius in meters}
 
-\item{sf}{(FALSE/TRUE) Output sf class object else sp}
-
 \item{...}{Additional arguments passed to gBuffer}
+
+\item{sf}{(FALSE/TRUE) Output sf class object else sp}
 }
 \value{
 an sp or sf polygon class object representing buffer for each feature
@@ -26,19 +26,22 @@ Projects (Latitude/Longitude) data in decimal-degree geographic projection
 using an on-the-fly azimuthal equidistant projection in meters centered on
 }
 \examples{
-library(sp)
-library(raster)
-
-s <- spsample(as(extent(61.87125, 76.64458, 23.90153, 37.27042), 
-              "SpatialPolygons"), n=100, type="random")  
-  slot(s, "proj4string") <- CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs') 
-b <- geo.buffer(x=s, r=1000, quadsegs=100)
-  plot(b[1,])
-    points(s[1,], pch=20,cex=2)
+if(require(sf, quietly = TRUE)) {
+  e <- c(61.87125, 23.90153, 76.64458, 37.27042)
+    names(e) <- c("xmin", "ymin", "xmax", "ymax")
+    s <- st_as_sf(st_sample(st_as_sfc(st_bbox(e)), size=100, 
+                   type = "regular"))
+  	st_crs(s) <- st_crs(4326)
+        s$id <- 1:nrow(s)
+  
+  b <- geo.buffer(x=s, r=1000)
+    plot(st_geometry(b[1,]))
+       plot(st_geometry(s[1,]), pch=20,cex=2, add=TRUE)
+}	 
 	
 }
 \seealso{
-\code{\link[rgeos]{gBuffer}} for gBuffer ... arguments
+\code{\link[sf]{st_buffer}} for st_buffer ... arguments
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

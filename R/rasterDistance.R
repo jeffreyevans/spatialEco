@@ -65,7 +65,7 @@ rasterDistance <- function(x, y, reference = NULL, scale = FALSE){
     } else {
       p <- x
     }
-  idx <- RANN::nn2(coordinates(y), coordinates(p),  k = 1) 
+  idx <- RANN::nn2(sp::coordinates(y), sp::coordinates(p),  k = 1) 
     if(scale) {    
       idx <- idx$nn.dists[,1] / max(idx$nn.dists[,1]) 
     } else {

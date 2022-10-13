@@ -8,8 +8,7 @@ spatial.select(
   x,
   y = NULL,
   distance = NULL,
-  predicate = c("intersect", "contains", "covers", "touches", "proximity",
-    "contingency"),
+  predicate = c("intersect", "contains", "covers", "touches", "proximity", "contingency"),
   neighbors = c("queen", "rook")
 )
 }

@@ -1,7 +1,7 @@
 #' @title Average Nearest Neighbor Index (NNI)
 #' @description Calculates the NNI as a measure of clustering or dispersal 
 #'
-#' @param x An sp point object
+#' @param x An sf point object
 #' @param win Type of window 'hull' or 'extent'
 #'
 #' @return 
@@ -30,24 +30,34 @@
 #' Cressie, N (1991) Statistics for spatial data. Wiley & Sons, New York.
 #'
 #' @examples 
-#' require(sp)
-#' data(meuse)
-#'   coordinates(meuse) <- ~x+y
-#'     nni(meuse)
+#'
+#' p = c("sf", "sp")
+#'   if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+#'     m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+#'     message("Can't run examples, please install ", paste(p[m], collapse = " "))
+#'   } else {
+#'   invisible(lapply(p, require, character.only=TRUE))
+#' 
+#'   data(meuse, package = "sp")
+#'   meuse <- sf::st_as_sf(meuse, coords = c("x", "y"),  
+#'                         crs = 28992, agr = "constant")
+#'   nni(meuse)
+#'   }
 #'
 #' @export
-nni <- function(x, win = "hull") {
-    if(class(x) == "sf") { x <- as(x, "Spatial") }
-    if (!class(x) == "SpatialPointsDataFrame" & !class(x) == "SpatialPoints") 
-        stop(deparse(substitute(x)), " MUST BE A sp POINTS OBJECT")
-    if (win == "hull") {
-        w <- spatstat.geom::convexhull.xy(sp::coordinates(x))
+nni <- function(x, win = c("hull", "extent")) {
+  if(!inherits(x, "sf"))		
+    stop(deparse(substitute(x)), " must be an sf POINT object")	
+  if(unique(as.character(st_geometry_type(x))) != "POINT")
+    stop(deparse(substitute(x)), " must be an sf POINT object")		
+    if (win[1] == "hull") {
+      w <- spatstat.geom::convexhull.xy( sf::st_coordinates(x)[,1:2] )
     }
-    if (win == "extent") {
-        e <- as.vector(sp::bbox(x))
-        w <- spatstat.geom::as.owin(c(e[1], e[3], e[2], e[4]))
+    if (win[1] == "extent") {
+      e <- as.vector(sf::st_bbox(x))
+      w <- spatstat.geom::as.owin(c(e[1], e[3], e[2], e[4]))
     }
-    x <- spatstat.geom::as.ppp(sp::coordinates(x), w)
+    x <- spatstat.geom::as.ppp(sf::st_coordinates(x)[,1:2], w)
     A <- spatstat.geom::area.owin(w)
       obsMeanDist <- sum(spatstat.geom::nndist(x))/x$n
       expMeanDist <- 0.5 * sqrt(A / x$n)

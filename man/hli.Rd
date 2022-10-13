@@ -7,7 +7,7 @@
 hli(x, check = TRUE, force.hemisphere = c("none", "southern", "northern"))
 }
 \arguments{
-\item{x}{rasterLayer class object}
+\item{x}{terra SpatRaster class object}
 
 \item{check}{(TRUE/FALSE) check for projection integrity and
 calculate central latitude for non-geographic
@@ -17,7 +17,7 @@ projections}
 or northern hemisphere equation c("southern", "northern")}
 }
 \value{
-raster class object of McCune & Keon (2002) Heat Load Index
+terra SpatRaster class object of McCune & Keon (2002) Heat Load Index
 }
 \description{
 Calculates the McCune & Keon (2002) Heat Load Index
@@ -38,7 +38,7 @@ equator you can use the force.hemisphere argument to choose which equation to us
 Valid values for this argument are "southern" and "northern" with the default "none".
 }
 \examples{
-  library(raster)
+  library(terra)
   data(elev)
   heat.load <- hli(elev)
     plot(heat.load, main="Heat Load Index") 

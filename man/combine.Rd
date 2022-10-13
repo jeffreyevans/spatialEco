@@ -4,14 +4,12 @@
 \alias{combine}
 \title{raster combine}
 \usage{
-combine(x, rnames = NULL, sp = FALSE)
+combine(x)
 }
 \arguments{
 \item{x}{raster stack/brick or SpatialPixelsDataFrame object}
 
 \item{rnames}{Column names to combine in raster stack or sp object}
-
-\item{sp}{(FALSE/TRUE) output SpatialPixelsDataFrame}
 }
 \value{
 A  ratified rasterLayer or a list containing a SpatialPixelsDataFrame 
@@ -34,32 +32,33 @@ with the summary table as the raster attribute table, this is most similar
 to the ESRI format resulting from their combine function.
 }
 \examples{
-library(raster)
+if(require(terra, quietly = TRUE)) { 
 
-r1 <- raster(nrows=100, ncol=100)
-  r1[] <- round(runif(ncell(r1), 1,4),0)
-r2 <- raster(nrows=100, ncol=100)
-  r2[] <- round(runif(ncell(r2), 2,6),0)
-r3 <- raster(nrows=100, ncol=100)
-  r3[] <- round(runif(ncell(r3), 2,6),0)
-r <- stack(r1,r2,r3)  
-  names(r) <- c("LC1","LC2","LC3")
+# Create example data (with a few NA's introduced)
+ r1 <- rast(nrows=100, ncol=100)
+   names(r1) <- "LC1"
+   r1[] <- round(runif(ncell(r1), 1,4),0)
+     r1[c(8,10,50,100)] <- NA
+ r2 <- rast(nrows=100, ncol=100)
+   names(r2) <- "LC2"
+   r2[] <- round(runif(ncell(r2), 2,6),0)
+     r2[c(10,50,100)] <- NA   
+ r3 <- rast(nrows=100, ncol=100)
+   names(r3) <- "LC3"
+   r3[] <- round(runif(ncell(r3), 2,6),0)
+     r3[c(10,50,100)] <- NA   
+ r <- c(r1,r2,r3)  
+   names(r) <- c("LC1","LC2","LC3")
 
-# Combine rasters in stack
-( cr <- combine(r) )
-  levels(cr)
-  
-# Combine rasters in stack, using specific rasters
-( cr <- combine(r, rnames=c("LC1","LC3")) )
+ # Combine rasters with a multilayer stack
+ cr <- combine(r)
+   head(cr$summary)
+   plot(cr$combine)
 
-# Combine rasters in stack, output SpatialPixelsDataFrame
-cr.sp <- combine(r, sp = TRUE)
-  head(cr.sp$summary)
-  class(cr.sp$combine)
+# or, from separate layers
+ cr <- combine(c(r1,r3))
 
-# Input SpatialPixelsDataFrame 
-r.sp <- as(r, "SpatialPixelsDataFrame")
-cr.sp <- combine(r.sp, sp = TRUE)
+}
 
 }
 \author{

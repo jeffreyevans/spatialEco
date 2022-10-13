@@ -4,17 +4,10 @@
 \alias{raster.entropy}
 \title{Raster Entropy}
 \usage{
-raster.entropy(
-  x,
-  d = 5,
-  categorical = FALSE,
-  global = FALSE,
-  filename = FALSE,
-  ...
-)
+raster.entropy(x, d = 5, categorical = FALSE, global = FALSE, ...)
 }
 \arguments{
-\item{x}{Object of class raster (requires integer raster)}
+\item{x}{A terra SpatRaster object (requires integer raster)}
 
 \item{d}{Size of matrix (window)}
 
@@ -23,12 +16,10 @@ raster.entropy(
 \item{global}{Should the model use a global or local n to calculate 
 entropy (FALSE/TRUE)}
 
-\item{filename}{Raster file written to disk}
-
-\item{...}{Optional arguments passed to writeRaster or dataType}
+\item{...}{Optional arguments passed terra focal function}
 }
 \value{
-raster class object or specified format raster written to disk
+terra SpatRaster class object
 }
 \description{
 Calculates entropy on integer raster (i.e., 8 bit 0-255)
@@ -36,14 +27,15 @@ Calculates entropy on integer raster (i.e., 8 bit 0-255)
 Entropy calculated as: H = -sum(Pi*ln(Pi)) where; Pi, Proportion of one value 
 to total values Pi=n(p)/m and m, Number of unique values. Expected range: 
 0 to log(m) H=0 if window contains the same value in all cells.
-H increases with the number of different values in the window.
+H increases with the number of different values in the window. The ellipsis
+arguments can be used to write to disk using the filename argument. 
 
 Maximum entropy is reached when all values are different, same as log(m)
   max.ent <- function(x) { log( length( unique(x) ) ) }
 }
 \examples{
-require(raster)
-  r <- raster(ncols=100, nrows=100)
+library(terra)
+  r <- rast(ncols=100, nrows=100)
     r[] <- round(runif(ncell(r), 1,8), digits=0)
 
 rEnt <- raster.entropy(r, d=5, categorical = TRUE, global = TRUE)

@@ -26,8 +26,10 @@ Transformation option details:
 \itemize{
 \item norm - (Normalization_ (0-1): if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )
 \item rstd - (Row standardize) (0-1): if min(x) >= 0 x / max(x) This normalizes data
-\item \preformatted{   with negative distributions
-}
+\item 
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{   with negative distributions
+}\if{html}{\out{</div>}}
 \item std - (Standardize) (x - mean(x)) / sdv(x)
 \item stretch - (Stretch) ((x - min(x)) * max.stretch / (max(x) - min(x)) + min.stretch)
 This will stretch values to the specified minimum and maximum values

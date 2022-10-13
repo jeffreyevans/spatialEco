@@ -4,27 +4,14 @@
 \alias{parea.sample}
 \title{Percent area sample}
 \usage{
-parea.sample(
-  x,
-  pct = 0.1,
-  join = FALSE,
-  min.samp = 1,
-  max.samp = NULL,
-  sf = 4046.86,
-  stype = "hexagonal",
-  ...
-)
+parea.sample(x, pct = 0.1, join = FALSE, sf = 4046.86, stype = "random", ...)
 }
 \arguments{
-\item{x}{sp SpatialPolygonsDataFrame object}
+\item{x}{An sf POLYGON object}
 
 \item{pct}{Percent of area sampled}
 
-\item{join}{Join polygon attributed to point sample}
-
-\item{min.samp}{Minimum number of samples}
-
-\item{max.samp}{Maximum number of samples}
+\item{join}{{FALSE/TRUE} Join polygon attributed to point sample}
 
 \item{sf}{Scaling factor (default is meters to acres conversion factor)}
 
@@ -33,7 +20,7 @@ parea.sample(
 \item{...}{Additional arguments passed to spsample}
 }
 \value{
-A SpatialPointsDataFrame with polygon samples
+An sf POINT object
 }
 \description{
 Creates a point sample of polygons where n is based 
@@ -41,22 +28,18 @@ Creates a point sample of polygons where n is based
 }
 \note{
 This function results in an adaptive sample based on the area of 
-      each polygon
+each polygon. The default scaling factor (sf) converts meters to
+acres. You can set sf=1 to stay in the native projection units
 }
 \examples{
-require(sp)
-sr1=Polygons(list(Polygon(cbind(c(180114, 180553, 181127, 181477, 181294, 
-  181007, 180409, 180162, 180114), c(332349, 332057, 332342, 333250, 333558, 
-  333676, 332618, 332413, 332349)))),'1')
-sr2=Polygons(list(Polygon(cbind(c(180042, 180545, 180553, 180314, 179955, 
-  179142, 179437, 179524, 179979, 180042), c(332373, 332026, 331426, 330889, 
-  330683, 331133, 331623, 332152, 332357, 332373)))),'2')
-sr=SpatialPolygons(list(sr1,sr2))
-srdf=SpatialPolygonsDataFrame(sr, data.frame(row.names=c('1','2'), PIDS=1:2))
-
-ars <- parea.sample(srdf, pct=0.20, stype='random') 
-  plot(srdf)
-    plot(ars, pch=20, add=TRUE)
+if(require(sf, quietly = TRUE)) {
+  nc <- st_read(system.file("shape/nc.shp", package="sf"))
+    nc <- suppressWarnings(st_cast(nc[c(10,100),], "POLYGON"))
+  
+  ( ars <- parea.sample(nc, pct=0.001, join = TRUE, stype='random') ) 
+    plot(st_geometry(nc))
+      plot(st_geometry(ars), pch=19, add=TRUE)  
+}
 
 }
 \author{

@@ -7,9 +7,9 @@
 overlap(x, y)
 }
 \arguments{
-\item{x}{A matrix, rasterLayer or sp raster class object}
+\item{x}{A matrix or SpatRaster raster class object}
 
-\item{y}{A matrix, rasterLayer or sp raster class object
+\item{y}{A matrix or SpatRaster raster class object
 with the same dimensions of x}
 }
 \value{

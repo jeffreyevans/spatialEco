@@ -6,7 +6,6 @@
 \usage{
 background(
   x,
-  ext = NULL,
   p = 1000,
   known = NULL,
   d = NULL,
@@ -14,20 +13,18 @@ background(
 )
 }
 \arguments{
-\item{x}{A polygon defining sample region}
-
-\item{ext}{Vector of extent coordinates (xmin, xmax, ymin, ymax)}
+\item{x}{A sf class polygon defining sample region}
 
 \item{p}{Size of sample}
 
-\item{known}{SpatialPoints of known locations (same CSR as x)}
+\item{known}{An sf POINT class of known locations with same CSR as x}
 
 \item{d}{Threshold distance for known proximity}
 
 \item{type}{Type of sample c("systematic", "random", "hexagon", "nonaligned")}
 }
 \value{
-A SpatialPointsDataFrame or data.frame with x,y coordinates
+A sf POINT feature class or data.frame with x,y coordinates
 }
 \description{
 Creates a point sample that can be used as 
@@ -43,45 +40,37 @@ the distance threshold (d). As such, if the know and d arguments are
 provided the exact value provided in p will not be returned.
 }
 \examples{
-library(sp)
-library(raster)
-library(rgeos)
-  data(meuse)
-  coordinates(meuse) <- ~x+y
+library(sf)
+
+# define study area
+sa <- suppressWarnings(st_cast(st_read(
+        system.file("shape/nc.shp", 
+        package="sf")), "POLYGON"))
+  sa <- sa[10,]
 
 # create "known" locations  
-locs <- meuse[sample(1:nrow(meuse), 5),]
+locs <- st_sample(sa, 50)
+  st_crs(locs) <- st_crs(sa)
 
 # systematic sample using extent polygon
-e <- as(extent(meuse), "SpatialPolygons")
-s <- background(e, p=1000, known=locs, d=300)
-  plot(s,pch=20)
-    points(locs, pch=20, col="red")
+e <- st_as_sf(st_as_sfc(st_bbox(sa)))
+  st_crs(e) <- st_crs(sa)
+s <- background(e, p=1000, known=locs, d=1000)
+  plot(st_geometry(s), pch=20)
+    plot(st_geometry(locs), pch=20, col="red", add=TRUE)
 
 # systematic sample using irregular polygon
-data(meuse.grid)
-  coordinates(meuse.grid) = c("x", "y")
-  gridded(meuse.grid) = TRUE
-meuse.poly = gUnaryUnion(as(meuse.grid, "SpatialPolygons"))
-
-s <- background(meuse.poly, p=1000, known=locs, d=200)
-  plot(s,pch=20)
-    plot(meuse.poly, add=TRUE)
-    points(locs, pch=20, col="red")
+s <- background(sa, p=1000, known=locs, d=1000)
+  plot(st_geometry(sa)) 
+    plot(st_geometry(s), pch=20, add=TRUE)
+      plot(st_geometry(locs), pch=20, col="red", add=TRUE)
 
 # random sample using irregular polygon
-s <- background(meuse.poly, p=500, known=locs, 
-                d=200, type="random")
-  plot(s,pch=20)
-    plot(meuse.poly, add=TRUE)
-    points(locs, pch=20, col="red")
-
-# systematic sample using defined extent
-extent(meuse)
-s <- background(ext=c(178605, 181390, 329714, 333611), 
-                p=1000, known=locs, d=300)
-  plot(s,pch=20)
-    points(locs, pch=20, col="red")
+s <- background(sa, p=500, known=locs, 
+                d=1000, type="random")
+  plot(st_geometry(sa)) 
+    plot(st_geometry(s), pch=20, add=TRUE)
+      plot(st_geometry(locs), pch=20, col="red", add=TRUE)
 
 }
 \author{

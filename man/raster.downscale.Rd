@@ -9,21 +9,19 @@ raster.downscale(
   y,
   p = NULL,
   n = NULL,
-  filename = FALSE,
   scatter = FALSE,
+  samp.type = c("random", "regular"),
   ...
 )
 }
 \arguments{
-\item{x}{Raster class object representing independent variable(s)}
+\item{x}{A terra SpatRaster object representing independent variable(s)}
 
-\item{y}{Raster class object representing dependent variable}
+\item{y}{A terra SpatRaster object representing dependent variable}
 
-\item{p}{Percent sample size}
+\item{p}{Percent sample size (default NULL)}
 
-\item{n}{Fixed sample size}
-
-\item{filename}{Name of output raster}
+\item{n}{Fixed sample size (default NULL)}
 
 \item{scatter}{(FALSE/TRUE) Optional scatter plot}
 
@@ -32,7 +30,7 @@ raster.downscale(
 \value{
 A list object containing:
 \itemize{ 
-\item  downscale downscaled raster (omitted if filename is defined)
+\item  downscale downscaled terra SpatRaster object
 \item  model     rlm model object 
 \item  MSE       Mean Square Error
 \item  AIC       Akaike information criterion
@@ -44,22 +42,32 @@ Downscales a raster to a higher resolution raster using
 }
 \examples{
 \dontrun{
- library(raster)
- elev <- raster::getData('alt', country='SWZ', mask=TRUE)
- tmax <- raster::getData('worldclim', var='tmax', res=10, 
-                         lon=8.25, lat=46.8)
- tmax <- crop(tmax[[1]], extent(elev))
- 
- # Downscale temperature
- tmax.ds <- raster.downscale(elev, tmax, scatter=TRUE)
-   opar <- par(no.readonly=TRUE)
-     par(mfrow=c(2,2))
-     plot(tmax, main="Temp max")
-     plot(elev, main="elevation")
-       plot(tmax.ds$downscale, main="Downscaled Temp max")
-   par(opar)
-}
+  library(geodata)
+  library(terra)
 
+  # Download example data (requires geodata package)
+    elev <- geodata::elevation_30s(country="SWZ",  path=tempdir())
+	  slp <- terrain(elev, v="slope")
+    tmax <- geodata::worldclim_country(country="SWZ", var="tmax", 
+                                       path=tempdir())
+      tmax <- crop(tmax[[1]], ext(elev))
+  
+  # Downscale temperature
+  x=c(elev,slp)
+    names(x) <- c("elev","slope")
+  y=tmax
+    names(y) <- c("tmax")
+  
+  tmax.ds <- raster.downscale(x, y, scatter=TRUE)
+    opar <- par(no.readonly=TRUE)
+      par(mfrow=c(2,2))
+        plot(tmax, main="Temp max")
+        plot(x[[1]], main="elevation")
+	    plot(x[[2]], main="slope")
+        plot(tmax.ds$downscale, main="Downscaled Temp max")
+    par(opar)
+   
+}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

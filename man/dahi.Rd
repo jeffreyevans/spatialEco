@@ -7,14 +7,13 @@
 dahi(x, amax = 202.5)
 }
 \arguments{
-\item{x}{An elevation raster of class RasterLayer, SpatRaster or 
-SpatialPixelsDataFrame}
+\item{x}{An elevation raster of class terra SpatRaster}
 
 \item{amax}{The Alpha Max (amax) parameter in degrees defined 
 as: minimum = 0, maximum = 360 with the default = 202.500}
 }
 \value{
-RasterLayer class object Diurnal Anisotropic Heat Index
+terra SpatRaster class object Diurnal Anisotropic Heat Index
 }
 \description{
 Simple approximation of the anisotropic diurnal heat (Ha) distribution
@@ -25,7 +24,7 @@ Ha = cos(amax - a) * arctan(b)
   surplus, a is the aspect and b is the slope angle.
 }
 \examples{
-library(raster)
+library(terra)
 data(elev)
 Ha <- dahi(elev)
   plot(Ha)

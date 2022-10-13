@@ -7,16 +7,16 @@
 idw.smoothing(x, y, d, k)
 }
 \arguments{
-\item{x}{Object of class SpatialPointsDataFrame}
+\item{x}{An sf POINT class object}
 
-\item{y}{Numeric data in x@data}
+\item{y}{Numeric data column in x to be smoothed}
 
 \item{d}{Distance constraint}
 
 \item{k}{Maximum number of k-nearest neighbors within d}
 }
 \value{
-A vector, same length as nrow(x), of adjusted y values
+A vector, same length as nrow(x), of smoothed y values
 }
 \description{
 Distance weighted smoothing of a variable in a 
@@ -31,18 +31,24 @@ distance, including all neighbors within 1000 (d=1000) would require k to equal
 all of the potential neighbors (n-1 or k=nrow(x)-1).
 }
 \examples{
- library(sp)
-  data(meuse)                                                   
-  coordinates(meuse) <- ~x+y             
 
-# Calculate distance weighted mean on cadmium variable in meuse data   
-  cadmium.idw <- idw.smoothing(meuse, 'cadmium', k=nrow(meuse), d = 1000)                
-  meuse@data$cadmium.wm <- cadmium.idw
+library(sf)
+if(require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
+}
+      
+ # Calculate distance weighted mean on cadmium variable in meuse data   
+   cadmium.idw <- idw.smoothing(meuse, 'cadmium', k=nrow(meuse), d = 1000)                
+   meuse$cadmium.wm <- cadmium.idw
+ 
+   opar <- par(no.readonly=TRUE)
+     par(mfrow=c(2,1)) 
+       plot(density(meuse$cadmium), main='Cadmium')
+       plot(density(meuse$cadmium.wm), main='IDW Cadmium')
+   par(opar)
 
-  opar <- par(no.readonly=TRUE)
-    par(mfrow=c(2,1)) 
-      plot(density(meuse@data$cadmium), main='Cadmium')
-      plot(density(meuse@data$cadmium.wm), main='IDW Cadmium')
-  par(opar)
+plot(meuse[c("cadmium","cadmium.wm")], pch=20)   
 
 }

@@ -62,53 +62,52 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(raster)
-#' library(RStoolbox)
-#' 
-#' data(lsat)
+#' library(terra)
+#' if(!unlist(lapply("RStoolbox", requireNamespace, quietly=TRUE)))
+#'   message("Can't run examples, please install RStoolbox")
+#' data(lsat, package = "RStoolbox")
 #' lsat <- radCor(lsat, metaData = readMeta(system.file(
 #'                "external/landsat/LT52240631988227CUB02_MTL.txt", 
 #'                 package="RStoolbox")), method = "apref")
-#'    plotRGB(lsat, r=3, g=2, b=1, scale=1.0, stretch="lin")
-#'				   
+#'    # plotRGB(lsat, r=3, g=2, b=1, scale=1.0, stretch="lin")
+#' 			   
+#'  # Using Bouhennache et al., (2018) method (needs green, red, swir1 and swir2) 
+#'  ( bouh <- built.index(red = lsat[[3]], green = lsat[[4]], swir1 = lsat[[5]], 
+#'                       swir2 = lsat[[7]]) )
+#'     plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+#'       plot(bouh, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), 
+#' 	       add=TRUE )
 #' 
-#' # Using Bouhennache et al., (2018) method (needs green, red, swir1 and swir2) 
-#'( bouh <- built.index(red = lsat[[3]], green = lsat[[4]], swir1 = lsat[[5]], 
-#'                      swir2 = lsat[[7]]) )
+#'  # Using simple Zha et al., (2003) method (needs nir and swir1)
+#'  ( zha <- built.index(nir = lsat[[4]], swir1 = lsat[[5]], method = "Zha") )
 #'    plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-#'      plot(bouh, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), 
-#'	       add=TRUE )
-#'
-#' # Using simple Zha et al., (2003) method (needs nir and swir1)
-#' ( zha <- built.index(nir = lsat[[4]], swir1 = lsat[[5]], method = "Zha") )
-#'   plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-#'     plot(zha, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
-#'
-#' # Using Xu (2008) normalized modification of Zha (needs green, red, nir and swir1)
-#' ( xu <- built.index(green= lsat[[3]], red = lsat[[3]], nir = lsat[[4]], 
-#'                     swir1 = lsat[[5]], , method = "Xu") )
-#'   plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-#'     plot(xu, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE ) 
-#'
+#'      plot(zha, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
+#' 
+#'  # Using Xu (2008) normalized modification of Zha (needs green, red, nir and swir1)
+#'  ( xu <- built.index(green= lsat[[3]], red = lsat[[3]], nir = lsat[[4]], 
+#'                      swir1 = lsat[[5]], , method = "Xu") )
+#'    plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+#'      plot(xu, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE ) 
+#' 
 #' }
 #' 
 #' @export built.index
 built.index <- function(green, red, nir, swir1, swir2, L = 0.5, 
-                        method = c("Bouhennache", "Zha", "Xu")) {
+                        method = c("Bouhennache", "Zha", "Xu")) { 
   if(method[1] == "Zha") {
     if(missing(nir) | missing(swir1))
       stop("must specify swir1 and nir bands")
-	if(any(c(class(swir1)[1],class(nir)[1]) %in% 
-	  c("RasterLayer", "SpatRaster") == FALSE))
-        stop("Rasters must be of terra::SpatRaster or raster::rasterLayer class")
+  if(any(c(class(nir)[1],class(swir1)[1]) %in% 
+	 c("RasterLayer", "SpatRaster") == FALSE))
+       stop("Rasters must be of terra::SpatRaster or raster::rasterLayer class")	  
     bi <- (swir1 - nir) / (swir1 + nir)
   } else if(method[1] == "Xu") {
     if(missing(green) | missing(red) | missing(swir1))
       stop("Must specify green, red and swir1 bands")  
+    if(any(c(class(green)[1],class(red)[1], class(swir1)[1]) %in% 
+	 c("RasterLayer", "SpatRaster") == FALSE))
+       stop("Rasters must be of terra::SpatRaster or raster::rasterLayer class")	  
     ibi <- function(g, r, nr, s1, l = 0.5) { 
-      if(any(c(class(g)[1],class(r)[1], class(s1)[1], class(nr)[1]) %in% 
-	     c("RasterLayer", "SpatRaster") == FALSE))
-           stop("Rasters must be of terra::SpatRaster or raster::rasterLayer class")	
 	  savi <- ((nr - r)*(1+l)) / (nr + r + l) 
       mndwi <- (g - s1) / (g - s1) 
       ndbi <- (swir1 - nir) / (swir1 + nir)	  
@@ -118,12 +117,12 @@ built.index <- function(green, red, nir, swir1, swir2, L = 0.5,
 	bi <- ibi(g=green, r=red, nr= nir, s1=swir1,  l=L)
   } else if(method[1] == "Bouhennache") {
     if(missing(green) | missing(red) | missing(swir1) | missing(swir2))
-      stop("Must specify green, red, swir1 and swir2 bands")  
+      stop("Must specify green, red and swir1 bands")  
+    if(any(c(class(green)[1],class(red)[1], class(swir1)[1], class(swir2)[1]) %in% 
+	 c("RasterLayer", "SpatRaster") == FALSE))
+       stop("Rasters must be of terra::SpatRaster or raster::rasterLayer class")	    
     blfei <- function(g, r, s1, s2) {
-      if(any(c(class(g)[1],class(r)[1], class(s1)[1], class(s2)[1]) %in% 
-	     c("RasterLayer", "SpatRaster") == FALSE))
-           stop("Rasters must be of terra::SpatRaster or raster::rasterLayer class")
-      return( (( (g + r + s2) / 3) - s1) /
+       return( (( (g + r + s2) / 3) - s1) /
               ((( g + r + s2 ) / 3) + s1) )
     }
     bi <- blfei(g=green, r=red, s1=swir1, s2=swir2) 

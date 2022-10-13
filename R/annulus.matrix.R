@@ -53,4 +53,3 @@ annulus.matrix <- function(scale = 3, inner.scale = 0, outer.scale = 0,
 	x[x >= 1] <- 1
   return( x )  
 }
-

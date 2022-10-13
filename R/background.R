@@ -3,14 +3,13 @@
 #' @description Creates a point sample that can be used as 
 #'              a NULL for SDM's and other modeling approaches. 
 #'
-#' @param x      A polygon defining sample region    
-#' @param ext    Vector of extent coordinates (xmin, xmax, ymin, ymax) 
+#' @param x      A sf class polygon defining sample region    
 #' @param p      Size of sample
-#' @param known  SpatialPoints of known locations (same CSR as x)
+#' @param known  An sf POINT class of known locations with same CSR as x
 #' @param d      Threshold distance for known proximity 
 #' @param type   Type of sample c("systematic", "random", "hexagon", "nonaligned")
 #'
-#' @return A SpatialPointsDataFrame or data.frame with x,y coordinates
+#' @return A sf POINT feature class or data.frame with x,y coordinates
 #'
 #' @note 
 #' This function creates a background point sample based on an extent 
@@ -24,73 +23,67 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
-#' library(sp)
-#' library(raster)
-#' library(rgeos)
-#'   data(meuse)
-#'   coordinates(meuse) <- ~x+y
+#' library(sf)
+#' 
+#' # define study area
+#' sa <- suppressWarnings(st_cast(st_read(
+#'         system.file("shape/nc.shp", 
+#'         package="sf")), "POLYGON"))
+#'   sa <- sa[10,]
 #' 
 #' # create "known" locations  
-#' locs <- meuse[sample(1:nrow(meuse), 5),]
+#' locs <- st_sample(sa, 50)
+#'   st_crs(locs) <- st_crs(sa)
 #' 
 #' # systematic sample using extent polygon
-#' e <- as(extent(meuse), "SpatialPolygons")
-#' s <- background(e, p=1000, known=locs, d=300)
-#'   plot(s,pch=20)
-#'     points(locs, pch=20, col="red")
+#' e <- st_as_sf(st_as_sfc(st_bbox(sa)))
+#'   st_crs(e) <- st_crs(sa)
+#' s <- background(e, p=1000, known=locs, d=1000)
+#'   plot(st_geometry(s), pch=20)
+#'     plot(st_geometry(locs), pch=20, col="red", add=TRUE)
 #' 
 #' # systematic sample using irregular polygon
-#' data(meuse.grid)
-#'   coordinates(meuse.grid) = c("x", "y")
-#'   gridded(meuse.grid) = TRUE
-#' meuse.poly = gUnaryUnion(as(meuse.grid, "SpatialPolygons"))
-#' 
-#' s <- background(meuse.poly, p=1000, known=locs, d=200)
-#'   plot(s,pch=20)
-#'     plot(meuse.poly, add=TRUE)
-#'     points(locs, pch=20, col="red")
+#' s <- background(sa, p=1000, known=locs, d=1000)
+#'   plot(st_geometry(sa)) 
+#'     plot(st_geometry(s), pch=20, add=TRUE)
+#'       plot(st_geometry(locs), pch=20, col="red", add=TRUE)
 #' 
 #' # random sample using irregular polygon
-#' s <- background(meuse.poly, p=500, known=locs, 
-#'                 d=200, type="random")
-#'   plot(s,pch=20)
-#'     plot(meuse.poly, add=TRUE)
-#'     points(locs, pch=20, col="red")
-#' 
-#' # systematic sample using defined extent
-#' extent(meuse)
-#' s <- background(ext=c(178605, 181390, 329714, 333611), 
-#'                 p=1000, known=locs, d=300)
-#'   plot(s,pch=20)
-#'     points(locs, pch=20, col="red")
+#' s <- background(sa, p=500, known=locs, 
+#'                 d=1000, type="random")
+#'   plot(st_geometry(sa)) 
+#'     plot(st_geometry(s), pch=20, add=TRUE)
+#'       plot(st_geometry(locs), pch=20, col="red", add=TRUE)
 #' 
 #' @export
-background <- function(x, ext=NULL, p=1000, known=NULL, d=NULL, 
+background <- function(x, p=1000, known=NULL, d=NULL, 
                 type=c("regular", "random", "hexagon", "nonaligned")) {
-  if(missing(x) & is.null(ext))
-    stop("extent argument (x or ext) must be defined")	
-  if(!missing(x)){
-    if(class(x)[1] == "sf") x <- as(x, "sf")
-    if(!any(class(x)[1] == c("SpatialPolygons", "SpatialPolygonsDataFrame")))
-      stop("known must be sp class polygons object")
-  }  
-  if(!is.null(ext)){
-     if(length(ext) != 4)
-	   stop("4 coordinates needed for extent") 
-    x <- as(raster::extent(ext), "SpatialPolygons")	   
-  }    
-  if(!is.null(known)){
-    if(!any(class(known)[1] == c("SpatialPoints", "SpatialPointsDataFrame")))
-      stop("known must be sp class points object")
     if(is.null(d)) 
       stop("distance (d) must be defined")  
+    if(missing(x))
+      stop("extent or x argument must be defined")	 
+    if(inherits(x, c("SpatialPolygons", "SpatialPolygonsDataFrame")))	
+      x <- sf::st_as_sf(x)  
+	if(inherits(x, c("sf", "sfc"))) {   
+	  if(as.character(unique(st_geometry_type(x))) != "POLYGON")
+        stop(deparse(substitute(x)), " x must be an sf POLYGON object")	
+    }    	
+  if(!is.null(known)){
+    if(!inherits(known, c("sf", "sfc")))  
+      stop(deparse(substitute(known)), " must be an sf POINT object")
+    if(as.character(unique(st_geometry_type(known))) != "POINT")
+      stop(deparse(substitute(known)), " must be an sf POINT object")
+	if(sf::st_crs(x) != sf::st_crs(known))
+      stop("CSR of known and x do not match")	  
   }
-  s <- sp::spsample(x=x, n=p, type=type[1], iter=10)
-  if(!is.null(known)) {
-    rm.buff <- rgeos::gBuffer(known, byid = FALSE, width = d)
-	  idx <- which(rgeos::gIntersects(s, rm.buff, byid = TRUE))
-    s <- s[-idx,] 
-  }
-    methods::slot(s, "proj4string") <- sp::CRS(s) 
+  s <- sf::st_as_sf(sf::st_sample(x=x, size=p, type=type[1]))
+    if(!is.null(known)) {
+      idx <- unique(unlist(sf::st_is_within_distance(known, s,  
+                     dist = d,sparse = TRUE)))
+        s <- s[-idx,] 
+    }
+    if(!is.na(st_crs(x))) {
+      sf::st_crs(s) <- sf::st_crs(x) 
+    }	  
   return(s)
 }

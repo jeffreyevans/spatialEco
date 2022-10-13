@@ -3,7 +3,7 @@
 #' Calculates a hierarchical scale decomposition of topographic 
 #' position index  
 #'                                                                       
-#' @param x            Object of class raster (requires integer raster)  
+#' @param x            A terra SpatRaster class object 
 #' @param min.scale    Minimum scale (window size)
 #' @param max.scale    Maximum scale (window size)
 #' @param inc          Increment to increase scales
@@ -34,30 +34,34 @@
 #' @export  
 hsp <- function(x, min.scale = 3, max.scale = 27, inc = 4, win = "rectangle",
                 normalize = FALSE) { 
+  if (!inherits(x, "SpatRaster")) 
+    stop(deparse(substitute(x)), " must be a terra SpatRaster class object") 
   scales = rev(seq(from=min.scale, to=max.scale, by=inc)) 
     for(s in scales) {
 	  if( win == "circle") {
-	    if( min.scale < raster::res(x)[1] * 2) 
+	    if( min.scale < terra::res(x)[1] * 2) 
 		  stop( "Minimum resolution is too small for a circular window")
-	        m <- raster::focalWeight(x, s, type=c('circle'))
+			m <- terra::focalMat(x, s, type=c('circle'))
               m[m > 0] <- 1  
           } else { 	  
         m <- matrix(1, nrow=s, ncol=s)
 	  }
 	message("Calculating scale:", s, "\n")
-        scale.r <- x - raster::focal(x, w=m, fun=mean)
+        scale.r <- x - terra::focal(x, w=m, fun=mean)
 	  if( s == max(scales) ) {
-        scale.r.norm <- 100 * ( (scale.r - raster::cellStats(scale.r, stat="mean") / 
-                                 raster::cellStats(scale.r, stat="sd") ) )
+        scale.r.norm <- 100 * ( (scale.r - 
+		     terra::global(scale.r, "mean", na.rm=TRUE)[,1] / 
+             terra::global(scale.r, "sd", na.rm=TRUE)[,1] ) )
 	    } else {
-	    scale.r.norm <-  scale.r.norm + 100 * ( (scale.r - raster::cellStats(scale.r, stat="mean") / 
-                                                 raster::cellStats(scale.r, stat="sd") ) )   
+	    scale.r.norm <-  scale.r.norm + 100 * ( (scale.r - 
+		     terra::global(scale.r, "mean", na.rm=TRUE)[,1] / 
+             terra::global(scale.r, "sd", na.rm=TRUE)[,1] ) )   
 	  }   			 
     }
   if(normalize == TRUE) {  
-    scale.r.norm <- (scale.r.norm - raster::cellStats(scale.r.norm, stat="min")) /
-                    (raster::cellStats(scale.r.norm, stat="max") - 
-					 raster::cellStats(scale.r.norm, stat="min"))
+ 	scale.r.norm <- (scale.r.norm - terra::global(scale.r.norm, "min", na.rm=TRUE)[,1]) /
+                    (terra::global(scale.r.norm, "max", na.rm=TRUE)[,1] - 
+					 terra::global(scale.r.norm, "min", na.rm=TRUE)[,1])				 			 
   }
   return(scale.r.norm)  
 }

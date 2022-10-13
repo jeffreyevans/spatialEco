@@ -7,9 +7,9 @@
 topo.distance(x, r, echo = FALSE)
 }
 \arguments{
-\item{x}{sp SpatialLinesDataFrame object}
+\item{x}{sf LINESTRING object}
 
-\item{r}{raster class elevation raster}
+\item{r}{terra or raster class elevation raster}
 
 \item{echo}{(FALSE/TRUE) print progress to screen}
 }
@@ -18,7 +18,7 @@ Vector of corrected topographic distances same length as nrow(x)
 }
 \description{
 Calculates topographic corrected distance for a 
-             SpatialLinesDataFrame object
+             LINESTRING object
 }
 \note{
 This function corrects straight-line (euclidean) distances for 
@@ -54,7 +54,6 @@ r <- crop(r, extent(6482554, 6536750, 6615538, 6667271))
  
  # Percent increase in corrected distance
  ((tdist - lgt) / lgt) * 100
-
 
 }
 \author{

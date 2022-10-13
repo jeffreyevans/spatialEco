@@ -76,64 +76,69 @@ slot directly via "object@data", just pass the object name.
 }
 \examples{
 
-p = c("sp", "spdep", "rms")
+ p = c("sf", "sp", "spdep", "rms")
  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
    message("Can't run examples, please install ", paste(p[m], collapse = " "))
  } else {
-   invisible(lapply(p, require, character.only=TRUE))                                                                  
-data(meuse)
-  coordinates(meuse) <- ~x+y  
-    meuse@data <- data.frame(DepVar=rbinom(dim(meuse)[1], 1, 0.5), 
-                              meuse@data)
-
-#### Logistic model
-lmodel <- logistic.regression(meuse, y='DepVar', 
-                  x=c('dist','cadmium','copper')) 
-  lmodel$model
-    lmodel$diagTable
-      lmodel$coefTable
-
-#### Logistic model with factorial variable
-lmodel <- logistic.regression(meuse, y='DepVar', 
-            x=c('dist','cadmium','copper', 'soil')) 
-  lmodel$model
-    lmodel$diagTable
-      lmodel$coefTable
-
-### Auto-logistic model using 'autocov_dist' in 'spdep' package
-lmodel <- logistic.regression(meuse, y='DepVar', 
-            x=c('dist','cadmium','copper'), autologistic=TRUE, 
-            coords=coordinates(meuse), bw=5000) 
-  lmodel$model
-    lmodel$diagTable
-      lmodel$coefTable
-  est <- predict(lmodel$model, type='fitted.ind')
-
-#### Add residuals, standardized residuals and estimated probabilities
-VarNames <- rownames(lmodel$model$var)[-1]
-  meuse@data$AutoCov <- lmodel$AutoCov
-    meuse@data <- data.frame(meuse@data, Residual=lmodel$Residuals[,1], 
-                     StdResid=lmodel$Residuals[,2], Probs=predict(lmodel$model, 
-                     meuse@data[,VarNames],type='fitted') )  
-
-#### Plot fit and probabilities
-resid(lmodel$model, "partial", pl="loess") 
-# plot residuals
-resid(lmodel$model, "partial", pl=TRUE) 
-
-# global test of goodness of fit 
-resid(lmodel$model, "gof")
-
-# Approx. leave-out linear predictors
-lp1 <- resid(lmodel$model, "lp1")            
-
-# Approx leave-out-1 deviance            
--2 * sum(meuse@data$DepVar * lp1 + log(1-plogis(lp1)))
-
-# plot estimated probabilities at points
-spplot(meuse, c('Probs'))
-
+   invisible(lapply(p, require, character.only=TRUE))
+ 
+ data(meuse, package = "sp")
+ meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                   agr = "constant")
+   meuse$DepVar <- rbinom(nrow(meuse), 1, 0.5)
+ 
+ #### Logistic model
+ lmodel <- logistic.regression(meuse, y='DepVar', 
+                   x=c('dist','cadmium','copper')) 
+   lmodel$model
+     lmodel$diagTable
+       lmodel$coefTable
+ 
+ #### Logistic model with factorial variable
+ lmodel <- logistic.regression(meuse, y='DepVar', 
+             x=c('dist','cadmium','copper', 'soil')) 
+   lmodel$model
+     lmodel$diagTable
+       lmodel$coefTable
+ 
+  ### Auto-logistic model using 'autocov_dist' in 'spdep' package
+  lmodel <- logistic.regression(meuse, y='DepVar', 
+              x=c('dist','cadmium','copper'), autologistic=TRUE, 
+              coords=st_coordinates(meuse), bw=5000) 
+    lmodel$model
+      lmodel$diagTable
+        lmodel$coefTable
+    est <- predict(lmodel$model, type='fitted.ind')
+  
+  #### Add residuals, standardized residuals and estimated probabilities
+  VarNames <- rownames(lmodel$model$var)[-1]
+    meuse$AutoCov <- lmodel$AutoCov 
+    meuse$Residual <- lmodel$Residuals[,1]
+    meuse$StdResid <- lmodel$Residuals[,2]
+    meuse$Probs <- predict(lmodel$model, 
+                          sf::st_drop_geometry(meuse[,VarNames]),
+ 	                     type='fitted')  
+  
+ #### Plot fit and probabilities
+ 
+ resid(lmodel$model, "partial", pl="loess") 
+ 
+ # plot residuals
+ resid(lmodel$model, "partial", pl=TRUE) 
+  
+ # global test of goodness of fit 
+ resid(lmodel$model, "gof")
+  
+ # Approx. leave-out linear predictors
+ lp1 <- resid(lmodel$model, "lp1")            
+  
+ # Approx leave-out-1 deviance            
+ -2 * sum(meuse$DepVar * lp1 + log(1-plogis(lp1)))
+  
+ # plot estimated probabilities at points
+ plot(meuse['Probs'], pch=20)
+ 
 }
 }
 \references{
