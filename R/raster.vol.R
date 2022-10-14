@@ -2,15 +2,16 @@
 #' @description Calculates a percent volume on a raster or based on a 
 #'              systematic sample
 #' 
-#' @param x        raster class object
+#' @param x        A terra SpatRaster class object
 #' @param p        percent raster-value volume
-#' @param sample   base volume on systematic point sample (TRUE/FALSE)
+#' @param sample   (FALSE/TRUE) base volume on systematic point sample 
 #' @param spct     sample percent, if sample (TRUE)
+#' @param type     If sample=TRUE type of sample, options are "random" or "regular"
 #'
 #' @return 
 #' if sample (FALSE) binary raster object with 1 representing designated 
-#' percent volume else, if sample (TRUE) n sp SpatialPointsDataFrame object 
-#' with points that represent the percent volume of the sub-sample
+#' percent volume else, if sample (TRUE) n sf POINT object with points 
+#' that represent the percent volume of the sub-sample
 #'
 #' @note 
 #' Since this model needs to operate on all of the raster values, 
@@ -20,11 +21,11 @@
 #'
 #' @examples 
 #' \donttest{
-#' require(raster)
-#'   r <- raster(ncols=100, nrows=100)
+#' library(terra)
+#'   r <- rast(ncols=100, nrows=100)
 #'     r[] <- runif(ncell(r), 0, 1)
-#'     r <- focal(r, w=focalWeight(r, 6, "Gauss"))
-#'     r[sample(1000, 1:ncell(r))] <- NA
+#'     r <- focal(r, w=focalMat(r, 6, "Gauss"))
+#'   #r[sample(1:ncell(r)),10] <- NA
 #'   
 #'   # full raster percent volume 
 #'   p30 <- raster.vol(r, p=0.30)
@@ -44,29 +45,41 @@
 #' }
 #'
 #' @export raster.vol    	
-raster.vol <- function(x, p = 0.95, sample = FALSE, spct = 0.05) {
-  if( sample == FALSE ) {
-    den <- raster::getValues(x)
-    z <- sort(den[!is.na(den)], decreasing=TRUE)
-    y <- cumsum(as.numeric(z))
-    i <- sum(y <= p * y[length(y)])
-  return(raster::setValues(x, den >= z[i])) 
+raster.vol <- function(x, p = 0.75, sample = FALSE, spct = 0.05,
+                       type=c("random","regular")) {
+  if (!inherits(x, "SpatRaster")) 
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")					   
+  if( sample == FALSE ) { 
+	den <- x[][,1]
+      z <- sort(den[!is.na(den)], decreasing=TRUE)
+        y <- cumsum(as.numeric(z))
+          i <- sum(y <= p * y[length(y)]) 
+	        vol <- x
+			  vol[] <- as.integer(den >= z[i])
+    return( vol ) 
   } else {
-  den <- raster::sampleRegular(x, round(raster::ncell(x) * spct, digits = 0), sp = TRUE) 
-    den@data <- data.frame(idx = 1:nrow(den), den = den@data[,1], cls = 0)
-	sum.p <- sum(den@data[,"den"], na.rm = TRUE) * p
-    den@data <- den@data[order(-den@data$den),] 
-    i=0; j=0
+    ss = round(terra::ncell(x) * spct, digits = 0)
+    den <- sf::st_as_sf(terra::spatSample(x, size=ss, method=type[1],  
+                        na.rm=TRUE, as.points=TRUE, values=TRUE))
+      names(den)[1] <- "den" 						
+      den$idx <- 1:nrow(den) 
+	  den$cls = 0  
+    #den <- data.frame(idx = 1:nrow(den), den = den[,1], cls = 0)
+	  sum.p <- sum(den$den, na.rm = TRUE) * p
+        den <- den[order(-den$den),] 
+    
+	i=0; j=0
       while(i <= sum.p) { 
         j=j+1
-        if( !is.na(den@data[,"den"][j])) {
-        i = i + den@data[,"den"][j]
-        den@data[,"cls"][j] <- 1
+        if(!is.na(den$den[j])) {
+          i = i + den$den[j]
+          den$cls[j] <- 1
         } else {
-        den@data[,"cls"][j] <- NA
+          den$cls[j] <- NA
       }	
-    }						   
-    den@data <- den@data[order(den@data[,"idx"]),]
+    }
+    den <- den[order(den$idx),]
       return( den[den$cls == 1 ,] )	
   }
 }
+

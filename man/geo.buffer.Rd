@@ -11,9 +11,7 @@ geo.buffer(x, r, ...)
 
 \item{r}{Buffer radius in meters}
 
-\item{...}{Additional arguments passed to gBuffer}
-
-\item{sf}{(FALSE/TRUE) Output sf class object else sp}
+\item{...}{Additional arguments passed to sf::st_buffer}
 }
 \value{
 an sp or sf polygon class object representing buffer for each feature

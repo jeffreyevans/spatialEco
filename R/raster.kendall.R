@@ -3,7 +3,7 @@
 #'              based on the Kendall tau statistic and the Theil-Sen slope 
 #'              modification
 #'
-#' @param x             A rasterStack object with at least 5 layers
+#' @param x             A multiband terra SpatRaster object with at least 5 layers
 #' @param intercept     (FALSE/TRUE) return a raster with the pixel 
 #'                       wise intercept values 
 #' @param p.value       (FALSE/TRUE) return a raster with the pixel 
@@ -51,14 +51,16 @@
 #'
 #' @examples
 #' \donttest{
-#'  library(raster)
-#'  r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
-#'                  system.file("external/rlogo.grd", package="raster"),
-#'  			    system.file("external/rlogo.grd", package="raster")) 
+#'  library(terra)
+#'
+#'  # note; nonsense example
+#'  r <- c(rast(system.file("ex/logo.tif", package="terra")),
+#'         rast(system.file("ex/logo.tif", package="terra")),
+#'         rast(system.file("ex/logo.tif", package="terra"))) 
 #'  
 #'  # Calculate trend slope with p-value and confidence level(s)
 #'  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
-#'    k <- raster.kendall(r.logo, p.value=TRUE, z.value=TRUE, 
+#'    k <- raster.kendall(r, p.value=TRUE, z.value=TRUE, 
 #'                        intercept=TRUE, confidence=TRUE, 
 #'                        tau=TRUE)
 #'      plot(k)
@@ -72,12 +74,13 @@ raster.kendall <- function(x, intercept = FALSE, p.value = FALSE, z.value = FALS
                            confidence = FALSE, tau = FALSE, ...) {
   if(!any(which(utils::installed.packages()[,1] %in% "EnvStats")))
     stop("please install EnvStats package before running this function")
-  if(!any(class(x)[1] %in% c("RasterBrick","RasterStack"))) 
-    stop("x is not a raster stack or brick object")
+   if (!inherits(x, "SpatRaster")) 
+	  stop(deparse(substitute(x)), " must be a terra SpatRaster object")
   if(confidence) {confidence = c(TRUE,TRUE)} else {confidence = c(FALSE,FALSE)}
     n <- c("intercept", "p.value", "z.value", "LCI", "UCI", "tau")	
 	n <- n[which(c(intercept, p.value, z.value,confidence, tau))]	
-    if( raster::nlayers(x) < 5) stop("Too few layers (n<5) to calculate a trend")
+    if( terra::nlyr(x) < 5) 
+	  stop("Too few layers (n < 5) to calculate a trend")
   trend.slope <- function(y, tau.pass = tau, p.value.pass = p.value,  
                           confidence.pass = confidence[1], z.value.pass = z.value,
                           intercept.pass = intercept) {
@@ -97,7 +100,7 @@ raster.kendall <- function(x, intercept = FALSE, p.value = FALSE, z.value = FALS
 		  if(tau.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }  
     return( fit.results )
   }
-  k <- raster::overlay(x, fun=trend.slope, ...)
+  k <- terra::app(x, fun=trend.slope, ...)
     names(k) <- c("slope", n)
   return( k )
 }

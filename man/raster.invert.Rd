@@ -19,20 +19,20 @@ Inverts (flip) the values of a raster
 Inverts raster values using the formula: (((x - max(x)) * -1) + min(x)
 }
 \examples{
-\donttest{
-  library(raster)
-  r <- raster(nrows=500, ncols=500, xmn=571823, xmx=616763, 
-              ymn=4423540, ymx=4453690)
-    r[] <- runif(ncell(r), 1, 100)
- r <- focal(r, focalWeight(r, 150, "Gauss") )
-  r.inv <- raster.invert(r)
+library(terra)
+r <- rast(nrows=500, ncols=500, xmin=571823, xmax=616763, 
+            ymin=4423540, ymax=4453690)
+ crs(r) <- "epsg:9001"
+r[] <- runif(ncell(r), 1000, 2500)
+r <- focal(r, focalMat(r, 150, "Gauss") )
+
+r.inv <- raster.invert(r)
 
 opar <- par(no.readonly=TRUE)
     par(mfrow=c(1,2))
       plot(r, main="original raster")
       plot(r.inv, main="inverted raster") 
-par(opar)
-}     
+par(opar)   
 
 }
 \author{

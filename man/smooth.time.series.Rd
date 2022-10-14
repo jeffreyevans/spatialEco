@@ -7,65 +7,60 @@
 smooth.time.series(x, f = 0.8, smooth.data = FALSE, ...)
 }
 \arguments{
-\item{x}{A raster stack/brick or sp object with a @data slot}
+\item{x}{A terra SpatRaster with > 8 layers}
 
 \item{f}{Smoothing parameter (see loess span argument)}
 
 \item{smooth.data}{(FALSE/TRUE) Smooth all of the data or just impute NA values}
 
-\item{...}{Additional arguments passed to raster calc (for 
+\item{...}{Additional arguments passed to terra::app (for 
 writing results to disk)}
 }
 \value{
-A raster stack or brick pr data.frame object with imputed NA values or smoothed data.
+A terra SpatRaster containing imputed or smoothed data.
 }
 \description{
 Smooths pixel-level data in raster time-series and can impute 
              missing (NA) values.
 }
 \details{
-This function uses a LOESS regression to smooth the time-series (using the 
-smooth.data = TRUE argument). If the data is smoothed, it will be replaced by 
+This function uses a LOESS regression to smooth the time-series. If the data is 
+smoothed, (using the smooth.data = TRUE argument) it will be entirely replaced by  
 a loess estimate of the time-series (estimated distribution at the pixel-level). 
-The results can dramatically be effected by the choice of the smoothing 
-parameter (f) so caution is warranted and the effect of this parameter tested. 
 Alternately, with smooth.data = FALSE, the function can be used to impute missing 
 pixel data (NA) in raster time-series (stacks/bricks).
+The results can dramatically be effected by the choice of the smoothing 
+parameter (f) so caution is warranted and the effect of this parameter tested.
 }
 \examples{
 \dontrun{
- random.raster <- function(r=50, c=50, l=10, min=0, max=1){ 
-   do.call(stack, replicate(l, raster(matrix(runif(r*c, min, max),r,c))))
- }
- r <- random.raster()
+library(terra)
+  random.raster <- function(rows=50, cols=50, l=20, min=0, max=1){ 
+    do.call(c, replicate(l, rast(matrix(runif(rows * cols, min, max), 
+	        rows , cols))))
+  }
+r <- random.raster()
 
- #### Smooth time-series using raster stack/brick 
- r.smooth <- smooth.time.series(r, f = 0.6, smooth.data = TRUE)  
- 
- #### sp SpatialPixelsDataFrame example
- r <- as(r, "SpatialPixelsDataFrame")
- 
- # extract pixel 100 for plotting
- y <- as.numeric(r@data[100,])
- 
- # Smooth data
- r@data <- smooth.time.series(r, f = 0.6, smooth.data = TRUE)
- 	
- # plot results	
- plot(y, type="l")
-   lines(as.numeric(r@data[100,]), col="red")
-     legend("bottomright", legend=c("original","smoothed"),
+#### Smooth time-series using raster stack/brick 
+r.smooth <- smooth.time.series(r, f = 0.4, smooth.data = TRUE)  
+
+# extract pixel 100 for plotting
+y <- as.numeric(r[100])
+ys <- as.numeric(r.smooth[100])
+
+# plot results	
+plot(y, type="l")
+  lines(ys, col="red")
+    legend("bottomright", legend=c("original","smoothed"),
          lty=c(1,1), col=c("black","red"))	
-
- # coerce back to raster stack object	
- r <- stack(r) 
-
 }
 }
 \seealso{
 \code{\link[stats]{loess}} for details on the loess regression
 
-\code{\link[raster]{calc}} for details on additional (...) arguments
+\code{\link[terra]{app}} for details on additional (...) arguments
+
+\code{\link[spatialEco]{impute.loess}} for details on imputation model
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

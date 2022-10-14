@@ -4,21 +4,29 @@
 \alias{raster.vol}
 \title{Raster Percent Volume}
 \usage{
-raster.vol(x, p = 0.95, sample = FALSE, spct = 0.05)
+raster.vol(
+  x,
+  p = 0.75,
+  sample = FALSE,
+  spct = 0.05,
+  type = c("random", "regular")
+)
 }
 \arguments{
-\item{x}{raster class object}
+\item{x}{A terra SpatRaster class object}
 
 \item{p}{percent raster-value volume}
 
-\item{sample}{base volume on systematic point sample (TRUE/FALSE)}
+\item{sample}{(FALSE/TRUE) base volume on systematic point sample}
 
 \item{spct}{sample percent, if sample (TRUE)}
+
+\item{type}{If sample=TRUE type of sample, options are "random" or "regular"}
 }
 \value{
 if sample (FALSE) binary raster object with 1 representing designated 
-percent volume else, if sample (TRUE) n sp SpatialPointsDataFrame object 
-with points that represent the percent volume of the sub-sample
+percent volume else, if sample (TRUE) n sf POINT object with points 
+that represent the percent volume of the sub-sample
 }
 \description{
 Calculates a percent volume on a raster or based on a 
@@ -30,11 +38,11 @@ it is not memory safe
 }
 \examples{
 \donttest{
-require(raster)
-  r <- raster(ncols=100, nrows=100)
+library(terra)
+  r <- rast(ncols=100, nrows=100)
     r[] <- runif(ncell(r), 0, 1)
-    r <- focal(r, w=focalWeight(r, 6, "Gauss"))
-    r[sample(1000, 1:ncell(r))] <- NA
+    r <- focal(r, w=focalMat(r, 6, "Gauss"))
+  #r[sample(1:ncell(r)),10] <- NA
   
   # full raster percent volume 
   p30 <- raster.vol(r, p=0.30)

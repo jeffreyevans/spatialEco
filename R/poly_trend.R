@@ -48,7 +48,7 @@ poly_trend <- function(x, y, degree, ci = 0.95, plot=TRUE, ...) {
   }
   fit <- stats::lm(y ~ stats::poly(x,degree))
     conf <- stats::confint(fit, level=ci)
-      trend <- predict(fit, data.frame(x=x),
+      trend <- stats::predict(fit, data.frame(x=x),
                        interval='confidence',
                        level=ci)
   if (plot == TRUE) { 

@@ -73,7 +73,6 @@
 #' @export sp.kde
 sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,  
                    standardize = FALSE, scale.factor = NULL, mask = TRUE) {
-  # if(class(x) == "sf") { x <- as(x, "Spatial") }
   if(is.null(bw)){ 
     bw <- c(MASS::bandwidth.nrd(sp::coordinates(x)[,1]), 
 	        MASS::bandwidth.nrd(sp::coordinates(x)[,2]))
@@ -88,7 +87,7 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,
       message("Using extent of x to define grid")	
   }
   if(!is.null(newdata)) {
-    if( class(newdata) == "numeric") {
+    if(inherits(newdata, "numeric")) {
       if(length(newdata) != 4) stop("Need xmin, xmax, ymin, ymax bounding coordinates")
 	    if(is.null(n)) {
 	      ext <- raster::raster(raster::extent(newdata))
@@ -98,10 +97,10 @@ sp.kde <- function(x, y = NULL, bw = NULL, newdata = NULL, nr = NULL, nc = NULL,
         }
       newdata <- raster::raster(raster::extent(newdata), nrow=n[1], ncol=n[2])		
 	    newdata[] <- rep(1, raster::ncell(newdata)) 	
-    } else if(class(newdata) == "RasterLayer") { 	  
+    } else if(inherits(newdata, "RasterLayer")) { 	  
 	  n = c(raster::nrow(newdata), raster::ncol(newdata))
         message("using existing raster dimensions to define grid")		  
-    } else if(class(newdata) == "SpatialPixelsDataFrame" | class(newdata) == "SpatialGridDataFrame") {
+    } else if(inherits(newdata, c("SpatialPixelsDataFrame","SpatialGridDataFrame"))) {
 	  newdata <- raster::raster(newdata, 1)
 	    n = c(raster::nrow(newdata), raster::ncol(newdata))
           message("using existing raster dimensions to define grid")		

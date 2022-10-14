@@ -15,7 +15,7 @@ raster.kendall(
 )
 }
 \arguments{
-\item{x}{A rasterStack object with at least 5 layers}
+\item{x}{A multiband terra SpatRaster object with at least 5 layers}
 
 \item{intercept}{(FALSE/TRUE) return a raster with the pixel 
 wise intercept values}
@@ -62,14 +62,16 @@ the slope and related confidence intervals.
 }
 \examples{
 \donttest{
- library(raster)
- r.logo <- stack(system.file("external/rlogo.grd", package="raster"),
-                 system.file("external/rlogo.grd", package="raster"),
- 			    system.file("external/rlogo.grd", package="raster")) 
+ library(terra)
+
+ # note; nonsense example
+ r <- c(rast(system.file("ex/logo.tif", package="terra")),
+        rast(system.file("ex/logo.tif", package="terra")),
+        rast(system.file("ex/logo.tif", package="terra"))) 
  
  # Calculate trend slope with p-value and confidence level(s)
  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
-   k <- raster.kendall(r.logo, p.value=TRUE, z.value=TRUE, 
+   k <- raster.kendall(r, p.value=TRUE, z.value=TRUE, 
                        intercept=TRUE, confidence=TRUE, 
                        tau=TRUE)
      plot(k)

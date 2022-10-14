@@ -30,10 +30,8 @@
 #'
 #' @export dahi
 dahi <- function(x, amax = 202.500) {
- if(class(x) == "SpatRaster") {
-   tr <- terra::terrain(x, v=c("slope", "aspect"), unit="degrees")
-  } else {
-    stop(deparse(substitute(x)), " must be a terra SpatRaster class object")
-  }
+  if(!inherits(x, "SpatRaster"))
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+    tr <- terra::terrain(x, v=c("slope", "aspect"), unit="degrees")
   return( cos(amax - tr[[2]]) * atan(tr[[1]]) )
 }

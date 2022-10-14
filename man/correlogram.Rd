@@ -4,7 +4,7 @@
 \alias{correlogram}
 \title{Correlogram}
 \usage{
-correlogram(x, v, dist = 5000, dmatrix = FALSE, ns = 99, ...)
+correlogram(x, v, dist = 5000, ns = 99, ...)
 }
 \arguments{
 \item{x}{A sf POINT object}
@@ -34,7 +34,7 @@ Calculates and plots a correlogram
 }
 \examples{
 library(sf)
-if(require(c(sp, quietly = TRUE)) {
+if(require(sp, quietly = TRUE)) {
   data(meuse, package = "sp")
   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
                     agr = "constant")

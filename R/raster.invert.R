@@ -12,25 +12,26 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
 #' @examples 
-#' \donttest{
-#'   library(raster)
-#'   r <- raster(nrows=500, ncols=500, xmn=571823, xmx=616763, 
-#'               ymn=4423540, ymx=4453690)
-#'     r[] <- runif(ncell(r), 1, 100)
-#'	 r <- focal(r, focalWeight(r, 150, "Gauss") )
-#'   r.inv <- raster.invert(r)
+#' library(terra)
+#' r <- rast(nrows=500, ncols=500, xmin=571823, xmax=616763, 
+#'             ymin=4423540, ymax=4453690)
+#'  crs(r) <- "epsg:9001"
+#' r[] <- runif(ncell(r), 1000, 2500)
+#' r <- focal(r, focalMat(r, 150, "Gauss") )
+#'
+#' r.inv <- raster.invert(r)
 #'
 #' opar <- par(no.readonly=TRUE)
 #'     par(mfrow=c(1,2))
 #'       plot(r, main="original raster")
 #'       plot(r.inv, main="inverted raster") 
-#' par(opar)
-#' }     
+#' par(opar)   
 #'
 #' @export raster.invert
 raster.invert <- function(x) {  
-  if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
-    rmax <- raster::cellStats(x, stat = "max", na.rm = TRUE, asSample = FALSE)
-	rmin <- raster::cellStats(x, stat = "min", na.rm = TRUE, asSample = FALSE)
-    return( ((x - rmax) * -1) + rmin )
+  if (!inherits(x, "SpatRaster")) 
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+      rmax <- terra::global(x, "max", na.rm = TRUE)[,1]
+	rmin <- terra::global(x, "min", na.rm = TRUE)[,1]
+  return( ((x - rmax) * -1) + rmin )
 }  

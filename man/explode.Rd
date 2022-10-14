@@ -20,8 +20,8 @@ dissaggregates the data into a one-to-one match.
 \examples{
 \donttest{
 library(sf)
-nc <- st_read(system.file("shape/nc.shp", package="sf"))
-nc <- suppressWarnings(st_cast(nc, "POLYGON"))
+  nc <- st_read(system.file("shape/nc.shp", package="sf"))
+  nc <- suppressWarnings(st_cast(nc, "POLYGON"))
 }
 
 }

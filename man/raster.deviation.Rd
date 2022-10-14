@@ -4,24 +4,30 @@
 \alias{raster.deviation}
 \title{Raster local deviation from the global trend}
 \usage{
-raster.deviation(x, type = "trend", s = 3, degree = 1, global = FALSE)
+raster.deviation(
+  x,
+  type = c("trend", "min", "max", "mean", "median"),
+  s = 3,
+  degree = 1,
+  global = FALSE
+)
 }
 \arguments{
-\item{x}{raster object}
+\item{x}{A terra SpatRaster object}
 
 \item{type}{The global statistic to represent the local deviation
 options are: "trend", "min", "max", "mean", "median"}
 
 \item{s}{Size of matrix (focal window), not used with type="trend"}
 
-\item{degree}{The polynomial degree if type is trend, options are 1 and 2.}
+\item{degree}{The polynomial degree if type is trend, default is 1st order.}
 
 \item{global}{Use single global value for deviation or cell-level values 
 (FALSE/TRUE). Argument is ignored for type="trend"}
 }
 \value{
-raster class object of the local deviation from the raster or specified 
-global statistic
+A SpatRaster class object representing local deviation from the raster or the 
+specified global statistic
 }
 \description{
 Calculates the local deviation from the raster, a specified global statistic 
@@ -35,8 +41,8 @@ where; stat(x) is the global value of the specified statistic and y-hat is the
 specified focal statistic.
 }
 \examples{
-  library(raster)
-  data(elev)
+library(terra)
+elev <- rast(system.file("data/elev.tif", package="spatialEco"))
 
 # local deviation from first-order trend, global mean and raw value
 r.dev.trend <- raster.deviation(elev, type="trend", degree=1) 

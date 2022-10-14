@@ -33,17 +33,15 @@ Imports:
   SpatialPack (>= 0.3),
   mgcv,
   EnvStats,
-  GeNetIt,
-  gstat,
   terra,
   tabularaster,
   stringr,
   raster,
   sp  
 Suggests:
+  GeNetIt,
+  gstat,
   RStoolbox,
-  sp,
-  raster,
   maptools
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3

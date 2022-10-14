@@ -29,11 +29,12 @@
 #'   presented at the Stanford Artificial Intelligence Project (SAIL). 
 #' 
 #' @examples
-#' library(raster)
-#' r <- brick(system.file("external/rlogo.grd", package="raster")) 
-#' s.int <- sobal(r[[1]])
-#' s.dir <- sobal(r[[1]], method = "direction")
-#' s.edge <- sobal(r[[1]], method = "edge")
+#' library(terra)
+#' 
+#' r <- rast(system.file("ex/logo.tif", package="terra"))  
+#'   s.int <- sobal(r[[1]])
+#'   s.dir <- sobal(r[[1]], method = "direction")
+#'   s.edge <- sobal(r[[1]], method = "edge")
 #'
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,2))
@@ -45,17 +46,19 @@
 #'
 #' @export sobal
 sobal <- function(x, method = "intensity", ...) {
+  if (!inherits(x, "SpatRaster")) 
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")
   sobal.y <- matrix( c(-1, 0, 1, -2, 0, 2, -1, 0, 1), nrow=3, ncol=3)
   sobal.x <- matrix( c(-1, -2, -1, 0, 0, 0, 1, 2, 1), nrow=3, ncol=3)
     if (method == "direction") {
-	  Gx = raster::focal(x, w=sobal.x, "sum")
-      Gy = raster::focal(x, w=sobal.y, "sum")
-      return( raster::overlay(Gy, Gx, fun=atan2, ...) )
+	  Gx = terra::focal(x, w=sobal.x, "sum")
+      Gy = terra::focal(x, w=sobal.y, "sum")
+      return( terra::lapp(c(Gy, Gx), fun=atan2) )
     } else if (method == "intensity") {
-	  Gx = raster::focal(x, w=sobal.x, "sum")
-      Gy = raster::focal(x, w=sobal.y, "sum")
-      return( raster::overlay( Gx, Gy, fun=function(x, y) { sqrt( x^2 + y^2) }, ... ) )
+	  Gx = terra::focal(x, w=sobal.x, "sum")
+      Gy = terra::focal(x, w=sobal.y, "sum")
+      return( terra::lapp(c(Gx, Gy), fun=function(x, y) { sqrt( x^2 + y^2) }) )
     } else {
-	return( raster::focal(x, w=(sobal.y / 4), "sum", ...) )
+	  return( terra::focal(x, w=(sobal.y / 4), "sum") )
 	}
 }

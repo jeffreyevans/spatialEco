@@ -3,8 +3,7 @@
 #' 
 #' @param x    A sf or sp vector class object
 #' @param r    Buffer radius in meters
-#' @param sf   (FALSE/TRUE) Output sf class object else sp
-#' @param ...  Additional arguments passed to gBuffer
+#' @param ...  Additional arguments passed to sf::st_buffer
 #'
 #' @return an sp or sf polygon class object representing buffer for each feature
 #'
@@ -30,7 +29,7 @@
 #' }	 
 #' 	
 #' @seealso \code{\link[sf]{st_buffer}} for st_buffer ... arguments
-#'
+#' 
 #' @export geo.buffer 
 geo.buffer <- function(x, r, ...) {
   prj <- sf::st_crs("+proj=aeqd  +R=6371000 +lat_0=51 +lon_0=7")
@@ -40,7 +39,7 @@ geo.buffer <- function(x, r, ...) {
     stop(deparse(substitute(x)), " must be an sf POINT object")	
   if(unique(as.character(st_geometry_type(x))) != "POINT")
     stop(deparse(substitute(x)), " must be an sf POINT object")			
-  if(is.na(st_crs(s)))
+  if(is.na(st_crs(x)))
     stop(deparse(substitute(x)), " must have a defined projection")	  
   if(!sf::st_is_longlat(x))
     stop("Data appears to be projected and not Latitude/Longitude")

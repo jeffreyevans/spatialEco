@@ -25,6 +25,8 @@ raster.downscale(
 
 \item{scatter}{(FALSE/TRUE) Optional scatter plot}
 
+\item{samp.type}{Type of sample, options are "random" and "regular"}
+
 \item{...}{Additional arguments passed to predict}
 }
 \value{

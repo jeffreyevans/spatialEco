@@ -4,39 +4,60 @@
 \alias{sampleTransect}
 \title{Sample transect}
 \usage{
-sampleTransect(x, min.length, max.length, id = NULL, ...)
+sampleTransect(
+  x,
+  min.dist,
+  max.dist,
+  distance = NULL,
+  azimuth = NULL,
+  id = NULL,
+  ...
+)
 }
 \arguments{
-\item{x}{A sp point object}
+\item{x}{A sf point object}
 
-\item{min.length}{Minimum length of transect(s)}
+\item{min.dist}{Minimum length of transect(s)}
 
-\item{max.length}{Maximum length of transect(s)}
+\item{max.dist}{Maximum length of transect(s)}
+
+\item{distance}{A vector of distances, same length as x, used
+to define transect distances (length)}
+
+\item{azimuth}{A vector of azimuths, same length as x, used
+to define transect direction}
 
 \item{id}{A unique identification column in x}
 
-\item{...}{Additional arguments passed to sample.line}
+\item{...}{Additional arguments passed to st_sample}
 }
 \description{
 Creates random transects from points and generates 
              sample points along each transect
 }
 \note{
-Function create random direction and length transects and then creates a point 
-sample along each transect. The characteristic of the sample points are defined 
-by arguments passed to the sample.line function
+Function create lines and samples using random or defined direction 
+and length transects and then creates a point sample along each transect. 
+The characteristic of the sample points are defined by arguments passed 
+to the sf::st_sample function. The distance and azimuth arguments allow
+for specifying the exact length and direction for each points transect.
 }
 \examples{
-library(sp)
-data(meuse)
-coordinates(meuse) <- ~x+y
-slot(meuse, "proj4string") <- CRS(SRS_string = "EPSG:28992")
+
+library(sf)
+if(require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
+}
 meuse <- meuse[sample(1:nrow(meuse),10),]
 
-transects <- sampleTransect(meuse, min.length=200, 
-                    max.length=500, min.samp = 3)
-  plot(transects$transects)
-    plot(transects$samples, pch=20, add=TRUE)
+transects <- sampleTransect(meuse, min.dist=200, max.dist=500, 
+                            type="regular", size=20)
+   plot(st_geometry(transects$transects))
+     plot(st_geometry(meuse), pch=19, cex=2, add=TRUE)
+       plot(st_geometry(transects$samples), 
+	        col="red", pch=19, add=TRUE)
 
 }
 \author{

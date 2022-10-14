@@ -2,7 +2,6 @@
 #' @description Combines rasters into all unique combinations of inputs
 #'
 #' @param x         raster stack/brick or SpatialPixelsDataFrame object
-#' @param rnames    Column names to combine in raster stack or sp object
 #'
 #' @return 
 #' A  ratified rasterLayer or a list containing a SpatialPixelsDataFrame 
@@ -78,6 +77,6 @@ combine <- function(x) {
 		    names(s)[which(names(s) == "Freq")] <- "count"
     r.combine <- x[[1]]
       r.combine[as.numeric(r[,"cell"])] <- as.numeric(r[,"value"]) 
-      r.combine[which(!1:ncell(x) %in% as.numeric(r[,"cell"]))] <- NA
+      r.combine[which(!1:terra::ncell(x) %in% as.numeric(r[,"cell"]))] <- NA
    return(list(combine=r.combine, summary=s))	
 }

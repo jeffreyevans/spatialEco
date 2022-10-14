@@ -18,29 +18,30 @@
 #'
 #' @examples 
 #' \donttest{
-#' library(raster)
-#' r <- raster(nrows=824, ncols=767, xmn=2451905, xmx=3218905, 
-#'             ymn=-2744771, ymx=-1920771, resolution = 5000)
+#' library(terra)
+#' r <- rast(nrows=500, ncols=500)
 #'   r[] <- runif(ncell(r), 0, 1)
 #'
 #' # Modified z-score
-#' z <- raster.Zscore(r)
+#' ( z <- raster.Zscore(r) )
 #'
 #' # P-value
-#' p <- raster.Zscore(r, p.value = TRUE)
+#' ( p <- raster.Zscore(r, p.value = TRUE) )
 #' }	
 #'
 #' @export raster.Zscore
 raster.Zscore <- function(x, p.value = FALSE, file.name = NULL, ...) {
-  r.vals <- raster::getValues(x)
-  na.idx <- which(!is.na(r.vals))
+  if (!inherits(x, "SpatRaster")) 
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+  r.vals <- x[][,1]
+    na.idx <- which(!is.na(r.vals))
   if( p.value == TRUE ) {
-    x[na.idx] <- stats::pnorm( outliers( stats::na.omit(raster::getValues(x)) ) )
+    x[na.idx] <- stats::pnorm( outliers( stats::na.omit(r.vals) ) )
   } else {
-    x[na.idx] <- outliers( stats::na.omit(raster::getValues(x)) )  
+    x[na.idx] <- outliers( stats::na.omit(r.vals) )  
   }
     if(!is.null(file.name)) { 
-      raster::writeRaster(x, ...)
+      terra::writeRaster(x, ...)
     } else {
       return( x )  
     }

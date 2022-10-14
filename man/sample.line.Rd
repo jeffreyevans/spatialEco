@@ -2,96 +2,23 @@
 % Please edit documentation in R/sample.line.R
 \name{sample.line}
 \alias{sample.line}
-\title{Systematic or random point sample of line(s)}
+\title{Sample Lines}
 \usage{
-sample.line(
-  x,
-  d = 100,
-  p = NULL,
-  n = NULL,
-  type = "regular",
-  longlat = FALSE,
-  min.samp = 1,
-  ...
-)
+sample.line(...)
 }
 \arguments{
-\item{x}{sp class SpatialLinesDataFrame object}
-
-\item{d}{Sample distance. For regular sample.}
-
-\item{p}{Proportional sample size (length * p), expected value 
-is 0-1. For regular or random.}
-
-\item{n}{Fixed sample size. For regular or random}
-
-\item{type}{Defines sample type. Options are "regular" or "random". A 
-regular sample results in a systematic, evenly spaced sample.}
-
-\item{longlat}{TRUE/FALSE is data in geographic units, if TRUE distance 
-is in kilometers}
-
-\item{min.samp}{Minimal number of sample points for a given line 
-(default is 1 point)}
-
-\item{...}{Additional argument passed to spsample}
+\item{...}{arguments passed to sf::st_sample}
 }
 \value{
-sp SpatialPointsDataFrame object.
+NA
 }
 \description{
-Creates a systematic or random point sample of an sp 
-             SpatialLinesDataFrame object based on distance spacing, 
-             fixed size or proportional size
-
-The sdist argument will produce an evenly spaced sample, whereas n produces 
-a fixed sized sample. The p (proportional) argument calculates the percent 
-of the line-length. The LID column in the @data slot corresponds to the row.names 
-of the SpatialLinesDataFrame object.
+Creates a sample for each line in a 
+             sf LINESTRING class object
 }
 \examples{
- require(sp)
- sp.lines <- SpatialLines(list(Lines(list(Line(cbind(c(1,2,3),c(3,2,2)))), 
-               ID="2")))
- sp.lines <- SpatialLinesDataFrame( sp.lines, data.frame(ID=1:2, 
-                                    row.names=c(1,2)) )
-
-opar <- par(no.readonly=TRUE)
-par(mfrow=c(2,2))
- # Create systematic sample at 20 km spacing 
- reg.sample <- sample.line(sp.lines, d = 20, type = "regular", 
-                           longlat = TRUE)
-   plot(sp.lines)
-     plot(reg.sample, pch = 20, add = TRUE)
-  box()
-  title("systematic d = 20")
-
- # Create fixed size (n = 20) systematic sample
- reg.sample <- sample.line(sp.lines, n = 20, type = "regular", 
-                           longlat = TRUE)  
-   plot(sp.lines)
-     plot(reg.sample, pch = 20, add = TRUE)
-     box()
-  title("systematic n = 20")
-  
- # Create fixed size (n = 20) random sample 
- rand.sample <- sample.line(sp.lines, n = 20, type = "random", 
-                            longlat = TRUE)  
-   plot(sp.lines)
-     plot(rand.sample, pch = 20, add = TRUE)
-     box()	  
-     title("rand n = 20")
-  
- # Create proportional (p = 0.10) random sample
- rand.sample <- sample.line(sp.lines, p = 0.10, type = "random", 
-                            longlat = TRUE)  
-   plot(sp.lines)
-     plot(rand.sample, pch = 20, add = TRUE)
-     box()
-  title("rand p = 0.10")
-par(opar)
-
+ \dontrun{
+  sf::sf_sample()
 }
-\author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+
 }

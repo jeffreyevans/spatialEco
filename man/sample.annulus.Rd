@@ -4,10 +4,10 @@
 \alias{sample.annulus}
 \title{Sample annulus}
 \usage{
-sample.annulus(x, r1, r2, n = 10, ...)
+sample.annulus(x, r1, r2, size = 10, ...)
 }
 \arguments{
-\item{x}{sp SpatialPoints or SpatialPointsDataFrame class object}
+\item{x}{An sf POINT class object}
 
 \item{r1}{Numeric value defining inner radius of annulus 
 (in projection units)}
@@ -15,9 +15,9 @@ sample.annulus(x, r1, r2, n = 10, ...)
 \item{r2}{Numeric value defining outer radius of annulus 
 (in projection units)}
 
-\item{n}{Number of samples}
+\item{size}{Number of samples}
 
-\item{...}{Additional arguments passed to spsample}
+\item{...}{Additional arguments passed to sf::st_sample}
 }
 \value{
 sp SpatialPointsataFrame OBJECT
@@ -31,23 +31,35 @@ Function can be used for distance based sampling. This is a sampling method
 that can be used to capture spatially lagged variation.
 }
 \examples{
-library(sp)
-library(rgeos)
-data(meuse)
-coordinates(meuse) <- ~x+y
-slot(meuse, "proj4string") <- CRS(SRS_string = "EPSG:28992")
-xy <- meuse[2,]
+ library(sf)
+ if(require(sp, quietly = TRUE)) {
+   data(meuse, package = "sp")
+   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                     agr = "constant")
+ }
 
-rs100 <- sample.annulus(xy, r1=50, r2=100, n = 50, type = "random")
-rs200 <- sample.annulus(xy, r1=100, r2=200, n = 50, type = "random")
+ xy <- meuse[2,]
+ rs100 <- sample.annulus(xy, r1=50, r2=100, size = 50)
+ rs200 <- sample.annulus(xy, r1=100, r2=200, size = 50)
+ 
+ plot(st_geometry(rs200), pch=20, col="red")
+   plot(st_geometry(rs100), pch=20, col="blue", add=TRUE)
+   plot(st_geometry(xy), pch=20, cex=2, col="black", add=TRUE)
+ legend("topright", legend=c("50-100m", "100-200m", "source"), 
+        pch=c(20,20,20), col=c("blue","red","black"))
 
-plot(rs200, pch=20, col="red")
-  points(rs100, pch=20, col="blue")
-  points(xy, pch=20, cex=2, col="black")
-  box()
-  legend("topright", legend=c("50-100m", "100-200m", "source"), 
-         pch=c(20,20,20), col=c("blue","red","black"))
-
+ \dontrun{
+# Run on multiple points
+rs100 <- sample.annulus(meuse[1:3,], r1=50, r2=100, 
+                        size = 50)
+rs200 <- sample.annulus(meuse[1:3,], r1=50, r2=200, 
+                        size = 50)
+plot(st_geometry(rs200), pch=20, col="red")
+  plot(st_geometry(rs100), pch=20, col="blue", add=TRUE)
+    plot(st_geometry(meuse[1:3,]), pch=20, cex=2, col="black", add=TRUE)
+ legend("topright", legend=c("50-100m", "100-200m", "source"), 
+        pch=c(20,20,20), col=c("blue","red","black"))
+}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

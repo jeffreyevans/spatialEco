@@ -21,7 +21,7 @@
 #'                                                                   
 #' @examples 
 #' library(sf)
-#' if(require(c(sp, quietly = TRUE)) {
+#' if(require(sp, quietly = TRUE)) {
 #'   data(meuse, package = "sp")
 #'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
 #'                     agr = "constant")
@@ -30,7 +30,7 @@
 #' zinc.cg <- correlogram(x = meuse, v = meuse$zinc, dist = 250, ns = 9)
 #' 
 #' @export correlogram  
-correlogram <- function(x, v, dist = 5000, dmatrix = FALSE, ns = 99, ...) {
+correlogram <- function(x, v, dist = 5000, ns = 99, ...) {
   if (!inherits(x, c("SpatialPointsDataFrame", "sf")))		
     stop(deparse(substitute(x)), " x must be a sf or sp point object")
   if(inherits(x, c("SpatialPointsDataFrame", "SpatialPoints"))) {

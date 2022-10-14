@@ -8,8 +8,6 @@ combine(x)
 }
 \arguments{
 \item{x}{raster stack/brick or SpatialPixelsDataFrame object}
-
-\item{rnames}{Column names to combine in raster stack or sp object}
 }
 \value{
 A  ratified rasterLayer or a list containing a SpatialPixelsDataFrame 

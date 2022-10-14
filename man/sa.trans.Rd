@@ -51,10 +51,12 @@ to 101% and flat areas (-1) to nodata.
 \examples{
  sa.trans(slope = 48.146, aspect = 360.000)
 
- library(raster)
- data(elev)
- sa <- raster::terrain(elev, opt=c("slope", "aspect"), unit="degrees")
- scosa <- raster::overlay(sa[[1]], sa[[2]], fun = sa.trans)
+library(terra)
+elev <- rast(system.file("data/elev.tif", package="spatialEco"))
+
+# Example of slope*cos(aspect)
+sa <- terra::terrain(elev, v=c("slope", "aspect"), unit="degrees")
+scosa <- terra::lapp(c(sa[[1]], sa[[2]]), fun = sa.trans)
 
 }
 \references{

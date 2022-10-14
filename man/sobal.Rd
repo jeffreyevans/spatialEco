@@ -34,11 +34,12 @@ to give the gradient intensity, using: SQRT( Gx^2 Gy^2 ). This can be expanded i
 gradient direction using atan(Gx/Gy)
 }
 \examples{
-library(raster)
-r <- brick(system.file("external/rlogo.grd", package="raster")) 
-s.int <- sobal(r[[1]])
-s.dir <- sobal(r[[1]], method = "direction")
-s.edge <- sobal(r[[1]], method = "edge")
+library(terra)
+
+r <- rast(system.file("ex/logo.tif", package="terra"))  
+  s.int <- sobal(r[[1]])
+  s.dir <- sobal(r[[1]], method = "direction")
+  s.edge <- sobal(r[[1]], method = "edge")
 
 opar <- par(no.readonly=TRUE)
 par(mfrow=c(2,2))

@@ -4,39 +4,21 @@
 \alias{sample.poly}
 \title{Sample Polygons}
 \usage{
-sample.poly(x, n = 10, type = "random", ...)
+sample.poly(...)
 }
 \arguments{
-\item{x}{sp class SpatialPolygons or SpatialPolygonsDataFrame object}
-
-\item{n}{Number of random samples}
-
-\item{type}{Type of sample with options for: "random", "regular", 
-"stratified", "nonaligned", "hexagonal", "clustered", 
- "Fibonacci". See "spsample" for details.}
-
-\item{...}{Additional arguments passed to spsample}
+\item{...}{arguments passed to sf::st_sample}
 }
 \value{
-sp SpatialPointsDataFrame object
+NA
 }
 \description{
 Creates an equal sample of n for each polygon in an 
              sp Polygon class object
 }
 \examples{
- library(raster)
- library(sp)   
-   p <- raster(nrow=10, ncol=10)
-   p[] <- runif(ncell(p)) * 10
-   p <- rasterToPolygons(p, fun=function(x){x > 9})   
-   s <- sample.poly(p, n = 5, type = "random")
-     plot(p)
-       plot(s, pch = 20, add = TRUE)
-       box()
-       title("Random sample (n=5) for each polygon")	   
-
+ \dontrun{
+  sf::sf_sample()
 }
-\author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+
 }

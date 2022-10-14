@@ -53,9 +53,9 @@ topo.distance <- function(x, r, echo = FALSE) {
     x <- sf::st_as_sf(x)
   if(sf::st_geometry_type(x, by_geometry = FALSE) != "LINESTRING")
     stop("x must be a LINESTRING object")
-  if (!any(class(r) %in% c("SpatRaster", "RasterLayer")))
+  if(!inherits(r, c("SpatRaster", "RasterLayer")))	
     stop("r must be a terra or raster object")	
-  if (class(r) == "RasterLayer")
+  if (!inherits(r, "RasterLayer"))
     r <- terra::rast(r)
   step.dist <- function(x) {
     d <- vector()

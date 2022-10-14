@@ -53,8 +53,14 @@
 bbox_poly <- function(x, crs=NULL) {
   if(inherits(x, "SpatRaster")) {
    e <- as.vector(terra::ext(x))[c(1,3,2,4)] 
-   e <- sf::st_as_sfc(sf::st_bbox(c(e[1], e[2], e[3], e[4])))
-   crs <- sf::st_crs(crs(x))    
+     e <- sf::st_as_sfc(sf::st_bbox(c(e[1], e[2], e[3], e[4])))
+
+      if(!is.null(crs)) {
+        sf::st_crs(e) <- sf::st_crs(crs)
+          message("assigning defined CRS, not feature CRS")		
+      } else {
+        sf::st_crs(e) <- sf::st_crs(terra::crs(x))    
+      }	 
   } else if(inherits(x, c("sf", "sfc"))) {
     e <- sf::st_as_sfc(sf::st_bbox(x))
       if(!is.null(crs)) {
@@ -63,6 +69,7 @@ bbox_poly <- function(x, crs=NULL) {
       } else {
         sf::st_crs(e) <- sf::st_crs(x)   
       }	
+  
   } else if(inherits(x, "numeric")) {
     names(x) <- c("xmin", "ymin", "xmax", "ymax")
     e <- sf::st_as_sfc(sf::st_bbox(c(x[1], x[2], x[3], x[4])))
