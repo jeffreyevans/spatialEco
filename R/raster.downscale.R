@@ -17,6 +17,7 @@
 #' \item  model     rlm model object 
 #' \item  MSE       Mean Square Error
 #' \item  AIC       Akaike information criterion
+#' \item  residuals if residuals = TRUE, a SpatRaster of the residual error
 #' }
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
