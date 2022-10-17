@@ -8,6 +8,8 @@
 #' @param scatter      (FALSE/TRUE) Optional scatter plot  
 #' @param residuals    (FALSE/TRUE) Output raster residual error raster, 
 #'                     at same resolution as y 
+#' @param se           (FALSE/TRUE) Output standard error raster, using prediction or 
+#'                     confidence interval  
 #' @param uncertainty  Output uncertainty raster(s) of confidence or prediction interval, 
 #'                     at same resolution as y. Options are c("none", "prediction", "confidence")  
 #'
@@ -21,18 +23,24 @@
 #' \item  residuals      If residuals = TRUE, a SpatRaster of the residual error
 #' \item  uncertainty    If pred.int = TRUE, SpatRaster's of the 
 #'                       lower/upper prediction intervals
+#' \item  std.error      If se = TRUE, SpatRaster's of the standard error 
 #' }
 #'
 #' @note
-#' This function uses a robust regression to downscale a raster based on higher-resolution
+#' This function uses a robust regression, fit using an M-estimation with Tukey's biweight 
+#' initialized by a specific S-estimator, to downscale a raster based on higher-resolution
 #' or more detailed raster data specified as covariate(s). You can optionally output residual 
-#' error or uncertainty rasters. However, please note that when choosing the type of uncertainty, 
-#' using a confidence interval (uncertainty around the mean predictions) when you should be using 
-#' the prediction interval (uncertainty around a single values) will greatly underestimate the 
-#' uncertainty in a given predicted value (Bruce & Bruce 2017). The full.ress = TRUE option uses 
-#' the x data to sample y rather than y to sample x. THis makes the problem much more
-#' computationally and memory extensive and should be used with caution. There is also the 
-#' question of pseudo-replication (sample redundancy) in the dependent variable.  
+#' error, standard error and/or uncertainty rasters. However, please note that when choosing 
+#' the type of uncertainty, using a confidence interval (uncertainty around the mean predictions) 
+#' when you should be using the prediction interval (uncertainty around a single values) will 
+#' greatly underestimate the uncertainty in a given predicted value (Bruce & Bruce 2017). 
+#' The full.res = TRUE option uses the x data to sample y rather than y to sample x. THis makes 
+#' the problem much more computationally and memory extensive and should be used with caution. 
+#' There is also the question of pseudo-replication (sample redundancy) in the dependent variable.
+#' Statistically speaking one would expect to capture the sample variation of x by sampling at the
+#' frequency of y thus supporting the downscaling estimate. Note that if uncertainty is not defined
+#' the prediction interval for standard error defaults to "confidence" else is the same output as
+#' uncertainty (eg., prediction or confidence).    
 #'
 #' @references
 #' Bruce, P., & A. Bruce. (2017). Practical Statistics for Data Scientists. O’Reilly Media.
@@ -58,7 +66,7 @@
 #'   names(y) <- c("tmax")
 #' 
 #' tmax.ds <- raster.downscale(x, y, scatter=TRUE, residuals = TRUE,
-#'                             uncertainty = "prediction")
+#'                             uncertainty = "prediction", se = TRUE)
 #' 	
 #'   # plot prediction and parameters	
 #'   opar <- par(no.readonly=TRUE)
@@ -72,7 +80,7 @@
 #'   # Plot residual error and raw prediction +/- intervals
 #'   opar <- par(no.readonly=TRUE)
 #'     par(mfrow=c(2,2))
-#'       plot(tmax.ds$downscale, main="Downscaled Temp max")
+#'       plot(tmax.ds$std.error, main="Standard Error")
 #'       plot(tmax.ds$residuals, main="residuals")
 #'       plot(tmax.ds$uncertainty[[1]], 
 #' 	       main="lower prediction interval")
@@ -91,7 +99,8 @@
 #'  
 #' }
 #' @export raster.downscale
-raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE, residuals = FALSE, 
+raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE, 
+                             residuals = FALSE, se = FALSE, 
 							 uncertainty = c("none", "prediction", "confidence")) {
 	uncertainty = uncertainty[1]
     if (!inherits(x, "SpatRaster")) 
@@ -142,7 +151,7 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE, residuals 
      warning(paste0(uncertainty, " is not a valid option, uncertainty will not be calculated"))
 	} else { 
     cells <- as.numeric(names(rrr$residuals))
-      ci <- suppressWarnings(predict(rrr, interval = uncertainty))
+      ci <- suppressWarnings(predict(rrr, interval = uncertainty))	  
 	    lci <- y
 	      lci[] <- NA
 		    lci[cells] <- as.numeric(ci[,"lwr"]) 
@@ -152,5 +161,16 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE, residuals 
 	results$uncertainty <- c(lci,uci)
     }	
   }
+  if(se == TRUE) {
+    if(uncertainty == "none")
+	  uncertainty = "confidence"
+	  message("Calculating standard error using ", uncertainty, " interval")
+    cells <- as.numeric(names(rrr$residuals))
+	  std.err <- y
+	    std.err[] <- NA
+	      std.err[cells] <- suppressWarnings(predict(rrr, se.fit=TRUE, 
+		                               interval=uncertainty)$se.fit) 
+	results$std.error <- std.err	 
+  }    
   return( results )		
 }
