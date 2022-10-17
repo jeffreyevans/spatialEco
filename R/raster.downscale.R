@@ -2,24 +2,41 @@
 #' @description Downscales a raster to a higher resolution raster using 
 #'              a robust regression
 #' 
-#' @param x          A terra SpatRaster object representing independent variable(s) 
-#' @param y          A terra SpatRaster object representing dependent variable
-#' @param p          Percent sample size (default NULL)      
-#' @param n          Fixed sample size (default NULL) 
-#' @param samp.type  Type of sample, options are "random" and "regular"     
-#' @param scatter    (FALSE/TRUE) Optional scatter plot  
-#' @param residuals  (TRUE/FALSE) Output residual error raster, same resolution as y 
-#' @param ...        Additional arguments passed to predict    
+#' @param x            A terra SpatRaster object representing independent variable(s) 
+#' @param y            A terra SpatRaster object representing dependent variable
+#' @param full.res     (FALSE/TRUE) Use full resolution of x (see notes)  
+#' @param scatter      (FALSE/TRUE) Optional scatter plot  
+#' @param residuals    (FALSE/TRUE) Output raster residual error raster, 
+#'                     at same resolution as y 
+#' @param uncertainty  Output uncertainty raster(s) of confidence or prediction interval, 
+#'                     at same resolution as y. Options are c("none", "prediction", "confidence")  
 #'
 #' @return A list object containing:
 #' \itemize{ 
-#' \item  downscale downscaled terra SpatRaster object
-#' \item  model     rlm model object 
-#' \item  MSE       Mean Square Error
-#' \item  AIC       Akaike information criterion
-#' \item  residuals if residuals = TRUE, a SpatRaster of the residual error
+#' \item  downscale      downscaled terra SpatRaster object
+#' \item  model          MASS rlm model object 
+#' \item  MSE            Mean Square Error
+#' \item  AIC            Akaike information criterion
+#' \item  parm.ci        Parameter confidence intervals
+#' \item  residuals      If residuals = TRUE, a SpatRaster of the residual error
+#' \item  uncertainty    If pred.int = TRUE, SpatRaster's of the 
+#'                       lower/upper prediction intervals
 #' }
 #'
+#' @note
+#' This function uses a robust regression to downscale a raster based on higher-resolution
+#' or more detailed raster data specified as covariate(s). You can optionally output residual 
+#' error or uncertainty rasters. However, please note that when choosing the type of uncertainty, 
+#' using a confidence interval (uncertainty around the mean predictions) when you should be using 
+#' the prediction interval (uncertainty around a single values) will greatly underestimate the 
+#' uncertainty in a given predicted value (Bruce & Bruce 2017). The full.ress = TRUE option uses 
+#' the x data to sample y rather than y to sample x. THis makes the problem much more
+#' computationally and memory extensive and should be used with caution. There is also the 
+#' question of pseudo-replication (sample redundancy) in the dependent variable.  
+#'
+#' @references
+#' Bruce, P., & A. Bruce. (2017). Practical Statistics for Data Scientists. O’Reilly Media.
+#' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
@@ -40,40 +57,65 @@
 #' y=tmax
 #'   names(y) <- c("tmax")
 #' 
-#' tmax.ds <- raster.downscale(x, y, scatter=TRUE)
+#' tmax.ds <- raster.downscale(x, y, scatter=TRUE, residuals = TRUE,
+#'                             uncertainty = "prediction")
+#' 	
+#'   # plot prediction and parameters	
 #'   opar <- par(no.readonly=TRUE)
 #'     par(mfrow=c(2,2))
 #'       plot(tmax, main="Temp max")
 #'       plot(x[[1]], main="elevation")
-#'    plot(x[[2]], main="slope")
+#'       plot(x[[2]], main="slope")
 #'       plot(tmax.ds$downscale, main="Downscaled Temp max")
 #'   par(opar)
+#' 
+#'   # Plot residual error and raw prediction +/- intervals
+#'   opar <- par(no.readonly=TRUE)
+#'     par(mfrow=c(2,2))
+#'       plot(tmax.ds$downscale, main="Downscaled Temp max")
+#'       plot(tmax.ds$residuals, main="residuals")
+#'       plot(tmax.ds$uncertainty[[1]], 
+#' 	       main="lower prediction interval")
+#'       plot(tmax.ds$uncertainty[[2]], 
+#' 	       main="upper prediction interval")
+#'   par(opar)
 #'   
-#'   # Plot residual error raster
-#'   plot(tmax.ds$residuals)
+#'   # plot prediction uncertainty
+#'   opar <- par(no.readonly=TRUE)
+#'     par(mfrow=c(2,1))
+#'       plot(tmax.ds$downscale - tmax.ds$uncertainty[[1]], 
+#' 	       main="lower prediction interval")
+#'       plot(tmax.ds$downscale - tmax.ds$uncertainty[[2]], 
+#' 	       main="upper prediction interval")  
+#'   par(opar)  
 #'  
 #' }
 #' @export raster.downscale
-raster.downscale <- function(x, y, p = NULL, n = NULL, scatter = FALSE, 
-                             samp.type=c("random", "regular"), 
-							 residuals = TRUE, ...) {
+raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE, residuals = FALSE, 
+							 uncertainty = c("none", "prediction", "confidence")) {
+	uncertainty = uncertainty[1]
     if (!inherits(x, "SpatRaster")) 
 	  stop(deparse(substitute(x)), " must be a terra SpatRaster object")	
     if (!inherits(y, "SpatRaster")) 
-	  stop(deparse(substitute(y)), " must be a terra SpatRaster object")	
-    if(is.null(p) & is.null(n)) {
+	  stop(deparse(substitute(y)), " must be a terra SpatRaster object")
+    if (terra::nlyr(y) > 1)  {
+      warning("Dependent variable must be a single response, 
+	    only the first raster will be used")	
+          y <- y[[1]]
+    }	  
+	if(full.res == FALSE) {
+	   sub.samp <- terra::as.points(y)
+	    sub.samp <- data.frame(sub.samp, terra::extract(x, sub.samp) )
+	      sub.samp <- sub.samp[,-which(names(sub.samp) %in% "ID")]
+	        names(sub.samp) <- c("y", names(x))
+	          sub.samp <- stats::na.omit(sub.samp)	   
+	} else {
 	  message("Population is being used and may cause memory issues")
-	    sub.samp <- terra::as.points(y)
-	} else {  
-	  if(!is.null(n)) { sampSize = n }
-	  if(!is.null(p)) { sampSize = as.numeric(round(((terra::nrow(y)*terra::ncol(y))*p),0)) }
-	  sub.samp <- terra::spatSample(y, size=sampSize, as.points=TRUE, 
-	                                na.rm=TRUE, method=samp.type[1])
-	}
-	sub.samp <- data.frame(sub.samp, terra::extract(x, sub.samp) )
-	  sub.samp <- sub.samp[,-which(names(sub.samp) %in% "ID")]
-	    names(sub.samp) <- c("y", names(x))
-	      sub.samp <- stats::na.omit(sub.samp)
+       sub.samp <- terra::as.points(x)
+	     sub.samp <- data.frame(terra::extract(y, sub.samp)[,2], sub.samp)
+	       names(sub.samp) <- c("y", names(x))
+	          sub.samp <- stats::na.omit(sub.samp)	
+    }		
 	if(length(names(sub.samp)[-1]) > 1){ 
       xnames <- paste(names(sub.samp)[-1], collapse = "+") 
 	} else {
@@ -82,17 +124,33 @@ raster.downscale <- function(x, y, p = NULL, n = NULL, scatter = FALSE,
     rrr <- MASS::rlm(stats::as.formula(paste(names(sub.samp)[1], xnames, sep=" ~ ")), 
                      data=sub.samp, scale.est="Huber", psi=MASS::psi.hampel, init="lts")
     if(scatter == TRUE) { graphics::plot(sub.samp[,2], sub.samp[,1], pch=20, cex=0.50,
-		                                 xlab=names(sub.samp)[2], ylab="y") }
-  r <- terra::predict(x, rrr, na.rm=TRUE, ...)
-  results <- list(downscale = r, model = rrr, 
-     MSE = round(mean(rrr$residuals), digits=4), 
-     AIC = round(stats::AIC(rrr), digits=4))
+		                                 xlab=names(sub.samp)[2], ylab="y") }									 
+     r <- terra::predict(x, rrr, na.rm=TRUE)
+   results <- list(downscale = r, model = rrr, 
+                MSE = round(mean(rrr$residuals), digits=4), 
+                AIC = round(stats::AIC(rrr), digits=4),
+              parm.ci=stats::confint.default(object = rrr, level = 0.95))
   if(residuals == TRUE) {
     cells <- as.numeric(names(rrr$residuals))
 	  res.rast <- y
 	    res.rast[] <- NA
 	      res.rast[cells] <- rrr$residuals 
 	results$residuals <- res.rast 	 
+  }
+  if(uncertainty != "none"){
+    if(!uncertainty %in% c("prediction", "confidence")) {
+     warning(paste0(uncertainty, " is not a valid option, uncertainty will not be calculated"))
+	} else { 
+    cells <- as.numeric(names(rrr$residuals))
+      ci <- suppressWarnings(predict(rrr, interval = uncertainty))
+	    lci <- y
+	      lci[] <- NA
+		    lci[cells] <- as.numeric(ci[,"lwr"]) 
+	  uci <- y
+	    uci[] <- NA
+	      uci[cells] <- as.numeric(ci[,"upr"]) 
+	results$uncertainty <- c(lci,uci)
+    }	
   }
   return( results )		
 }
