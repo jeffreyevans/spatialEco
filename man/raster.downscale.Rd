@@ -11,6 +11,7 @@ raster.downscale(
   full.res = FALSE,
   residuals = FALSE,
   se = FALSE,
+  p = 0.95,
   uncertainty = c("none", "prediction", "confidence")
 )
 }
@@ -28,6 +29,8 @@ at same resolution as y}
 
 \item{se}{(FALSE/TRUE) Output standard error raster, using prediction or 
 confidence interval}
+
+\item{p}{The confidence/prediction interval (default is 95%)}
 
 \item{uncertainty}{Output uncertainty raster(s) of confidence or prediction interval, 
 at same resolution as y. Options are c("none", "prediction", "confidence")}

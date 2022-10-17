@@ -10,6 +10,7 @@
 #'                     at same resolution as y 
 #' @param se           (FALSE/TRUE) Output standard error raster, using prediction or 
 #'                     confidence interval  
+#' @param p            The confidence/prediction interval (default is 95%)  
 #' @param uncertainty  Output uncertainty raster(s) of confidence or prediction interval, 
 #'                     at same resolution as y. Options are c("none", "prediction", "confidence")  
 #'
@@ -100,7 +101,7 @@
 #' }
 #' @export raster.downscale
 raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE, 
-                             residuals = FALSE, se = FALSE, 
+                             residuals = FALSE, se = FALSE, p = 0.95,  
 							 uncertainty = c("none", "prediction", "confidence")) {
 	uncertainty = uncertainty[1]
     if (!inherits(x, "SpatRaster")) 
@@ -138,7 +139,7 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
    results <- list(downscale = r, model = rrr, 
                 MSE = round(mean(rrr$residuals), digits=4), 
                 AIC = round(stats::AIC(rrr), digits=4),
-              parm.ci=stats::confint.default(object = rrr, level = 0.95))
+                parm.ci=stats::confint.default(object = rrr, level = 0.95))
   if(residuals == TRUE) {
     cells <- as.numeric(names(rrr$residuals))
 	  res.rast <- y
@@ -149,28 +150,25 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
   if(uncertainty != "none"){
     if(!uncertainty %in% c("prediction", "confidence")) {
      warning(paste0(uncertainty, " is not a valid option, uncertainty will not be calculated"))
-	} else { 
-    cells <- as.numeric(names(rrr$residuals))
-      ci <- suppressWarnings(stats::predict(rrr, interval = uncertainty))	  
-	    lci <- y
-	      lci[] <- NA
-		    lci[cells] <- as.numeric(ci[,"lwr"]) 
-	  uci <- y
-	    uci[] <- NA
-	      uci[cells] <- as.numeric(ci[,"upr"]) 
-	results$uncertainty <- c(lci,uci)
+	} else {	
+	  pred.uncert <- function(model, data) {
+        v <- suppressWarnings(stats::predict(model, data, se.fit=FALSE,  
+                              interval=uncertainty,level=p))
+	      cbind(lci=as.vector(v[,"lwr"]), uci=as.vector(v[,"upr"]) )
+      }
+    results$uncertainty <- terra::predict(x, rrr, fun=pred.uncert) 
     }	
   }
   if(se == TRUE) {
     if(uncertainty == "none")
 	  uncertainty = "confidence"
 	  message("Calculating standard error using ", uncertainty, " interval")
-    cells <- as.numeric(names(rrr$residuals))
-	  std.err <- y
-	    std.err[] <- NA
-	      std.err[cells] <- suppressWarnings(stats::predict(rrr, se.fit=TRUE, 
-		                               interval=uncertainty)$se.fit) 
-	results$std.error <- std.err	 
+    pred.se <- function(model, data) {
+      suppressWarnings(stats::predict(model, data, se.fit=TRUE,  
+                      interval=uncertainty,level=p)$se.fit)
+    }
+  results$std.error <- terra::predict(x, rrr, fun=pred.se) 
   }    
   return( results )		
 }
+
