@@ -151,7 +151,7 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
      warning(paste0(uncertainty, " is not a valid option, uncertainty will not be calculated"))
 	} else { 
     cells <- as.numeric(names(rrr$residuals))
-      ci <- suppressWarnings(predict(rrr, interval = uncertainty))	  
+      ci <- suppressWarnings(stats::predict(rrr, interval = uncertainty))	  
 	    lci <- y
 	      lci[] <- NA
 		    lci[cells] <- as.numeric(ci[,"lwr"]) 
@@ -168,7 +168,7 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
     cells <- as.numeric(names(rrr$residuals))
 	  std.err <- y
 	    std.err[] <- NA
-	      std.err[cells] <- suppressWarnings(predict(rrr, se.fit=TRUE, 
+	      std.err[cells] <- suppressWarnings(stats::predict(rrr, se.fit=TRUE, 
 		                               interval=uncertainty)$se.fit) 
 	results$std.error <- std.err	 
   }    
