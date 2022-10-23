@@ -1,11 +1,11 @@
 #' @title Surface Relief Ratio
 #' @description Calculates the Pike (1971) Surface Relief Ratio
 #' 
-#' @param x    raster object
+#' @param x    A terra SpatRaster object
 #' @param s    Focal window size
-#' @param ...  Additional arguments passed to raster::calc
+#' @param ...  Additional arguments passed to terra::lapp
 #' 
-#' @return raster class object of Pike's (1971) Surface Relief Ratio
+#' @return A terra SpatRaster object of Pike's (1971) Surface Relief Ratio
 #'
 #' @note
 #' Describes rugosity in continuous raster surface within a specified window. 
@@ -15,20 +15,19 @@
 #' 
 #' @examples 
 #' \donttest{
-#'   library(raster)
-#'   data(elev)
+#'  library(terra)
+#'  elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #'   r.srr <- srr(elev, s=5)
 #'     plot(r.srr, main="Surface Relief Ratio") 
-#'
 #'  }     
 #' @export srr
 srr <- function(x, s = 5, ...) {  
-  if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
-    if( length(s) == 1) s = c(s[1],s[1])
-       m <- matrix(1, nrow=s, ncol=s)
-    rmin <- raster::focal(x, w=m, fun=min)
-    rmax <- raster::focal(x, w=m, fun=max)
-	rmean <- raster::focal(x, w=m, fun=mean)
-    return( raster::calc(raster::stack(rmean,rmin,rmax), 
-	        fun=function(x) { (x[1] - x[2] ) / ( x[3] - x[2] ) }, ... ) )
+  if (!inherits(x, "SpatRaster")) 
+	stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+  m <- matrix(1, nrow=s, ncol=s)
+  rmin <- terra::focal(x, w=m, fun=min)
+    rmax <- terra::focal(x, w=m, fun=max)
+	  rmean <- terra::focal(x, w=m, fun=mean)
+  return( terra::lapp(c(rmean,rmin,rmax), 
+    fun=function(x,y,z) { (x - y ) / ( z - y ) }, ... ) )
 } 

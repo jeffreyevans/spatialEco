@@ -8,7 +8,8 @@ spatial.select(
   x,
   y = NULL,
   distance = NULL,
-  predicate = c("intersect", "contains", "covers", "touches", "proximity", "contingency"),
+  predicate = c("intersection", "intersect", "contains", "covers", "touches",
+    "proximity", "contingency"),
   neighbors = c("queen", "rook")
 )
 }
@@ -21,104 +22,86 @@ spatial.select(
 
 \item{predicate}{Spatial predicate for intersection}
 
-\item{neighbors}{If predicate = "contingency" type of neighbors options are 
+\item{neighbors}{If predicate = "contingency" type of neighbors options are
 c("queen", "rook")}
 }
 \value{
-An sp object representing a subset of y based on the spatial query of x or, 
+An sf object representing a subset of y based on the spatial query of x or,
 if predicate = contingency a sparse matrix representing neighbor indexes
 }
 \description{
-Performs a spatial select (feature subset) between a polygon(s) and other 
+Performs a spatial select (feature subset) between a polygon(s) and other
 feature class
-
-Performs a spatial select of features based on an overlay of a polygon (x),   
-which can represent multiple features, and a polygon, point or line feature 
-classes (y). User can specify a partial or complete intersection, using within 
-argument, or within a distance, using distance argument, predicated on the  
-query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
-that for point to point neighbor selections use the knn function.
+}
+\details{
+\itemize{
+\item intersection  Create a spatial intersection between two features
+\item intersect     Boolean evaluation of features intersecting
+\item contains      Boolean evaluation of x containing y
+\item covers        Boolean evaluation of x covering y
+\item touches       Boolean evaluation of x touching y
+\item proximity     Evaluation of distance-based proximity of x to y (x and y can be the same)
+\item contingency   Evaluation of polygon contingency (eg., 1st, 2nd order)
+}
 }
 \note{
-Valid spatial predicates include: intersect, touches, covers, contains, proximity 
-and contingency. See [DE-9IM topology model](https://en.wikipedia.org/wiki/DE-9IM)
-for detailed information on data predicates.
+Performs a spatial select of features based on an overlay of a polygon (x),
+which can represent multiple features, and a polygon, point or line feature
+classes (y). User can specify a partial or complete intersection, using within
+argument, or within a distance, using distance argument, predicated on the
+query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
+that for point to point neighbor selections use the knn function.
+Valid spatial predicates include: intersect, touches, covers, contains, proximity
+and contingency. See DE-9IM topology model for detailed information on data predicates.
 }
 \examples{
-library(raster)
-library(sp)   
-
-data(meuse)
-  coordinates(meuse) <- ~x+y
+library(sf)
+ if(require(sp, quietly = TRUE)) {
+   data(meuse, package = "sp")
+   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                     agr = "constant")
 
 spolys <- hexagons(meuse, res=100)
-p <- raster(extent(spolys), res=800)
-  p[] <- runif(ncell(p)) * 10
-    p <- rasterToPolygons(p, fun=function(x){x > 6})
+  spolys$ID <- 1:nrow(spolys)
+    p <- st_as_sf(st_sample(spolys, 500))
+	  p$PTID <- 1:nrow(p) 
+	  sf::st_geometry(p) <- "geometry"
+
+  plot(st_geometry(spolys), main="all data")
+    plot(st_geometry(p), pch=20, add=TRUE)
 	
-#### On polygons	 
 sub.int <- spatial.select(p, spolys, predicate = "intersect")
-sub.contains <- spatial.select(p, spolys, predicate = "contains")
-sub.cov <- spatial.select(p, spolys, predicate = "covers")
-sub.touches <- spatial.select(p, spolys, predicate = "touches")
-sub.prox <- spatial.select(p, spolys, distance=100, predicate = "proximity")
+  plot(st_geometry(sub.int), main="intersects")
+    plot(st_geometry(p), pch=20, add=TRUE)	
 
-opar <- par(no.readonly=TRUE)
-par(mfrow=c(2,3))
-  plot(spolys, main="all data")
-    plot(p, add=TRUE)  
-  plot(sub.int, main="intersects")
-    plot(p, add=TRUE) 
-  plot(sub.contains, main="contains")
-    plot(p, add=TRUE) 
-  plot(sub.cov, main="covers")
-    plot(p, add=TRUE) 	 
-  plot(sub.touches, main="touches")
-    plot(p, add=TRUE) 	
-  plot(sub.prox, main="Proximity 100m distance")
-    plot(p, add=TRUE) 
-par(opar)
+sub.prox <- spatial.select(p, spolys, distance=100, predicate = "proximity")	
+  plot(st_geometry(sub.int), main="intersects")
+    plot(st_geometry(p), pch=20, add=TRUE)
 
-#### On points 
-#### note; touches is not relevant for points and intersect/contains/covers 
-####       yield the same results  
-sub.int <- spatial.select(p, meuse, predicate = "intersect")
-sub.contains <- spatial.select(p, meuse, predicate = "contains")
-sub.prox <- spatial.select(p, meuse, distance=200, predicate = "proximity")
-
-opar <- par(no.readonly=TRUE)
-par(mfrow=c(2,2))
-  plot(meuse, main="all data", pch=20)
-    plot(p, add=TRUE)  
-  plot(sub.int, main="intersects", pch=20)
-    plot(p, add=TRUE) 
-  plot(sub.contains, main="contains", pch=20)
-    plot(p, add=TRUE) 
-  plot(sub.prox, main="Proximity 200m distance", pch=20)
-    plot(p, add=TRUE)
-par(opar)
-
-#### For rook or queen polygon contingency 	
-spolys <- as(sf::st_make_grid(sf::st_sfc(sf::st_point(c(0,0)), 
-             sf::st_point(c(3,3))), n = c(3,3)), "Spatial")
-
-spatial.select(spolys, predicate = "contingency")
+# For rook or queen polygon contingency 	
+plot( spolys <- sf::st_make_grid(sf::st_sfc(sf::st_point(c(0,0)), 
+                 sf::st_point(c(3,3))), n = c(3,3)) )
+  
+spatial.select(x=spolys, predicate = "contingency")
 spatial.select(spolys, predicate = "contingency", neighbors = "rook") 
 
 }
+}
 \seealso{
-\code{\link[rgeos]{gIntersects}} for details on intersect predicate
+\code{\link[sf]{st_intersection}} for details on intersection predicate
 
-\code{\link[rgeos]{gContains}} for details on contain predicate
+\code{\link[sf]{st_intersects}} for details on intersect predicate
 
-\code{\link[rgeos]{gCovers}} for details on covers predicate
+\code{\link[sf]{st_contains}} for details on contain predicate
 
-\code{\link[rgeos]{gTouches}} for details on touches predicate
+\code{\link[sf]{st_covers}} for details on covers predicate
 
-\code{\link[rgeos]{gWithinDistance}} for details on proximity predicate
+\code{\link[sf]{st_touches}} for details on touches predicate
+
+\code{\link[sf]{st_is_within_distance}} for details on proximity predicate
 
 \url{https://en.wikipedia.org/wiki/DE-9IM} for details on DE-9IM topology model
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

@@ -4,10 +4,10 @@
 \alias{tri}
 \title{Terrain Ruggedness Index}
 \usage{
-tri(r, s = 3, exact = TRUE, file.name = NULL, ...)
+tri(r, s = 3, exact = TRUE, ...)
 }
 \arguments{
-\item{r}{RasterLayer class object}
+\item{r}{A terra SpatRaster class object}
 
 \item{s}{Scale of window. Must be odd number, can represent 2
 dimensions (eg., s=c(3,5) would represent a 3 x 5 window)}
@@ -15,12 +15,10 @@ dimensions (eg., s=c(3,5) would represent a 3 x 5 window)}
 \item{exact}{Calculate (TRUE/FALSE) the exact TRI or an algebraic
 approximation.}
 
-\item{file.name}{Name of output raster (optional)}
-
-\item{...}{Additional arguments passed to writeRaster}
+\item{...}{Additional arguments passed to terra::focal or terra::app}
 }
 \value{
-raster class object or raster written to disk
+A terra SpatRaster class object of the TRI
 }
 \description{
 Implementation of the Riley et al (1999) Terrain Ruggedness Index
@@ -42,11 +40,11 @@ Recommended ranges for classifying Topographic Ruggedness Index:
 }
 \examples{
 \donttest{
- library(raster)
- data(elev)
+library(terra)
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
   ( tri.ext <- tri(elev) )
   ( tri.app <- tri(elev, exact = FALSE) )
-  plot(stack(tri.ext, tri.app))
+  plot(c(tri.ext, tri.app))
 }
 
 }

@@ -72,7 +72,7 @@ idw.smoothing <- function(x, y, d, k) {
           wt <- round(append(dsub, 1, after = 0), digits = 0)
         wt <- wts[wt]
       }
-	  ysub <- sf::st_drop_geometry(lsub[,yname])[,1]
+	  ysub <- sf::st_drop_geometry(lsub[,y])[,1]
         wm <- stats::weighted.mean(ysub, wt, na.rm = TRUE)
         wm[is.nan(wm)] <- NA
       v <- append(v, wm, after = length(v))

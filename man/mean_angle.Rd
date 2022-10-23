@@ -31,8 +31,7 @@ mean_angle(c(90, 180, 270, 360))
   mean(c(90, 180, 270, 360))
 
 library(terra)
-data(elev)
-  elev <- rast(elev)
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 asp <- terrain(elev, v="aspect")
 s <- buffer(spatSample(asp, 20, as.points=TRUE, 
             na.rm=TRUE, values=FALSE), 5000)

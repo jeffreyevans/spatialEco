@@ -4,7 +4,7 @@
 #' @param dates        Dates to subset default is NULL, returns all products
 #' @param resolution   The product resolution c("1km", "300m"),
 #' @param product      Which product to query options are "fapar", 
-#                      "fcover", "lai", "ndvi"),
+#                      "fcover", "lai", "ndvi"
 #' @param ver          Product version options are "newest", "v1", "v2", "v3"
 #'
 #' @return A vector of download URL's for the products
@@ -27,15 +27,13 @@
 #' It is highly recommended that you do not change the default  
 #' ver="newest" argument unless there is a specific reason to.  
 #' 
-#' @details
-#' Available products
-#' \itemize{
-#'   \item {fapar} {Fraction of photosynthetically active radiation  
-#'                  absorbed by the vegetation} 
-#'   \item {fcover} {Fraction of green vegetation cover} 
-#'   \item {lai} {Leaf Area index}
-#'   \item {ndvi} {Normalized Difference Vegetation Index}  
-#' }
+#' @details Available products
+#' * fapar    Fraction of photosynthetically active radiation  
+#'            absorbed by the vegetation
+#' * fcover   Fraction of green vegetation cover
+#' * lai      Leaf Area index
+#' * ndvi     Normalized Difference Vegetation Index 
+#' @md
 #'
 #' @details
 #' Not yet implemented; Soil Water Index, Surface Soil Moisture,
@@ -55,11 +53,10 @@
 #' all.urls <- cgls_urls(dates = d, resolution = 1000, 
 #'                         product = "lai")		
 #'
-#' # Return all 300m LAI 
-#' lai <- cgls_urls(resolution = 300, product = "lai")
-#'     head( basename(lai) )
+#' ## Return all 300m LAI 
+#' # lai <- cgls_urls(resolution = 300, product = "lai")
+#' #   head( basename(lai) )
 #' 
-#'
 #' ## Example of downloading URL's
 #' ## You need to define your login credentials to download data
 #' # username = "xxxx"  
@@ -77,7 +74,7 @@
 cgls_urls <- function(dates = NULL, resolution = c(1000, 300),  
                        product = c("fapar", "fcover", "lai", "ndvi"),
                        ver = c("newest", "v1", "v2", "v3")) {
-    manifest.url <- "http://land.copernicus.vgt.vito.be/manifest/"
+    manifest.url <- "https://land.copernicus.vgt.vito.be/manifest/"
    if(!any(which(utils::installed.packages()[,1] %in% "stringr")))
       stop("please install stringr package before running this function")	
     if(resolution[1] == 300) {

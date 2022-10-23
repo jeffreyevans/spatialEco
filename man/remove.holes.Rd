@@ -2,36 +2,52 @@
 % Please edit documentation in R/remove.holes.R
 \name{remove.holes}
 \alias{remove.holes}
-\title{Remove polygon holes}
+\title{Remove or return polygon holes}
 \usage{
-remove.holes(x)
+remove.holes(x, only.holes = FALSE)
 }
 \arguments{
-\item{x}{SpatialPolygons or SpatialPolygonsDataFrame class object}
+\item{x}{sf POLYGON or MULTIPOLYGON object}
+
+\item{only.holes}{Delete holes (FALSE) or returns only holes (FALSE)}
 }
 \value{
-SpatialPolygonsDataFrame object with all holes removed
+sf POLYGON object
 }
 \description{
-Removes all holes (null geometry) in polygon sp class objects
+Removes or returns all holes (null geometry) in sf polygon 
+class objects
 }
 \note{
-A hole is considered a polygon within a polygon representing null geometry
+A hole is considered a polygon within a polygon (island) representing null 
+geometry. If you want to return only holes, no longer NULL, use keep = TRUE. 
+To delete holes use default only.holes = FALSE. Single part features will be 
+returned regardless of input.
 }
 \examples{
- library(sp)
- Sr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
- Sr2 = Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))
- Sr3 = Polygon(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))
- Sr4 = Polygon(cbind(c(5,6,6,5,5),c(4,4,3,3,4)), hole = TRUE)
- polys <- SpatialPolygons(list(Polygons(list(Sr1), "s1"),
-                 Polygons(list(Sr2), "s2"),
-                 Polygons(list(Sr3, Sr4), "s3/4")), 1:3)
+library(sf)
+
+p <- sf::st_as_sf(sf::st_sfc(
+  sf::st_polygon(list(
+  cbind(c(2,4,4,1,2),c(2,3,5,4,2)),
+  cbind(c(2.33, 2.05, 3.25, 3.25, 2.33), 
+      c(3.00, 3.56, 3.95, 3.46, 3.00)))),
+  sf::st_polygon(list(	
+    cbind(c(5,4,2,5),c(2,3,2,2)))),
+  sf::st_polygon(list(  
+    cbind(c(4,4,5,10,4),c(5,3,2,5,5)),
+    cbind(c(5,6,6,5,5),c(4,4,3,3,4)) 
+))))
+  p$ID <- 1:3
+
+rh <- remove.holes(p)
+kh <- remove.holes(p, only.holes=TRUE)
 
 opar <- par(no.readonly=TRUE)
-   par(mfrow=c(1,2))
-     plot(polys, col = 1:3, main="with hole")
-     plot(remove.holes(polys), col = 1:3, main="with hole removed")
+   par(mfrow=c(2,2))
+     plot(st_geometry(p), main="Original with holes")
+     plot(st_geometry(rh), main="holes removed only.holes=FALSE")
+	 plot(st_geometry(kh), main="return holes only.holes=TRUE")
 par(opar)
 
 }

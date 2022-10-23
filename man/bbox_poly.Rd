@@ -4,13 +4,10 @@
 \alias{bbox_poly}
 \title{Bounding box polygon}
 \usage{
-bbox_poly(x, crs = NULL)
+bbox_poly(x)
 }
 \arguments{
 \item{x}{An sf or terra object or vector of bounding coordinates}
-
-\item{crs}{The CRS assigned to the object, mostly relevant 
-for coordinates}
 }
 \value{
 A single feature sf class polygon object
@@ -46,14 +43,14 @@ plot(st_geometry(meuse), pch=20)
 # raster (terra)
   r <- rast(ext(meuse))
     r[] <- runif(ncell(r))
+   crs(r) <- "epsg:28992"
   e <- bbox_poly(r)
   
   plot(r)
     plot(st_geometry(e), border="red", add=TRUE)
 
 # extent vector
-e <- bbox_poly(c(178605, 329714, 181390, 333611), 
-               crs=28992) 
+e <- bbox_poly(c(178605, 329714, 181390, 333611)) 
 plot(e)
 
 }

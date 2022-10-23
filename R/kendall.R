@@ -14,19 +14,18 @@
 #' @param na.rm      (FALSE/TRUE) Remove NA values
 #' @param ...         Not used
 #'
-#' @return Depending on arguments, a vector containing:
-#' \itemize{
-#'   \item {value 1} { Theil-Sen slope, always returned }
-#'   \item {value 2} {Kendall's tau two-sided test, if tau TRUE}
-#'   \item {value 3} {intercept for trend if intercept TRUE, not 
-#'                    if prewhitened}
-#'   \item {value 4} {p value for trend fit if p.value TRUE}
-#'   \item {value 5} {Z value for trend fit if z.value TRUE}
-#'   \item {value 6} {lower confidence level at 95-pct if confidence 
-#'                    TRUE, not if prewhitened}
-#'   \item {value 7} {upper confidence level at 95-pct if confidence 
-#'                    TRUE, not if prewhitened}
-#' }
+#' @return Depending on arguments, a vector containing: 
+#' * Theil-Sen slope, always returned 
+#' * Kendall's tau two-sided test, if tau TRUE
+#' * intercept for trend if intercept TRUE, not 
+#'                    if prewhitened
+#' * p value for trend fit if p.value TRUE
+#' * Z value for trend fit if z.value TRUE
+#' * lower confidence level at 95-pct if confidence 
+#'                    TRUE, not if prewhitened
+#' * upper confidence level at 95-pct if confidence 
+#'                    TRUE, not if prewhitened
+#' @md
 #'
 #' @details 
 #' This function implements Kendall's nonparametric test for a monotonic trend 

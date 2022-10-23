@@ -7,14 +7,14 @@
 dissection(x, s = 5, ...)
 }
 \arguments{
-\item{x}{raster object}
+\item{x}{A terra SpatRaster class object}
 
 \item{s}{Focal window size}
 
-\item{...}{Additional arguments passed to raster::calc}
+\item{...}{Additional arguments passed to terra::lapp}
 }
 \value{
-raster class object of Martonne's modified dissection
+A SpatRaster class object of Martonne's modified dissection
 }
 \description{
 Calculates the Evans (1972) Martonne's modified 
@@ -26,8 +26,8 @@ Dissection is calculated as:
 }
 \examples{
 \donttest{ 
-  library(raster)
-  data(elev)
+library(terra)
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
   d <- dissection(elev, s=3)
     plot(d, main="dissection") 
 }     

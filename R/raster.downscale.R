@@ -14,18 +14,17 @@
 #' @param uncertainty  Output uncertainty raster(s) of confidence or prediction interval, 
 #'                     at same resolution as y. Options are c("none", "prediction", "confidence")  
 #'
-#' @return A list object containing:
-#' \itemize{ 
-#' \item  downscale      downscaled terra SpatRaster object
-#' \item  model          MASS rlm model object 
-#' \item  MSE            Mean Square Error
-#' \item  AIC            Akaike information criterion
-#' \item  parm.ci        Parameter confidence intervals
-#' \item  residuals      If residuals = TRUE, a SpatRaster of the residual error
-#' \item  uncertainty    If pred.int = TRUE, SpatRaster's of the 
-#'                       lower/upper prediction intervals
-#' \item  std.error      If se = TRUE, SpatRaster's of the standard error 
-#' }
+#' @return A list object containing:  
+#' * downscale      downscaled terra SpatRaster object
+#' * model          MASS rlm model object 
+#' * MSE            Mean Square Error
+#' * AIC            Akaike information criterion
+#' * parm.ci        Parameter confidence intervals
+#' * residuals      If residuals = TRUE, a SpatRaster of the residual error
+#' * uncertainty    If pred.int = TRUE, SpatRaster's of the 
+#'                  lower/upper prediction intervals
+#' * std.error      If se = TRUE, SpatRaster's of the standard error 
+#' @md
 #'
 #' @note
 #' This function uses a robust regression, fit using an M-estimation with Tukey's biweight 

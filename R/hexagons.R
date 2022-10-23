@@ -15,18 +15,17 @@
 #'    data(meuse, package = "sp")
 #'    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
 #'                      agr = "constant")
-#'  }
-#' 
+#'
 #' hex <- hexagons(meuse, res=300)   
 #'   plot(st_geometry(hex))
 #'     plot(st_geometry(meuse),pch=20,add=TRUE)
 #' 
 #' # subset hexagons to intersection with points
-#' idx <- which(apply(st_intersects(hex.polys, meuse, sparse=FALSE), 1, any))
+#' idx <- which(apply(st_intersects(hex, meuse, sparse=FALSE), 1, any))
 #' hex.sub <- hex[idx,] 
 #'   plot(st_geometry(hex.sub))
 #'     plot(st_geometry(meuse),pch=20,add=TRUE)
-#' 
+#' }
 #' @export      
 hexagons <- function(x, res = 100, ...) {
   if(!inherits(x, "sf"))		
@@ -37,6 +36,7 @@ hexagons <- function(x, res = 100, ...) {
   e <- sf::st_as_sfc(sf::st_bbox(x))
     res <- sf::st_as_sf(sf::st_make_grid(e, cellsize = res, 
                         square = FALSE))
+        sf::st_geometry(res) <- "geometry"
       sf::st_crs(res) <- sf::st_crs(x) 						
   return(res)
 } 

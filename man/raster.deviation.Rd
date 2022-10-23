@@ -42,7 +42,7 @@ specified focal statistic.
 }
 \examples{
 library(terra)
-elev <- rast(system.file("data/elev.tif", package="spatialEco"))
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 
 # local deviation from first-order trend, global mean and raw value
 r.dev.trend <- raster.deviation(elev, type="trend", degree=1) 

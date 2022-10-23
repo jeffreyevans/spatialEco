@@ -53,9 +53,9 @@
 sample.annulus <- function(x, r1, r2, size = 10, ...) {
   if(!inherits(x, c("sf", "sfc")))		
     stop(deparse(substitute(x)), " must be an sf or sfc object")
- if(!unique(as.character(st_geometry_type(x))) %in% c("POINT", "MULTIPOINT"))
+ if(!unique(as.character(sf::st_geometry_type(x))) %in% c("POINT", "MULTIPOINT"))
     stop(deparse(substitute(x)), " must be an sf POLYGON object")		
-  if(unique(as.character(st_geometry_type(x))) %in% "MULTIPOINT")
+  if(unique(as.character(sf::st_geometry_type(x))) %in% "MULTIPOINT")
     stop("Function does not support multi-part MULTIPOINT objects")		
   if(r1 >= r2) stop("inner radius (r1) must be smaller than outer (r2)")
     dots <- as.list(match.call(expand.dots = TRUE)[-1])

@@ -3,11 +3,11 @@
 #'              Vegetation Index 2 (MTVI) weighted by the Normalized difference senescent 
 #'              vegetation index (NDSVI)
 #'
-#' @param red            Red band (0.636 - 0.673mm), landsat 5&7 band 3, OLI 
+#' @param red            SpatRaster, Red band (0.636 - 0.673mm), landsat 5&7 band 3, OLI 
 #'                       (landsat 8) band 4
-#' @param nir            Near infrared band (0.851 - 0.879mm) landsat 5&7 band 4, 
+#' @param nir            SpatRaster, Near infrared band (0.851 - 0.879mm) landsat 5&7 band 4, 
 #'                       OLI (landsat 8) band 5 
-#' @param swir           short-wave infrared band 1 (1.566 - 1.651mm), landsat 5&7 
+#' @param swir           SpatRaster, short-wave infrared band 1 (1.566 - 1.651mm), landsat 5&7 
 #'                       band 5, OLI (landsat 8) band 6
 #' @param mtvi           (FALSE | TRUE) Use Modified Triangular Vegetation Index 2  
 #'                       instead of MSAVI
@@ -15,9 +15,9 @@
 #' @param senescence     The critical value, in NDSVI, representing senescent vegetation 
 #' @param threshold      Threshold value for defining NA based on < p
 #' @param weight.factor  Apply partial weights (w * weight.factor) to the NDSVI weights 
-#' @param ...            Additional arguments passed to raster calc function
+#' @param ...            Additional arguments passed to terra::lapp function
 #'
-#' @return rasterLayer class object of the weighted MSAVI metric 
+#' @return A terra SpatRaster class object of the weighted MSAVI metric 
 #'
 #' @description
 #' The intent of this index is to correct the MSAVI or MTVI index for bias associated 
@@ -70,19 +70,20 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(raster)
+#' library(terra)
 #' library(RStoolbox)
 #' 
 #' data(lsat)
 #' lsat <- radCor(lsat, metaData = readMeta(system.file(
-#'                  "external/landsat/LT52240631988227CUB02_MTL.txt", 
-#'                   package="RStoolbox")), method = "apref")
-#' 
+#'               "external/landsat/LT52240631988227CUB02_MTL.txt", 
+#'               package="RStoolbox")), method = "apref")
+#'   lsat <- rast(lsat)
+#'   
 #' # Using Modified Soil-adjusted Vegetation Index (MSAVI)
 #' ( wmsavi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]]) )
 #'     plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
 #'       plot(wmsavi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
-#'
+#' 
 #' # Using Modified Triangular Vegetation Index 2 (MTVI) 
 #' ( wmtvi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]],
 #'                           green = lsat[[3]], mtvi = TRUE) )
@@ -94,15 +95,21 @@
 swvi <- function(red, nir, swir, green = NULL, mtvi = FALSE, 
                  senescence = 0, threshold = NULL, 
                  weight.factor = NULL, ...) {
-  if(missing(red) & 
-       missing(nir) & 
-         missing(swir))
+  if(missing(red) | missing(nir) | missing(swir))
     stop("Must specify red, nir and swir1 bands")
-  if(mtvi) { if(is.null(green)) stop("Must specify green band") } 	
-  if(class(red)[1] != "RasterLayer" & 
-       class(nir)[1] != "RasterLayer" & 
-         class(swir)[1] != "RasterLayer")
-    stop("Data must be raster class objects")
+  if(mtvi) { 
+    if(is.null(green)) 
+      stop("Must specify green band") 
+    if (!inherits(green, "SpatRaster")) 
+	stop("green band must be a terra SpatRaster object")	  
+  } 	
+  if (!inherits(red, "SpatRaster")) 
+	stop("red band must be a terra SpatRaster object")
+  if (!inherits(nir, "SpatRaster")) 
+	stop("NIR band must be a terra SpatRaster object")
+  if (!inherits(swir, "SpatRaster")) 
+	stop("SWIR band must be a terra SpatRaster object")
+
   f.msavi <- function(nir, red) {
     return( (2 * nir + 1 - sqrt( (2 * nir + 1)^2 - 8 * (nir - red) )) / 2 )
   }
@@ -110,26 +117,21 @@ swvi <- function(red, nir, swir, green = NULL, mtvi = FALSE,
     return( 1.5 * (1.2*(nir - green) - 2.5*(red - green)) /
 	        sqrt( (2*nir+1)^2 - (6 * nir - 5 * sqrt(red) - 0.5) ) )
   }
-  ndsvi <- function(nir, swir) { return( (swir - nir) / (swir + nir) ) }
-  wf <- function(y, p = threshold, partial = weight.factor, ...) {
-    if( !is.null(p) ) {
-      i <- ifelse(p <= y[1], y[1], p)
-    } else if(is.na(y[2])) {
-      i = y[1]
-    } else if(is.na(y[1])) {
-      i = NA
-    } else {
-      if(!is.null(partial)) { y[2] <- y[2] / partial }
-        i = y[1] * y[2]
+  ndsvi <- function(nir, swir) { return( (swir - nir) / (swir + nir) ) }  
+    wf <- function(x, y) {
+      if(!is.null(weight.factor)) { 
+	    y <- y / weight.factor 
+	  }
+      return( x * y )
     }
-    return(i)
-  }
   w <- ndsvi(nir, swir)
     w[w < senescence] <- NA
-       w <- (w / sum(w[], na.rm=TRUE)) * -1
-  if(mtvi == TRUE) {	   
-    return( raster::calc(raster::stack(f.mtvi(nir, red, green), w), fun=wf, ...) )
+    # w <- (w / terra::global(w, "sum", na.rm=TRUE)[,1]) * -1
+  if(mtvi == TRUE) {
+    d <- c(f.mtvi(nir, red, green), w)  
+    return( terra::lapp(d, fun = wf, ...) )
   } else {
-    return( raster::calc(raster::stack(f.msavi(nir, red), w), fun=wf, ...) )
+    d <- c(f.msavi(nir, red), w)
+	return( terra::lapp(d, fun=wf, ...) )
   }  
 }

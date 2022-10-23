@@ -7,12 +7,12 @@
 trasp(x, ...)
 }
 \arguments{
-\item{x}{raster object}
+\item{x}{A terra SpatRaster object}
 
 \item{...}{Additional arguments passed to raster::calc}
 }
 \value{
-raster class object of oberts and Cooper (1989) Solar-radiation Aspect Index
+A terra SpatRaster object of Roberts and Cooper (1989) Solar-radiation Aspect Index
 }
 \description{
 Calculates the Roberts and Cooper (1989) Solar-radiation 
@@ -26,8 +26,8 @@ The metric is defined as: trasp = ( 1 - cos((pi/180)(a-30) ) / 2
 where; a = aspect in degrees
 }
 \examples{
-  library(raster)
-  data(elev)
+library(terra)
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
   s <- trasp(elev)
     plot(s)
     

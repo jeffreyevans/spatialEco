@@ -35,7 +35,7 @@
 #' 
 #' @examples 
 #' library(terra)
-#' elev <- rast(system.file("data/elev.tif", package="spatialEco"))
+#' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #' 
 #' # local deviation from first-order trend, global mean and raw value
 #' r.dev.trend <- raster.deviation(elev, type="trend", degree=1) 
@@ -53,8 +53,8 @@
 #' @export raster.deviation
 raster.deviation <- function(x, type = c("trend", "min", "max", "mean", "median"), 
                              s = 3, degree = 1, global = FALSE) {  
-    if (!inherits(x, "SpatRaster")) 
-	  stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+  if (!inherits(x, "SpatRaster")) 
+	stop(deparse(substitute(x)), " must be a terra SpatRaster object")
   if( type[1] != "trend") {
      if( length(s) == 1) s = c(s[1],s[1])
        m <- matrix(1, nrow=s, ncol=s)

@@ -40,7 +40,7 @@
 #'  sa.trans(slope = 48.146, aspect = 360.000)
 #'
 #' library(terra)
-#' elev <- rast(system.file("data/elev.tif", package="spatialEco"))
+#' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #' 
 #' # Example of slope*cos(aspect)
 #' sa <- terra::terrain(elev, v=c("slope", "aspect"), unit="degrees")

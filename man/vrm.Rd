@@ -4,21 +4,17 @@
 \alias{vrm}
 \title{Vector Ruggedness Measure (VRM)}
 \usage{
-vrm(x, s = 3, file.name = NULL, ...)
+vrm(x, s = 3)
 }
 \arguments{
-\item{x}{Elevation raster class object}
+\item{x}{A terra SpatRaster class object}
 
 \item{s}{Scale of window. Must be odd number, can 
 represent 2 dimensions (eg., s=c(3,5) would 
 represent a 3 x 5 window)}
-
-\item{file.name}{Name of output raster (optional)}
-
-\item{...}{Additional arguments passed to writeRaster}
 }
 \value{
-raster class object or raster written to disk
+A terra SpatRaster class object of the VRI
 }
 \description{
 Implementation of the Sappington et al., (2007) vector 
@@ -29,11 +25,11 @@ This function measures terrain ruggedness by calculating the vector
 ruggedness measure
 }
 \examples{
- library(raster)
- data(elev)
+library(terra)
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
    vrm3 <- vrm(elev) 
    vrm5 <- vrm(elev, s=5)
-   plot(stack(vrm3, vrm5))
+   plot(c(vrm3, vrm5))
 
 }
 \references{

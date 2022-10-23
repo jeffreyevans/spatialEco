@@ -1,15 +1,14 @@
 #' @title Terrain Ruggedness Index
 #' @description Implementation of the Riley et al (1999) Terrain Ruggedness Index
 #'
-#' @param r              RasterLayer class object
-#' @param s              Scale of window. Must be odd number, can represent 2 
-#'                       dimensions (eg., s=c(3,5) would represent a 3 x 5 window)
-#' @param exact          Calculate (TRUE/FALSE) the exact TRI or an algebraic 
-#'                       approximation. 
-#' @param file.name      Name of output raster (optional)
-#' @param ...            Additional arguments passed to writeRaster
+#' @param r      A terra SpatRaster class object
+#' @param s      Scale of window. Must be odd number, can represent 2 
+#'               dimensions (eg., s=c(3,5) would represent a 3 x 5 window)
+#' @param exact  Calculate (TRUE/FALSE) the exact TRI or an algebraic 
+#'               approximation. 
+#' @param ...    Additional arguments passed to terra::focal or terra::app
 #'
-#' @return raster class object or raster written to disk
+#' @return A terra SpatRaster class object of the TRI
 #'
 #' @description
 #' The algebraic approximation is considerably faster. However, because 
@@ -36,15 +35,17 @@
 #'
 #' @examples 
 #' \donttest{
-#'  library(raster)
-#'  data(elev)
+#' library(terra)
+#' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #'   ( tri.ext <- tri(elev) )
 #'   ( tri.app <- tri(elev, exact = FALSE) )
-#'   plot(stack(tri.ext, tri.app))
+#'   plot(c(tri.ext, tri.app))
 #' }
 #'
 #' @export
-tri <- function(r, s = 3, exact = TRUE, file.name = NULL, ...) {
+tri <- function(r, s = 3, exact = TRUE, ...) {
+  if (!inherits(r, "SpatRaster")) 
+	stop(deparse(substitute(x)), " must be a terra SpatRaster object")
   if(length(s) > 2) stop( "Specified window exceeds 2 dimensions")   
     if(length(s) == 1) s = rep(s,2)
   r.sqrt <- function(x) {
@@ -68,21 +69,12 @@ tri <- function(r, s = 3, exact = TRUE, file.name = NULL, ...) {
     }
   }	  
   if(exact == TRUE) {  
-    if(!is.null(file.name)) {
-      return( raster::focal(r, w=matrix(1,s[1],s[2]), fun=tri.calc, na.rm=FALSE,
-	                        filename = file.name, ...) )
-    } else {
-      return( raster::focal(r, w=matrix(1,s[1],s[2]), fun=tri.calc, na.rm=FALSE) )
-    }  
+    return( terra::focal(r, w=matrix(1,s[1],s[2]), fun=tri.calc, ...) )
   } else {
-    sx <- raster::focal(r, w = matrix(1,s[1],s[2]), sum)
-    e2 <- r * r
-    st <- raster::focal(e2, w = matrix(1,s[1],s[2]), sum)
+    sx <- terra::focal(r, w = matrix(1,s[1],s[2]), sum)
+      e2 <- r * r
+      st <- terra::focal(e2, w = matrix(1,s[1],s[2]), sum)
     r2 <- st + (s[1]*s[2]) * e2 - 2 * r * sx
-	if(!is.null(file.name)) {
-      return( raster::calc(r2, fun= r.sqrt, filename = file.name, ...) )
-	} else {
-	  return( raster::calc(r2, fun= r.sqrt) )
-    }
+  return( terra::app(r2, fun= r.sqrt, ...) )
   }
 }

@@ -7,14 +7,14 @@
 srr(x, s = 5, ...)
 }
 \arguments{
-\item{x}{raster object}
+\item{x}{A terra SpatRaster object}
 
 \item{s}{Focal window size}
 
-\item{...}{Additional arguments passed to raster::calc}
+\item{...}{Additional arguments passed to terra::lapp}
 }
 \value{
-raster class object of Pike's (1971) Surface Relief Ratio
+A terra SpatRaster object of Pike's (1971) Surface Relief Ratio
 }
 \description{
 Calculates the Pike (1971) Surface Relief Ratio
@@ -25,11 +25,10 @@ The implementation of SRR can be shown as: (mean(x) - min(x)) / (max(x) - min(x)
 }
 \examples{
 \donttest{
-  library(raster)
-  data(elev)
+ library(terra)
+ elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
   r.srr <- srr(elev, s=5)
     plot(r.srr, main="Surface Relief Ratio") 
-
  }     
 }
 \author{

@@ -39,7 +39,7 @@ Valid values for this argument are "southern" and "northern" with the default "n
 }
 \examples{
   library(terra)
-  data(elev)
+  elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
   heat.load <- hli(elev)
     plot(heat.load, main="Heat Load Index") 
    

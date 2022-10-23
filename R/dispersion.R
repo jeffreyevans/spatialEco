@@ -9,9 +9,9 @@
 #'
 #' @note 
 #' The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) 
-#' where; P = [sum of target in planning unit / sum of target across all 
-#' planning units] and a = [count of planning units containing 
-#' target / number of planning units]  
+#' where; P = (sum of target in planning unit / sum of target across all 
+#' planning units) and a = (count of planning units containing 
+#' target / number of planning units)  
 #'  
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -23,11 +23,11 @@
 #'
 #' @examples
 #' \donttest{ 
-#'  library(sp)
+#'  library(sf)
 #'    data(pu)
-#'  
-#'  d <- dispersion(pu@data[,2:ncol(pu)])  
-#'  p <- d[,"H"]
+#'   
+#'  d <- dispersion(st_drop_geometry(pu[,2:ncol(pu)]))  
+#'    p <- d[,"H"]
 #'  clr <- c("#3288BD", "#99D594", "#E6F598", "#FEE08B", 
 #'           "#FC8D59", "#D53E4F")      
 #'  clrs <- ifelse(p < 0.5524462, clr[1], 
@@ -36,8 +36,8 @@
 #'  	          ifelse(p >= 2.465613 & p < 4.76429, clr[4],
 #'  	            ifelse(p >= 4.76429 & p < 8.817699, clr[5],
 #'  	              ifelse(p >= 8.817699, clr[6], NA))))))
-#'  plot(pu, col=clrs, border=NA)
-#'    legend("topleft", legend=rev(c("Very Rare","Rare","Moderately Rare",
+#'  plot(st_geometry(pu), col=clrs, border=NA)
+#'    legend("bottomleft", legend=rev(c("Very Rare","Rare","Moderately Rare",
 #'           "Somewhat Common","Common","Over Dispersed")),
 #'           fill=clr, cex=0.6, bty="n") 
 #'    box()

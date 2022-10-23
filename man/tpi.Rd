@@ -7,7 +7,7 @@
 tpi(x, scale = 3, win = "rectangle", normalize = FALSE, zero.correct = FALSE)
 }
 \arguments{
-\item{x}{A raster class object}
+\item{x}{A terra SpatRaster object}
 
 \item{scale}{focal window size (n-cell x n-cell for rectangle or 
 distance for circle)}
@@ -20,15 +20,15 @@ surface roughness}
 \item{zero.correct}{Apply correction for zero values in matrix weights}
 }
 \value{
-raster class object of tpi metric
+A terra SpatRaster object of tpi A terra SpatRaster object
 }
 \description{
 Calculates topographic position using mean deviations
 }
 \examples{
 \donttest{
- library(raster)
- data(elev)
+library(terra)
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 
 # calculate tpi and plot 
   tpi7 <- tpi(elev, scale=7) 

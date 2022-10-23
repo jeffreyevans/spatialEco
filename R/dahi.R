@@ -24,7 +24,7 @@
 #'
 #' @examples
 #' library(terra)
-#' data(elev)
+#' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #' Ha <- dahi(elev)
 #'   plot(Ha)
 #'

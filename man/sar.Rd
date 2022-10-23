@@ -4,18 +4,18 @@
 \alias{sar}
 \title{Surface Area Ratio}
 \usage{
-sar(x, s = NULL, ...)
+sar(x, s = NULL, scale = TRUE)
 }
 \arguments{
-\item{x}{raster object}
+\item{x}{A terra SpatRaster object}
 
-\item{s}{cell resolution (default is NULL, not needed if projection 
+\item{s}{cell resolution (default is NULL and not needed if projection 
 is in planar units)}
 
-\item{...}{Additional arguments passed to raster::calc}
+\item{scale}{(TRUE/FALSE) Scale (row standardize) results}
 }
 \value{
-raster class object of Berry (2002) Surface Area Ratio
+A terra SpatRaster class object of the Surface Area Ratio
 }
 \description{
 Calculates the Berry (2002) Surface Area Ratio based on slope
@@ -24,10 +24,10 @@ Calculates the Berry (2002) Surface Area Ratio based on slope
 SAR is calculated as: resolution^2 * cos( (degrees(slope) * (pi / 180)) )
 }
 \examples{
-  library(raster)
-  data(elev)
-  surface.ratio <- sar(elev, s=90)
-  plot(surface.ratio)
+ library(terra)
+ elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
+ ( surface.ratio <- sar(elev) )
+   plot(surface.ratio)
     
 }
 \references{

@@ -10,7 +10,7 @@
 #' @param win          Window type, options are "rectangle" or "circle"
 #' @param normalize    Normalize results to 0-1 scale (FALSE | TRUE)          
 #'  
-#' @return raster class object 
+#' @return  terra SpatRaster class object of slope position 
 #'    
 #' @note
 #' if win  = "circle" units are distance, if win = "rectangle" units 
@@ -25,8 +25,8 @@
 #'    
 #' @examples
 #' \donttest{ 
-#'   library(raster)
-#'   data(elev)
+#'   library(terra)
+#'   elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #'   hsp27 <- hsp(elev, 3, 27, 4, normalize = TRUE)
 #'   plot(hsp27)
 #'  }

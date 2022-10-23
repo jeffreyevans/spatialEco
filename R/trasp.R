@@ -2,11 +2,11 @@
 #' @description Calculates the Roberts and Cooper (1989) Solar-radiation 
 #'              Aspect Index
 #' 
-#' @param x    raster object
+#' @param x    A terra SpatRaster object
 #' @param ...  Additional arguments passed to raster::calc
 #' 
 #' @return 
-#' raster class object of oberts and Cooper (1989) Solar-radiation Aspect Index
+#' A terra SpatRaster object of Roberts and Cooper (1989) Solar-radiation Aspect Index
 #'
 #' @description 
 #' Roberts and Cooper (1989) rotates (transforms) the circular aspect to assign a 
@@ -24,14 +24,15 @@
 #' USDA Forest Service GTR INT-257, Ogden, UT, pp 90-96
 #'
 #' @examples 
-#'   library(raster)
-#'   data(elev)
+#' library(terra)
+#' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #'   s <- trasp(elev)
 #'     plot(s)
 #'     
 #' @export trasp
 trasp <- function(x, ...) {  
-  if (!inherits(x, "RasterLayer")) stop("MUST BE RasterLayer OBJECT")
-    asp <- raster::terrain(x, out='aspect', unit='degrees') 
-    return( raster::calc(asp, fun=function(x) { (1 - cos( (3.142/180)  *(x - 30)) ) / 2 }, ... ) )
+  if (!inherits(x, "SpatRaster")) 
+	stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+    asp <- terra::terrain(x, v='aspect', unit='degrees') 
+  return( terra::app(asp, fun=function(x) { (1 - cos( (3.142/180)  *(x - 30)) ) / 2 }, ... ) )
 }  

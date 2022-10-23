@@ -17,13 +17,13 @@ swvi(
 )
 }
 \arguments{
-\item{red}{Red band (0.636 - 0.673mm), landsat 5&7 band 3, OLI
+\item{red}{SpatRaster, Red band (0.636 - 0.673mm), landsat 5&7 band 3, OLI
 (landsat 8) band 4}
 
-\item{nir}{Near infrared band (0.851 - 0.879mm) landsat 5&7 band 4,
+\item{nir}{SpatRaster, Near infrared band (0.851 - 0.879mm) landsat 5&7 band 4,
 OLI (landsat 8) band 5}
 
-\item{swir}{short-wave infrared band 1 (1.566 - 1.651mm), landsat 5&7
+\item{swir}{SpatRaster, short-wave infrared band 1 (1.566 - 1.651mm), landsat 5&7
 band 5, OLI (landsat 8) band 6}
 
 \item{green}{Green band if MTVI = TRUE}
@@ -37,10 +37,10 @@ instead of MSAVI}
 
 \item{weight.factor}{Apply partial weights (w * weight.factor) to the NDSVI weights}
 
-\item{...}{Additional arguments passed to raster calc function}
+\item{...}{Additional arguments passed to terra::lapp function}
 }
 \value{
-rasterLayer class object of the weighted MSAVI metric
+A terra SpatRaster class object of the weighted MSAVI metric
 }
 \description{
 Modified Soil-adjusted Vegetation Index (MSAVI) or Modified Triangular
@@ -78,14 +78,15 @@ used to change the influence of the weights on MSAVI.
 }
 \examples{
 \dontrun{
-library(raster)
+library(terra)
 library(RStoolbox)
 
 data(lsat)
 lsat <- radCor(lsat, metaData = readMeta(system.file(
-                 "external/landsat/LT52240631988227CUB02_MTL.txt", 
-                  package="RStoolbox")), method = "apref")
-
+              "external/landsat/LT52240631988227CUB02_MTL.txt", 
+              package="RStoolbox")), method = "apref")
+  lsat <- rast(lsat)
+  
 # Using Modified Soil-adjusted Vegetation Index (MSAVI)
 ( wmsavi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]]) )
     plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")

@@ -86,12 +86,13 @@ r2@data$class2 <- round(runif(nrow(r2), 1,5),0)
     plot(raster(d, layer=4), main="t.test")
     plot(raster(d, layer=5), main="t.test p-value")
  par(opar)
+ 
  # Hexagonal sampling	  
  d.hex <- class.comparison(r1, r2, x.idx = 8, y.idx = 8, stat = "both",
                            sub.sample = TRUE, d = 500, size = 1000)
-   sp::bubble(d.hex, "kappa")
-    d.hex <- sp.na.omit(d.hex, col.name = "t.test")
-  sp::bubble(d.hex, "t.test")
+    sp::bubble(d.hex, "kappa")
+    na.idx <- which(is.na(d.hex$t.test))
+  sp::bubble(d.hex[-na.idx,], "t.test")
 }
 
 }

@@ -2,8 +2,6 @@
 #' @description Creates a polygon from a vector or raster extent
 #' 
 #' @param x    An sf or terra object or vector of bounding coordinates 
-#' @param crs  The CRS assigned to the object, mostly relevant 
-#'             for coordinates    
 #'
 #' @return A single feature sf class polygon object
 #'
@@ -37,48 +35,32 @@
 #' # raster (terra)
 #'   r <- rast(ext(meuse))
 #'     r[] <- runif(ncell(r))
+#'	   crs(r) <- "epsg:28992"
 #'   e <- bbox_poly(r)
 #'   
 #'   plot(r)
 #'     plot(st_geometry(e), border="red", add=TRUE)
 #' 
 #' # extent vector
-#' e <- bbox_poly(c(178605, 329714, 181390, 333611), 
-#'                crs=28992) 
+#' e <- bbox_poly(c(178605, 329714, 181390, 333611)) 
 #' plot(e)
 #' 
 #' }
 #'
 #' @export bbox_poly
-bbox_poly <- function(x, crs=NULL) {
+bbox_poly <- function(x) {
   if(inherits(x, "SpatRaster")) {
-   e <- as.vector(terra::ext(x))[c(1,3,2,4)] 
-     e <- sf::st_as_sfc(sf::st_bbox(c(e[1], e[2], e[3], e[4])))
-
-      if(!is.null(crs)) {
-        sf::st_crs(e) <- sf::st_crs(crs)
-          message("assigning defined CRS, not feature CRS")		
-      } else {
-        sf::st_crs(e) <- sf::st_crs(terra::crs(x))    
-      }	 
+    e <- as.vector(terra::ext(x))[c(1,3,2,4)] 
+      e <- sf::st_as_sfc(sf::st_bbox(c(e[1], e[2], e[3], e[4])))
+	    p <- terra::crs(x)
+		if(! p == "") 
+	      sf::st_crs(e) <- sf::st_crs(p) 
   } else if(inherits(x, c("sf", "sfc"))) {
-    e <- sf::st_as_sfc(sf::st_bbox(x))
-      if(!is.null(crs)) {
-        sf::st_crs(e) <- sf::st_crs(crs)
-          message("assigning defined CRS, not feature CRS")		
-      } else {
-        sf::st_crs(e) <- sf::st_crs(x)   
-      }	
-  
+     e <- sf::st_as_sfc(sf::st_bbox(x))
+       sf::st_crs(e) <- sf::st_crs(x)   
   } else if(inherits(x, "numeric")) {
     names(x) <- c("xmin", "ymin", "xmax", "ymax")
     e <- sf::st_as_sfc(sf::st_bbox(c(x[1], x[2], x[3], x[4])))
-      if(!is.null(crs)){ 
-        sf::st_crs(e) <- sf::st_crs(crs)
-          message("assigning defined CRS")
-      } else {
-        message("no CRS defined")
-      }	  
   }
   return(sf::st_as_sf(e))
 }

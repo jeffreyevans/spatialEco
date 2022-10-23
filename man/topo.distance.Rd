@@ -30,12 +30,9 @@ topographic-slope effect.
  library(terra)
  
  # create example data
- data(elev)
-   r <- projectRaster(elev, res=c(1000,1000), 
-       crs=crs("EPSG:5070"))
-r <- crop(r, extent(6482554, 6536750, 6615538, 6667271))
- elev <- rast(r)
-   names(elev) <- "elev"
+ elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
+  r <- crop(r, ext(6482554, 6536750, 6615538, 6667271))
+     names(elev) <- "elev"
 
  lns <- lapply(1:5, function(i) {
    p <- st_combine(st_as_sf(spatSample(elev, size=2, as.points=TRUE)))

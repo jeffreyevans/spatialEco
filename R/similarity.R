@@ -27,14 +27,11 @@
 #'   and a Sustainable Future. F. Huettman (eds). Springer, NY.   
 #'
 #' @examples
-#'  library(sp)
+#' \donttest{ 
+#'  library(sf)
 #'  data(pu)
-#'  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = FALSE, 
-#'                    ID = pu@data$UNIT_ID)  
-#'
-#' \donttest{  
-#'  kNN <- similarity(pu@data[2:ncol(pu)], k = 4, frequency = TRUE, 
-#'                    ID = pu@data$UNIT_ID)  
+#'  kNN <- similarity(st_drop_geometry(pu[2:ncol(pu)]), k = 4, 
+#'                    frequency = TRUE, ID = pu$UNIT_ID)  
 #'  p <- kNN$freq   
 #'  clr <- c("#3288BD", "#99D594", "#E6F598", "#FEE08B", 
 #'           "#FC8D59", "#D53E4F")   
@@ -44,7 +41,7 @@
 #'  	       ifelse(p >= 20 & p < 50, clr[4],
 #'  	         ifelse(p >= 50 & p < 100, clr[5],
 #'  	           ifelse(p >= 100, clr[6], NA))))))
-#'  plot(pu, col=p, border=NA)
+#'  plot(st_geometry(pu), col=p, border=NA)
 #'    legend("topleft", legend=c("None","<10","10-20",
 #'           "20-50","50-100",">100"),
 #'           fill=clr, cex=0.6, bty="n") 
