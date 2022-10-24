@@ -4,71 +4,51 @@
 \alias{subsample.distance}
 \title{Distance-based subsampling}
 \usage{
-subsample.distance(
-  x,
-  size,
-  d,
-  d.max = NULL,
-  replacement = FALSE,
-  latlong = FALSE,
-  echo = FALSE
-)
+subsample.distance(x, size, d, d.max = NULL, replacement = FALSE)
 }
 \arguments{
-\item{x}{A spatial polygons or points sp object}
+\item{x}{A POLYGON or POINT sf object}
 
 \item{size}{Subsample size}
 
-\item{d}{Minimum sampling distance}
+\item{d}{Minimum sampling distance in meters}
 
-\item{d.max}{Maximum sampling distance}
+\item{d.max}{Maximum sampling distance in meters}
 
 \item{replacement}{(FALSE/TRUE) Subsample with replacement}
-
-\item{latlong}{(FALSE/TRUE) Is the data in a geographic projection}
-
-\item{echo}{(FALSE/TRUE) Print min and max sample distances}
 }
 \value{
-A subsampled spatial polygons or points sp object
+A subsampled POLYGON or POINT sf object
 }
 \description{
 Draws a minimum, and optional maximum constrained, distance sub-sampling
 }
 \note{
 This function provides a distance constrained subsample of existing point 
-      or polygon data
+      or polygon data. Please note that units are in meters regardless of input
+      CRS projection units (including lat/long).
 }
 \examples{
      
 \donttest{
-library(sp)
-data(meuse)
-  coordinates(meuse) <- ~ x+y
+library(sf)
+ if(require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
 
 # Subsample with a 500m minimum sample spread 
-sub.meuse <- subsample.distance(meuse, size = 10, d = 500, echo = TRUE)  
-  plot(meuse, pch=19, main="min dist = 500")
-    points(sub.meuse, pch=19, col="red") 
-
+sub.meuse <- subsample.distance(meuse, size = 10, d = 500)  
+  plot(st_geometry(meuse), pch=19, main="min dist = 500")
+    plot(st_geometry(sub.meuse), pch=19, col="red", add=TRUE) 
+ 
 # Check distances	
-dm <- spDists(sub.meuse)
+dm <- st_distance(sub.meuse)
   diag(dm) <- NA
 cat("\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
-cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n") 
-
-  # Subsample with a 500m minimum and 3500m maximum sample spread   
-  sub.meuse <- subsample.distance(meuse, size = 10, d = 500, d.max = 3500)  
-    plot(meuse,pch=19, main="min dist = 500, max dist = 3500")
-      points(sub.meuse, pch=19, col="red") 
-
-  # Check distances		
-  dm <- spDists(sub.meuse)
-    diag(dm) <- NA
-  cat("Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
-  cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")    
+cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")  
+  }
 }
-
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

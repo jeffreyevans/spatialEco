@@ -2,53 +2,44 @@
 #'
 #' @description Draws a minimum, and optional maximum constrained, distance sub-sampling 
 #' 
-#' @param x             A spatial polygons or points sp object
+#' @param x             A POLYGON or POINT sf object 
 #' @param size          Subsample size 
-#' @param d             Minimum sampling distance
-#' @param d.max         Maximum sampling distance
+#' @param d             Minimum sampling distance in meters
+#' @param d.max         Maximum sampling distance in meters
 #' @param replacement   (FALSE/TRUE) Subsample with replacement   
-#' @param latlong       (FALSE/TRUE) Is the data in a geographic projection
-#' @param echo          (FALSE/TRUE) Print min and max sample distances
 #'
-#' @return A subsampled spatial polygons or points sp object  
+#' @return A subsampled POLYGON or POINT sf object  
 #'
 #' @note This function provides a distance constrained subsample of existing point 
-#'       or polygon data  
+#'       or polygon data. Please note that units are in meters regardless of input
+#'       CRS projection units (including lat/long).   
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples      
 #' \donttest{
-#' library(sp)
-#' data(meuse)
-#'   coordinates(meuse) <- ~ x+y
+#' library(sf)
+#'  if(require(sp, quietly = TRUE)) {
+#'   data(meuse, package = "sp")
+#'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                     agr = "constant")
 #' 
 #' # Subsample with a 500m minimum sample spread 
-#' sub.meuse <- subsample.distance(meuse, size = 10, d = 500, echo = TRUE)  
-#'   plot(meuse, pch=19, main="min dist = 500")
-#'     points(sub.meuse, pch=19, col="red") 
-#' 
+#' sub.meuse <- subsample.distance(meuse, size = 10, d = 500)  
+#'   plot(st_geometry(meuse), pch=19, main="min dist = 500")
+#'     plot(st_geometry(sub.meuse), pch=19, col="red", add=TRUE) 
+#'  
 #' # Check distances	
-#' dm <- spDists(sub.meuse)
+#' dm <- st_distance(sub.meuse)
 #'   diag(dm) <- NA
 #' cat("\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
-#' cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n") 
-#'
-#'   # Subsample with a 500m minimum and 3500m maximum sample spread   
-#'   sub.meuse <- subsample.distance(meuse, size = 10, d = 500, d.max = 3500)  
-#'     plot(meuse,pch=19, main="min dist = 500, max dist = 3500")
-#'       points(sub.meuse, pch=19, col="red") 
-#'
-#'   # Check distances		
-#'   dm <- spDists(sub.meuse)
-#'     diag(dm) <- NA
-#'   cat("Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
-#'   cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")    
+#' cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")  
+#'   }
 #' }
-#'
 #' @export subsample.distance
-subsample.distance <- function(x, size, d, d.max = NULL, replacement = FALSE,
-                               latlong = FALSE, echo = FALSE) {
+subsample.distance <- function(x, size, d, d.max = NULL, 
+                               replacement = FALSE) {						   
+  gtypes = c("POLYGON", "POINT", "MULTIPOLYGON", "MULTIPOINT")			 
   if(missing(x)) 
     stop("Must define a spatial object")
   if(missing(d)) 
@@ -56,12 +47,14 @@ subsample.distance <- function(x, size, d, d.max = NULL, replacement = FALSE,
   if(!is.null(d.max)) {
     if(d.max <= d) 
 	  stop("Maximum distance must be larger than minimum")
-  }
-  if(!any(class(x)[1] == c("SpatialPointsDataFrame", "SpatialPolygonsDataFrame")) )
-    stop("x must be sp class polygons or points")
-  if(latlong == TRUE) {  
-    message("geographic projection distances must be in kilometers")
-  }
+  } 
+  if(!inherits(x, c("sf", "sfc")))
+    stop(deparse(substitute(x)), " must be an sf object or coercible")	  
+  if(any(unique(as.character(st_geometry_type(x))) == gtypes[3:4]))
+    stop("Function does not support multi-part geometry")  
+  if(!any(unique(as.character(st_geometry_type(x))) != gtypes[1:2]))
+    stop(deparse(substitute(x)), " must be one of ", 
+	     paste(gtypes, collopse=""))		     
   if( size >= nrow(x)) 
     stop("subsample size must be smaller than population")
   rs <- sample(1:nrow(x),1) 
@@ -72,20 +65,15 @@ subsample.distance <- function(x, size, d, d.max = NULL, replacement = FALSE,
           nsamp=0
           while(deval == TRUE) { 		  
             rs <- sample(1:nrow(x),1)
-	      pts.dist = sp::spDists(s, x[rs,], longlat = latlong)
+	          pts.dist <- units::drop_units(units::set_units(sf::st_distance(s, x[rs,]), "m"))
             if(is.null(d.max)) {
               deval <- any(pts.dist < d, na.rm = TRUE)
-		} else {
-		  deval <- any(pts.dist < d, na.rm = TRUE) | any(pts.dist > d.max, na.rm = TRUE)
-	    } 
-        nsamp = nsamp + 1			
-		  if(echo) cat("Sample iteration=", nsamp, "\n")  
-            if(nsamp == nrow(x)) break			
+		    } else {
+		      deval <- any(pts.dist < d, na.rm = TRUE) | any(pts.dist > d.max, na.rm = TRUE)
+	        } 
+            nsamp = nsamp + 1			
+              if(nsamp == nrow(x)) break			
 	      }  
-		if(echo) {
-		  cat("\n","Min distance for", i, "=", min(pts.dist, na.rm=TRUE), "\n")
-              cat(" Max distance for", i, "=", max(pts.dist, na.rm=TRUE), "\n")
-		}
         if(nsamp == nrow(x)) {
           message(paste0("Warning: sampling cannot converge at n=", size, " returning n=", nrow(s)))
             return(s)  

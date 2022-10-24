@@ -1,4 +1,4 @@
-# spatialEco (dev 1.3-8) <img src="man/figures/spatialEco_logo.png" align="right" alt="" width="160" />
+# spatialEco (dev 2.0-0) <img src="man/figures/spatialEco_logo.png" align="right" alt="" width="160" />
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/jeffreyevans/spatialEco/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions)
@@ -16,16 +16,27 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     absences and sub-sampling, polygon and point-distance landscape metrics,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
-    
-## Available functions in spatialEco 1.3-8
+ 
+I jumped to a major release and pushed the version to 2.0-0. All spatial functions are now using the 
+`sf` and `terra` packages due to `sp`, `rgeos`, `rgdal`, `maptools` and `raster` being retired. Sorry 
+but, for the most part I removed backwards compatibility with these depreciated object classes so, you 
+will need to make sure that you are using modern spatial object classes. In terra, there is now only 
+one class type for multi or single band raster objects "SpatRaster" which can be read or coerced using 
+`terra::rast`. For coercing sp class vector objects to sf you can use `sf::st_as:sf` or `as(x, "sf")` 
+and, going from sf to sp you use `as(x, "Spatial")` 
+   
+ 
+## Available functions in spatialEco 2.0-0
 
 | `spatialEco` Function        | Description                                                                             |
 |:-----------------------------|:----------------------------------------------------------------------------------------|
-| `annulus.matrix`             | Creates a 0,1 matrix based on defined annulus parameters, can be used as a window matrix in a raster focal function                                                 |
-| `background`                 | Creates a point sample that can be used as a NULL for SDM's and other modeling approaches (see pseudo.absence for alternate approach).                  |
+| `all_pairwise`               | Creates a list of all pairwise combinations of a vector  |
+| `annulus.matrix`             | Creates a 0,1 matrix based on defined annulus parameters, can be used as a window matrix in a raster focal function  |
+| `background`                 | Creates a point sample that can be used as a NULL for SDM's and other modeling approaches (see pseudo.absence for alternate approach). |
+| `bbox_extent`                | Creates a bounding box polygon representing the extent of a feature or raster  |                                                     
 | `bearing.distance`           | Calculate new point based on bearing/distance                                     
-| `breeding.density`           | Calculates n-th percent breeding density areas base on a kernel density estimate of population counts.                                                             |
-| `built.index`                | remote sensing built-up index                                                     
+| `breeding.density`           | Calculates n-th percent breeding density areas base on a kernel density estimate of population counts. |
+| `built.index`                | remote sensing built-up index |      
 | `cgls_urls`                  | Based on query, provide URL's for Copernicus Global Land Service datasets         
 | `chae`                       | The Canine-Human Age Equivalent (for fun)                                         
 | `classBreaks`                | for finding class breaks in a distribution                                        

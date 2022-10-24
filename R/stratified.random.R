@@ -1,20 +1,20 @@
 #' @title Stratified random sample
 #' @description Creates a stratified random sample of an sp class object
 #'
-#' @param x  sp class SpatialDataFrame object (point, polygon, line, pixel)
-#' @param strata  Column in @@data slot with stratification factor
-#' @param n Number of random samples
-#' @param reps Number of replicates per strata
-#' @param replace Sampling with replacement (TRUE|FALSE)
+#' @param x            An sf class object 
+#' @param strata       Column in x with stratification factor
+#' @param n            Number of random samples
+#' @param reps         Number of replicates per strata
+#' @param replace      (TRUE/FALSE) Sampling with replacement 
 #'
-#' @return sp SpatialDataFrame object (same as input feature) containing random samples
+#' @return An sf class object containing random samples
 #'
 #' @note
 #' If replace=FALSE features are removed from consideration in subsequent replicates.
 #' Conversely, if replace=TRUE, a feature can be selected multiple times across 
 #' replicates. Not applicable if rep=1.
 #'
-#' @note Depends: sp
+#' @note Depends: sf
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
@@ -25,86 +25,83 @@
 #'   Canadian Journal of Remote Sensing 32: 126-138.
 #'
 #' @examples 
-#' require(sp)
-#'   data(meuse)
-#'     coordinates(meuse) <- ~x+y
+#' library(sf)
+#'  if(require(sp, quietly = TRUE)) {
+#'   data(meuse, package = "sp")
+#'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                     agr = "constant")
 #' 
 #' # Create stratified variable using quartile breaks
-#' x1 <- cut(meuse@@data[,'cadmium'], summary(meuse@@data[,'cadmium'])[-4], 
+#' x1 <- cut(meuse$cadmium, summary(meuse$cadmium)[-4], 
 #'           include.lowest=TRUE)
 #'   levels(x1) <- seq(1,nlevels(x1),1)
-#' x2 <- cut(meuse@@data[,'lead'], summary(meuse@@data[,'lead'])[-4], 
+#' x2 <- cut(meuse$lead, summary(meuse$lead)[-4], 
 #'           include.lowest=TRUE)
 #'   levels(x2) <- seq(1,nlevels(x2),1) 
-#' meuse@@data <- cbind(meuse@@data, STRAT=paste(x1, x2, sep='.') ) 
+#' meuse$STRAT <- paste(x1, x2, sep='.')
+#'
+#' # Counts for each full strata (note; 2 strata have only 1 observation)
+#' tapply(meuse$STRAT, meuse$STRAT, length)
 #'    
-#' # 2 replicates and replacement
-#' ssample <- stratified.random(meuse, strata='STRAT', n=2, reps=2)
+#' # 2 replicates, 2 samples with replacement
+#' ssample <- stratified.random(meuse, strata='STRAT', n=2, reps=2, 
+#'                              replace=TRUE)
+#'   tapply(ssample$STRAT, ssample$STRAT, length)
 #' 
-#' # 2 replicates and no replacement
-#' ssample.nr <- stratified.random(meuse, strata='STRAT', n=2, reps=2, 
-#'                                 replace=FALSE)
+#' # 2 replicates, 2 samples no replacement
+#' ssample.nr <- stratified.random(meuse, strata='STRAT', n=2, reps=2)
+#'   tapply(ssample.nr$STRAT, ssample.nr$STRAT, length)
 #' 
 #' # n=1 and reps=10 for sequential numbering of samples 
 #' ssample.ct <- stratified.random(meuse, strata='STRAT', n=1, reps=10, 
 #'                                 replace=TRUE)
-#' 
-#' # Counts for each full strata (note; 2 strata have only 1 observation)
-#' tapply(meuse@@data$STRAT, meuse@@data$STRAT, length)
-#' 
-#' # Counts for each sampled strata, with replacement
-#' tapply(ssample@@data$STRAT, ssample@@data$STRAT, length)
-#' 
-#' # Counts for each sampled strata, without replacement
-#' tapply(ssample.nr@@data$STRAT, ssample.nr@@data$STRAT, length)
-#' 
-#' # Counts for each sampled strata, without replacement
-#' tapply(ssample.ct@@data$STRAT, ssample.ct@@data$STRAT, length)
+#'   tapply(ssample.ct$STRAT, ssample.ct$STRAT, length)
 #' 
 #' # Plot random samples colored by replacement
-#' ssample@@data$REP <- factor(ssample@@data$REP)
-#'   spplot(ssample, 'REP', col.regions=c('red','blue'))
-#'
+#' ssample$REP <- factor(ssample$REP)
+#'   plot(ssample['REP'], pch=20)
+#' } 
 #' @export stratified.random
-stratified.random <- function(x, strata, n = 10, reps = 1, replace = TRUE) {
-    if (!methods::is(x, "Spatial")) 
-      stop(deparse(substitute(x)), " Must be an sp class spatial object")
-    spx <- x
-    if(!inherits(spx@data[,strata], "factor")) spx@data[,strata] <- factor(spx@data[,strata]) 
-    if (nlevels(spx@data[,strata]) < 2) 
-        stop("NOT ENOUGH LEVELS TO STRATIFY BY")
-    spx@data <- cbind(spx@data, REP = 0)
-    results <- spx[1, ]
-    for (i in 1:reps) {
-      spx@data[, strata] <- factor(spx@data[, strata])
-      for (j in 1:nlevels(spx@data[, strata])) {
-          f <- levels(spx@data[, strata])[j]
-          if (is.na(match(f, levels(spx@data[, strata]))) == FALSE) {
-            if ((dim(spx[spx@data[, strata] == f, ])[1] > 0) == TRUE) {
-              ssub <- spx[spx@data[, strata] == f, ]
-              if ((dim(ssub)[1] >= n) == TRUE) {
-                s <- ssub[sample(dim(ssub)[1], size = n), ]
-                s@data$REP <- i
-                results <- rbind(results, s)
-                if (replace == FALSE) {
-                  rinx <- which(rownames(spx@data) %in% rownames(s@data))
-                  if (length(rinx) > 0) 
-                    spx <- spx[-rinx, ]
-                }
-              } else {
-                s <- ssub
-                s@data$REP <- i
-                results <- rbind(results, s)
-                if (replace == FALSE) {
-                  rinx <- which(rownames(spx@data) %in% rownames(s@data))
-                  if (length(rinx) > 0) 
-                    spx <- spx[-rinx, ]
-                }
-              }
+stratified.random <- function(x, strata, n = 10, reps = 1, replace = FALSE) {
+  gtypes = c("POLYGON", "POINT", "LINESTRING", "MULTIPOLYGON", 
+             "MULTIPOINT", "MULTILINESTRING")			 
+  if(missing(x)) 
+    stop("Must provide an input spatial object (x)")
+  if(!inherits(x, c("sf", "sfc")))
+    stop(deparse(substitute(x)), " must be an sf object or coercible")	  
+  if(any(unique(as.character(st_geometry_type(x))) == gtypes[4:6]))
+    stop("Function does not support multi-part geometry")  
+  if(!any(unique(as.character(st_geometry_type(x))) != gtypes[1:3]))
+    stop(deparse(substitute(x)), " must be one of ", 
+	     paste(gtypes[1:3], collopse=""))		     
+  spx <- sf::st_drop_geometry(x)
+    if(!inherits(spx[,strata], "factor")) 
+      spx[,strata] <- factor(spx[,strata])  
+    if (nlevels(spx[,strata]) < 2) 
+      stop("Not enough levels to stratify by (n<2)")
+    spx$REP <- NA
+    results <- list()	
+      for(j in levels(spx[, strata])) {
+        d <- spx[spx[,strata] == j,]
+    	  d$rowname <- rownames(d)
+          if(nrow(d) > n) {  	
+            for (i in 1:reps) {	
+              s <- lapply(1, function(ij) {
+      	             d[sample(1:nrow(d), n),]})
+      	        s[[1]]$REP <- i
+             results[[paste(j,i,sep="_")]] <-s[[1]] 
             }
-          }
-        }
+          } else {
+    	    d$REP <- 1
+    		results[[paste(j,i,sep="_")]] <- d
+    	  }
       }
-    results <- results[-1, ]
+    results <- do.call(rbind, results)
+	  if(!replace){
+	    results <- results[-which(duplicated(results$rowname)),]
+	  }
+	  results <- stats::na.omit(results[,c("rowname","REP")])	
+    results <- merge(x, results, by.y="rowname", by.x = 'row.names', 
+	                 all.x = FALSE, all.y = TRUE)
   return(results)
 } 

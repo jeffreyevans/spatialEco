@@ -4,21 +4,21 @@
 \alias{stratified.random}
 \title{Stratified random sample}
 \usage{
-stratified.random(x, strata, n = 10, reps = 1, replace = TRUE)
+stratified.random(x, strata, n = 10, reps = 1, replace = FALSE)
 }
 \arguments{
-\item{x}{sp class SpatialDataFrame object (point, polygon, line, pixel)}
+\item{x}{An sf class object}
 
-\item{strata}{Column in @data slot with stratification factor}
+\item{strata}{Column in x with stratification factor}
 
 \item{n}{Number of random samples}
 
 \item{reps}{Number of replicates per strata}
 
-\item{replace}{Sampling with replacement (TRUE|FALSE)}
+\item{replace}{(TRUE/FALSE) Sampling with replacement}
 }
 \value{
-sp SpatialDataFrame object (same as input feature) containing random samples
+An sf class object containing random samples
 }
 \description{
 Creates a stratified random sample of an sp class object
@@ -28,49 +28,45 @@ If replace=FALSE features are removed from consideration in subsequent replicate
 Conversely, if replace=TRUE, a feature can be selected multiple times across 
 replicates. Not applicable if rep=1.
 
-Depends: sp
+Depends: sf
 }
 \examples{
-require(sp)
-  data(meuse)
-    coordinates(meuse) <- ~x+y
+library(sf)
+ if(require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
 
 # Create stratified variable using quartile breaks
-x1 <- cut(meuse@data[,'cadmium'], summary(meuse@data[,'cadmium'])[-4], 
+x1 <- cut(meuse$cadmium, summary(meuse$cadmium)[-4], 
           include.lowest=TRUE)
   levels(x1) <- seq(1,nlevels(x1),1)
-x2 <- cut(meuse@data[,'lead'], summary(meuse@data[,'lead'])[-4], 
+x2 <- cut(meuse$lead, summary(meuse$lead)[-4], 
           include.lowest=TRUE)
   levels(x2) <- seq(1,nlevels(x2),1) 
-meuse@data <- cbind(meuse@data, STRAT=paste(x1, x2, sep='.') ) 
-   
-# 2 replicates and replacement
-ssample <- stratified.random(meuse, strata='STRAT', n=2, reps=2)
+meuse$STRAT <- paste(x1, x2, sep='.')
 
-# 2 replicates and no replacement
-ssample.nr <- stratified.random(meuse, strata='STRAT', n=2, reps=2, 
-                                replace=FALSE)
+# Counts for each full strata (note; 2 strata have only 1 observation)
+tapply(meuse$STRAT, meuse$STRAT, length)
+   
+# 2 replicates, 2 samples with replacement
+ssample <- stratified.random(meuse, strata='STRAT', n=2, reps=2, 
+                             replace=TRUE)
+  tapply(ssample$STRAT, ssample$STRAT, length)
+
+# 2 replicates, 2 samples no replacement
+ssample.nr <- stratified.random(meuse, strata='STRAT', n=2, reps=2)
+  tapply(ssample.nr$STRAT, ssample.nr$STRAT, length)
 
 # n=1 and reps=10 for sequential numbering of samples 
 ssample.ct <- stratified.random(meuse, strata='STRAT', n=1, reps=10, 
                                 replace=TRUE)
-
-# Counts for each full strata (note; 2 strata have only 1 observation)
-tapply(meuse@data$STRAT, meuse@data$STRAT, length)
-
-# Counts for each sampled strata, with replacement
-tapply(ssample@data$STRAT, ssample@data$STRAT, length)
-
-# Counts for each sampled strata, without replacement
-tapply(ssample.nr@data$STRAT, ssample.nr@data$STRAT, length)
-
-# Counts for each sampled strata, without replacement
-tapply(ssample.ct@data$STRAT, ssample.ct@data$STRAT, length)
+  tapply(ssample.ct$STRAT, ssample.ct$STRAT, length)
 
 # Plot random samples colored by replacement
-ssample@data$REP <- factor(ssample@data$REP)
-  spplot(ssample, 'REP', col.regions=c('red','blue'))
-
+ssample$REP <- factor(ssample$REP)
+  plot(ssample['REP'], pch=20)
+} 
 }
 \references{
 Hudak, A.T., N.L. Crookston, J.S. Evans, M.J. Falkowski, A.M.S. Smith, P. Gessler 
