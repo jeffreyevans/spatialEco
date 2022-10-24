@@ -7,16 +7,16 @@
 spherical.sd(r, d, variance = FALSE, ...)
 }
 \arguments{
-\item{r}{Raster class object}
+\item{r}{A terra SpatRaster class object}
 
 \item{d}{Size of focal window or a matrix to use in focal function}
 
 \item{variance}{(FALSE|TRUE) Output spherical variance rather than standard deviation}
 
-\item{...}{Additional arguments passed to calc (can write raster to disk here)}
+\item{...}{Additional arguments passed to terra:app (can write raster to disk here)}
 }
 \value{
-rasterLayer class object of the spherical standard deviation
+A terra SpatRaster class object of the spherical standard deviation
 }
 \description{
 Derives the spherical standard deviation of a raster surface
@@ -41,14 +41,14 @@ and it's square root can be considered the spherical standard deviation.
 }
 \examples{
 \donttest{
- library(raster)
- data(elev)
+ library(terra)
+ elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
  
  ssd <- spherical.sd(elev, d=5)
  
- slope <- terrain(elev, opt='slope')
- aspect <- terrain(elev, opt='aspect')
- hill <- hillShade(slope, aspect, 40, 270)
+ slope <- terrain(elev, v='slope')
+ aspect <- terrain(elev, v='aspect')
+ hill <- shade(slope, aspect, 40, 270)
  plot(hill, col=grey(0:100/100), legend=FALSE, 
       main='terrain spherical standard deviation')
    plot(ssd, col=rainbow(25, alpha=0.35), add=TRUE)
@@ -56,9 +56,7 @@ and it's square root can be considered the spherical standard deviation.
  
 }
 \seealso{
-\code{\link[raster]{focal}} for details on focal function
-
-\code{\link[raster]{calc}} for details on ... arguments
+\code{\link[terra]{app}} for details on ... arguments
 }
 \author{
 Jeffrey S. Evans <jeffrey_evans<at>tnc.org>

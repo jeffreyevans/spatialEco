@@ -17,13 +17,11 @@
 #'
 #' @examples 
 #'  library(sf)
-#'  library(raster)
 #'  library(terra)
 #'  
 #'  # create example data
 #'  elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
-#'	  r <- crop(r, ext(6482554, 6536750, 6615538, 6667271))
-#'      names(elev) <- "elev"
+#'    names(elev) <- "elev"
 #' 
 #'  lns <- lapply(1:5, function(i) {
 #'    p <- st_combine(st_as_sf(spatSample(elev, size=2, as.points=TRUE)))
@@ -50,10 +48,10 @@ topo.distance <- function(x, r, echo = FALSE) {
     x <- sf::st_as_sf(x)
   if(sf::st_geometry_type(x, by_geometry = FALSE) != "LINESTRING")
     stop("x must be a LINESTRING object")
-  if(!inherits(r, c("SpatRaster", "RasterLayer")))	
+  if (inherits(r, "RasterLayer"))
+    r <- terra::rast(r)	
+  if(!inherits(r, "SpatRaster"))	
     stop("r must be a terra or raster object")	
-  if (!inherits(r, "RasterLayer"))
-    r <- terra::rast(r)
   step.dist <- function(x) {
     d <- vector()
       for(i in 1:(nrow(x)-1)){

@@ -1,12 +1,12 @@
 #' @title Spherical Variance or Standard Deviation of Surface 
 #' @description Derives the spherical standard deviation of a raster surface  
 #'    
-#' @param r         Raster class object
+#' @param r         A terra SpatRaster class object
 #' @param d         Size of focal window or a matrix to use in focal function
 #' @param variance  (FALSE|TRUE) Output spherical variance rather than standard deviation
-#' @param ...       Additional arguments passed to calc (can write raster to disk here)
+#' @param ...       Additional arguments passed to terra:app (can write raster to disk here)
 #'
-#' @return rasterLayer class object of the spherical standard deviation   
+#' @return A terra SpatRaster class object of the spherical standard deviation   
 #'
 #' @details
 #' Surface variability using spherical variance/standard deviation. 
@@ -30,37 +30,41 @@
 #'
 #' @examples
 #' \donttest{
-#'  library(raster)
-#'  data(elev)
+#'  library(terra)
+#'  elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #'  
 #'  ssd <- spherical.sd(elev, d=5)
 #'  
-#'  slope <- terrain(elev, opt='slope')
-#'  aspect <- terrain(elev, opt='aspect')
-#'  hill <- hillShade(slope, aspect, 40, 270)
+#'  slope <- terrain(elev, v='slope')
+#'  aspect <- terrain(elev, v='aspect')
+#'  hill <- shade(slope, aspect, 40, 270)
 #'  plot(hill, col=grey(0:100/100), legend=FALSE, 
 #'       main='terrain spherical standard deviation')
 #'    plot(ssd, col=rainbow(25, alpha=0.35), add=TRUE)
 #' }
 #'  
-#' @seealso \code{\link[raster]{focal}} for details on focal function
-#' @seealso \code{\link[raster]{calc}} for details on ... arguments
+#' @seealso \code{\link[terra]{app}} for details on ... arguments
 #' 
 #' @export
 spherical.sd <- function(r, d, variance = FALSE, ...) {
-  if(class(r)[1] != "RasterLayer") stop("r argument must be a rasterLayer class object")
+  if(!inherits(r, "SpatRaster"))	
+    stop("r must be a terra or raster object")	
     if(class(d)[1] != "matrix") { d = matrix(1,d,d) }
-  s <- raster::terrain(r, opt='slope', unit='radians') 
-    a <- raster::terrain(r, opt='aspect', unit='radians')
-      x <- raster::overlay(a,s, fun=function(x,y) {cos(x) * sin(y) } )
-	    y <- raster::overlay(a,s, fun=function(x,y) {sin(x) * sin(y) } )
-          z <- raster::calc(s, fun=cos)
-        xb = raster::focal(x, d, fun=mean)
-      yb = raster::focal(y, d, fun=mean)
-    zb = raster::focal(z, d, fun=mean)
+  s <- terra::terrain(r, v='slope', unit='radians') 
+    a <- terra::terrain(r, v='aspect', unit='radians')
+      x <- terra::lapp(c(a,s), fun=function(x,y) {cos(x) * sin(y) } )
+	    y <- terra::lapp(c(a,s), fun=function(x,y) {sin(x) * sin(y) } )
+          z <- terra::app(s, fun=cos)
+        xb = terra::focal(x, d, fun=mean)
+      yb = terra::focal(y, d, fun=mean)
+    zb = terra::focal(z, d, fun=mean)
   if(variance == TRUE) {
-	raster::calc( raster::stack(xb, yb, zb), fun=function(x) { 1 - (x[1]^2 + x[2]^2 + x[3]^2) }, ... )   
+    return(
+	  terra::lapp( c(xb, yb, zb), fun=function(x,y,z) { 1 - (x^2 + y^2 + z^2) }, ... )
+    )	  
   } else {
-    raster::calc( raster::stack(xb, yb, zb), fun=function(x) { sqrt( 1 - (x[1]^2 + x[2]^2 + x[3]^2) ) }, ... )
+    return(
+      terra::lapp( c(xb, yb, zb), fun=function(x,y,z) { sqrt( 1 - (x^2 + y^2 + z^2) ) }, ... )
+	)  
   }  
 }
