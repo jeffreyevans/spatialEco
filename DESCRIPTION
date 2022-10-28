@@ -4,7 +4,8 @@ Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-0
 Date: 2022-10-12
 Authors@R: c(
-  person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", role = c("aut", "cre")),
+    person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
+         role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
   person(family="Murphy", given="Melanie A.", role = "ctb"),			 
   person(family="Ram", given="Karthik", role = "ctb") )
 Description: Utilities to support spatial data manipulation, query, sampling

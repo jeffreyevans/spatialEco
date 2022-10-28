@@ -128,6 +128,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `raster.vol`                 | Calculates a percent volume on a raster or based on the entire raster or a systematic sample   
 | `raster.Zscore`              | Calculates the modified z-score for all cells in a raster                         
 | `rasterCorrelation`          | Performs a simple moving window correlation between two rasters		           
+| `remove_duplicates`          | Removes duplicate duplicate feature geometries         
 | `remove.holes`               | Removes all holes (null geometry) in polygon sp class objects                     
 | `rotate.polygon`             | Rotates a polygon by specified angle                                              
 | `sa.trans`                   | Trigonometric transformation of a slope and aspect interaction                    

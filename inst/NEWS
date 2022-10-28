@@ -242,3 +242,22 @@ spatialEco_1.3-8
 * Added support for terra class objects in rasterCorrelation  
 
 * Added silhouettes to optimal.k output    
+
+spatialEco_2.0-0
+================= 
+
+**** Jumped to major version release
+
+* Converted all functions that historically relied on sp, raster, rgeos, rgdal 
+  and maptools packages to sf and terra and optimized code structure in many 
+  functions. 
+
+* Function enhancement raster.downscale to expand to multivariate model with
+  optional output for confidence/prediction intervals and MSE rasters.  
+
+* Added function "remove_duplicates" for removing duplicate duplicate feature geometries 
+
+* Added function "all_pairwise" creates a list of all pairwise combinations of a vector 
+
+* Added function "bbox_extent" creates a bounding box polygon representing the extent 
+  of a feature or raster                                                   
