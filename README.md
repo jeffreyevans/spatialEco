@@ -2,9 +2,11 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jeffreyevans/spatialEco/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions)
 
-[![CRAN status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
+[![CRAN 
+status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
 
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/spatialEco)](https://cran.r-project.org/package=spatialEco)
+[![CRAN 
+RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/spatialEco)](https://cran.r-project.org/package=spatialEco)
 
 [![codecov](https://codecov.io/gh/jeffreyevans/spatialEco/branch/master/graph/badge.svg?token=1d03a407-3171-4c39-833b-d7fad930392d)](https://codecov.io/gh/jeffreyevans/spatialEco)
 <!-- badges: end -->
