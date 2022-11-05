@@ -4,115 +4,20 @@
 \alias{polygon_extract}
 \title{polygon raster extract}
 \usage{
-polygon_extract(
-  r,
-  p,
-  ids = NULL,
-  cells = FALSE,
-  asList = TRUE,
-  use.terra = FALSE
-)
+polygon_extract(...)
 }
 \arguments{
-\item{r}{RasterLayer, RasterStack, RasterBrick or SpatRaster object}
-
-\item{p}{sf polygon data}
-
-\item{ids}{A unique id field contained in p, will be assigned to 
-output otherwise will return rownames}
-
-\item{cells}{FALSE | TRUE - Return cell index ids}
-
-\item{asList}{TRUE | FALSE - Output list object}
-
-\item{use.terra}{FALSE | TRUE - Use terra for extracting indices}
+\item{...}{arguments passed to terra::extract}
 }
 \value{
-A list object containing a data.frame for each polygons
-        raster values, as columns. Additional columns are "row_names"
-        or which ever column is passed to the ids argument and "cells"
-        if cells = TRUE. If asList = FALSE a data.frame will be returned
+NA
 }
 \description{
 Fast method for extracting raster values to polygons
-
-This method for raster extraction uses the raster cell indices and
-is quite a bit faster with polygon data than other methods. This is
-especially true with large raster stacks (eg., time-series). The cell 
-indices are returned using \code{\link[tabularaster]{cellnumbers}}.
-If ids argument is provided a column with values from the associate 
-column are included otherwise "row_names" is returned which corresponds
-to the rownames in the source polygon object. Please note that if 
-use.terra = TRUE it will coerce to a terra class if not already. With 
-large data the coercion overhead may be worth it, providing speed gains.
-If the raster is a terra SpatRaster it will operate in its native class.
-The cells = TRUE argument will return the cell indices which could be 
-used at a later time.
 }
 \examples{
-p = c("sf", "raster", "tabularaster")
- if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
-   m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
-   message("Can't run examples, please install ", paste(p[m], collapse = " "))
- } else {
-   invisible(lapply(p, require, character.only=TRUE))
-
- nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
-   nc <- suppressWarnings(sf::st_cast(nc, "POLYGON"))
- 
-#### multi-band 
-i=100; j=100
-r <- do.call(raster::stack, replicate(20, 
-	         raster::raster(matrix(runif(i*j), i, j))))
-      names(r) <- paste0("time", 1:nlayers(r))			 
-    extent(r) <- extent(nc)
-	  crs(r) <- crs(sf::st_crs(nc))
-
- plot(r[[1]])
-   plot(st_geometry(nc), add=TRUE)
- 
- ( e <- polygon_extract(r, nc) )
- ( e <- polygon_extract(r, nc, ids="CNTY_ID") )
- 
- # Column means
- lapply(e, function(x) apply(x[,2:ncol(x)], MARGIN=1, FUN=mean) )
- 
- #### Single band mean
- ( e <- polygon_extract(r[[1]], nc, ids="CNTY_ID") )
-   unlist(lapply(e, function(x) mean(x[,2], na.rm=TRUE) ))
-
-\donttest{ 
- # Leveraging cell ids, pulls values, calculates   
- # new value, and assigns to source cell using
- # index from cells = TRUE 
-
- e <- polygon_extract(r, nc, cells=TRUE)
- e <- data.frame(
-   cells=unlist(lapply(e, function(x) as.numeric(x[,22]))),
-   means=unlist(lapply(e, function(x) apply(x[,2:22], MARGIN=1, FUN=mean))) 
- )
- 
- # copy raster and assign NA's
- r2 <- r[[1]]
-   r2[] <- rep(NA, ncell(r))
-
- # assign using cell indices
- r2[e$cells] <- e$means 
-   plot(r2)
-
- # benchmark against raster extract
- system.time({
-   e <- polygon_extract(r, nc)
- })
- 
- system.time({
-   e <- raster::extract(r, nc)
- })
-
-   }
- }
-
+ \dontrun{
+  terra::extract()
 }
-\author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+
 }

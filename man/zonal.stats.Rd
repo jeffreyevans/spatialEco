@@ -4,65 +4,20 @@
 \alias{zonal.stats}
 \title{zonal.stats}
 \usage{
-zonal.stats(x, y, stats = c("min", "mean", "max"))
+zonal.stats(...)
 }
 \arguments{
-\item{x}{Polygon object of class SpatialPolygonsDataFrame}
-
-\item{y}{rasterLayer object of class raster}
-
-\item{stats}{Statistic or function}
+\item{...}{arguments passed to terra::extract}
 }
 \value{
-data.frame, nrow(x) and ncol of function results
+NA
 }
 \description{
 Polygon zonal statistics of a raster
 }
-\note{
-This function calculates the zonal statistics between a polygon vector 
-object and a raster. This provides the advantage of being able to accept 
-any custom function, passed to the 'stats' argument. Please note that 
-any custom function needs to have a 'na.rm' argument.
-}
 \examples{
-p = c("sp", "raster", "exactextractr")
- if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
-   m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
-   message("Can't run examples, please install ", paste(p[m], collapse = " "))
- } else {
-   invisible(lapply(p, require, character.only=TRUE))
-
-# skewness function
-skew <- function(x, na.rm = FALSE) { 
-   if (na.rm) x <- x[!is.na(x)]
-   sum( (x - mean(x)) ^ 3) / ( length(x) * sd(x) ^ 3 )  
-  }   
-
-# percent x >= p function
-pct <- function(x, p=0.30, na.rm = FALSE) {
-  if ( length(x[x >= p]) < 1 )  return(0) 
-    if ( length(x[x >= p]) == length(x) ) return(1) 
-     else return( length(x[x >= p]) / length(x) ) 
+ \dontrun{
+  terra::extract()
 }
 
-# create some example data
-p <- raster(nrow=10, ncol=10)
-  p[] <- runif(ncell(p)) * 10
-    p <- rasterToPolygons(p, fun=function(x){x > 9})
-      r <- raster(nrow=100, ncol=100)
-        r[] <- runif(ncell(r)) 
-plot(r)
-  plot(p, add=TRUE, lwd=4) 
-
-# run zonal statistics using skew and pct functions   
-z.skew <- zonal.stats(x = p, y = r, stats = "skew") 
-z.pct <- zonal.stats(x=p, y=r, stats = "pct")
-  ( z <- data.frame(ID = as.numeric(as.character(row.names(p@data))), 
-                    SKEW=z.skew, PCT=z.pct) )  
-}
-
-}
-\author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

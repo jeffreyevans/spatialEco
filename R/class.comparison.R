@@ -217,7 +217,7 @@ class.comparison <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", stat = "kap
       s@data <- data.frame(x=x@data[rs,][x.idx], y=y@data[rs,][y.idx],
       	                   as.data.frame(do.call("cbind", results)))
     } else if(type == "hexagon") {	
-      e <- as(raster::extent(x), "SpatialPolygons")  
+      e <- methods::as(raster::extent(x), "SpatialPolygons")  
 	  s <- sp::spsample(e, n = n,  type = "hexagonal")
 	    s <- sp::SpatialPointsDataFrame(s, data.frame(ID=1:length(s)))
 	  r.ids <- raster::extract(raster::raster(x), s, method='simple', buffer=d,  

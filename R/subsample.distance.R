@@ -50,9 +50,9 @@ subsample.distance <- function(x, size, d, d.max = NULL,
   } 
   if(!inherits(x, c("sf", "sfc")))
     stop(deparse(substitute(x)), " must be an sf object or coercible")	  
-  if(any(unique(as.character(st_geometry_type(x))) == gtypes[3:4]))
+  if(any(unique(as.character(sf::st_geometry_type(x))) == gtypes[3:4]))
     stop("Function does not support multi-part geometry")  
-  if(!any(unique(as.character(st_geometry_type(x))) != gtypes[1:2]))
+  if(!any(unique(as.character(sf::st_geometry_type(x))) != gtypes[1:2]))
     stop(deparse(substitute(x)), " must be one of ", 
 	     paste(gtypes, collopse=""))		     
   if( size >= nrow(x)) 

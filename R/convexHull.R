@@ -97,9 +97,9 @@ convexHull <- function(x, alpha = 250000)	{
 		  sf::st_as_sf() |>
 		    sf::st_polygonize() |>	
               sf::st_collection_extract(type = "POLYGON")
-			    st_geometry(a) <- "geometry"
+			    sf::st_geometry(a) <- "geometry"
 			      a$ID <- 1
-	if(!is.na(st_crs(x))) {
+	if(!is.na(sf::st_crs(x))) {
 	  sf::st_crs(a) <- sf::st_crs(x) 
 	}	  
   return( a )	

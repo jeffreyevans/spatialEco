@@ -25,35 +25,34 @@ specified NA values will be returned in the position(s) of the specified class
 Calculates proximity index for a set of polygons
 }
 \examples{
-library(sp)
-library(rgeos)
+ library(sf)
+ if(require(sp, quietly = TRUE)) {
+   data(meuse, package = "sp")
+   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                     agr = "constant")
+   meuse <- st_buffer(meuse, dist = meuse$elev * 5)
+     meuse$LU <- sample(c("forest","nonforest"), nrow(meuse), 
+                       replace=TRUE) 
 
-# Create test polygons
-data(meuse)
-  coordinates(meuse) = ~x+y
-  meuse_poly <- gBuffer(meuse, width = meuse$elev * 5, byid = TRUE)
-    meuse_poly$LU <- sample(c("forest","nonforest"), nrow(meuse_poly), 
-                            replace=TRUE) 
-
-# All polygon proximity index 1000 radius	
-( pidx <-proximity.index(meuse_poly, min.dist = 1) )
-  pidx[pidx > 1000] <- 1000
-
-# Class-level proximity index 1000 radius
-( pidx.class <- proximity.index(meuse_poly, y = "LU", min.dist = 1) )
-  pidx.class[pidx.class > 1000] <- 1000  
-  
-# plot index for all polygons
-meuse_poly$pidx <- pidx
-  spplot(meuse_poly, "pidx")
-
-# plot index for class-level polygons 
-meuse_poly$cpidx <- pidx.class
-  spplot(meuse_poly, "cpidx")
-
-# plot index for just forest class
-forest <- meuse_poly[meuse_poly$LU == "forest",]
-  spplot(forest, "cpidx")
+ # All polygon proximity index 1000 radius	
+ ( pidx <- proximity.index(meuse, min.dist = 1) )
+   pidx[pidx > 1000] <- 1000
+ 
+ # Class-level proximity index 1000 radius
+ ( pidx.class <- proximity.index(meuse, y = "LU", min.dist = 1) )
+   
+ # plot index for all polygons
+ meuse$pidx <- pidx
+   plot(meuse["pidx"])
+ 
+ # plot index for class-level polygons 
+ meuse$cpidx <- pidx.class
+   plot(meuse["cpidx"])
+ 
+ # plot index for just forest class
+ forest <- meuse[meuse$LU == "forest",]
+  plot(forest["cpidx"])
+}
   
 }
 \references{

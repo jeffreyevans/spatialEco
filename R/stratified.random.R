@@ -69,9 +69,9 @@ stratified.random <- function(x, strata, n = 10, reps = 1, replace = FALSE) {
     stop("Must provide an input spatial object (x)")
   if(!inherits(x, c("sf", "sfc")))
     stop(deparse(substitute(x)), " must be an sf object or coercible")	  
-  if(any(unique(as.character(st_geometry_type(x))) == gtypes[4:6]))
+  if(any(unique(as.character(sf::st_geometry_type(x))) == gtypes[4:6]))
     stop("Function does not support multi-part geometry")  
-  if(!any(unique(as.character(st_geometry_type(x))) != gtypes[1:3]))
+  if(!any(unique(as.character(sf::st_geometry_type(x))) != gtypes[1:3]))
     stop(deparse(substitute(x)), " must be one of ", 
 	     paste(gtypes[1:3], collopse=""))		     
   spx <- sf::st_drop_geometry(x)

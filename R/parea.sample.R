@@ -33,7 +33,7 @@ parea.sample <- function(x, pct = 0.1, join = FALSE, sf = 4046.86,
                          stype = "random", ...) {
   if (!inherits(x, "sf")) 
     stop(deparse(substitute(x)), " must be an sf POLYGON object")
-  if(!unique(as.character(st_geometry_type(x))) %in% c("POLYGON", "MULTIPOLYGON"))
+  if(!unique(as.character(sf::st_geometry_type(x))) %in% c("POLYGON", "MULTIPOLYGON"))
     stop(deparse(substitute(x)), " must be an sf POLYGON object")		
   ns <- unlist(lapply(1:nrow(x), function(i) {
     round( (units::drop_units(sf::st_area(x[i,])) / sf) * pct, 0) 

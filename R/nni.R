@@ -48,7 +48,7 @@
 nni <- function(x, win = c("hull", "extent")) {
   if(!inherits(x, "sf"))		
     stop(deparse(substitute(x)), " must be an sf POINT object")	
-  if(unique(as.character(st_geometry_type(x))) != "POINT")
+  if(unique(as.character(sf::st_geometry_type(x))) != "POINT")
     stop(deparse(substitute(x)), " must be an sf POINT object")		
     if (win[1] == "hull") {
       w <- spatstat.geom::convexhull.xy( sf::st_coordinates(x)[,1:2] )

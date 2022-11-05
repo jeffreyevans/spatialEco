@@ -2,20 +2,15 @@
 #' @description A bivarate raster correlation using Dutilleul's 
 #'              modified t-test
 #'       
-#' @param x           x raster for correlation, SpatialPixelsDataFrame or 
-#'                    SpatialGridDataFrame object    
-#' @param y           y raster for correlation, SpatialPixelsDataFrame or 
-#'                    SpatialGridDataFrame object 
-#' @param x.idx       Index for the column in the x raster object  
-#' @param y.idx       Index for the column in the y raster object  
+#' @param x           A terra SpatRaster class object 
+#' @param y           A terra SpatRaster class object, same dimensions as x
 #' @param d           Distance for finding neighbors
-#' @param sub.sample  Should a sub-sampling approach be employed (TRUE/FALSE)  
-#' @param type        If sub.sample = TRUE, what type of sample (random  or hexagon)
-#' @param p           If sub.sample = TRUE, what proportion of population 
+#' @param sample      Apply sub-sampling options; c("none", "random", "hexagonal", "regular") 
+#' @param p           If sample != "none", what proportion of population 
 #'                    should be sampled
-#' @param size        Fixed sample size               
+#' @param size        Fixed sample size (default NULL)               
 #'
-#' @return A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
+#' @return A terra SpatRaster or sf POINT class object with the 
 #'         following attributes:
 #' \itemize{ 
 #' \item   corr        Correlation 
@@ -43,133 +38,135 @@
 #' 
 #' @examples
 #' \dontrun{
-#' library(gstat)                                         
-#' library(sp)                                            
-#'                                                         
-#' data(meuse)                                            
-#' data(meuse.grid)                                       
-#' coordinates(meuse) <- ~x + y                           
-#' coordinates(meuse.grid) <- ~x + y                      
-#'                                                         
-#' # GRID-1 log(copper):                                              
-#' v1 <- variogram(log(copper) ~ 1, meuse)                  
-#' x1 <- fit.variogram(v1, vgm(1, "Sph", 800, 1))           
-#' G1 <- krige(zinc ~ 1, meuse, meuse.grid, x1, nmax = 30)
-#' gridded(G1) <- TRUE                                      
-#' G1@data = as.data.frame(G1@data[,-2])
+#' library(gstat) 
+#' library(sf) 
+#' library(terra) 
+#'  
+#' data(meuse, package = "sp")
+#' meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                   agr = "constant") 
+#' data(meuse.grid, package = "sp")                                      
+#' meuse.grid <- st_as_sf(meuse.grid, coords = c("x", "y"), crs = 28992, 
+#'                   agr = "constant") 
 #' 
-#' # GRID-2 log(elev):                                              
-#' v2 <- variogram(log(elev) ~ 1, meuse)                  
-#' x2 <- fit.variogram(v2, vgm(.1, "Sph", 1000, .6))        
-#' G2 <- krige(elev ~ 1, meuse, meuse.grid, x2, nmax = 30)
-#' gridded(G2) <- TRUE    
-#' G2@data <- as.data.frame(G2@data[,-2])
-#' G2@data[,1] <- G2@data[,1]
+#' ref <- rast(ext(meuse.grid), resolution = 40)
+#'   crs(ref) <- crs(meuse)
+#' e <- ext(179407.8, 181087.9, 331134.4, 332332.1)
+#'                                        
+#' # GRID-1 log(copper): 
+#' v1 <- variogram(log(copper) ~ 1, meuse) 
+#'   x1 <- fit.variogram(v1, vgm(1, "Sph", 800, 1))           
+#'   G1 <- krige(zinc ~ 1, meuse, meuse.grid, x1, nmax = 30)
+#' G1 <- crop(rasterize(G1, ref, "var1.pred"),e)
+#' names(G1) <- "copper"
+#'  
+#'  # GRID-2 log(elev):
+#' v2 <- variogram(log(elev) ~ 1, meuse) 
+#'   x2 <- fit.variogram(v2, vgm(1, "Sph", 800, 1))           
+#'   G2 <- krige(zinc ~ 1, meuse, meuse.grid, x2, nmax = 30)
+#' G2 <- crop(rasterize(G2, ref, "var1.pred"),e)
+#' names(G2) <- "elev"
 #' 
-#' corr <- raster.modified.ttest(G1, G2)
-#'   plot(raster::raster(corr,1))
-#'   
-#' corr.rand <- raster.modified.ttest(G1, G2, sub.sample = TRUE, type = "random")	 
-#' corr.hex <- raster.modified.ttest(G1, G2, sub.sample = TRUE, d = 500, size = 1000)	
-#'   head(corr.hex@data)
-#'     bubble(corr.hex, "corr") 
+#' # Raster corrected correlation 
+#' acor <- raster.modified.ttest(G1, G2)
+#'   plot(acor)
+#'  
+#' # Sample-based corrected correlation
+#' ( cor.hex <- raster.modified.ttest(G1, G2, sample = "hexagonal") )	 
+#'   plot(cor.hex["corr"], pch=20)
+#' 
 #' }
 #' 
 #' @seealso \code{\link[SpatialPack]{modified.ttest}} for test details
 #'
 #' @export raster.modified.ttest
-raster.modified.ttest <- function(x, y, x.idx = 1, y.idx = 1, d = "AUTO", 
-                                  sub.sample = FALSE, type = "hexagon", p = 0.10, 
-								  size = NULL) {
-    if(!any(which(utils::installed.packages()[,1] %in% "SpatialPack")))
-      stop("please install SpatialPack package before running this function")							  
-	if (!sp::gridded(x))
-	  stop(deparse(substitute(x)), " Must be an sp raster object")
-    if (!sp::gridded(y)) 
-      stop(deparse(substitute(y)), " Must be an sp raster object")	
-   if ( (d == "AUTO") == TRUE){
-     cs <- x@grid@cellsize[1]
-      d = sqrt(2*((cs*3)^2))
+raster.modified.ttest <- function(x, y, d = "auto", sample = c("none", "random", "hexagonal", "regular"), 
+								  p = 0.10, size = NULL) {						  
+  if(!any(which(utils::installed.packages()[,1] %in% "SpatialPack")))
+    stop("please install SpatialPack package before running this function")	
+  if(missing(x))
+    stop("x argument is missing")
+  if(!inherits(x, "SpatRaster"))
+    stop(deparse(substitute(x)), " must be a terra SpatRast object")	
+  if(missing(y))
+    stop("y argument is missing")	
+  if(!inherits(y, "SpatRaster"))
+    stop(deparse(substitute(y)), " must be a terra SpatRast object")
+  if(!terra::ext(x) == terra::ext(y))
+    stop("Extents do not match")
+  if(!any(terra::res(x) == terra::res(y)))
+    stop("Resolutions do not match")
+  if(sample[1] == "none") {
+    if(d == "auto"){
+      d = sqrt(2*((terra::res(x)[1]*3)^2))
     } else {
-      if (!is.numeric (d)) stop("Distance (d) must be numeric")
-    }
-  nb <- spdep::dnearneigh(sp::coordinates(x),0, d)
-  if(sub.sample == FALSE) { 	
+      if(!is.numeric (d)) stop("Distance (d) must be numeric")
+    }  
+    pts <- sf::st_as_sf( terra::as.points( c(x,y) ) )
+      names(pts)[1:2] <- c("x","y")
+    nb <- spdep::dnearneigh(pts,0, d)  
     spatial.corr <- data.frame()
       for(i in 1:length(nb)) {
-        # x.var <- x@data[nb[[i]],][x.idx][,1]
-		x.var <- x@data[,x.idx][nb[[i]]]
-        # y.var <- y@data[nb[[i]],][y.idx][,1]
-		y.var <- y@data[,y.idx][nb[[i]]]
-      sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
-	                                    nclass = 1)		
+	    if(length(nb[[i]]) > 3) {
+		  x.var <- pts$x[nb[[i]]]
+		  y.var <- pts$y[nb[[i]]]
+        sc <- SpatialPack::modified.ttest(x.var, y.var, 
+	            sf::st_coordinates(pts[,1:2][nb[[i]],]), nclass = 1)		
         spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, 
 		                      Fstat= (sc$dof * sc$Fstat),  
 		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
-							  moran.y = sc$imoran[2]),5))  
+							  moran.y = sc$imoran[2]),5))
+        } else {
+          spatial.corr <- rbind(spatial.corr, rep(NA, 5))
+        }		  							  
       }
-	  names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
-      s <- x    
-      s@data <- spatial.corr
-    } else {
-      if(!is.null(size)) {
+	  v <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")  
+	  names(spatial.corr) <- v  
+        pts <- cbind(pts, spatial.corr)
+      s <- terra::rast(lapply(v, function(v) {terra::rasterize(pts, x, field=v)}))	 
+	    names(s) <- v
+		  terra::crs(s) <- terra::crs(x)
+	} else {
+	# "random", "hexagonal", "regular"
+	  if(!is.null(size)) {
         n = size 
-	  } else {
-	    n = round(nrow(x) * p, 0)
-	  } 
-    if(type == "random") {
-	  rs <- sample(1:length(nb), n)
-      spatial.corr <- data.frame()	  
-      for(i in 1:length(rs)) {
-        #x.var <- x@data[nb[[rs[i]]],][x.idx][,1]
-		x.var <- x@data[,x.idx][nb[[i]]]
-        # y.var <- y@data[nb[[rs[i]]],][x.idx][,1]
-		y.var <- y@data[,y.idx][nb[[i]]]
-      sc <- SpatialPack::modified.ttest(x.var, y.var, sp::coordinates(x[nb[[i]],]), 
-	                                    nclass = 1)		
-        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, Fstat= (sc$dof * sc$Fstat),  
-		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
-							  moran.y = sc$imoran[2]),5)) 
-      }
-	  names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
-      s <- x[rs,]    
-      s@data <- spatial.corr
-      s <- as(s, "SpatialPointsDataFrame")
-	  
-    } else {	
-      e <- as(raster::extent(x), "SpatialPolygons")  
-	  s <- sp::spsample(e, n = n,  type = "hexagonal")
-	  r.ids <- raster::extract(raster::raster(x), s, method='simple', buffer=d,  
-	                           small=TRUE, cellnumbers=TRUE) 
-		names(r.ids) <- 1:length(r.ids) 			 
-	  rm.na <- function(x) {
-        x <- x[stats::complete.cases(x),]
-	  	if( length(x) < 4 ) {
-	  	  x <- NA
-	  	} else {
-	      x <- as.numeric( x[,1] ) 
-	  	}
-	    return(x)
-	  }	
-	r.ids <- lapply(r.ids, FUN = rm.na  ) 
-    r.ids <- r.ids[sapply(r.ids, function(z) !all(is.na(z)))]
-    spatial.corr <- data.frame()
-	  for(i in 1:length(r.ids)) {
-	    cdat <- data.frame(xvar = raster::raster(x)[r.ids[[i]]], 
-		                   yvar = raster::raster(y)[r.ids[[i]]], 
-	                       raster::xyFromCell(raster::raster(x), 
-						   r.ids[[i]]) )  						   
-	sc <- SpatialPack::modified.ttest(cdat[,1], 
-		                         cdat[,2], cdat[,3:4], nclass = 1)
-        spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, 
-		                      Fstat = (sc$dof * sc$Fstat),  
-		                      p.value = sc$p.value, moran.x = sc$imoran[1], 
-							  moran.y = sc$imoran[2]),5)) 
-      }
+      } else {
+        n = round(terra::ncell(x) * p, 0)
+      } 
+	  e <- as.vector(terra::ext(x))[c(1,3,2,4)] 
+      e <- sf::st_as_sfc(sf::st_bbox(c(e[1], e[2], e[3], e[4])))
+	  pts <- sf::st_as_sf(sf::st_sample(e, size=n, type=sample[1]))
+         pts <- cbind(pts, terra::extract(c(x,y), terra::vect(pts))[,-1])
+		   pts <- stats::na.omit(pts)
+            sf::st_geometry(pts) <- "geometry"
+		names(pts)[1:2] <- c("x","y")   
+	    if(d == "auto"){
+		  dm <- sf::st_distance(pts)
+		    diag(dm) <- NA
+              d = sqrt(2*((min(dm, na.rm=TRUE)*3)^2))
+        } else {
+          if(!is.numeric (d)) stop("Distance (d) must be numeric")
+        }	   	   
+	  nb <- spdep::dnearneigh(pts,0, d)
+	  spatial.corr <- data.frame()	  
+        for(i in 1:length(nb)) {
+	      if(length(nb[[i]]) > 3) {
+		  x.var <- pts$x[nb[[i]]]
+		  y.var <- pts$y[nb[[i]]]
+          sc <- SpatialPack::modified.ttest(x.var, y.var, 
+	              sf::st_coordinates(pts[,1:2][nb[[i]],]), 
+	              nclass = 1)		
+          spatial.corr <- rbind(spatial.corr, round(data.frame(corr = sc$corr, 
+		                        Fstat= (sc$dof * sc$Fstat),  
+		                        p.value = sc$p.value, moran.x = sc$imoran[1], 
+		  	  				    moran.y = sc$imoran[2]),5))
+          } else {
+            spatial.corr <- rbind(spatial.corr, rep(NA, 5))
+          }		  
+        }
 	    names(spatial.corr) <- c("corr", "Fstat", "p.value", "moran.x", "moran.y")
-	  s <- s[as.numeric(names(r.ids)),] 
-      s <- sp::SpatialPointsDataFrame(s,  spatial.corr) 
-	} 	
-  }
-return( s )  
+          s <- cbind(pts, spatial.corr)
+		    s <- s[,-which(names(s) %in% c("x","y"))] 
+	  }
+  return( s )  
 }

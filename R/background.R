@@ -65,13 +65,13 @@ background <- function(x, p=1000, known=NULL, d=NULL,
     if(inherits(x, c("SpatialPolygons", "SpatialPolygonsDataFrame")))	
       x <- sf::st_as_sf(x)  
 	if(inherits(x, c("sf", "sfc"))) {   
-	  if(as.character(unique(st_geometry_type(x))) != "POLYGON")
+	  if(as.character(unique(sf::st_geometry_type(x))) != "POLYGON")
         stop(deparse(substitute(x)), " x must be an sf POLYGON object")	
     }    	
   if(!is.null(known)){
     if(!inherits(known, c("sf", "sfc")))  
       stop(deparse(substitute(known)), " must be an sf POINT object")
-    if(as.character(unique(st_geometry_type(known))) != "POINT")
+    if(as.character(unique(sf::st_geometry_type(known))) != "POINT")
       stop(deparse(substitute(known)), " must be an sf POINT object")
 	if(sf::st_crs(x) != sf::st_crs(known))
       stop("CSR of known and x do not match")	  
@@ -82,7 +82,7 @@ background <- function(x, p=1000, known=NULL, d=NULL,
                      dist = d,sparse = TRUE)))
         s <- s[-idx,] 
     }
-    if(!is.na(st_crs(x))) {
+    if(!is.na(sf::st_crs(x))) {
       sf::st_crs(s) <- sf::st_crs(x) 
     }	  
   return(s)

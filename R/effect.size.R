@@ -39,7 +39,7 @@ effect.size <- function(y, x, pooled = TRUE, conf.level = 0.95) {
   effectsize <- vector()
   low.ci <- vector()
   up.ci <- vector()
-  if(class(y) != "factor") y <- as.factor(y)
+  if(!inherits(y, "factor")) y <- as.factor(y)
     for(i in levels(y)){
       y.i <- ifelse( y == i, i, "control")
 	    g.means <- tapply(x, y.i, mean)

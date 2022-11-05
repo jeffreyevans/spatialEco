@@ -4,41 +4,53 @@
 \alias{wt.centroid}
 \title{Weighted centroid}
 \usage{
-wt.centroid(x, p, sp = TRUE)
+wt.centroid(x, p = NULL, spatial = TRUE)
 }
 \arguments{
-\item{x}{sp SpatialPointsDataFrame class object}
+\item{x}{sf POINT class object}
 
-\item{p}{Weights column in x@data slot}
+\item{p}{Weights column in x}
 
-\item{sp}{Output sp SpatailPoints class object (TRUE | FALSE)}
+\item{spatial}{(TRUE/FALSE) Output sf POINT object}
 }
 \value{
-A vector or an sp class SpatialPoints object of the weighted coordinate centroid
+An x,y coordinate or sf POINT object representing the weighted or unweighted 
+coordinate centroid
 }
 \description{
-Creates centroid of [x,y] coordinates based on a 
+Creates centroid of [x,y] coordinates with optional
              weights field
 }
 \note{
 The weighted centroid is calculated as:
 [Xw]=[X]*[p], [Yw]=[Y]*[p], [sXw]=SUM[Xw], [sYw]=SUM[Yw], [sP]=SUM[p]
    wX=[sXw]/[sP], wY=[sYw]/[sP]    
-   where; X=X COORDINATE(S), Y=Y COORDINATE(S), p=WEIGHT
+   where; X=X coordinate(S), Y=Y coordinate(S), p=WEIGHT
 
 Depends: sp
 }
 \examples{
-library(sp)
- data(meuse)
- coordinates(meuse) = ~x+y
- wt.copper <- wt.centroid(meuse, 'copper', sp=TRUE) 
-   wt.zinc <- wt.centroid(meuse, 'zinc', sp=TRUE) 
-     plot(meuse, pch=20, cex=0.75, main='Weighted centroid(s)')
-       points(wt.copper, pch=19, col='red', cex=1.5)  
-         points(wt.zinc, pch=19, col='blue', cex=1.5)
-        box() 
+p = c("sf", "sp")
+if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+  m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+  message("Can't run examples, please install ", paste(p[m], collapse = " "))
+} else {
+invisible(lapply(p, require, character.only=TRUE))
+
+data(meuse, package = "sp")
+meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                  agr = "constant")
+
+wt.copper <- wt.centroid(meuse, p='copper') 
+wt.zinc <- wt.centroid(meuse,  p='zinc') 
+
+plot(st_geometry(meuse), pch=20, cex=0.75, 
+     main='Weighted centroid(s)')
+  plot(st_geometry(wt.copper), pch=19, col='red', 
+       cex=1.5, add=TRUE)  
+  plot(st_geometry(wt.zinc), pch=19, col='blue', 
+       cex=1.5, add=TRUE)
 legend('topleft', legend=c('all','copper', 'zinc'), 
        pch=c(20,19,19),col=c('black','red','blue'))
-
+}
 }

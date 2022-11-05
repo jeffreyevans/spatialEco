@@ -91,7 +91,7 @@ spatial.select <- function(x, y = NULL, distance = NULL,
 	}  
     if(!inherits(y, c("sf", "sfc")))
       stop(deparse(substitute(y)), " must be an sf object or coercible")	  
-    if(!any(unique(as.character(st_geometry_type(y))) != gtypes))
+    if(!any(unique(as.character(sf::st_geometry_type(y))) != gtypes))
       stop(deparse(substitute(y)), " must be one of ", 
 	       paste(gtypes, collopse=""))		     
   } else {
@@ -104,7 +104,7 @@ spatial.select <- function(x, y = NULL, distance = NULL,
   }	
   if(!inherits(x, c("sf", "sfc")))
     stop(deparse(substitute(x)), " must be an sf object or coercible")
-  if(!any(unique(as.character(st_geometry_type(x))) != gtypes))
+  if(!any(unique(as.character(sf::st_geometry_type(x))) != gtypes))
     stop(deparse(substitute(c)), " must be one of ", 
 	     paste(gtypes[1:2], collopse=""))
 		 

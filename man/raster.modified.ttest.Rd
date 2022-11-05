@@ -7,39 +7,28 @@
 raster.modified.ttest(
   x,
   y,
-  x.idx = 1,
-  y.idx = 1,
-  d = "AUTO",
-  sub.sample = FALSE,
-  type = "hexagon",
+  d = "auto",
+  sample = c("none", "random", "hexagonal", "regular"),
   p = 0.1,
   size = NULL
 )
 }
 \arguments{
-\item{x}{x raster for correlation, SpatialPixelsDataFrame or 
-SpatialGridDataFrame object}
+\item{x}{A terra SpatRaster class object}
 
-\item{y}{y raster for correlation, SpatialPixelsDataFrame or 
-SpatialGridDataFrame object}
-
-\item{x.idx}{Index for the column in the x raster object}
-
-\item{y.idx}{Index for the column in the y raster object}
+\item{y}{A terra SpatRaster class object, same dimensions as x}
 
 \item{d}{Distance for finding neighbors}
 
-\item{sub.sample}{Should a sub-sampling approach be employed (TRUE/FALSE)}
+\item{sample}{Apply sub-sampling options; c("none", "random", "hexagonal", "regular")}
 
-\item{type}{If sub.sample = TRUE, what type of sample (random  or hexagon)}
-
-\item{p}{If sub.sample = TRUE, what proportion of population 
+\item{p}{If sample != "none", what proportion of population 
 should be sampled}
 
-\item{size}{Fixed sample size}
+\item{size}{Fixed sample size (default NULL)}
 }
 \value{
-A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
+A terra SpatRaster or sf POINT class object with the 
         following attributes:
 \itemize{ 
 \item   corr        Correlation 
@@ -61,36 +50,43 @@ at capturing spatial process that includes nonstationarity and anistropy.
 }
 \examples{
 \dontrun{
-library(gstat)                                         
-library(sp)                                            
-                                                        
-data(meuse)                                            
-data(meuse.grid)                                       
-coordinates(meuse) <- ~x + y                           
-coordinates(meuse.grid) <- ~x + y                      
-                                                        
-# GRID-1 log(copper):                                              
-v1 <- variogram(log(copper) ~ 1, meuse)                  
-x1 <- fit.variogram(v1, vgm(1, "Sph", 800, 1))           
-G1 <- krige(zinc ~ 1, meuse, meuse.grid, x1, nmax = 30)
-gridded(G1) <- TRUE                                      
-G1@data = as.data.frame(G1@data[,-2])
+library(gstat) 
+library(sf) 
+library(terra) 
+ 
+data(meuse, package = "sp")
+meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                  agr = "constant") 
+data(meuse.grid, package = "sp")                                      
+meuse.grid <- st_as_sf(meuse.grid, coords = c("x", "y"), crs = 28992, 
+                  agr = "constant") 
 
-# GRID-2 log(elev):                                              
-v2 <- variogram(log(elev) ~ 1, meuse)                  
-x2 <- fit.variogram(v2, vgm(.1, "Sph", 1000, .6))        
-G2 <- krige(elev ~ 1, meuse, meuse.grid, x2, nmax = 30)
-gridded(G2) <- TRUE    
-G2@data <- as.data.frame(G2@data[,-2])
-G2@data[,1] <- G2@data[,1]
+ref <- rast(ext(meuse.grid), resolution = 40)
+  crs(ref) <- crs(meuse)
+e <- ext(179407.8, 181087.9, 331134.4, 332332.1)
+                                       
+# GRID-1 log(copper): 
+v1 <- variogram(log(copper) ~ 1, meuse) 
+  x1 <- fit.variogram(v1, vgm(1, "Sph", 800, 1))           
+  G1 <- krige(zinc ~ 1, meuse, meuse.grid, x1, nmax = 30)
+G1 <- crop(rasterize(G1, ref, "var1.pred"),e)
+names(G1) <- "copper"
+ 
+ # GRID-2 log(elev):
+v2 <- variogram(log(elev) ~ 1, meuse) 
+  x2 <- fit.variogram(v2, vgm(1, "Sph", 800, 1))           
+  G2 <- krige(zinc ~ 1, meuse, meuse.grid, x2, nmax = 30)
+G2 <- crop(rasterize(G2, ref, "var1.pred"),e)
+names(G2) <- "elev"
 
-corr <- raster.modified.ttest(G1, G2)
-  plot(raster::raster(corr,1))
-  
-corr.rand <- raster.modified.ttest(G1, G2, sub.sample = TRUE, type = "random")	 
-corr.hex <- raster.modified.ttest(G1, G2, sub.sample = TRUE, d = 500, size = 1000)	
-  head(corr.hex@data)
-    bubble(corr.hex, "corr") 
+# Raster corrected correlation 
+acor <- raster.modified.ttest(G1, G2)
+  plot(acor)
+ 
+# Sample-based corrected correlation
+( cor.hex <- raster.modified.ttest(G1, G2, sample = "hexagonal") )	 
+  plot(cor.hex["corr"], pch=20)
+
 }
 
 }

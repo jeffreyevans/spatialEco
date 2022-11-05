@@ -64,7 +64,7 @@ breeding.density <- function(x, pop, p = 0.75, bw = 6400,
   if(inherits(x, c("SpatialPointsDataFrame", "SpatialPoints"))) {
      x <- sf::st_as_sf(x)
   }
-  if(as.character(unique(st_geometry_type(x))) != "POINT")
+  if(as.character(unique(sf::st_geometry_type(x))) != "POINT")
     stop(deparse(substitute(x)), " x must be an sf POINT object")
   if(is.na(match(pop, names(x)))) 
     stop("Count/density field not present in data")
@@ -86,7 +86,7 @@ breeding.density <- function(x, pop, p = 0.75, bw = 6400,
     pop.counts <- sf::st_drop_geometry(x[,pn]) 
 	pop.n <- sum(pop.counts) * p
     d <- (point.density(x, bw = bw, self = self)) * pop.counts
-    pop.den <- data.frame(st_coordinates(x)[,1:2], pop.counts, d)
+    pop.den <- data.frame(sf::st_coordinates(x)[,1:2], pop.counts, d)
       names(pop.den) <- c("x", "y", "pop", "pden")
     pop.den <- pop.den[order(-pop.den$pden), ]
       i <- 0
@@ -97,8 +97,8 @@ breeding.density <- function(x, pop, p = 0.75, bw = 6400,
           i <- i + pop.den[, "pop"][j]
           pts <- rbind(pts, pop.den[j, ])
       }
-    pts <- st_as_sf(pts, coords = c("x", "y"), agr = "constant")    
-	  if(!is.na(st_crs(x))) {
+    pts <- sf::st_as_sf(pts, coords = c("x", "y"), agr = "constant")    
+	  if(!is.na(sf::st_crs(x))) {
 	    sf::st_crs(pts) <- sf::st_crs(x) 
 	  }	 		
 	pop.buff <- sf::st_buffer(pts, dist=b,

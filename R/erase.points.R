@@ -55,11 +55,11 @@
 erase.point <- function(y, x, inside = TRUE) {
   if(!inherits(y, "sf"))		
     stop(deparse(substitute(y)), " must be an sf POINT object")	
-  if(unique(as.character(st_geometry_type(y))) != "POINT")
+  if(unique(as.character(sf::st_geometry_type(y))) != "POINT")
     stop(deparse(substitute(y)), " must be an sf POINT object")		
   if(!inherits(x, "sf"))		
     stop(deparse(substitute(x)), " must be an sf POLYGON object")
-  if(unique(as.character(st_geometry_type(x))) != "POLYGON")
+  if(unique(as.character(sf::st_geometry_type(x))) != "POLYGON")
     stop(deparse(substitute(x)), " must be an sf POLYGON object")		
   idx <- sf::st_intersects(y, x, sparse = FALSE)   
   if(inside == TRUE) { 

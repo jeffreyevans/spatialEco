@@ -1,19 +1,15 @@
 #' @title Raster Distance
-#' @description Calculates the Euclidean distance between a set of points and
-#'              the cells in a raster. This is a drop-in replacement for the  
-#'              raster distanceFromPoints function using the RANN algorithm for 
-#'              calculating distance, resulting in a large improvement in   
-#'              processing speed.   
+#' @description Calculates the Euclidean distance of a defined raster class and
+#'              all the other cells in a taster
 #'
-#' @param  x          rasterLayer, sp SpatialPoints or sf POINTS object 
-#' @param  y          sp SpatialPoints or sf POINTS object 
-#' @param  reference  A raster to use as a reference if x is points object 
+#' @param  x          A terra SpatRast or sf class object 
+#' @param  y          Value(s) in x to to calculate distance to
 #' @param  scale      (FALSE/TRUE) Perform a row standardization on results 
 #'
-#' @return a distance raster of class rasterLayer 
+#' @return a distance terra SpatRast raster
 #'
 #' @note  
-#' This replicates the raster distanceFromPoints function but uses the Arya & Mount
+#' This replicates the terra distance function but uses the Arya & Mount
 #' Approximate Near Neighbor (ANN) C++ library for calculating distances. Where this
 #' results in a notable increase in performance it is not memory safe, needing to read
 #' in the entire raster and does not use the GeographicLib (Karney, 2013) spheroid 
@@ -27,51 +23,60 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
-#' library(raster)
-#' r <- raster(ncol=100,nrow=100)
-#'   r[] <- sample(c(0,1), ncell(r), replace = TRUE)
-#'  
-#' majority <- function(x){
-#'  m <- table(x)
-#'  names(m)[which.max(m)][1]
-#' }
-#' r <- focal(r, matrix(1,11,11, byrow=TRUE), majority) 
-#'  
-#'  pts <- rasterToPoints(r, spatial=TRUE)
-#'    cls <- pts[pts$layer == "1",] 
-#'  d <- rasterDistance(pts, cls, reference = r, scale=TRUE)
-#'    dev.new(height=8,width=11)
-#'      plot(d)
-#'        points(cls,pch=19,cex=0.5)
+#' library(sf)
+#' library(terra)
+#' 
+#' # read, project and subset 10 polygons
+#' nc <- suppressWarnings(st_cast(st_read(system.file("shape/nc.shp", 
+#'          package="sf")), "POLYGON"))
+#'   nc <- st_transform(nc, st_crs("ESRI:102008"))
+#'     nc.sub <- nc[sample(1:nrow(nc),10),]
+#' 
+#' # create 1000m reference raster, rasterize subset polygons
+#' ref <- rast(ext(nc), resolution=1000)
+#'   rnc <- mask(rasterize(vect(nc.sub), field="CNTY_ID",
+#'               ref, background=9999), vect(nc)) 
+#'     crs(rnc) <- "ESRI:102008"  
+#'   
+#' # Calculate distance to class 1 in rnc raster, plot results
+#' ids <- nc.sub$CNTY_ID 
+#' rd <- rasterDistance(rnc, y=ids) 
+#'   plot(rd)
+#'     plot( st_geometry(nc.sub), add=TRUE)
+#' 
+#' #### Benchmark rasterDistance and terra::distance
+#' ####   at res=90m the differences are quite notable
+#' # ref <- rast(ext(nc), resolution=500)
+#' #   rnc <- mask(rasterize(vect(nc.sub), ref, background=2),
+#' #               vect(nc)) 
+#' #     crs(rnc) <- "ESRI:102008" 
+#' # system.time({ rasterDistance(rnc, y=1) })  
+#' # system.time({ distance(rnc, target=2) }) 
 #'
-#' @seealso \code{\link[raster]{distanceFromPoints}, \link[raster]{distance}}
+#' @seealso \code{\link[terra]{distance}, \link[terra]{distance}}
 #'
+#' @import terra
 #' @export rasterDistance 
-rasterDistance <- function(x, y, reference = NULL, scale = FALSE){
-  if(!is.null(reference)) {
-    if(class(reference)[1] != "RasterLayer")
-      stop("the reference raster is not a RasterLayer object")
-  }
-  if(is.null(reference)){
-    if(class(x)[1] == "rasterLayer") {
-      reference = x
-    } else {
-      reference = raster::raster(raster::extent(x))
-    }
-  }
-  if(class(y)[1] == "sf") y <- as(y, "Spatial") 
-    if(class(x)[1] == "RasterLayer") {
-      p <- raster::rasterToPoints(x, spatial = TRUE)
-    } else {
-      p <- x
-    }
-  idx <- RANN::nn2(sp::coordinates(y), sp::coordinates(p),  k = 1) 
-    if(scale) {    
-      idx <- idx$nn.dists[,1] / max(idx$nn.dists[,1]) 
-    } else {
-      idx <- idx$nn.dists[,1]
-    }
-      p@data <- data.frame(dist=idx)
-    r <- raster::rasterize(p, reference, field = "dist")
+rasterDistance <- function(x, y, scale = FALSE){
+  if(!any(which(utils::installed.packages()[,1] %in% "RANN")))
+    stop("please install RANN package before running this function")
+  if(missing(x))
+    stop("x argument is missing")
+  if(missing(y))
+    stop("y argument is missing")	
+  if(!any(y %in% unique(x[])[,1]))
+    stop("values in ", deparse(substitute(y)), " are missing in ", deparse(substitute(x)))
+  if(!inherits(x, "SpatRaster"))
+	  stop(deparse(substitute(x)), " must be a terra SpatRast object")
+  r <- terra::ifel(x %in% y, 1, NA)  
+    idx <- which(r[] == 1)
+      na.idx <- which(is.na(r[]))
+  knn.dist <- RANN::nn2(terra::xyFromCell(r, idx),
+                        terra::xyFromCell(r, na.idx), 
+    			        k = 1)$nn.dists[,1]
+	r <- terra::ifel(r == 1, 0, NA)					
+      r[na.idx] <- knn.dist
+	    r <- terra::mask(r, x)	
+    if(scale) r <- r / terra::global(r, "max", na.rm=TRUE)[,1] 
   return(r)
 }

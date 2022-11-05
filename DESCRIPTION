@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-0
-Date: 2022-10-12
+Date: 2022-11-04
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
@@ -18,32 +18,29 @@ Description: Utilities to support spatial data manipulation, query, sampling
 Depends: R (>= 4.0)
 Imports:
   sf,
+  terra
+Suggests:
   spatstat.geom, 
   spatstat.core, 
   spdep,
-  MASS,
-  methods,
   alphahull,
-  exactextractr,
   cluster,
   readr,
   RCurl,
   RANN,
   rms,
   yaImpute,
-  SpatialPack (>= 0.3),
   mgcv,
   EnvStats,
-  terra,
-  tabularaster,
-  stringr,
-  raster,
-  sp
-Suggests:
   gstat,
+  methods,
+  MASS,
+  SpatialPack (>= 0.3),
   RStoolbox,
-  rgeos,
-  units  
+  units,
+  raster,
+  sp,
+  stringr  
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3
 URL: https://github.com/jeffreyevans/spatialEco, https://jeffreyevans.github.io/spatialEco/

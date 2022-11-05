@@ -29,7 +29,7 @@
 extract.vertices <- function(x, join = TRUE) {
   if(!inherits(x, c("sf", "sfc")))		
     stop(deparse(substitute(x)), " must be an sf object")
- if(!unique(as.character(st_geometry_type(x))) %in% c("POLYGON", 
+ if(!unique(as.character(sf::st_geometry_type(x))) %in% c("POLYGON", 
    "MULTIPOLYGON", "MULTILINESTRING", "LINESTRING"))
     stop(deparse(substitute(x)), " must be an sf POINT object")	
   if(join == TRUE) {
@@ -45,11 +45,11 @@ extract.vertices <- function(x, join = TRUE) {
     # })
     # xy <- do.call("rbind", xy)  
   } else {	
-    xy <- as.data.frame(st_coordinates(x))[,c(1,2,4)]
+    xy <- as.data.frame(sf::st_coordinates(x))[,c(1,2,4)]
       names(xy)[3] <- "LID"  
-    xy <- st_as_sf(xy, coords = c("X", "Y"), 
-                   crs = sf::st_crs(x), 
-                   agr = "constant")
+    xy <- sf::st_as_sf(xy, coords = c("X", "Y"), 
+                       crs = sf::st_crs(x), 
+                       agr = "constant")
   } 
   return( xy )
 }

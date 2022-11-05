@@ -18,61 +18,65 @@
 #'   for Landscape Design. Landscape and Urban Planning 29:117-130
 #'
 #' @examples
-#' library(sp)
-#' library(rgeos)
+#'  library(sf)
+#'  if(require(sp, quietly = TRUE)) {
+#'    data(meuse, package = "sp")
+#'    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                      agr = "constant")
+#'    meuse <- st_buffer(meuse, dist = meuse$elev * 5)
+#'      meuse$LU <- sample(c("forest","nonforest"), nrow(meuse), 
+#'                        replace=TRUE) 
 #' 
-#' # Create test polygons
-#' data(meuse)
-#'   coordinates(meuse) = ~x+y
-#'   meuse_poly <- gBuffer(meuse, width = meuse$elev * 5, byid = TRUE)
-#'     meuse_poly$LU <- sample(c("forest","nonforest"), nrow(meuse_poly), 
-#'                             replace=TRUE) 
-#' 
-#' # All polygon proximity index 1000 radius	
-#' ( pidx <-proximity.index(meuse_poly, min.dist = 1) )
-#'   pidx[pidx > 1000] <- 1000
-#' 
-#' # Class-level proximity index 1000 radius
-#' ( pidx.class <- proximity.index(meuse_poly, y = "LU", min.dist = 1) )
-#'   pidx.class[pidx.class > 1000] <- 1000  
-#'   
-#' # plot index for all polygons
-#' meuse_poly$pidx <- pidx
-#'   spplot(meuse_poly, "pidx")
-#' 
-#' # plot index for class-level polygons 
-#' meuse_poly$cpidx <- pidx.class
-#'   spplot(meuse_poly, "cpidx")
-#' 
-#' # plot index for just forest class
-#' forest <- meuse_poly[meuse_poly$LU == "forest",]
-#'   spplot(forest, "cpidx")
+#'  # All polygon proximity index 1000 radius	
+#'  ( pidx <- proximity.index(meuse, min.dist = 1) )
+#'    pidx[pidx > 1000] <- 1000
+#'  
+#'  # Class-level proximity index 1000 radius
+#'  ( pidx.class <- proximity.index(meuse, y = "LU", min.dist = 1) )
+#'    
+#'  # plot index for all polygons
+#'  meuse$pidx <- pidx
+#'    plot(meuse["pidx"])
+#'  
+#'  # plot index for class-level polygons 
+#'  meuse$cpidx <- pidx.class
+#'    plot(meuse["cpidx"])
+#'  
+#'  # plot index for just forest class
+#'  forest <- meuse[meuse$LU == "forest",]
+#'   plot(forest["cpidx"])
+#' }
 #'   
 #' @export proximity.index
 proximity.index <- function(x, y = NULL, min.dist = 0, max.dist = 1000, 
                             background = NULL) {
-  if(any(class(x)[1] == "sf")) { x <- as(x, "Spatial") }
-    if(!any(class(x)[1] == "SpatialPolygonsDataFrame"))
-      stop("x must be an sp SpatialPolygonsDataFrame object")  	  
+  if(!inherits(x, "sf"))
+    stop(deparse(substitute(x)), " must be an sf object")	  
+  if(!unique(as.character(sf::st_geometry_type(x))) == "POLYGON")
+      stop(deparse(substitute(x)), " must be POLYGON geometry (not multi-part) ")
   if(!is.null(y)) {  
     if(!any(y %in% names(x))) 
 	  stop("Column (y) is not in polygon data")
-	classes <- unique(x@data[,y])  
+	classes <- unique(sf::st_drop_geometry(x[,y])[,1])  
     if(!is.null(background)) {
-	  if(!any(background %in% unique(x@data[,y])))
+	  if(!any(background %in% classes))
         stop("Background class not in data")
-		bg.idx <- which( x@data[,y] == background ) 
-        x <- x[x@data[,y] != background,]
-        classes <- classes[-grep(background, classes)]		
+      bg.idx <- which( sf::st_drop_geometry(x[,y])[,1] == background ) 
+        x <- x[sf::st_drop_geometry(x[,y])[,1] != background,]
+          classes <- classes[-grep(background, classes)]		
 	  }	  
     class.pidx <- vector()
       rn <- vector()	
-    for(j in classes) {   
-	  xx <- x[x@data[,y] == j,]
-	  rn <- append(rn,rownames(xx@data))
-      dmat <- rgeos::gDistance(xx, byid=TRUE)
+    for(j in classes) { 
+	  xx <- x[which(sf::st_drop_geometry(x[,y])[,1] == j),]
+	  rn <- append(rn, rownames(xx))
+      dmat <- units::drop_units(sf::st_distance(xx, sparse=FALSE))
+	    colnames(dmat) <- rownames(xx)
+		rownames(dmat) <- rownames(xx)
+	    #diag(dmat) <- NA
         dmat[dmat <= min.dist | dmat > max.dist] <- NA
-      a <- rgeos::gArea(xx, byid=TRUE)	
+      a <- sf::st_area(xx)
+        names(a) <- rownames(xx)	  
 	  pidx <- vector()
         for(i in 1:nrow(dmat)) {
 	      idx <- colnames(dmat)[which(!is.na(as.numeric(dmat[,i])))]
@@ -80,15 +84,17 @@ proximity.index <- function(x, y = NULL, min.dist = 0, max.dist = 1000,
         }
       class.pidx <- append(class.pidx, pidx)
  	}
-	pidx <- class.pidx[order(match(rownames(x@data),rn))]
+	pidx <- class.pidx[order(match(rownames(x),rn))]
   } else {
-	dmat <- rgeos::gDistance(x, byid=TRUE)
-      dmat[dmat <= min.dist | dmat > max.dist] <- NA
-	a <- rgeos::gArea(x, byid=TRUE)
+	dmat <- units::drop_units(sf::st_distance(x, sparse=FALSE))
+	  colnames(dmat) <- rownames(x)
+	  rownames(dmat) <- rownames(x)	
+    dmat[dmat <= min.dist | dmat > max.dist] <- NA
+	a <- sf::st_area(x)
+	  names(a) <- rownames(x)
 	pidx <- vector()
       for(i in 1:nrow(dmat)) {
 	    idx <- colnames(dmat)[which(!is.na(as.numeric(dmat[,i])))]
-		#pidx[i] <- sum(a[which(names(a) %in% idx)] / dmat[,i][idx])
 		pidx[i] <- sum(a[which(names(a) %in% idx)] * dmat[,i][idx]^-2)
       }
 	}

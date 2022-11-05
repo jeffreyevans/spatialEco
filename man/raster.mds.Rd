@@ -7,18 +7,18 @@
 raster.mds(r, s = 5, window.median = FALSE, ...)
 }
 \arguments{
-\item{r}{Raster layer}
+\item{r}{A terra SpatRaster class object}
 
 \item{s}{Window size (may be a vector of 1 or 2) of 
 n x n dimension.}
 
-\item{window.median}{(TRUE/FALSE) Return the median of the MDS 
+\item{window.median}{(FALSE/TRUE) Return the median of the MDS 
 matrix values.}
 
-\item{...}{Additional arguments passed to raster::focal}
+\item{...}{Additional arguments passed to terra::focal}
 }
 \value{
-A raster class object or raster written to disk
+A terra SpatRaster class object
 }
 \description{
 Multidimensional scaling of raster values within an 
@@ -30,9 +30,9 @@ matrix is returned and not the median of the matrix
 }
 \examples{
 \donttest{ 
- library(raster)
- r <- raster(system.file("external/rlogo.grd", package="raster")) 
-   r <- r / cellStats(r, "max")
+ library(terra)
+ r <- rast(system.file("ex/elev.tif", package="terra"))
+   r <- r[[1]] / max(global(r, "max", na.rm=TRUE)[,1])
  
  diss <- raster.mds(r)
  diss.med <- raster.mds(r, window.median = TRUE)
@@ -40,7 +40,7 @@ matrix is returned and not the median of the matrix
 opar <- par(no.readonly=TRUE)
    par(mfrow=c(2,2))
    plot(r)
-     title("R logo band-1")
+     title("Elevation")
    plot( focal(r, w = matrix(1, nrow=5, ncol=5), fun = var) )
      title("Variance")		 
      plot(diss)
