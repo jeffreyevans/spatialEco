@@ -21,7 +21,7 @@ Imports:
   terra
 Suggests:
   spatstat.geom, 
-  spatstat.core, 
+  spatstat.explore, 
   spdep,
   alphahull,
   cluster,

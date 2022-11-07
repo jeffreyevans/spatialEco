@@ -62,7 +62,7 @@
 #'   Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
 #'
 #' @examples  
-#' require(spatstat.core)
+#' require(spatstat.explore)
 #' require(sp) 
 #' data(bei)  
 #'   trees <- as(bei, 'SpatialPoints')
@@ -98,7 +98,7 @@ pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL,
     }
     bw.geometry <- function(X, f = 1/4) {
         X <- spatstat.geom::as.owin(X)
-        g <- spatstat.core::distcdf(X)
+        g <- spatstat.explore::distcdf(X)
         r <- with(g, .x)
         Fr <- with(g, .y)
         iopt <- min(which(Fr >= f))
@@ -123,11 +123,11 @@ pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL,
         cv <- numeric(ns)
         for (i in 1:ns) {
             si <- sigma[i]
-            lamx <- spatstat.core::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
-            lam <- spatstat.core::density.ppp(X, sigma = si)
+            lamx <- spatstat.explore::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
+            lam <- spatstat.explore::density.ppp(X, sigma = si)
             cv[i] <- sum(log(lamx)) - spatstat.geom::integral.im(lam)
         }
-        result <- spatstat.core::bw.optim(cv, sigma, iopt = which.max(cv), criterion = "Likelihood Cross-Validation")
+        result <- spatstat.explore::bw.optim(cv, sigma, iopt = which.max(cv), criterion = "Likelihood Cross-Validation")
         return(result)
     }
     if (window == "hull") {
@@ -140,7 +140,7 @@ pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL,
     }
     x.ppp <- spatstat.geom::as.ppp(sp::coordinates(x), win)
     if (sigma == "Diggle") {
-        bw <- spatstat.core::bw.diggle(x.ppp)
+        bw <- spatstat.explore::bw.diggle(x.ppp)
     } else {
         if (sigma == "Scott") {
             bw <- bw.Scott(x.ppp)
@@ -162,7 +162,7 @@ pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL,
             }
         }
     }
-  den <- spatstat.core::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge, at = "points")
+  den <- spatstat.explore::density.ppp(x.ppp, weights = wts, sigma = bw, adjust = gradient, diggle = edge, at = "points")
     point.den <- data.frame(X = x.ppp$x, Y = x.ppp$y, KDE = as.vector(den * 10000))
       point.den$KDE <- point.den$KDE/max(point.den$KDE)
         point.den <- point.den[order(point.den[["KDE"]]), ]
