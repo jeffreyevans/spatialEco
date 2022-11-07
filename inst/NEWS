@@ -259,5 +259,8 @@ spatialEco_2.0-0
 
 * Added function "all_pairwise" creates a list of all pairwise combinations of a vector 
 
+* Added function "sieve" that creates a MMU for an integer raster 
+
+
 * Added function "bbox_extent" creates a bounding box polygon representing the extent 
   of a feature or raster                                                   
