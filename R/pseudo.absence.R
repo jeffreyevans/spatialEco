@@ -104,7 +104,7 @@
 #'
 #'  # With clustered data
 #'  library(sp)
-#'  library(spatstat.core)
+#'  library(spatstat.explore)
 #'  data(bei)
 #'    trees <- as(bei, 'SpatialPoints')
 #'      trees <- SpatialPointsDataFrame(coordinates(trees), 
@@ -174,7 +174,7 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
     }
     bw.geometry <- function(X, f = 1/4) {
         X <- spatstat.geom::as.owin(X)
-        g <- spatstat.core::distcdf(X)
+        g <- spatstat.explore::distcdf(X)
         r <- with(g, .x)
         Fr <- with(g, .y)
         iopt <- min(which(Fr >= f))
@@ -199,17 +199,17 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
         cv <- numeric(ns)
         for (i in 1:ns) {
             si <- sigma[i]
-            lamx <- spatstat.core::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
-            lam <- spatstat.core::density.ppp(X, sigma = si)
+            lamx <- spatstat.explore::density.ppp(X, sigma = si, at = "points", leaveoneout = TRUE)
+            lam <- spatstat.explore::density.ppp(X, sigma = si)
             cv[i] <- sum(log(lamx)) - spatstat.geom::integral.im(lam)
         }
-      result <- spatstat.core::bw.optim(cv, sigma, iopt = which.max(cv), 
+      result <- spatstat.explore::bw.optim(cv, sigma, iopt = which.max(cv), 
 	                    criterion = "Likelihood Cross-Validation")
     return(result)
     }
 	
     if (sigma == "Diggle") {
-        bw <- spatstat.core::bw.diggle(x.ppp)
+        bw <- spatstat.explore::bw.diggle(x.ppp)
       } else if(sigma == "Scott") { 
           bw <- bw.Scott(x.ppp)
         } else if(sigma == "Stoyan") {
@@ -223,7 +223,7 @@ pseudo.absence <- function(x, n, window = "hull", Mask = NULL, s = NULL, sigma =
                 } else {
 	              stop("Not a valid bandwidth option")
                 }  		
-      den <- raster::raster(spatstat.core::density.ppp(x.ppp, weights = wts, sigma = bw, 
+      den <- raster::raster(spatstat.explore::density.ppp(x.ppp, weights = wts, sigma = bw, 
                                    adjust = gradient, diggle = edge)) * a
 
       den <- 1 - (den/raster::maxValue(den))
