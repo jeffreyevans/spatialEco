@@ -62,7 +62,7 @@ validation (2nd order)
 }
 \examples{
  
-require(spatstat.core)
+require(spatstat.explore)
 require(sp) 
 data(bei)  
   trees <- as(bei, 'SpatialPoints')
