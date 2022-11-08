@@ -7,9 +7,9 @@
 cross.tab(x, y, values = NULL, labs = NULL, pct = FALSE, ...)
 }
 \arguments{
-\item{x}{rasterLayer class object}
+\item{x}{A terra SpatRaster class object}
 
-\item{y}{rasterLayer class object to compare to x}
+\item{y}{A terra SpatRaster class object to compare to x}
 
 \item{values}{Expected values in both rasters}
 
@@ -32,40 +32,33 @@ rather than counts. It also accounts for asymmetrical classes between
 the two rasters
 }
 \examples{
- library(sp)
- library(raster)
-   data(meuse.grid)
+library(terra)
  
- r1 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
-                                  data = meuse.grid)
- lulc2010 <- raster(r1)
-   na.idx <- which(!is.na(lulc2010[]))
-     lulc2010[na.idx] <- sample(1:5, length(na.idx), replace=TRUE)
-  
- lulc2020 <- raster(lulc2010)
-   lulc2020[na.idx] <- sample(1:5, length(na.idx), replace=TRUE)
+e <- ext(179407.8, 181087.9, 331134.4, 332332.1)
+lulc2010 <- rast(e, resolution=20)
+  lulc2010[] <- sample(1:5, ncell(lulc2010), replace=TRUE)
+lulc2020 <- rast(e, resolution=20)
+  lulc2020[] <- sample(1:5, ncell(lulc2020), replace=TRUE)
  
  ( v = sort(unique(c(lulc2010[], lulc2020[]))) )
  l = c("water","urban","forest",
        "ag","barren")
 
- cross.tab(lulc2010, lulc2020) 
- cross.tab(lulc2010, lulc2020, values = v, labs = l)
- cross.tab(lulc2010, lulc2020, values = v, labs = l, pct=TRUE)
+cross.tab(lulc2010, lulc2020) 
+cross.tab(lulc2010, lulc2020, values = v, labs = l)
+cross.tab(lulc2010, lulc2020, values = v, labs = l, pct=TRUE)
 
 # Create asymmetrical classes 
+na.idx <- which(!is.na(lulc2010[]))
 lulc2020[na.idx] <- sample(c(1,2,4,5), length(na.idx), replace=TRUE)
-
 cross.tab(lulc2010, lulc2020, values = v, labs = l, pct=TRUE)
+
 
 }
 \references{
 Pontius Jr, R.G., Shusas, E., McEachern, M. (2004). Detecting
 important categorical land changes while accounting for persistence.
 Agriculture, Ecosystems & Environment 101(2):251-268.
-}
-\seealso{
-\code{raster::\link[raster]{crosstab}}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

@@ -89,7 +89,7 @@ raster.change <- function(x, y, s = 3, stat = c("kappa", "t.test",
 					      "divergence"), ...) {
   stat = stat[1]
   if (!inherits(x, "SpatRaster"))
-    stop(deparse(substitute(x)), " c")
+    stop(deparse(substitute(x)), " Must be a terra SpatRaster object")
   if (!inherits(y, "SpatRaster"))
     stop(deparse(substitute(y)), " Must be a terra SpatRaster object")
   if(!any((dim(x)[1:2] == dim(y)[1:2]))) 

@@ -15,7 +15,7 @@ pp.subsample(
 )
 }
 \arguments{
-\item{x}{An sp class SpatialPointsDataFrame or SpatialPoints object}
+\item{x}{An sf POINT class}
 
 \item{n}{Number of random samples to generate}
 
@@ -34,7 +34,7 @@ default is 1, for no adjustment (downweight < 1 | upweight > 1)}
 \item{edge}{Apply Diggle edge correction (TRUE/FALSE)}
 }
 \value{
-sp class SpatialPointsDataFrame containing random subsamples
+sf class POINT geometry containing random subsamples
 }
 \description{
 Generates random subsample based on density estimate

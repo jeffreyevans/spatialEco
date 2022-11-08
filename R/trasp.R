@@ -3,7 +3,7 @@
 #'              Aspect Index
 #' 
 #' @param x    A terra SpatRaster object
-#' @param ...  Additional arguments passed to raster::calc
+#' @param ...  Additional arguments passed to terra::app
 #' 
 #' @return 
 #' A terra SpatRaster object of Roberts and Cooper (1989) Solar-radiation Aspect Index

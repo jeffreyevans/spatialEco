@@ -9,7 +9,7 @@ trasp(x, ...)
 \arguments{
 \item{x}{A terra SpatRaster object}
 
-\item{...}{Additional arguments passed to raster::calc}
+\item{...}{Additional arguments passed to terra::app}
 }
 \value{
 A terra SpatRaster object of Roberts and Cooper (1989) Solar-radiation Aspect Index

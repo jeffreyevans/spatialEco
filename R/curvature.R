@@ -1,7 +1,7 @@
 #' @title Surface curvature
 #' @description Calculates Zevenbergen & Thorne, McNab's or Bolstad's curvature 
 #' 
-#' @param x      rasterLayer object
+#' @param x      A terra SpatRaster object
 #' @param type   Method used c("planform", "profile", "total", "mcnab", "bolstad")
 #' @param ...    Additional arguments passed to writeRaster
 #' 
@@ -60,8 +60,6 @@
 #'   mcnab.crv <- curvature(elev, type="mcnab")
 #'       plot(mcnab.crv, main="McNab's curvature") 
 #' }
-#'     
-#' @seealso \code{\link[raster]{writeRaster}} For additional ... arguments passed to writeRaster
 #'
 #' @export curvature
 curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolstad"), ...) { 

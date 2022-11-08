@@ -2,19 +2,19 @@
 #' @description Generates random subsample based on density estimate 
 #'              of observations
 #'
-#' @param x An sp class SpatialPointsDataFrame or SpatialPoints object
-#' @param n Number of random samples to generate
-#' @param window Type of window (hull or extent)
-#' @param sigma Bandwidth selection method for KDE, default is 'Scott'. 
-#'              Options are 'Scott', 'Stoyan', 'Diggle', 'likelihood', 
-#'              and 'geometry'
-#' @param wts Optional vector of weights corresponding to point pattern
-#' @param gradient A scaling factor applied to the sigma parameter used to 
-#'                 adjust the gradient decent of the density estimate. The 
-#'                 default is 1, for no adjustment (downweight < 1 | upweight > 1)   
-#' @param edge Apply Diggle edge correction (TRUE/FALSE)
+#' @param x         An sf POINT class 
+#' @param n         Number of random samples to generate
+#' @param window    Type of window (hull or extent)
+#' @param sigma     Bandwidth selection method for KDE, default is 'Scott'. 
+#'                  Options are 'Scott', 'Stoyan', 'Diggle', 'likelihood', 
+#'                  and 'geometry'
+#' @param wts       Optional vector of weights corresponding to point pattern
+#' @param gradient  A scaling factor applied to the sigma parameter used to 
+#'                  adjust the gradient decent of the density estimate. The 
+#'                  default is 1, for no adjustment (downweight < 1 | upweight > 1)   
+#' @param edge      Apply Diggle edge correction (TRUE/FALSE)
 #'
-#' @return sp class SpatialPointsDataFrame containing random subsamples
+#' @return sf class POINT geometry containing random subsamples 
 #'
 #' @description
 #' The window type creates a convex hull by default or, optionally, uses the maximum 

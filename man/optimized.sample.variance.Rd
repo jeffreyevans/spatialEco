@@ -23,9 +23,10 @@ Draws an optimal sample that minimizes or maximizes the
              sample variance
 }
 \examples{
- library(sp)
-   data(meuse)
-   coordinates(meuse) <- ~x+y
+library(sf)
+data(meuse, package = "sp")
+meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                  agr = "constant")
 
  n = 15
  # Draw n samples that maximize the variance of y
@@ -36,35 +37,13 @@ Draws an optimal sample that minimizes or maximizes the
                type="minimized") )
  
  # Plot results
- plot(meuse, pch=19, col="grey")
-   plot(meuse[max.sv$idx,], col="red", add=TRUE, pch=19)
-     plot(meuse[min.sv$idx,], col="blue", add=TRUE, pch=19)
+ plot(st_geometry(meuse), pch=19, col="grey")
+   plot(st_geometry(meuse[max.sv$idx,]), col="red", add=TRUE, pch=19)
+     plot(st_geometry(meuse[min.sv$idx,]), col="blue", add=TRUE, pch=19)
  	  box()
      legend("topleft", legend=c("population","maximized variance", 
             "minimized variance"), col=c("grey","red","blue"),  
-            pch=c(19,19,19))
-
-\donttest{
- # Raster example (not memory safe) 
- library(raster)
-   r <- raster(system.file("external/test.grd", package="raster"))
-  
-# Calculate optimal sample variance and coerce to SpatialPointDataFrame 
-#   using xyFromCell
-     ( min.sv <- optimized.sample.variance(getValues(r), n, type="minimized") )
-      min.sv <- sp::SpatialPointsDataFrame(xyFromCell(r, min.sv[,"idx"], 
-                                           spatial=TRUE), data=min.sv) 
-     ( max.sv <- optimized.sample.variance(getValues(r), n) )
-      max.sv <- sp::SpatialPointsDataFrame(xyFromCell(r, max.sv[,"idx"], 
-                                           spatial=TRUE), data=max.sv)
-
- plot(r)
-   plot(max.sv, col="blue", add=TRUE, pch=19)
-   plot(min.sv, col="red", add=TRUE, pch=19)
-   box()
- legend("topleft", legend=c("maximized variance", "minimized variance"),
-        col=c("red","blue"), pch=c(19,19))
- }  
+            pch=c(19,19,19))  
  
 }
 \author{

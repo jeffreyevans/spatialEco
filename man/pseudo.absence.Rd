@@ -8,7 +8,7 @@ pseudo.absence(
   x,
   n,
   window = "hull",
-  Mask = NULL,
+  ref = NULL,
   s = NULL,
   sigma = "Scott",
   wts = NULL,
@@ -19,13 +19,13 @@ pseudo.absence(
 )
 }
 \arguments{
-\item{x}{An sp class SpatialPointsDataFrame or SpatialPoints object}
+\item{x}{An sf POINT geometry object}
 
 \item{n}{Number of random samples to generate}
 
 \item{window}{Type of window (hull OR extent), overridden if mask provided}
 
-\item{Mask}{Optional rasterLayer class mask raster. The resolution of the 
+\item{ref}{Optional terra SpatRaster class raster. The resolution of the 
 density estimate will match mask.}
 
 \item{s}{Optional resolution passed to window argument. Caution should be 
@@ -39,7 +39,7 @@ and 'geometry'}
 
 \item{wts}{Optional vector of weights corresponding to point pattern}
 
-\item{KDE}{save KDE raster (TRUE/FALSE)}
+\item{KDE}{Return KDE raster (TRUE/FALSE)}
 
 \item{gradient}{A scaling factor applied to the sigma parameter used to 
 adjust the gradient decent of the density estimate. The 
@@ -52,9 +52,10 @@ default is 1, for no adjustment (downweight < 1 | upweight > 1)}
 \value{
 A list class object with the following components:
 \itemize{ 
-\item   sample SpatialPointsDataFrame containing random samples
-\item   kde sp RasterLayer class of KDE estimates (IF KDE = TRUE)
-\item   sigma Selected bandwidth of KDE 
+\item   sample  A sf POINT geometry object containing random samples
+\item   kde     A terra SpatRaster class of inverted Isotropic KDE estimates 
+                used as sample weights (IF KDE = TRUE)
+\item   sigma   Selected bandwidth of KDE 
  }
 }
 \description{
@@ -87,42 +88,40 @@ the 2nd order 'likelihood' approach, as it is slow and computationally expensive
 finally, the 'stoyan' method will produce very strong 2nd order results.
 }
 \examples{
- library(raster) 
- library(sp)
- data(meuse)
- data(meuse.grid)
-   coordinates(meuse) = ~x+y   
-   coordinates(meuse.grid) = ~x+y
-   slot(meuse, "proj4string") <- CRS(SRS_string = "EPSG:28992")   
-   gridded(meuse.grid) = TRUE
-   r <- raster(meuse.grid)
+library(sf) 
+library(terra) 
+library(spatstat.data)
+  
+data(meuse, package = "sp")
+meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                  agr = "constant") 
 
-   # Using a raster mask   
-   pa <- pseudo.absence(meuse, n=100, window='hull', KDE=TRUE, Mask = r, 
-                        sigma='Diggle', s=50) 
-     col.br <- colorRampPalette(c('blue','yellow'))
-       plot(pa$kde, col=col.br(10))
-         plot(meuse, pch=20, cex=1, add=TRUE)
-           plot(pa$sample, col='red', pch=20, cex=1, add=TRUE)
-             legend('top', legend=c('Presence', 'Pseudo-absence'), 
-                    pch=c(20,20),col=c('black','red'))
+# Using a raster mask   
+r <- rast(ext(meuse), resolution=40, crs=crs(meuse))
+  r[] <- rep(1,ncell(r))
+  
+pa <- pseudo.absence(meuse, n=100, window='hull', KDE=TRUE, ref = r, 
+                     sigma='Diggle', s=50) 
+  col.br <- colorRampPalette(c('blue','yellow'))
+    plot(pa$kde, col=col.br(10))
+      plot(st_geometry(meuse), pch=20, cex=1, add=TRUE)
+        plot(st_geometry(pa$sample), col='red', pch=20, cex=1, add=TRUE)
+          legend('top', legend=c('Presence', 'Pseudo-absence'), 
+                 pch=c(20,20),col=c('black','red'), bg="white")
 
- # With clustered data
- library(sp)
- library(spatstat.explore)
- data(bei)
-   trees <- as(bei, 'SpatialPoints')
-     trees <- SpatialPointsDataFrame(coordinates(trees), 
-                         data.frame(ID=1:length(trees))) 
-       trees.abs <- pseudo.absence(trees, n=100, window='extent', KDE=TRUE)
- 
- col.br <- colorRampPalette(c('blue','yellow'))
-   plot(trees.abs$kde, col=col.br(10))
-    plot(trees, pch=20, cex=0.50, add=TRUE)
-       plot(trees.abs$sample, col='red', pch=20, cex=1, add=TRUE)
-         legend('top', legend=c('Presence', 'Pseudo-absence'), 
-                pch=c(20,20),col=c('black','red'))
-     
+# With clustered data
+data(bei, package = "spatstat.data")
+  trees <- st_as_sf(bei)
+    trees <- trees[-1,]
+
+trees.abs <- pseudo.absence(trees, n=100, window='extent', KDE=TRUE)
+  col.br <- colorRampPalette(c('blue','yellow'))
+    plot(trees.abs$kde, col=col.br(10))
+     plot(st_geometry(trees), pch=20, cex=0.50, add=TRUE)
+        plot(st_geometry(trees.abs$sample), col='red', pch=20, cex=1, add=TRUE)
+          legend('top', legend=c('Presence', 'Pseudo-absence'), 
+                 pch=c(20,20),col=c('black','red'),bg="white")
+    
 }
 \references{
 Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order 

@@ -26,8 +26,6 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
-#'
-#' library(raster)
 #' 
 #' # Binomial instance
 #' time_to_event(c(0,0,0,0,1,0,0,0,1,0))
@@ -35,18 +33,22 @@
 #' time_to_event(c(0,0,0,0,1,0,0,0,1,0), dir="RL")
 #' time_to_event(c(NA,0,0,0,1,0,0,0,1,0), na.action="ignore")
 #' 
-#' r <- do.call(raster::stack, replicate(20,raster::raster(matrix(sample(
-#'              c(0,1), 1000, replace=TRUE), 100, 100))))             
-#'   ( t2e <- calc(r, fun=time_to_event) )
-#' 
 #' # Continuous threshold instance
 #' ( x <- runif(100, 0,7) ) 
 #' time_to_event(x, y = 5, int=TRUE)
 #' 
-#' r <- do.call(raster::stack, replicate(20,raster::raster(matrix(
-#'              runif(1000,0,7), 100, 100))))
-#'   t2e <- function(x) { time_to_event(x, y=5, int=TRUE) }              
-#'   ( t2e <- calc(r, fun=time_to_event) )
+#' # raster example
+#' library(terra)
+#'
+#' # Binomial instance
+#' r <- do.call(c, replicate(20,terra::rast(matrix(sample(
+#'              c(0,1), 1000, replace=TRUE), 100, 100))))             
+#'   ( t2e <- app(r, fun=time_to_event) )
+#' 
+#' # Continuous threshold instance
+#' r <- do.call(c, replicate(20,terra::rast(matrix(
+#'               runif(1000,0,7), 100, 100))))
+#'   ( t2e <- app(r, fun=time_to_event, y=5) )
 #'
 #' @export
 time_to_event <- function(x, y = 1, dir = c("LR", "RL"), int = FALSE,

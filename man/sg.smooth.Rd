@@ -52,21 +52,13 @@ Smoothing of time-series data using Savitzky-Golay
     lines(sg.smooth(y, l = 25),col="blue", lwd=2)
     lines(sg.smooth(y, l = 10),col="green", lwd=2)
   
- #### function applied to a raster stack  and sp object
- library(raster)
- 
- random.raster <- function(r=50, c=50, l=10, min=0, max=1){ 
-   do.call(stack, replicate(l, raster(matrix(runif(r*c, min, max),r,c))))
- }
- r <- random.raster()
+ #### function applied to a multi-band raster 
+ library(terra)
+ ( r <- spatialEco::random.raster(n.layers=20) )
  
  # raster stack example
- ( r.sg <- calc(r, sg.smooth) )  
+ ( r.sg <- app(r, sg.smooth) )  
  
- # sp SpatialPixelsDataFrame example
- r.sp <- as(r, "SpatialPixelsDataFrame")
- r.sp@data <- as.data.frame(t(apply(r.sp@data, MARGIN=1, FUN=sg.smooth)))
-
 }
 \references{
 Savitzky, A., and Golay, M.J.E. (1964). Smoothing and Differentiation of Data 

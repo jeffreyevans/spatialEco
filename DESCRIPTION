@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-0
-Date: 2022-11-04
+Date: 2022-11-07
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
@@ -25,6 +25,7 @@ Suggests:
   spatstat.data, 
   spdep,
   alphahull,
+  ks,
   cluster,
   readr,
   RCurl,
@@ -39,8 +40,8 @@ Suggests:
   SpatialPack (>= 0.3),
   RStoolbox,
   units,
-  raster,
   sp,
+  raster,
   stringr  
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3
