@@ -20,8 +20,9 @@ Imports:
   sf,
   terra
 Suggests:
-  spatstat.geom, 
+  spatstat.geom (>= 3.0-3), 
   spatstat.explore, 
+  spatstat.data, 
   spdep,
   alphahull,
   cluster,

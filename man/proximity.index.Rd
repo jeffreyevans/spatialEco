@@ -25,6 +25,7 @@ specified NA values will be returned in the position(s) of the specified class
 Calculates proximity index for a set of polygons
 }
 \examples{
+\donttest{
  library(sf)
  if(require(sp, quietly = TRUE)) {
    data(meuse, package = "sp")
@@ -52,8 +53,8 @@ Calculates proximity index for a set of polygons
  # plot index for just forest class
  forest <- meuse[meuse$LU == "forest",]
   plot(forest["cpidx"])
-}
-  
+  }
+}   
 }
 \references{
 Gustafson, E.J., & G.R. Parker (1994) Using an Index of Habitat Patch Proximity 

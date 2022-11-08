@@ -7,43 +7,32 @@
 raster.change(
   x,
   y,
-  d = c(3, 3),
-  stat = c("kappa", "wkappa", "t.test", "cor", "entropy", "cross-entropy", "divergence"),
-  w = NULL,
-  out.raster = NULL,
-  mask = FALSE,
-  force.memory = FALSE
+  s = 3,
+  stat = c("kappa", "t.test", "cor", "entropy", "cross-entropy", "divergence"),
+  ...
 )
 }
 \arguments{
-\item{x}{First raster for comparison, rasterLayer class object}
+\item{x}{A terra SpatRaster}
 
-\item{y}{Second raster for comparison, rasterLayer class object}
+\item{y}{A terra SpatRaster for comparison to x}
 
-\item{d}{Rectangular window size, must be odd but not necessarily 
-square}
+\item{s}{Integer or matrix for defining Kernel, 
+must be odd but not necessarily square}
 
 \item{stat}{Statistic to use in comparison, please see details for 
 options.}
 
-\item{w}{Weights if stat="kappa", must represent same classes as 
-input rasters}
-
-\item{out.raster}{Optional output raster}
-
-\item{mask}{(FALSE/TRUE) mask output to original rasters}
-
-\item{force.memory}{(FALSE/TRUE) Force in memory processing, may fail with 
-insufficient RAM}
+\item{...}{Additional arguments passed to terra::focalCor}
 }
 \value{
-A raster layer or stack object one of the following layers:
+A terra SpatRaster layer containing one of the following layers:
 \itemize{ 
 \item   kappa         Kappa or Weighted Kappa statistic (if stat = "kappa")
 \item   correlation   Paired t.test statistic  (if stat = "cor")
-\item   entropy       Delta entropy  (if stat = "entropy")
+\item   entropy       Local entropy  (if stat = "entropy")
 \item   divergence    Kullback-Leibler divergence (if stat = "divergence")
-\item   cross.entropy Cross-entropy (if stat = "cross.entropy")
+\item   cross.entropy Local Cross-entropy (if stat = "cross.entropy")
 \item   t.test        Paired t.test statistic  (if stat = "t.test")
 \item   p.value       p-value of the paired t.test statistic (if stat = "t.test")
  }
@@ -56,52 +45,49 @@ This function provides a various statistics for comparing two classified maps.
 Valid options are:
 \itemize{ 
 \item   kappa - Cohen's Kappa 
-\item   wkappa - Cohen's Weighted Kappa (not yet implemented) 
 \item   t.test - Two-tailed paired t-test 
 \item   cor - Persons Correlation 
 \item   entropy - Delta entropy 
 \item   cross-entropy - Cross-entropy loss function 
 \item   divergence - Kullback-Leibler divergence (relative entropy) 
 }
-
+}
+\note{
 Kappa and t-test values < 0 are reported as 0. For a weighted kappa, a matrix must 
 be provided that correspond to the pairwise weights for all values in both rasters. 
 Delta entropy is derived by calculating Shannon's on each focal window then 
-differencing  them (e(x) - e(y))
+differencing  them (e(x) - e(y)). The s argument can be a single scalar, defining
+a symmetrical kernel, two scalers defining the dimensions of the kernel eg., c(3,5)
+or a matrix defining the kernel say, resulting from terra::focalMat
 }
 \examples{
 \donttest{
- library(sp)
- library(raster)
- data(meuse.grid)
- r1 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
-                                  data = meuse.grid)
-r1 <- raster(r1)
-  na.idx <- which(!is.na(r1[]))
-  r1[na.idx] <- round(runif(length(na.idx), 1,5),0)
- r2 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
-                                  data = meuse.grid) 
-r2 <- raster(r2)
-  r2[na.idx] <- round(runif(length(na.idx), 1,5),0)
+ library(sf) 
+ library(terra) 
   
-s = 11    
- ( r.kappa <- raster.change(r1, r2, d = s, mask = TRUE) )   
- ( r.ttest <- raster.change(r1, r2, d = s, stat="t.test", mask = TRUE) )
- ( r.ent <- raster.change(r1, r2, d = s, stat="entropy", mask = TRUE) )   
- ( r.cor <- raster.change(r1, r2, d = s, stat="cor", mask = TRUE) )
- ( r.ce <- raster.change(r1, r2, d = s, stat = "cross-entropy", mask = TRUE) )
- ( r.kl <- raster.change(r1, r2, d = s, stat = "divergence", mask = TRUE) )	
-     
- opar <- par(no.readonly=TRUE)
- par(mfrow=c(3,2))
-   plot(r.kappa, main="Kappa")
-   plot(r.ttest[[1]], main="Paired t-test")
-   plot(r.ent, main="Delta Entropy")
-   plot(r.cor, main="Rank Correlation")
-   plot(r.kl, main="Kullback-Leibler")
-   plot(r.ce, main="cross-entropy")
- par(opar)
-
+ e <- ext(179407.8, 181087.9, 331134.4, 332332.1)
+ r1 <- rast(e, resolution=20)
+   r1[] <- sample(1:5, ncell(r1), replace=TRUE)
+ r2 <- rast(e, resolution=20)
+   r2[] <- sample(1:5, ncell(r2), replace=TRUE)
+ 	  
+ d = 5 # kernel    
+ ( r.kappa <- raster.change(r1, r2, s = d) )   
+ ( r.ttest <- raster.change(r1, r2, s = d, stat="t.test") )
+ ( r.ent <- raster.change(r1, r2, s = d, stat="entropy") )   
+ ( r.cor <- raster.change(r1, r2, s = d, stat="cor") )
+ ( r.ce <- raster.change(r1, r2, s = d, stat = "cross-entropy") )
+ ( r.kl <- raster.change(r1, r2, s = d, stat = "divergence") )	
+       
+   opar <- par(no.readonly=TRUE)
+   par(mfrow=c(3,2))
+     plot(r.kappa, main="Kappa")
+     plot(r.ttest[[1]], main="Paired t-test")
+     plot(r.ent, main="Delta Entropy")
+     plot(r.cor, main="Rank Correlation")
+     plot(r.kl, main="Kullback-Leibler")
+     plot(r.ce, main="cross-entropy")
+   par(opar) 
 }
 
 }

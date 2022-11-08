@@ -55,6 +55,7 @@ Not yet implemented; Soil Water Index, Surface Soil Moisture,
 Copernicus product details: http://land.copernicus.eu/global/products/
 }
 \examples{
+\donttest{
 # Create date string for query
 d <- seq(as.Date("2020/05/01"), as.Date("2020-09-01"), by="day")
 
@@ -81,7 +82,7 @@ all.urls <- cgls_urls(dates = d, resolution = 1000,
 #     download.file(file.url, file.path(getwd(), 
 # 	              basename(all.urls[i])), mode = 'wb') 
 #   }
-
+}
 }
 \author{
 Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}

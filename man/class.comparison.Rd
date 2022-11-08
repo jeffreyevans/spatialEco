@@ -4,102 +4,21 @@
 \alias{class.comparison}
 \title{Class comparison between two nominal rasters}
 \usage{
-class.comparison(
-  x,
-  y,
-  x.idx = 1,
-  y.idx = 1,
-  d = "AUTO",
-  stat = "kappa",
-  sub.sample = FALSE,
-  type = "hexagon",
-  p = 0.1,
-  size = NULL
-)
+class.comparison(...)
 }
 \arguments{
-\item{x}{First raster for comparison, SpatialPixelsDataFrame or 
-SpatialGridDataFrame object}
-
-\item{y}{Second raster for comparison, SpatialPixelsDataFrame or 
-SpatialGridDataFrame object}
-
-\item{x.idx}{Index for the column in the x raster object}
-
-\item{y.idx}{Index for the column in the y raster object}
-
-\item{d}{Distance for finding neighbors, the default "AUTO" will derive 
-a distance}
-
-\item{stat}{Statistic to use in comparison ("kappa", "t.test", "both")}
-
-\item{sub.sample}{Should a subsampling approach be employed (FALSE/TRUE)}
-
-\item{type}{If sub.sample = TRUE, what type of sample ("random"
-or "hexagon")}
-
-\item{p}{If sub.sample = TRUE, what proportion of population 
-should be sampled}
-
-\item{size}{If sub.sample = TRUE, alternate to proportion of population (p), 
-using fixed sample size}
+\item{...}{arguments passed to raster.change}
 }
 \value{
-A SpatialPixelsDataFrame or SpatialPointsDataFrame with the 
-following attributes:
-\itemize{ 
-\item   x        x variable used to derive Kappa (d)
-\item   y        y variable used to derive Kappa (d)
-\item   kappa    Kappa (d) statistic
-\item   t.test   Paired t.test statistic  (if stat = "t.test" or "both")
-\item   p.value  p-value of the paired t.test statistic (if stat = "t.test" 
-                 or "both")
- }
+NA
 }
 \description{
 Compares two categorical rasters using Cohen's Kappa (d) 
              or paired t-test statistic(s)
 }
-\note{
-This function provides a Cohen's Kappa or paired t-test to compare two 
-classified maps. Point based subsampling is provided for computation 
-tractability.  The hexagon sampling is recommended as it it good at 
-capturing spatial process that includes nonstationarity and anisotropy.
-}
 \examples{
-\donttest{
- library(sp)                                            
- library(raster)
-           
- data(meuse.grid)
- r1 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
-                                  data = meuse.grid)
-   r1@data$class1 <- round(runif(nrow(r1), 1,5),0)
- r2 <- sp::SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], 
-                                  data = meuse.grid) 
-r2@data$class2 <- round(runif(nrow(r2), 1,5),0)
-
- d <- class.comparison(r1, r2, x.idx = 8, y.idx = 8, stat="both")
- opar <- par(no.readonly=TRUE)
-   par(mfrow=c(2,2))
-     plot(raster(d, layer=3), main="Kappa")
-    plot(raster(d, layer=4), main="t.test")
-    plot(raster(d, layer=5), main="t.test p-value")
- par(opar)
- 
- # Hexagonal sampling	  
- d.hex <- class.comparison(r1, r2, x.idx = 8, y.idx = 8, stat = "both",
-                           sub.sample = TRUE, d = 500, size = 1000)
-    sp::bubble(d.hex, "kappa")
-    na.idx <- which(is.na(d.hex$t.test))
-  sp::bubble(d.hex[-na.idx,], "t.test")
+ \dontrun{
+  raster.change()
 }
 
-}
-\references{
-Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational 
-and Psychological Measurement, 20:37-46
-}
-\author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

@@ -24,6 +24,7 @@ A sieve can be used to establish a minimal mapping unit where
 contiguous cells < specified query area are set to NA
 }
 \examples{
+\donttest{
 library(terra)
 elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 m <- matrix(c(100,200,1,200,300,2,300,400,3,400,
@@ -33,5 +34,5 @@ m <- matrix(c(100,200,1,200,300,2,300,400,3,400,
 # Sieve to a MMU of 60km
 sv <- sieve(x, a = 60, units = "km")
   plot(c(x, sv))
-
+} 
 }

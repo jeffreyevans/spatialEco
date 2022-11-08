@@ -43,6 +43,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
+#' \donttest{
 #' # Create date string for query
 #' d <- seq(as.Date("2020/05/01"), as.Date("2020-09-01"), by="day")
 #'
@@ -69,7 +70,7 @@
 #' #     download.file(file.url, file.path(getwd(), 
 #' # 	              basename(all.urls[i])), mode = 'wb') 
 #' #   }
-#'
+#' }
 #' @export cgls_urls 
 cgls_urls <- function(dates = NULL, resolution = c(1000, 300),  
                        product = c("fapar", "fcover", "lai", "ndvi"),

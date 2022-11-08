@@ -18,6 +18,7 @@
 #'   for Landscape Design. Landscape and Urban Planning 29:117-130
 #'
 #' @examples
+#' \donttest{
 #'  library(sf)
 #'  if(require(sp, quietly = TRUE)) {
 #'    data(meuse, package = "sp")
@@ -45,8 +46,8 @@
 #'  # plot index for just forest class
 #'  forest <- meuse[meuse$LU == "forest",]
 #'   plot(forest["cpidx"])
-#' }
-#'   
+#'   }
+#' }   
 #' @export proximity.index
 proximity.index <- function(x, y = NULL, min.dist = 0, max.dist = 1000, 
                             background = NULL) {
