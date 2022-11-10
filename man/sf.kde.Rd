@@ -45,6 +45,11 @@ a terra SpatRaster class object containing kernel density estimate
 A weighted or unweighted Gaussian Kernel Density estimate 
              for point spatial data
 }
+\details{
+The automatic bandwidth selection for unweighted KDE uses the Wand & Jones (1994)
+univariate plug-in whereas, weighted KDE's use the Duong & Hazelton (2005) smoothed
+cross-validation for creating a diagonal bandwidth matrix.
+}
 \examples{
 \donttest{ 
 library(sf) 
@@ -60,16 +65,23 @@ pt.kde <- sf.kde(x = meuse, bw = 1000, standardize = TRUE,
   plot(pt.kde, main="Unweighted kde")
     plot(st_geometry(meuse), pch=20, col="red", add=TRUE) 
 
-# Weighted KDE using cadmium and extent
+# Weighted KDE using cadmium and extent with automatic bandwidth selection
 ( e <- st_bbox(meuse)[c(1,3,2,4)] ) 
-cadmium.kde <- sf.kde(x = meuse, y = meuse$cadmium, bw = 1000,  
-                      ref = e, standardize = TRUE, 
-					    scale.factor = 10000, res=40)
+cadmium.kde <- sf.kde(x = meuse, y = meuse$cadmium, ref = e,  
+                      standardize = TRUE, 
+					  scale.factor = 10000, res=40)
 plot(cadmium.kde)
   plot(st_geometry(meuse), pch=20, col="red", add=TRUE)
  			
 }
 
+}
+\references{
+Duong, T. & Hazelton, M.L. (2005) Cross-validation bandwidth matrices for multivariate 
+  kernel density estimation. Scandinavian Journal of Statistics, 32, 485-506. 
+
+Wand, M.P. & Jones, M.C. (1994) Multivariate plug-in bandwidth selection. Computational 
+  Statistics, 9, 97-116.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

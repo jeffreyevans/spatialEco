@@ -18,7 +18,19 @@
 #'
 #' @return  a terra SpatRaster class object containing kernel density estimate 
 #'
+#' @details
+#' The automatic bandwidth selection for unweighted KDE uses the Wand & Jones (1994)
+#' univariate plug-in whereas, weighted KDE's use the Duong & Hazelton (2005) smoothed
+#' cross-validation for creating a diagonal bandwidth matrix.    
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
+#'
+#' @references
+#' Duong, T. & Hazelton, M.L. (2005) Cross-validation bandwidth matrices for multivariate 
+#'   kernel density estimation. Scandinavian Journal of Statistics, 32, 485-506. 
+#'
+#' Wand, M.P. & Jones, M.C. (1994) Multivariate plug-in bandwidth selection. Computational 
+#'   Statistics, 9, 97-116. 
 #'
 #' @examples
 #' \donttest{ 
@@ -35,11 +47,11 @@
 #'   plot(pt.kde, main="Unweighted kde")
 #'     plot(st_geometry(meuse), pch=20, col="red", add=TRUE) 
 #' 
-#' # Weighted KDE using cadmium and extent
+#' # Weighted KDE using cadmium and extent with automatic bandwidth selection
 #' ( e <- st_bbox(meuse)[c(1,3,2,4)] ) 
-#' cadmium.kde <- sf.kde(x = meuse, y = meuse$cadmium, bw = 1000,  
-#'                       ref = e, standardize = TRUE, 
-#' 					    scale.factor = 10000, res=40)
+#' cadmium.kde <- sf.kde(x = meuse, y = meuse$cadmium, ref = e,  
+#'                       standardize = TRUE, 
+#' 					  scale.factor = 10000, res=40)
 #' plot(cadmium.kde)
 #'   plot(st_geometry(meuse), pch=20, col="red", add=TRUE)
 #'  			
@@ -83,8 +95,16 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   }
   n <- c(terra::nrow(ref), terra::ncol(ref)) 
   if(is.null(bw)) {
-    bw = ks::hpi(sf::st_coordinates(x)[,1:2])
-  } 
+    if(is.null(y)) {
+      bw = ks::hpi(sf::st_coordinates(x)[,1:2])
+	    message("Unweighted automatic bandwidth: "); print(bw)
+	} else {
+	  bw = ks::Hscv.diag(cbind(sf::st_coordinates(x)[,1:2],y))
+	    message("Weighted automatic CV bandwidth: "); print(bw)
+	}
+  } else {
+    message("Using specified bandwidth: "); print(bw)
+  }
   if(!is.null(y)) {
     message("\n","calculating weighted kde","\n")
     kde.est <- suppressWarnings(terra::flip(

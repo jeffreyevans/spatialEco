@@ -143,7 +143,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `sobal`                      | Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window   
 | `spatial.select`             | Performs a spatial select (feature subset) similar to ArcGIS                      
 | `spectral.separability`      | Calculates class-wise multivariate spectral separability                          
-| `sp.kde`                     | A weighted or un-weighted kernel density estimate                                 
+| `sf.kde`                     | A weighted or un-weighted kernel density estimate (previously sp.kde now as alias)                                 
 | `sp.na.omit `                | Removes row or column NA's in sp object. The standard R na.omit function will not propagate through all slots of an sp class object. This function removes the spatial objects, in all slots, corresponding to NA's in the @data object.
 | `srr`                        | Surface Relief Ratio                                                              
 | `stratified.random`          | Creates a stratified random sample of an sp class object using a factor.          
