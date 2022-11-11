@@ -14,9 +14,6 @@ A data.frame with 82 rows (species) and 5 columns (covertypes):
   \item{Banana.plantations}{Active banana plantations type}
 }
 }
-\source{
-\url{http://www.tiem.utk.edu/~gross/bioed/bealsmodules/shannonDI.html}
-}
 \description{
 Roth et al., (1994) Costa Rican ant diversity data
 }

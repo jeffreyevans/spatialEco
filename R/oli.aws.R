@@ -32,7 +32,7 @@
 #'   \url{https://registry.opendata.aws/landsat-8}
 #'   \url{https://aws.amazon.com/blogs/aws/start-using-landsat-on-aws/}
 #'
-#' USGS Landsat collections: \url{https://www.usgs.gov/core-science-systems/nli/landsat}
+#' USGS Landsat collections: \url{https://www.usgs.gov/landsat-missions}
 #' Pre-collection processing levels: "L1T", "L1GT", "L1G"
 #' Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
 #'     "L1T" and "L1TP" - Radiomertically calibrated and orthorectified (highest level processing) 
