@@ -4,14 +4,14 @@
 \alias{sieve}
 \title{Sieve raster data}
 \usage{
-sieve(x, a, units = c("m", "km", "ha"))
+sieve(x, a, unit = c("m", "km", "ha"))
 }
 \arguments{
 \item{x}{An integer terra SpatRaster}
 
 \item{a}{Query area to remove}
 
-\item{units}{The unit to use for area query options are c("m", "km", "ha")}
+\item{unit}{The unit to use for area query options are c("m", "km", "ha")}
 }
 \value{
 A terra SpatRaster with < a set to NA
@@ -32,7 +32,7 @@ m <- matrix(c(100,200,1,200,300,2,300,400,3,400,
   x <- classify(elev, m)
 
 # Sieve to a MMU of 60km
-sv <- sieve(x, a = 60, units = "km")
+sv <- spatialEco::sieve(x, a = 60, unit = "km")
   plot(c(x, sv))
 } 
 }

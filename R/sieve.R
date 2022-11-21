@@ -3,7 +3,7 @@
 #'
 #' @param x      An integer terra SpatRaster 
 #' @param a      Query area to remove 
-#' @param units  The unit to use for area query options are c("m", "km", "ha")
+#' @param unit   The unit to use for area query options are c("m", "km", "ha")
 #' 
 #' @return 
 #' A terra SpatRaster with < a set to NA  
@@ -21,18 +21,18 @@
 #'   x <- classify(elev, m)
 #' 
 #' # Sieve to a MMU of 60km
-#' sv <- sieve(x, a = 60, units = "km")
+#' sv <- spatialEco::sieve(x, a = 60, unit = "km")
 #'   plot(c(x, sv))
 #' } 
 #' @export
-sieve <- function(x, a, units = c("m", "km", "ha")) {
+sieve <- function(x, a, unit = c("m", "km", "ha")) {
   if(missing(a))
     stop("Must define query area (a)")
   if (!inherits(x, "SpatRaster")) 
     stop(deparse(substitute(x)), " must be a terra SpatRaster object")		
-  message("Sieve applied for a MMU < ", a, units)	
-  rs <- terra::zonal(terra::cellSize(x, unit = units[1]), x, 
-                     sum, as.raster = TRUE)
+  message("Sieve applied for a MMU < ", a, unit)
+      rs <- terra::zonal(terra::cellSize(x, unit = unit[1]), 
+	                     x, sum, as.raster = TRUE)					 
     rs <- terra::ifel(rs < a, NA, x)
   return( rs )
 }  

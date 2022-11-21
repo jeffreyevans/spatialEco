@@ -1,20 +1,17 @@
 # spatialEco (dev 2.0-0) <img src="man/figures/spatialEco_logo.png" align="right" alt="" width="160" />
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/jeffreyevans/spatialEco/workflows/R-CMD-check/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions)
+[![R-CMD-check](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/spatialEco)](https://cran.r-project.org/package=spatialEco)
 
-[![codecov](https://codecov.io/gh/jeffreyevans/spatialEco/branch/master/graph/badge.svg?token=1d03a407-3171-4c39-833b-d7fad930392d)](https://codecov.io/gh/jeffreyevans/spatialEco)
-[![R-CMD-check](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 spatialEco R package with utilities to support spatial data manipulation, query, sampling
-    and modeling. Functions include models for species population density, download
-    utilities for climate and global deforestation spatial products, spatial
-    smoothing, multivariate separability, point process model for creating pseudo-
-    absences and sub-sampling, polygon and point-distance landscape metrics,
+    and modeling. Functions include models for species population density, qudrat-based 
+	analysis and sampling, spatial smoothing, multivariate separability, point process model 
+	for creating pseudo-  absences and sub-sampling, polygon and point-distance structural metrics,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
- 
+
 I jumped to a major release and pushed the version to 2.0-0. All spatial functions are now using the 
 `sf` and `terra` packages due to `sp`, `rgeos`, `rgdal`, `maptools` and `raster` being retired. Sorry 
 but, for the most part I removed backwards compatibility with these depreciated object classes so, you 
@@ -165,5 +162,17 @@ and, going from sf to sp you use `as(x, "Spatial")`
 
 **To install `spatialEco` in R use install.packages() to download current stable release from CRAN** 
 
-**or, for the development version, run the following (requires the remotes package):**
+**for the development version, run the following (requires the remotes package):**
 `remotes::install_github("jeffreyevans/spatialEco")`
+
+**You can also install from ROpenSci (R-Universe):**
+
+```
+# Enable repository from jeffreyevans
+options(repos = c(
+  jeffreyevans = 'https://jeffreyevans.r-universe.dev',
+  CRAN = 'https://cloud.r-project.org'))
+  
+# Download and install spatialEco in R
+install.packages('spatialEco')
+```
