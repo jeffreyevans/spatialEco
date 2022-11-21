@@ -51,6 +51,7 @@ must match row dimensions with x and y as well as columns matching between weigh
 In other words, the covariates must match and be numeric.
 }
 \examples{
+\donttest{
  library(sp)
  data(meuse)
    coordinates(meuse) <- ~x+y
@@ -78,7 +79,7 @@ wy = as.matrix(pts@data[,1:3])
  y <- coordinates(pts)
  x <- coordinates(meuse)
  knn(y, x, k=2)
-  
+}	  
 }
 \seealso{
 \code{\link[RANN]{nn2}} for details on search algorithm

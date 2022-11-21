@@ -10,3 +10,4 @@ LICENSE
 ^docs$
 ^pkgdown$
 ^extdata$
+^\.github$

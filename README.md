@@ -5,6 +5,7 @@
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/spatialEco)](https://cran.r-project.org/package=spatialEco)
 
 [![codecov](https://codecov.io/gh/jeffreyevans/spatialEco/branch/master/graph/badge.svg?token=1d03a407-3171-4c39-833b-d7fad930392d)](https://codecov.io/gh/jeffreyevans/spatialEco)
+[![R-CMD-check](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 spatialEco R package with utilities to support spatial data manipulation, query, sampling
     and modeling. Functions include models for species population density, download
@@ -158,7 +159,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `vrm`                        | Implementation of the Sappington et al., (2007) vector ruggedness measure         
 | `winsorize`                  | Removes extreme outliers using a winsorization transformation                     
 | `wt.centroid`                | Creates centroid of [x,y] coordinates, of a random field, based on a weights field in a point sample.
-| `zonal.stats`                | Polygon "zonal" statistics of a raster. Function can accept custom “vectorized” function.
+| `zonal.stats`                | Depreciated
 
 **Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.
 

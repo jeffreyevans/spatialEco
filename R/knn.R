@@ -30,6 +30,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples 
+#' \donttest{
 #'  library(sp)
 #'  data(meuse)
 #'    coordinates(meuse) <- ~x+y
@@ -57,7 +58,7 @@
 #'  y <- coordinates(pts)
 #'  x <- coordinates(meuse)
 #'  knn(y, x, k=2)
-#'	  
+#' }	  
 #' @seealso \code{\link[RANN]{nn2}} for details on search algorithm 
 #'
 #' @export knn

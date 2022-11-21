@@ -2,29 +2,25 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-0
-Date: 2022-11-07
+Date: 2022-11-20
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
   person(family="Murphy", given="Melanie A.", role = "ctb"),			 
   person(family="Ram", given="Karthik", role = "ctb") )
 Description: Utilities to support spatial data manipulation, query, sampling
-    and modelling. Functions include models for species population density, download
-    utilities for climate and global deforestation spatial products, spatial
-    smoothing, multivariate separability, point process model for creating pseudo-
-    absences and sub-sampling, polygon and point-distance landscape metrics,
-    auto-logistic model, sampling models, cluster optimization, statistical
-    exploratory tools and raster-based metrics.
+    and modelling in ecological applications. Functions include models for species 
+	population density, spatial smoothing, multivariate separability, point process 
+	model for creating pseudo- absences and sub-sampling, Quadrant-based sampling and 
+	analysis, auto-logistic modeling, sampling models, cluster optimization, statistical 
+	exploratory tools and raster-based metrics.
 Depends: R (>= 4.0)
 Imports:
   sf,
-  terra
-Suggests:
+  terra,
   spatstat.geom (>= 3.0-3), 
   spatstat.explore, 
-  spatstat.data, 
   spdep,
-  alphahull,
   ks,
   cluster,
   readr,
@@ -34,15 +30,19 @@ Suggests:
   yaImpute,
   mgcv,
   EnvStats,
-  gstat,
-  methods,
-  MASS,
   SpatialPack (>= 0.3),
+  MASS
+Suggests:
+  alphahull,
+  Matrix,
+  gstat,
+  spatstat.data, 
+  methods,  
   RStoolbox,
   units,
   sp,
   raster,
-  stringr  
+  stringr    
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3
 URL: https://github.com/jeffreyevans/spatialEco, https://jeffreyevans.github.io/spatialEco/
@@ -51,4 +51,4 @@ NeedsCompilation: no
 Repository: CRAN
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2

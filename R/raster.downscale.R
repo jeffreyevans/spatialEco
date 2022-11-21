@@ -113,17 +113,22 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
           y <- y[[1]]
     }	  
 	if(full.res == FALSE) {
-	   sub.samp <- terra::as.points(y)
-	    sub.samp <- data.frame(sub.samp, terra::extract(x, sub.samp) )
+	  sub.samp.sp <- terra::as.points(y, na.rm=TRUE)
+	    sub.samp <- data.frame(sub.samp.sp, terra::extract(x, sub.samp.sp) )
 	      sub.samp <- sub.samp[,-which(names(sub.samp) %in% "ID")]
 	        names(sub.samp) <- c("y", names(x))
-	          sub.samp <- stats::na.omit(sub.samp)	   
+			  na.idx <- unique(which(is.na(sub.samp), arr.ind = TRUE)[,1])
+			  if(length(na.idx) > 0)
+	            sub.samp <- sub.samp[-na.idx,]
 	} else {
 	  message("Population is being used and may cause memory issues")
-       sub.samp <- terra::as.points(x)
-	     sub.samp <- data.frame(terra::extract(y, sub.samp)[,2], sub.samp)
-	       names(sub.samp) <- c("y", names(x))
-	          sub.samp <- stats::na.omit(sub.samp)	
+	  sub.samp.sp <- terra::as.points(x, na.rm=TRUE)
+	    sub.samp <- data.frame(terra::extract(y, sub.samp.sp), sub.samp.sp)
+	      sub.samp <- sub.samp[,-which(names(sub.samp) %in% "ID")]
+	        names(sub.samp) <- c("y", names(x))
+			  na.idx <- unique(which(is.na(sub.samp), arr.ind = TRUE)[,1])
+			  if(length(na.idx) > 0)
+	            sub.samp <- sub.samp[-na.idx,]
     }		
 	if(length(names(sub.samp)[-1]) > 1){ 
       xnames <- paste(names(sub.samp)[-1], collapse = "+") 
@@ -132,19 +137,28 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
 	}
     rrr <- MASS::rlm(stats::as.formula(paste(names(sub.samp)[1], xnames, sep=" ~ ")), 
                      data=sub.samp, scale.est="Huber", psi=MASS::psi.hampel, init="lts")
-    if(scatter == TRUE) { graphics::plot(sub.samp[,2], sub.samp[,1], pch=20, cex=0.50,
-		                                 xlab=names(sub.samp)[2], ylab="y") }									 
+    if(scatter == TRUE) {
+      n = terra::nlyr(x)
+	  graphics::par(mfrow=c(n,n/2))
+	    for(i in 2:(n+1)) {
+	      graphics::plot(sub.samp[,i], sub.samp[,1], pch=20, cex=0.50,
+		                 col="grey", xlab=names(sub.samp)[i], ylab="y") 
+		  graphics::abline(stats::coefficients(rrr)[c(1,i)], col="red") 
+		}					 
+	}
      r <- terra::predict(x, rrr, na.rm=TRUE)
-   results <- list(downscale = r, model = rrr, 
-                MSE = round(mean(rrr$residuals), digits=4), 
-                AIC = round(stats::AIC(rrr), digits=4),
-                parm.ci=stats::confint.default(object = rrr, level = 0.95))
+       results <- list(downscale = r, model = rrr, 
+                    MSE = round(mean(rrr$residuals), digits=4), 
+                    AIC = round(stats::AIC(rrr), digits=4),
+                    parm.ci=stats::confint.default(object = rrr, level = 0.95))
   if(residuals == TRUE) {
-    cells <- as.numeric(names(rrr$residuals))
-	  res.rast <- y
-	    res.rast[] <- NA
-	      res.rast[cells] <- rrr$residuals 
-	results$residuals <- res.rast 	 
+    sub.samp.sp <- sub.samp.sp[-na.idx,]
+    sub.samp.sp$resd <- rrr$residuals 
+      if(full.res) {
+	    results$residuals <- terra::rasterize(sub.samp.sp, x[[1]], field="resd")
+	  } else {
+	    results$residuals <- terra::rasterize(sub.samp.sp, y, field="resd")
+	  }
   }
   if(uncertainty != "none"){
     if(!uncertainty %in% c("prediction", "confidence")) {

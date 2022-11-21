@@ -2,47 +2,62 @@
 #' @description Applies a Gaussian smoothing kernel to smooth raster. 
 #' 
 #' @param x         A terra SpatRaster raster object
-#' @param type      The statistic to use in the smoothing operator 
-#'                  (suggest mean or sd)
-#' @param sigma     standard deviation (sigma) of kernel (default is 2)
+#' @param s         Standard deviation (sigma) of kernel (default is 2)
 #' @param n         Size of the focal matrix, single value (default is 
 #'                  5 for 5x5 window) 
+#' @param scale     (FALSE/TRUE) Scale sigma to the resolution of the raster
+#' @param type      The statistic to use in the smoothing operator; 
+#'                  "mean", "median", "sd", "convolution"
 #' @param ...       Additional arguments passed to terra::focal 
 #' 
 #' @return A terra SpatRaster class object of the local distributional moment
 #'
 #' @note
-#'  This is a simple wrapper for the focal function, returning local 
-#'  statistical moments 
+#' This applies a Gaussian Kernel smoother. The convolution option performs
+#' a Gaussian decomposition whereas the other options use the kernel
+#' as weights for the given statistic. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
 #' library(terra)
-#' r <- rast(nrows=500, ncols=500, xmin=571823, xmax=616763, 
-#'             ymin=4423540, ymax=4453690)
-#'  crs(r) <- "epsg:9001"
-#' r[] <- runif(ncell(r), 1000, 2500)
-#' r <- focal(r, focalMat(r, 150, "Gauss") )
+#' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #' 
-#' # Calculate Gaussian smoothing with sigma(s) = 1-4
-#' g1 <- raster.gaussian.smooth(r, sigma=1, nc=11)
-#' g2 <- raster.gaussian.smooth(r, sigma=2, nc=11)
-#' g3 <- raster.gaussian.smooth(r, sigma=3, nc=11)
-#' g4 <- raster.gaussian.smooth(r, sigma=4, nc=11)
-#'
-#'   opar <- par(no.readonly=TRUE)
-#'   par(mfrow=c(2,2)) 
-#'     plot(g1, main="Gaussian smoothing sigma = 1") 
-#'     plot(g2, main="Gaussian smoothing sigma = 2")
-#'     plot(g3, main="Gaussian smoothing sigma = 3")
-#'     plot(g4, main="Gaussian smoothing sigma = 4")
-#'   par(opar)
+#' # Calculate Gaussian smoothing with sigma = 2 and 7x7 window
+#' g1 <- raster.gaussian.smooth(elev, s=2, n=7)
+#'     plot(c(elev,g1))
 #'
 #' @export
-raster.gaussian.smooth <- function(x, sigma = 2, n = 5, type = mean, ...) {  
+raster.gaussian.smooth <- function(x, s = 2, n = 5, scale = FALSE, 
+           type = c("mean", "median", "sd", "convolution"), ...) {   
+  if(scale) s = s * terra::res(x)[1]
+    type=type[1]	
     if (!inherits(x, "SpatRaster")) 
-	  stop(deparse(substitute(x)), " must be a terra SpatRaster object")
-    gm <- gaussian.kernel(sigma=sigma, s=n)
-	return( terra::focal(x, w = gm, fun = type, ...) )
+	  stop(deparse(substitute(x)), " must be a terra SpatRaster object")   
+	if(type == "convolution") {
+	  message("Running a Gaussian decomposition")
+	message("Temporary bug in terra::focal failing convolution function")
+      fconv <- function(p, K = NULL, sdv=s) {
+          if(inherits(p, "matrix")) p <- as.vector(p)
+          if(length(is.na(p)) > 0)
+            p[is.na(p)] <- mean(p, na.rm=TRUE)
+            n <- floor((sqrt(1 + 8 * length(p)) - 1)/2)-1
+          if(is.null(K))
+              K <- gaussian.kernel(sigma=sdv, s = n)
+            K <- K / sum(K)
+            X <- as.matrix(Matrix::bandSparse(length(p), 
+                   k = seq(-(length(K)-1),0,1), 
+                   diag = t(replicate(length(p), rev(K))), 
+        		   symm=FALSE))
+              lvc <- X %*% as.matrix(p, ncol=1)
+      	lcv <- lcv[ceiling(length(lcv)/2)]
+          return(as.numeric(lcv[1]))
+        }	
+      g <- terra::focal(x, w=n, fun=fconv, ...)     
+    } else {
+      message("Using ", type, " for convolution")
+      gm <- gaussian.kernel(sigma=s, s=n)
+      g <- terra::focal(x, w=gm, fun=eval(parse(text = type)), ...)	  
+	} 
+  return( g )
 }  
