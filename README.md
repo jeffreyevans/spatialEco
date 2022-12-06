@@ -1,4 +1,4 @@
-# spatialEco (dev 2.0-0) <img src="man/figures/spatialEco_logo.png" align="right" alt="" width="160" />
+# spatialEco (dev 2.0-01) <img src="man/figures/logo.png" align="right" height="132" />
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -21,7 +21,7 @@ one class type for multi or single band raster objects "SpatRaster" which can be
 and, going from sf to sp you use `as(x, "Spatial")` 
    
  
-## Available functions in spatialEco 2.0-0
+## Available functions in spatialEco 2.0-01
 
 | `spatialEco` Function        | Description                                                                             |
 |:-----------------------------|:----------------------------------------------------------------------------------------|

@@ -107,15 +107,20 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   }
   if(!is.null(y)) {
     message("\n","calculating weighted kde","\n")
-    kde.est <- suppressWarnings(terra::flip(
-	            terra::rast(ks::kde(sf::st_coordinates(x)[,1:2], h=bw, 
-	                 gridsize=n, w = y, density=TRUE)$estimate,  
-	                 extent=terra::ext(ref)), direction="v")) 
+	kde.est <- 
+	  terra::rast(matrix(ks::kde(sf::st_coordinates(x)[,1:2], 
+        h=bw, eval.points=terra::xyFromCell(ref, 1:terra::ncell(ref)), 
+        gridsize=n, w = y, density=TRUE)$estimate,
+		nrow=n[1], ncol=n[2], byrow=TRUE),
+        extent=terra::ext(ref))				
   } else {
 	message("\n","calculating unweighted kde","\n")
-    kde.est <- terra::flip(terra::rast(ks::kde(sf::st_coordinates(x)[,1:2], 
-	                 h=bw, gridsize=n, density=TRUE)$estimate,  
-	                 extent=terra::ext(ref)), direction="v") 
+	kde.est <- 
+	  terra::rast(matrix(ks::kde(sf::st_coordinates(x)[,1:2], 
+        h=bw, eval.points=terra::xyFromCell(ref, 1:terra::ncell(ref)), 
+        gridsize=n, density=TRUE)$estimate,
+		nrow=n[1], ncol=n[2], byrow=TRUE),
+        extent=terra::ext(ref))		
   }
   if(!is.null(scale.factor)) kde.est <- kde.est * scale.factor	
 	if( standardize == TRUE ) { kde.est <- kde.est / 
