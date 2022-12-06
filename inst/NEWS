@@ -264,8 +264,3 @@ spatialEco_2.0-0
 
 * Added function "bbox_extent" creates a bounding box polygon representing the extent 
   of a feature or raster                                                   
-  
-spatialEco_2.0-01
-================= 
-  
-* Fixed bug in sf.kde (thanks to Dirk Pflugmacher for notifying me)  
