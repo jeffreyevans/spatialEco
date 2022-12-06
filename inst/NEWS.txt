@@ -1,0 +1,266 @@
+spatialEco_0.1-1
+=================
+* Fixed bug in logistic.regression where autocovariance function did not recognize the specified variable
+* Added an automatic all-neighbour minimum distance for autocovariance in logistic.regression function
+* Added function "csi" for cosine similarity index and angular similarity index
+* Added function "local.min.max" for finding local minimum and maximum values in a numeric vector
+* Added function "outliers" for identifying outliers using modified z-score
+
+spatialEco_0.1-2
+=================
+* Added argument in "o.ring" for inhomogeneous (TRUE/FALSE) to account for different point processes
+* Added function "kl.divergence" for the Kullback-Leibler divergence (relative entropy) metric
+* Added function "loess.boot" for bootstraping a loess regression, with associated print and plot functions
+* Added function "loess.ci" for calculating a confidence interval for a loess regression, with associated print and plot functions
+* Added function "raster.vol" for generating percent volume from a raster
+* Added function "tpi" for calculating the topographic position index 
+* Added function "concordance" that performs a concordance/ disconcordance (C-statistic) test on binomial models.
+
+spatialEco_0.1-3
+=================
+* Bug fix in "land.metrics" that addressed error when more than one class was present
+* Bug fix in "land.metrics" that addressed trace error
+* Enhancement to "land.metrics" function now accepts multiple classes
+* Added function "gaussian.kernel" Creates a Gaussian Kernel of specified size and sigma   
+* Added function "tri" Implementation of the Riley et al (1999) Terrain Ruggedness Index
+* Added function "sample.poly" for creating samples for each polygon in a SpatialPolygons class object
+* Added function "similarity" implementing row imputation to identify "k" ecological similar observations 
+* Added function "dispersion" for calculating the dispersion ("rarity") of targets associated with ecological planning units 
+* Added function "shannons" for calculating the Shannon's diversity index 
+* Added function "insert.values" for inserting new values into a vector at specified positions
+
+spatialEco_0.0.1-4
+=================
+* Enhancement to sp.an.omit that allows for removal of columns with NA's
+* Added function to identify daymet tiles from sp, raster, extent or coordinates
+* Added function for point download of DAYMET climate data
+* Added function for distance lagged sampling
+
+spatialEco_0.1-5
+=================
+* Bug fix in "stratified.random" function.
+* Added function "rasterCorrelation" for calculating "pearson" or "spearman" correlations or "covariance" between two rasters within a specified moving window.
+* Added function "mwCorr" for calculating Dutilleul's modified t-test between two rasters within a specified moving window.  
+* Added function "polyPerimeter" for calculating polygon perimeters 
+
+spatialEco_0.1-6
+================= 
+* Enhancement to "raster.entropy" for recognizing continuous verses nominal data in deriving entropy. Also allows for global or local definition of entropy constant. 
+* Added function "raster.mds" for calculating a focal multidimensional scaling 
+* Added function  "rasterZscore" for calculating cell-level modified z-scores (not memory safe)
+* Added function  "sobel" for calculating the Sobel-Feldman isotropic image gradient operator (intensity and direction)
+
+spatialEco_0.1-7
+================= 
+* Bug fix in "download.daymet" function to account for change in HTML structure on the ORNL website
+* Modified function "trig.trans" and changed to "sa.trans" for calculating slope, aspect transformations and interactions 
+* Added function "hli" for calculating the Heat Load Index 
+* Added function "sar" for calculating Surface Area Ratio 
+* Added function "curvature" for calculating Surface Curvature 
+* Added function "srr" for calculating Surface Relief Ratio
+* Added function "dissection" for calculating the Dissection coefficient 
+* Added function "raster.gaussian.smooth" for applying a Gaussian smoothing kernel to a raster 
+* Added function "raster.transformation" for applying statistical transformations to a raster 
+* Added function "raster.invert" for inverting the values in a raster 
+* Added function "raster.moments" for calculating a variety of focal statistical moments on a raster 
+* Added function "trasp" for calculating the Solar-radiation Aspect Index 
+
+spatialEco_1.0-0
+=================
+* Deprecated function "kde2D" and replaced with "sp.kde" which accepts weights
+* Deprecated function "mwCorr" and replaced with "raster.modified.ttest"
+* Changed the "point.in.poly" function so that it retains columns containing all NA's
+* Added added optional poly.id argument to "point.in.poly" function so a specific column can be define from the SpatialPolygonsDataFrame object
+* Added function "class.comparison" Compares two nominal rasters
+* Added function "erase.points" Erases points inside or outside a polygon feature class  
+* Added function "focal.lmetrics" Landscape metrics using a focal window 
+* Added function "oli.aws" Download Landsat 8 - OLI from AWS.   
+* Added function "raster.downscale" Downscale raster to a higher resolution raster using robust regression 
+* Added function "raster.modified.ttest" Bivariate moving window correlation using Dutilleul's modified t-test 
+* Added function "sp.kde" A weighted or un-weighted kernel density estimate
+
+spatialEco_1.1-0
+=================
+* Fixed bug in "pseudo.absence" that was throwing an error when a raster class mask was defined 
+* Fixed bug in "land.metrics" that was producing incorrect class enumeration
+* Feature Enhancement and bug fix in "point.in.poly" function so that polygon attributes are added to the points, also added support for sf classes
+* Added function "raster.kendall" Calculates Kendall's tau trend with continuity correction for raster time-series 
+* Added function "optimized.sample.variance" Draws an optimal sample that minimizes or maximizes the sample variance 
+* Added function "fuzzySum" Calculates the fuzzy sum of a vector
+* Added function "remove.holes" Removes all holes (null geometry) in polygon sp class objects  
+* Added function "winsorize" Removes extreme outliers using a winsorization transformation
+* Added function "crossCorrelation" Calculates the partial spatial cross-correlation function 
+
+spatialEco_1.1-1
+=================
+* Fixed bug in raster.modified.ttest due to changes in output from SpatialPack
+* Modified "crossCorrelation" function to be consistent with Chen (2015) GSCI metric 
+* Modified function "raster.kendall" to return Z-value raster
+* Added function "classBreaks" for finding class breaks in a distribution
+* Added function "smooth.time.series" for imputing NA or smoothing time-series raster data. 
+* Added function "hybrid.kmeans" for clustering using hierarchical clustering to define cluster-centers in k-means 
+* Added function "morans.plot" for  Autocorrelation plot (Anselin 1996), following Chen (2015), aka, Moran's-I plot (univariate or bivariate) 
+* Added function "optimized.sample.variance" for drawing an optimal sample that minimizes or maximizes the sample variance 
+* Added function "swvi" for Senescence weighted MSAVI or MTVI
+* Added function "smooth.time.series" for smoothing pixel-level data in raster time-series and imputing missing (NA) values using LOESS regression
+* Added function "poly.regression" for smoothing data in time-series and imputing missing (NA) values using polynomial regression
+* Added function "sg.smooth" for smoothing time-series data using a Savitzky-Golay filter 
+* Added function "subsample.distance" - Minimum, and optional maximum, distance constrained sub-sampling 
+
+spatialEco_1.2-0
+=================
+* Modified function "curvature" to clarify output
+* Fixed bug in "sp.kde" so that coordinates are parsed correctly
+* Fixed introduced bug in "stratified.random" 
+* Fixed bug in "bearing.distance"
+* Added function "kendall" and modified raster.kendall to call it 
+* Added function "raster.change" for change detection between two rasters
+* Added function "topo.distance" for evaluating topographically correct distance
+* Added function "focal.lmetrics" for calculating moving window landscape metrics
+* Added function "sample.distance" for distance lagged sampling
+* Added function "wt.centroids" Creates centroid of [x,y] coordinates based on a weights field
+
+spatialEco_1.2-1
+=================
+* Added function "parse.bits" for pulling value(s) for a bit(s) based on integer value 
+* Added function "annulus.matrix" creates a [0,1] matrix based on defined annulus parameters.  
+* Bug fix to "trasp" Missing parenthesis, thanks to Monika Anna Tomaszewska for reporting this mistake.
+* Added function "knn" to find nearest neighbors between two spatial objects, with optional search radius
+
+spatialEco_1.3-0
+=================
+* Added function "spatial.select" to perform a selection (subset) of a feature class based on a polygon(s) feature
+* Added function "random.raster" for creating various random rasters or stacks
+* Added function "shift" for shifting a vector by specified positive or negative lag
+* Added function "explode" for exploding multipart to singlepart feature geometry 
+* Added function "nth.values" for returning the Nth highest or lowest value(s) in a vector
+* Added function "overlap" comparing the similarity of two niche estimates using Warren's-I
+* Feature Enhancement "knn" expanded to accept "weights" or covariates for multivariate case
+* Fixed bug "sp.ked" Error with defined extent in newdata
+* Feature Enhancement "sp.ked" added row (nr) and column (nc) dimension arguments, replacing n. 
+* Enhancement to "zonal.stats" leveraging velox extract speed
+* Added function dependencies from orphaned CRAN package SDMTools (attributed to original author)
+    Associated SDMTools functions include:
+	  - connected.pixels
+      - ClassStat
+	  - PatchStat
+	  - asc.from.raster
+	  - spheroid.distance
+	  - grid.info
+
+spatialEco_1.3-1
+=================
+* Due to package depreciation, changed velox dependency to exactextractr for raster 
+  extraction
+
+* Depreciated two functions "land.metrics" and "focal.lmetrics" as there are now 
+  better alternatives in the landscapemetrics package. This removed the need for a 
+  C++ compile and also removed the associated SDMTools functions
+
+* Depreciated "download.daymet" function due to the THREDDS server moving 
+  to a NetCDF Markup Language (NcML) format
+
+spatialEco_1.3-2
+=================
+* Feature Enhancement "hli" added support for southern hemisphere
+  
+* Bug fix "raster.change" was not correctly evaluating raster in memory 
+
+* Feature Enhancement "erase.points" changed the function to account for single 
+  and multi geometry
+
+* Feature Enhancement "hli" added support for southern hemisphere
+
+* Added function "background" for generating background point samples often used in SDM's 
+
+* Added function "cross.tab" cross tabulation of two nominal rasters
+
+* Added function "extract.vertices" for extracting (x,y) vertices coordinates from
+  polygons and lines 
+
+* Added function "geo.buffer" that buffers data in geographic projection 
+  
+* Added function "insert" that inserts a row or column into a data.frame
+
+* Added function "is.empty" method that evaluates if a vector is empty
+
+* Added function "is.whole" method that evaluates if a numeric vector is whole or float
+
+spatialEco_1.3-3
+=================
+* Added function "built.index" remote sensing built-up index
+
+* Added function "chae" Canine-Human Age Equivalent (for fun)
+
+* Added function "dahi" Diurnal Anisotropic Heat Index
+
+* Added function "impute.loess" for imputing NA's or smoothing data
+
+* Added function "max_extent" returns polygon representing maximum extent 
+                  of defined rasters
+
+* Added function "quadrats" for quadrat sampling or analysis
+
+* Added function "rotate.polygon" rotates a polygon by specified angle 
+                 (also used by quadrats function)
+
+* Bug fix "smooth.time.series" was not accepting smoothing parameter 
+          (thanks to Eileen Perry)
+
+spatialEco_1.3-4
+=================
+* Added function "rasterDistance" for calculating fast point to raster distances
+
+* Bug fix in print method for crossCorrelation function 
+
+spatialEco_1.3-5
+=================
+* Fixed bug in crossCorrelation print method
+
+spatialEco_1.3-6
+=================
+* Addressed changes to spatstat package dependencies
+
+spatialEco_1.3-7
+=================
+* Added function "polygon_extract" for a fast method for extracting raster values to polygons  
+
+* Added function "time.to.event" returning the time (sum to position) to a specified value 
+
+* Added function "cgls_urls" for returning download URL from CGLS query
+
+* Fixed bug in insert associated with MARGIN argument
+
+* Fixed bug in crossCorrelation where the I value was being erroneously
+  corrected for population (thanks to GitHub user MarHer90). 
+ 
+spatialEco_1.3-8
+================= 
+ 
+* Added zero covariance error check in collinear  
+ 
+* Added support for terra class objects in rasterCorrelation  
+
+* Added silhouettes to optimal.k output    
+
+spatialEco_2.0-0
+================= 
+
+**** Jumped to major version release
+
+* Converted all functions that historically relied on sp, raster, rgeos, rgdal 
+  and maptools packages to sf and terra and optimized code structure in many 
+  functions. 
+
+* Function enhancement raster.downscale to expand to multivariate model with
+  optional output for confidence/prediction intervals and MSE rasters.  
+
+* Added function "remove_duplicates" for removing duplicate duplicate feature geometries 
+
+* Added function "all_pairwise" creates a list of all pairwise combinations of a vector 
+
+* Added function "sieve" that creates a MMU for an integer raster 
+
+
+* Added function "bbox_extent" creates a bounding box polygon representing the extent 
+  of a feature or raster                                                   
