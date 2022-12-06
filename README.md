@@ -34,16 +34,16 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `built.index`                | remote sensing built-up index |      
 | `cgls_urls`                  | Based on query, provide URL's for Copernicus Global Land Service datasets         
 | `chae`                       | The Canine-Human Age Equivalent (for fun)                                         
+| `class.comparison`           | Depreciated, with migration to terra, I collapsed into raster.change                                                      
 | `classBreaks`                | for finding class breaks in a distribution                                        
-| `class.comparison`           | Compares two nominal rasters                                                      
-| `colinear`                   | Test for linear or nonlinear collinearity/correlation in data                     
-| `correlogram`                | Calculates and plots a correlogram (spatially lagged correlations, "pearson", "kendall" or "spearman") 
-| `concordance`                | Performs a concordance/disconcordance (C-statistic) test on binomial models.      |
-| `conf.interval`              | Calculates confidence interval for the mean or median of a distribution with with unknown population variance
+| `collinear`                  | Test for linear or nonlinear collinearity/correlation in data                     
 | `combine`                    | Combines multiple rasters into an "all possible combinations" raster emulation the ESRI combine function
+| `concordance`                | Performs a concordance/disconcordance (C-statistic) test on binomial models.      
+| `conf.interval`              | Calculates confidence interval for the mean or median of a distribution with with unknown population variance
 | `convexHull`                 | Derives a convex hull of points using the alpha hull approach with adjustable tension. Please note that due to licensing reasons, this function is only available in the GitHub development version and not on CRAN. You must call the function from the package namespace using spatialEco:::convexHull
-| `crossCorrelation`           | Calculates the partial spatial cross-correlation function                         
+| `correlogram`                | Calculates and plots a correlogram (spatially lagged correlations, "pearson", "kendall" or "spearman") 
 | `cross.tab`                  | Cross tabulate two rasters, labels outputs                                        
+| `crossCorrelation`           | Calculates the partial spatial cross-correlation function                         
 | `csi`                        | Calculates cosine similarity and angular similarity on two vectors or a matrix    
 | `curvature`                  | Zevenbergen & Thorne, McNab's or Bolstad's surface (raster) curvature             
 | `dahi`                       | Calculates the DAHI (Diurnal Anisotropic Heat Index)                              
@@ -53,18 +53,19 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `dispersion`                 | Calculates the dispersion ("rarity") of targets associated with planning units    
 | `dissection`                 | Evans (1972) Martonne's modified dissection                                       
 | `divergence`                 | Kullback-Leibler Divergence (Cross-entropy)                                       
-| `download.daymet`            | Batch download of daily gridded DAYMET climate data                               
-| `download.hansen`            | Download of Hansen Global Forest Change 2000-2013                                 
-| `download.prism`             | Batch download of monthly gridded PRISM climate data                              
+| `download.daymet`            | Depreciated                             
+| `download.hansen`            | Depreciated                                 
+| `download.prism`             | Depreciated                             
 | `effect.size`                | Cohen's-d effect size with pooled sd for a control and experimental group         
 | `erase.points`               | Erases points inside or outside a polygon feature class                           
-| `explode`                    | Explodes multi-part to single-part feature geometry                               
+| `explode`                    | Depreciated due to redundancy with sf::st_cast                              
 | `extract.vertices`           | extracts (x,y) vertices coordinates from polygons and linesa                      
 | `fuzzySum`                   | Calculates the fuzzy sum of a vector                                              
 | `gaussian.kernel`            | Creates a Gaussian Kernel of specified size and sigma                             
 | `geo.buffer`                 | Buffers data in geographic coordinate space using a temporary projection          
 | `group.pdf`                  | Creates a probability density plot of y for each group of x                       
 | `hexagons`                   | Create hexagon polygon “fishnet” of defined size and extent.                      
+| `hli.pt`                     | Heat Load Index for tabular "point" data with slope and aspect                  
 | `hli`                        | Heat Load Index, now with support for southern hemisphere data                    
 | `hsp`                        | Hierarchical Slope Position                                                       
 | `hybrid.kmeans`              | Clustering using hierarchical clustering to define cluster-centers in k-means     
@@ -98,8 +99,8 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `parial.cor`                 | Partial and Semi-partial correlation                                              
 | `plot.effect.size`           | Plot generic for effect size                                                      
 | `plot.loess.boot`            | Plot generic for loess boot                                                       
-| `point.in.poly`              | Intersects point and polygon feature classes and adds attributes to the points    
-| `polygon_extract`            | Fast method for extracting raster values to polygons                              
+| `point.in.poly`              | Depreciated because function is redundant with sf::st_intersection
+| `polygon_extract`            | Depreciated because of migration to terra. Required package only supports raster class                               
 | `polyPerimeter`              | Calculates the perimeter length(s) for a polygon object                           
 | `poly.regression`            | smoothing data in time-series and imputing missing (NA) values using polynomial regression
 | `poly_trend`                 | Derives Nth order polynomial trend with confidence intervals                        
@@ -124,25 +125,27 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `raster.Zscore`              | Calculates the modified z-score for all cells in a raster                         
 | `rasterCorrelation`          | Performs a simple moving window correlation between two rasters		           
 | `remove_duplicates`          | Removes duplicate duplicate feature geometries         
-| `remove.holes`               | Removes all holes (null geometry) in polygon sp class objects                     
+| `remove.holes`               | Removes all holes (null geometry) in polygon sf class objects                     
+| `rm.ext`                     | Removes file extentions from text string                    
 | `rotate.polygon`             | Rotates a polygon by specified angle                                              
 | `sa.trans`                   | Trigonometric transformation of a slope and aspect interaction                    
 | `sample.annulus`             | Creates sample points based on annulus with defined inner and outer radius        
-| `sample.line`                | Creates a systematic or random point sample of an sp SpatialLinesDataFrame object based on distance spacing, fixed size or proportional size
-| `sample.poly`                | Creates an equal sample of n for each polygon in an sp Polygon class object       
+| `sample.line`                | Depreciated because sf::st_sample can aggregate samples by feature
+| `sample.poly`                | Depreciated because sf::st_sample can aggregate samples by feature       
 | `sampleTransect`             | Creates random transects from points, generates sample points along each transect 
 | `separability`               | Calculates variety of univariate separability metrics for nominal class samples   
 | `spectral.separability`      | Calculates univariate or multivariate separability for nominal class samples      
 | `sg.smooth`                  | Smoothing time-series data using a Savitzky-Golay filter                          
 | `shannons`                   | Calculates Shannon's Diversity Index and Shannon's Evenness Index                 
 | `shift`                      | Shifts a vector by n lags without changing its length, can specify fill values    
+| `sieve`                      | Creates a minimum mapping unit by removing pixel clusters < specified area
 | `similarity`                 | Uses row imputation to identify "k" ecological similar observations               
 | `smooth.time.series`         | Smoothing and imputing missing (NA) of pixel-level data in raster time-series using (local polynomial) LOESS regression
 | `sobal`                      | Applies an isotropic image gradient operator (Sobel-Feldman) using a 3x3 window   
 | `spatial.select`             | Performs a spatial select (feature subset) similar to ArcGIS                      
 | `spectral.separability`      | Calculates class-wise multivariate spectral separability                          
 | `sf.kde`                     | A weighted or un-weighted kernel density estimate (previously sp.kde now as alias)                                 
-| `sp.na.omit `                | Removes row or column NA's in sp object. The standard R na.omit function will not propagate through all slots of an sp class object. This function removes the spatial objects, in all slots, corresponding to NA's in the @data object.
+| `sp.na.omit `                | Depreciated as only relevant to sp class objects, for sf use base na.omit 
 | `srr`                        | Surface Relief Ratio                                                              
 | `stratified.random`          | Creates a stratified random sample of an sp class object using a factor.          
 | `subsample.distance`         | Minimum, and optional maximum, distance constrained sub-sampling                  
@@ -156,7 +159,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `vrm`                        | Implementation of the Sappington et al., (2007) vector ruggedness measure         
 | `winsorize`                  | Removes extreme outliers using a winsorization transformation                     
 | `wt.centroid`                | Creates centroid of [x,y] coordinates, of a random field, based on a weights field in a point sample.
-| `zonal.stats`                | Depreciated
+| `zonal.stats`                | Depreciated in leu of exactextractr library
 
 **Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.
 
