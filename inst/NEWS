@@ -264,3 +264,10 @@ spatialEco_2.0-0
 
 * Added function "bbox_extent" creates a bounding box polygon representing the extent 
   of a feature or raster                                                   
+
+* depreciated a few functions in lue of efficient alternatives in sf and terra
+
+spatialEco_2.0-01
+=================   
+
+* Fixed bug in sf.kde (thanks to Dirk Pflugmacher for point out rotation issue)  
