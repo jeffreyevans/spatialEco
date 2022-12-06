@@ -69,9 +69,6 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
     stop(deparse(substitute(x)), " must be a sf, or sfc object")
   if(unique(as.character(sf::st_geometry_type(x))) != "POINT")
       stop(deparse(substitute(x)), " must be single-part POINT geometry") 
-  if(is.null(bw)) {
-    bw = ks::hpi(sf::st_coordinates(x)[,1:2])
-  }
   if(is.null(ref)) {
     if(!is.null(res)) {
       ref <- terra::rast(terra::ext(x), resolution =  res)
@@ -96,31 +93,31 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   n <- c(terra::nrow(ref), terra::ncol(ref)) 
   if(is.null(bw)) {
     if(is.null(y)) {
-      bw = ks::hpi(sf::st_coordinates(x)[,1:2])
+	  bw = suppressWarnings(ks::hpi(sf::st_coordinates(x)[,1:2]))
 	    message("Unweighted automatic bandwidth: "); print(bw)
 	} else {
-	  bw = ks::Hscv.diag(cbind(sf::st_coordinates(x)[,1:2],y))
+	  bw = suppressWarnings(ks::Hscv.diag(cbind(sf::st_coordinates(x)[,1:2],y)))
 	    message("Weighted automatic CV bandwidth: "); print(bw)
 	}
   } else {
     message("Using specified bandwidth: "); print(bw)
   }
   if(!is.null(y)) {
-    message("\n","calculating weighted kde","\n")
-	kde.est <- 
+    message("\n","calculating weighted kde","\n")	
+	kde.est <- suppressWarnings( 
 	  terra::rast(matrix(ks::kde(sf::st_coordinates(x)[,1:2], 
         h=bw, eval.points=terra::xyFromCell(ref, 1:terra::ncell(ref)), 
         gridsize=n, w = y, density=TRUE)$estimate,
 		nrow=n[1], ncol=n[2], byrow=TRUE),
-        extent=terra::ext(ref))				
+        extent=terra::ext(ref)) )				
   } else {
 	message("\n","calculating unweighted kde","\n")
-	kde.est <- 
+	kde.est <- suppressWarnings( 
 	  terra::rast(matrix(ks::kde(sf::st_coordinates(x)[,1:2], 
         h=bw, eval.points=terra::xyFromCell(ref, 1:terra::ncell(ref)), 
         gridsize=n, density=TRUE)$estimate,
 		nrow=n[1], ncol=n[2], byrow=TRUE),
-        extent=terra::ext(ref))		
+        extent=terra::ext(ref)) )		
   }
   if(!is.null(scale.factor)) kde.est <- kde.est * scale.factor	
 	if( standardize == TRUE ) { kde.est <- kde.est / 
