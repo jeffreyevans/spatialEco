@@ -8,7 +8,7 @@
 #' 
 #' @note This returns a list of vector combinations starting with
 #' pairwise, as the first nested list element, then in groups of 
-#  threes, fours, to length of the vector.  
+#'  threes, fours, to length of the vector.  
 #'
 #' @author Jeffrey S. Evans    <jeffrey_evans<at>tnc.org>
 #'

@@ -18,7 +18,8 @@ Creates all pairwise combinations list for iteration
 }
 \note{
 This returns a list of vector combinations starting with
-pairwise, as the first nested list element, then in groups of
+pairwise, as the first nested list element, then in groups of 
+ threes, fours, to length of the vector.
 }
 \examples{
 classes <- paste0("class", 1:10)
