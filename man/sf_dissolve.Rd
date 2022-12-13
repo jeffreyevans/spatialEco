@@ -4,12 +4,14 @@
 \alias{sf_dissolve}
 \title{Dissolve polygons}
 \usage{
-sf_dissolve(x, y = NULL)
+sf_dissolve(x, y = NULL, overlaps = FALSE)
 }
 \arguments{
 \item{x}{An sf POLYGON or MULTIPOLYGON object}
 
 \item{y}{An attribute in x to dissolve by, default is NULL}
+
+\item{overlaps}{(FALSE/TRUE) Dissolve overlapping polygons, negates using attribute}
 }
 \value{
 A dissolved POLYGON or MULTIPOLYGON object
@@ -21,11 +23,11 @@ Dissolve polygon feature calss
 If a dissolve attribute is defined, the result will be a 
 MULTIPOLYGON with the grouping attribute column. If y=NULL all polygons
 will be dissolved into a single attribute, unless there is spatial
-discontinuity (eg., gaps) in the data.
+discontinuity (eg., gaps) in the data. The intent of overlaps=TRUE is to 
+provide functionality for dissolving overlapping polygons and should only
+be used in this specialized case.
 }
-\author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
-
+\examples{
 library(sf)
 nc <- st_read(system.file("shape/nc.shp", package="sf"))
   nc$group <- ifelse(nc$CNTY_ <= 1902, 1, 
@@ -43,4 +45,21 @@ d <- sf_dissolve(nc)
   plot(st_geometry(nc), border="grey")
     plot(st_geometry(d), border="red", col=NA, 
          lwd=2, add=TRUE)
+
+# Dissolve overlapping polygons
+sq <- function(pt, sz = 1) st_polygon(list(rbind(c(pt - sz), 
+     c(pt[1] + sz, pt[2] - sz), c(pt + sz), c(pt[1] - sz, pt[2] + sz), 
+	 c(pt - sz))))
+pol <- st_sf(box = 1:6, st_sfc(sq(c(4.2,4.2)), sq(c(0,0)), sq(c(1, -0.8)), 
+          sq(c(0.5, 1.7)), sq(c(3,3)), sq(c(-3, -3))))
+ st_geometry(pol) <- "geometry" 		  
+
+plot(pol)
+
+d <- sf_dissolve(pol, overlaps=TRUE)
+  plot(st_geometry(d))
+
+}
+\author{
+Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }
