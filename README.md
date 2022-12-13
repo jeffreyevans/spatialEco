@@ -134,7 +134,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `sample.poly`                | Depreciated because sf::st_sample can aggregate samples by feature       
 | `sampleTransect`             | Creates random transects from points, generates sample points along each transect 
 | `separability`               | Calculates variety of univariate separability metrics for nominal class samples   
-| `sf_dissolve`                | Dissolves polygon geometry using attribute or globally 
+| `sf_dissolve`                | Dissolves polygon geometry using attribute, globally or overlap 
 | `sg.smooth`                  | Smoothing time-series data using a Savitzky-Golay filter                          
 | `shannons`                   | Calculates Shannon's Diversity Index and Shannon's Evenness Index                 
 | `shift`                      | Shifts a vector by n lags without changing its length, can specify fill values    
