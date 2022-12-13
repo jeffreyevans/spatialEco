@@ -46,7 +46,7 @@
 #' plot(pol)
 #' 
 #' d <- sf_dissolve(pol, overlaps=TRUE)
-#'   plot(st_geometry(d))
+#'   plot(d["diss"])
 #' 
 #' @export
 sf_dissolve <- function(x, y=NULL, overlaps=FALSE) {
@@ -56,7 +56,7 @@ sf_dissolve <- function(x, y=NULL, overlaps=FALSE) {
     stop(deparse(substitute(x)), " must be an sf POLYGON object")	
   if(!is.null(y)) {	
     if(!y %in% names(x))
-      stop(deparse(substitute(y)), " not in sf object")
+      stop(deparse(substitute(y)), " is not in sf objects attributes")
     d <- split(x, f=sf::st_drop_geometry(x[,y])[,1]) |> 
       lapply(sf::st_union)
         atts <- names(d)
@@ -68,12 +68,15 @@ sf_dissolve <- function(x, y=NULL, overlaps=FALSE) {
         sf::st_cast(to="POLYGON") |> 
           sf::st_as_sf()
   } else if(overlaps == TRUE) {
+    if(!any(sf::st_overlaps(x,sparse = FALSE) == TRUE))
+      stop("There are no overlapping geometries")
     diss <- unlist(sf::st_intersects(x, 
       sf::st_as_sf(sf::st_cast(sf::st_union(x),"POLYGON"))))
         d <- cbind(x, diss) |>
-          dplyr::group_by(diss) |>
-            dplyr::summarize(box = paste(box, collapse = ", ")) 
-        sf::st_geometry(d) <- "geometry"			
+          dplyr::group_by(diss)
+            d <- dplyr::summarize(d, paste(d$box, collapse = ", ")) 
+			  names(d)[2] <- "box"
+        sf::st_geometry(d) <- "geometry"
   }
     sf::st_crs(d) <- sf::st_crs(x) 
   return(d)

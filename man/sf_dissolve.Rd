@@ -57,7 +57,7 @@ pol <- st_sf(box = 1:6, st_sfc(sq(c(4.2,4.2)), sq(c(0,0)), sq(c(1, -0.8)),
 plot(pol)
 
 d <- sf_dissolve(pol, overlaps=TRUE)
-  plot(st_geometry(d))
+  plot(d["diss"])
 
 }
 \author{

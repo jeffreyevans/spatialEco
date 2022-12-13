@@ -34,6 +34,7 @@ Imports:
   MASS
 Suggests:
   alphahull,
+  dplyr,
   Matrix,
   gstat,
   spatstat.data, 
