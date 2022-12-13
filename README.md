@@ -134,7 +134,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `sample.poly`                | Depreciated because sf::st_sample can aggregate samples by feature       
 | `sampleTransect`             | Creates random transects from points, generates sample points along each transect 
 | `separability`               | Calculates variety of univariate separability metrics for nominal class samples   
-| `spectral.separability`      | Calculates univariate or multivariate separability for nominal class samples      
+| `sf_dissolve`                | Dissolves polygon geometry using attribute or globally 
 | `sg.smooth`                  | Smoothing time-series data using a Savitzky-Golay filter                          
 | `shannons`                   | Calculates Shannon's Diversity Index and Shannon's Evenness Index                 
 | `shift`                      | Shifts a vector by n lags without changing its length, can specify fill values    
@@ -146,6 +146,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `spectral.separability`      | Calculates class-wise multivariate spectral separability                          
 | `sf.kde`                     | A weighted or un-weighted kernel density estimate (previously sp.kde now as alias)                                 
 | `sp.na.omit `                | Depreciated as only relevant to sp class objects, for sf use base na.omit 
+| `squareBuffer`               | Creates a square buffer of feature class
 | `srr`                        | Surface Relief Ratio                                                              
 | `stratified.random`          | Creates a stratified random sample of an sp class object using a factor.          
 | `subsample.distance`         | Minimum, and optional maximum, distance constrained sub-sampling                  

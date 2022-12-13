@@ -271,3 +271,7 @@ spatialEco_2.0-01
 =================   
 
 * Fixed bug in sf.kde (thanks to Dirk Pflugmacher for point out rotation issue)  
+
+* Added function sf_dissolve for dissolving polygon features
+
+* Added function squareBuffer for creating square buffers

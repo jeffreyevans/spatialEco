@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-01
-Date: 2022-12-06
+Date: 2022-12-13
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
