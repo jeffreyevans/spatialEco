@@ -139,13 +139,19 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
                      data=sub.samp, scale.est="Huber", psi=MASS::psi.hampel, init="lts")
     if(scatter == TRUE) {
       n = terra::nlyr(x)
-	  graphics::par(mfrow=c(n,n/2))
+	  if(n > 1) {
+	    graphics::par(mfrow=c(n,n/2))   
 	    for(i in 2:(n+1)) {
 	      graphics::plot(sub.samp[,i], sub.samp[,1], pch=20, cex=0.50,
 		                 col="grey", xlab=names(sub.samp)[i], ylab="y") 
 		  graphics::abline(stats::coefficients(rrr)[c(1,i)], col="red") 
 		}					 
-	}
+	  } else {
+	    graphics::plot(sub.samp[,2], sub.samp[,1], pch=20, cex=0.50,
+		               col="grey", xlab=names(sub.samp)[2], ylab="y") 
+		  graphics::abline(stats::coefficients(rrr)[c(1,2)], col="red") 	  
+	  }
+	}  
      r <- terra::predict(x, rrr, na.rm=TRUE)
        results <- list(downscale = r, model = rrr, 
                     MSE = round(mean(rrr$residuals), digits=4), 

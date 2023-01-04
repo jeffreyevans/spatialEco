@@ -275,3 +275,5 @@ spatialEco_2.0-01
 * Added function sf_dissolve for dissolving polygon features
 
 * Added function squareBuffer for creating square buffers
+
+* Fixed bug in raster.downsample where plot returned error when scatter=TRUE with one covariate  
