@@ -270,10 +270,13 @@ spatialEco_2.0-0
 spatialEco_2.0-01
 =================   
 
-* Fixed bug in sf.kde (thanks to Dirk Pflugmacher for point out rotation issue)  
+* Fixed bug in sf.kde (thanks to Dirk Pflugmacher for pointing out rotation issue)  
 
 * Added function sf_dissolve for dissolving polygon features
 
 * Added function squareBuffer for creating square buffers
 
 * Fixed bug in raster.downsample where plot returned error when scatter=TRUE with one covariate  
+
+* Added function aspline.downscale for downscaling rasters using multivariate adaptive 
+  regression splines (thanks to discussion with Felipe Benavides)

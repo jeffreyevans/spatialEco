@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-01
-Date: 2023-01-04
+Date: 2023-01-05
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
@@ -34,7 +34,9 @@ Imports:
   MASS
 Suggests:
   alphahull,
+  caret,
   dplyr,
+  earth,
   Matrix,
   gstat,
   spatstat.data, 
@@ -52,4 +54,4 @@ NeedsCompilation: no
 Repository: CRAN
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3

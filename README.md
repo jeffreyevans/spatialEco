@@ -27,6 +27,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 |:-----------------------------|:----------------------------------------------------------------------------------------|
 | `all_pairwise`               | Creates a list of all pairwise combinations of a vector  |
 | `annulus.matrix`             | Creates a 0,1 matrix based on defined annulus parameters, can be used as a window matrix in a raster focal function  |
+| `aspline.downscale`          | Downscale raster to a higher resolution using multivariate adaptive regression splines (MARS) |
 | `background`                 | Creates a point sample that can be used as a NULL for SDM's and other modeling approaches (see pseudo.absence for alternate approach). |
 | `bbox_extent`                | Creates a bounding box polygon representing the extent of a feature or raster  |                                                     
 | `bearing.distance`           | Calculate new point based on bearing/distance                                     

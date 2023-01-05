@@ -56,8 +56,7 @@
 #' @references
 #' Shao, J., (1993) Linear model selection by cross-validation. JASA 88:486-494
 #'
-#' @examples
-#' 
+#' @examples 
 #'  p = c("sf", "sp", "spdep", "rms")
 #'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
 #'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))

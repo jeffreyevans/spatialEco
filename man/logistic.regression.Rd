@@ -75,7 +75,6 @@ If the object passed to the function is an sp class there is no need to call the
 slot directly via "object@data", just pass the object name.
 }
 \examples{
-
  p = c("sf", "sp", "spdep", "rms")
  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
