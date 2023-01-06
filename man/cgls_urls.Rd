@@ -61,10 +61,11 @@ d <- seq(as.Date("2020/05/01"), as.Date("2020-09-01"), by="day")
 
 # Search for 300m (333m) LAI within specified date range 
 all.urls <- cgls_urls(dates = d, resolution = 300, 
-                        product = "lai")		
-# Search for 1000m LAI within specified date range  
-all.urls <- cgls_urls(dates = d, resolution = 1000, 
-                        product = "lai")		
+                        product = "lai")
+					 
+## Search for 1000m LAI within specified date range  
+# all.urls <- cgls_urls(dates = d, resolution = 1000, 
+#                       product = "lai")		
 
 ## Return all 300m LAI 
 # lai <- cgls_urls(resolution = 300, product = "lai")

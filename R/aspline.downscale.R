@@ -62,9 +62,9 @@
 #'   par(opar)
 #'  
 #' }
-#' @export aspline.downscale
-aspline.downscale <- function(x, y, add.coords = FALSE, keep.model = FALSE, 
-                               grid.search = FALSE, plot = TRUE, ...) {
+#' @export
+aspline.downscale <- function(x, y, add.coords = TRUE, keep.model = FALSE, 
+                              grid.search = FALSE, plot = FALSE, ...) {
     if (!inherits(x, "SpatRaster")) 
 	  stop(deparse(substitute(x)), " must be a terra SpatRaster object")	
     if (!inherits(y, "SpatRaster")) 
@@ -79,7 +79,7 @@ aspline.downscale <- function(x, y, add.coords = FALSE, keep.model = FALSE,
         stop("please install caret package to implement grid search")
     }	
   sub.samp.sp <- terra::as.points(x, na.rm=TRUE)
-  if(add.coords) {
+  if(add.coords == TRUE) {
     sub.samp.sp <- cbind(sub.samp.sp, terra::crds(sub.samp.sp, df=TRUE))
       sub.samp <- data.frame(terra::extract(y, sub.samp.sp), sub.samp.sp)
       sub.samp <- sub.samp[,-which(names(sub.samp) %in% "ID")]
@@ -92,7 +92,7 @@ aspline.downscale <- function(x, y, add.coords = FALSE, keep.model = FALSE,
   na.idx <- unique(which(is.na(sub.samp), arr.ind = TRUE)[,1])
     if(length(na.idx) > 0)
   	  sub.samp <- sub.samp[-na.idx,]
-  if(add.coords) {
+  if(add.coords == TRUE) {
     xcoord <- x[[1]] 
       ycoord <- x[[1]]
         xcoord[] <- xFromCell(xcoord, 1:terra::ncell(xcoord))
@@ -122,8 +122,7 @@ aspline.downscale <- function(x, y, add.coords = FALSE, keep.model = FALSE,
       ds.fit <- earth::earth( y ~ ., data = sub.samp, ...)  
     }
   parms <- earth::evimp(ds.fit) 
-    p <- terra::predict(x[[which(names(x) %in% rownames(parms))]], 
-                        ds.fit, fun = predict)
+    p <- terra::predict(x[[which(names(x) %in% rownames(parms))]], ds.fit)
     results <- list(downscale = p, 
                     GCV = ds.fit$gcv, 
                     RSS = ds.fit$rss, 

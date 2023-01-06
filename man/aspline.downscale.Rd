@@ -7,10 +7,10 @@
 aspline.downscale(
   x,
   y,
-  add.coords = FALSE,
+  add.coords = TRUE,
   keep.model = FALSE,
   grid.search = FALSE,
-  plot = TRUE,
+  plot = FALSE,
   ...
 )
 }
