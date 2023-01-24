@@ -110,8 +110,8 @@ aspline.downscale <- function(x, y, add.coords = TRUE, keep.model = FALSE,
 	  message("Running hyper parameter grid search with ", nrow(hyper_grid), 
 	          " parameter sets, this may take awhile")
       tuned_mars <- caret::train(
-        x = subset(sub.samp, select = -y),
-        y = sub.samp$y,
+        x <- subset(sub.samp, select = -y),
+        y <- sub.samp$y,
         method = "earth",
         metric = "RMSE",
         trControl = caret::trainControl(method = "cv", number = 10),
