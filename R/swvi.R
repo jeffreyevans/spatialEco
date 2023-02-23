@@ -71,7 +71,8 @@
 #' @examples
 #' \dontrun{
 #' library(terra)
-#' library(RStoolbox)
+#' if(!unlist(lapply("RStoolbox", requireNamespace, quietly=TRUE)))
+#'   message("Can't run examples, please install RStoolbox")
 #' 
 #' data(lsat)
 #' lsat <- radCor(lsat, metaData = readMeta(system.file(

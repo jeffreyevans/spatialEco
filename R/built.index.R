@@ -65,6 +65,7 @@
 #' library(terra)
 #' if(!unlist(lapply("RStoolbox", requireNamespace, quietly=TRUE)))
 #'   message("Can't run examples, please install RStoolbox")
+#' 
 #' data(lsat, package = "RStoolbox")
 #' lsat <- radCor(lsat, metaData = readMeta(system.file(
 #'                "external/landsat/LT52240631988227CUB02_MTL.txt", 
