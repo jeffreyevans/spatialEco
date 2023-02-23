@@ -43,10 +43,10 @@ vrm <- function(x, s = 3) {
   scale.factor <- round(s[1] * s[2], 0)
   sa <- terra::terrain(x, v=c("slope", "aspect"), 
                        unit="radians", neighbors=8) 
-  sin.slp <- terra::app(sa[["slope"]], fun=sin)  # xyRaster 
-    cos.slp <- terra::app(sa[["slope"]], fun=cos)  # zRaster 
-      sin.asp <- terra::app(sa[["aspect"]], fun=sin) * sin.slp  # yRaster
-        cos.asp <- terra::app(sa[["aspect"]], fun=cos) * sin.slp  # xRaster  
+  sin.slp <- terra::app(sa[["slope"]], fun=sin)                  # xyRaster 
+    cos.slp <- terra::app(sa[["slope"]], fun=cos)                # zRaster 
+      sin.asp <- terra::app(sa[["aspect"]], fun=sin) * sin.slp   # xRaster
+        cos.asp <- terra::app(sa[["aspect"]], fun=cos) * sin.slp # yRaster  
           x.sum <- terra::focal(sin.asp, w = f, fun=sum) 
         y.sum <- terra::focal(cos.asp, w = f, fun=sum) 
       z.sum <- terra::focal(cos.slp, w = f, fun=sum) 

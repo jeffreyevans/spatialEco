@@ -280,3 +280,11 @@ spatialEco_2.0-01
 
 * Added function aspline.downscale for downscaling rasters using multivariate adaptive 
   regression splines (thanks to discussion with Felipe Benavides)
+
+* Fixed a bug in breeding.density (thanks to Eric Newkirk) where st_distance was resulting 
+  in a units class object and crashing the function. 
+  
+* Feature request (Alessandro Mondanaro), added an argument/option in sf_kde for using ks or the modified MASS kde2d function that
+  facilitates weights. The MASS kde2d was the KDE function in the sp.kde function.   
+  
+ 

@@ -70,6 +70,8 @@ breeding.density <- function(x, pop, p = 0.75, bw = 6400,
     stop("Count/density field not present in data")
     point.density <- function(x, bw, self = TRUE) {
         d <- sf::st_distance(x, x)
+		  if(inherits(d, "units")) 
+		    d <- units::drop_units(d)
         if (self == TRUE) {
             diag(d) <- 1
         } else {
