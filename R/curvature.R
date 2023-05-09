@@ -3,7 +3,7 @@
 #' 
 #' @param x      A terra SpatRaster object
 #' @param type   Method used c("planform", "profile", "total", "mcnab", "bolstad")
-#' @param ...    Additional arguments passed to writeRaster
+#' @param ...    Additional arguments passed to focal
 #' 
 #' @return raster class object of surface curvature
 #'
@@ -56,42 +56,50 @@
 #'   library(terra)
 #'   elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #'
-#'   crv <- curvature(elev, type="planform")
-#'   mcnab.crv <- curvature(elev, type="mcnab")
+#'   crv <- curvature(elev, type = "planform")
+#'   mcnab.crv <- curvature(elev, type = "mcnab")
 #'       plot(mcnab.crv, main="McNab's curvature") 
 #' }
 #'
 #' @export curvature
-curvature <- function(x, type=c("planform", "profile", "total", "mcnab", "bolstad"), ...) { 
+curvature <- function(x, type = c("planform", "profile", "total", "mcnab", "bolstad"), ...) { 
   if(!inherits(x, "SpatRaster"))
     stop(deparse(substitute(x)), " must be a terra SpatRaster object")
     m <- matrix(1, nrow=3, ncol=3)
-      type = type[1] 
+    type = type[1] 
 	if(!any(c("planform", "profile", "total", "mcnab", "bolstad") %in% type)  )
       stop("Not a valid curvature option")	
-    zt.crv <- function(m, method = type, res = terra::res(x)[1], ...) {
-        p=(m[6]-m[4])/(2*res)
-          q=(m[2]-m[8])/(2*res)
-            r=(m[4]+m[6]-2*m[5])/(2*(res^2))
-            s=(m[3]+m[7]-m[1]-m[9])/(4*(res^2))
-          tx=(m[2]+m[8]-2*m[5])/(2*(res^2))
+	zt.crv <- function(m, method = type, res = terra::res(x)[1]) {
+      p=(m[6]-m[4])/(2*res)
+      q=(m[2]-m[8])/(2*res)
+      r=(m[4]+m[6]-2*m[5])/(2*(res^2))
+      s=(m[3]+m[7]-m[1]-m[9])/(4*(res^2))
+      tx=(m[2]+m[8]-2*m[5])/(2*(res^2))
       if(type == "planform") {
-        return( round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) ) 
+        crv <- round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) 
       } else if(type == "profile") {
-        return( round( -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3),6 ) )
+        crv <- round( -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3),6 )
       } else if(type == "total") {
-        return( round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) + 
-		        round( -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3),6 ) ) 
+        crv <- round( -(q^2*r-2*p*q*s+p^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)),6) + 
+		        round( -(p^2*r+2*p*q*s+q^2*tx)/((p^2+q^2)*sqrt(1+p^2+q^2)^3),6 )  
 	  }
-	}  
+	  return(crv)
+	}  	
     if(type == "bolstad") {
-      return( 10000 * ((x - terra::focal(x, w=m, fun=mean)) / 1000 / 36.2) )  
+      return( 10000 * ((x - terra::focal(x, w=m, fun=mean, ...)) / 1000 / 
+	          (terra::res[1] + terra::res[1]/2) ) )  
     } else if(type == "mcnab") {
-      # mcnab <- function(x, ...) (((x[5] - x) + (x[5] - x)) / 4)[5] 
-	  mcnab <- function(x, ...)  (( x[5] - x ) + x)[round((length(m)/2)/2,0)]
-        return( terra::focal(x, w=m, fun=mcnab, ...) ) 
-    } else {  
-      return( terra::focal(x, w=m, fun = function(x) { zt.crv(m=x, type = type) }, 
-	                      fillvalue = 0, ...) )
-    }
+        #mcnab <- function(x) {
+        #      ( (x[5] - x[1]) + (x[5] - x[2]) + (x[5] - x[3]) + (x[5] - x[4]) + 
+        #        (x[5] - x[6]) + (x[5] - x[7]) + (x[5] - x[8]) + (x[5] - x[9]) ) / 8  }
+      #x <- matrix(runif(9, 1100,1150), nrow=3,ncol=3)
+      mcnab <- function(x) {
+        m <- ceiling(length(x)/2) 
+        sum(x[m] - x[-m], na.rm=TRUE) / length(x)-1 
+      }
+      tidx <- mask(terra::focal(x, w=m, fun=mcnab, ...), x) 
+      return( tidx / as.numeric(terra::global(tidx, "max", na.rm=TRUE)) ) 
+    } else {
+	  return( terra::focal(x, w=m, fun = zt.crv, fillvalue = 0, ...) )
+	}
 }	

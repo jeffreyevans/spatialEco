@@ -16,11 +16,9 @@ knn(
 )
 }
 \arguments{
-\item{y}{Spatial points or polygons object or 
-coordinates matrix}
+\item{y}{Spatial sf object or coordinates matrix}
 
-\item{x}{Spatial points or polygons object or 
-coordinates matrix}
+\item{x}{Spatial points or polygons object or coordinates matrix}
 
 \item{k}{Number of neighbors}
 
@@ -52,33 +50,38 @@ In other words, the covariates must match and be numeric.
 }
 \examples{
 \donttest{
- library(sp)
- data(meuse)
-   coordinates(meuse) <- ~x+y
+library(sf)
+
+if(require(sp, quietly = TRUE)) {
+   data(meuse, package = "sp")
+   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                     agr = "constant")
  
- idx <- sample(1:nrow(meuse), 10) 
-   pts <- meuse[idx,]
-   meuse <- meuse[-idx,]
-     meuse$IDS <- 1:nrow(meuse)
+# create reference and target obs
+idx <- sample(1:nrow(meuse), 10) 
+  pts <- meuse[idx,]
+    meuse <- meuse[-idx,]
+    meuse$IDS <- 1:nrow(meuse)
  
- # Find 2 neighbors in meuse
- ( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE) )
-    plot(pts, pch=19, main="KNN")
-      points(meuse[nn[,1],], pch=19, col="red")
+# Find 2 neighbors in meuse
+( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE) )
+  plot( st_geometry(pts), pch=19, main="KNN")
+    plot(st_geometry(meuse[nn[,1],]), pch=19, col="red", add=TRUE)
 
 # Using covariates (weights)
-wx = as.matrix(meuse@data[,1:3])
-wy = as.matrix(pts@data[,1:3])
+wx = as.matrix(st_drop_geometry(meuse[,1:3]))
+wy = as.matrix(st_drop_geometry(pts[,1:3]))
 
 ( nn <- knn(pts, meuse, k=2, ids = "IDS", indexes = TRUE,
             weights.y=wy, weights.x=wx) )
-    plot(pts, pch=19, main="KNN")
-      points(meuse[nn[,1],], pch=19, col="red")
+  plot(st_geometry(pts), pch=19, main="KNN")
+    plot(st_geometry(meuse[nn[,1],]), pch=19, col="red")
 	  
- # Using coordinate matrices
- y <- coordinates(pts)
- x <- coordinates(meuse)
- knn(y, x, k=2)
+# Using coordinate matrices
+y <- st_coordinates(pts)[,1:2]
+x <- st_coordinates(meuse)[,1:2]
+knn(y, x, k=2)
+}  
 }	  
 }
 \seealso{

@@ -11,7 +11,7 @@ curvature(x, type = c("planform", "profile", "total", "mcnab", "bolstad"), ...)
 
 \item{type}{Method used c("planform", "profile", "total", "mcnab", "bolstad")}
 
-\item{...}{Additional arguments passed to writeRaster}
+\item{...}{Additional arguments passed to focal}
 }
 \value{
 raster class object of surface curvature
@@ -47,8 +47,8 @@ by dividing by the radius distance to the outermost cell (36.2m).
   library(terra)
   elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 
-  crv <- curvature(elev, type="planform")
-  mcnab.crv <- curvature(elev, type="mcnab")
+  crv <- curvature(elev, type = "planform")
+  mcnab.crv <- curvature(elev, type = "mcnab")
       plot(mcnab.crv, main="McNab's curvature") 
 }
 

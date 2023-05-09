@@ -73,33 +73,34 @@ OLI (Landsat 8)
 }
 \examples{
 \dontrun{
-library(terra)
-if(!unlist(lapply("RStoolbox", requireNamespace, quietly=TRUE)))
-  message("Can't run examples, please install RStoolbox")
-data(lsat, package = "RStoolbox")
-lsat <- radCor(lsat, metaData = readMeta(system.file(
-               "external/landsat/LT52240631988227CUB02_MTL.txt", 
-                package="RStoolbox")), method = "apref")
-   # plotRGB(lsat, r=3, g=2, b=1, scale=1.0, stretch="lin")
-			   
- # Using Bouhennache et al., (2018) method (needs green, red, swir1 and swir2) 
- ( bouh <- built.index(red = lsat[[3]], green = lsat[[4]], swir1 = lsat[[5]], 
-                      swir2 = lsat[[7]]) )
-    plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-      plot(bouh, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), 
-	       add=TRUE )
-
- # Using simple Zha et al., (2003) method (needs nir and swir1)
- ( zha <- built.index(nir = lsat[[4]], swir1 = lsat[[5]], method = "Zha") )
-   plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-     plot(zha, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
-
- # Using Xu (2008) normalized modification of Zha (needs green, red, nir and swir1)
- ( xu <- built.index(green= lsat[[3]], red = lsat[[3]], nir = lsat[[4]], 
-                     swir1 = lsat[[5]], , method = "Xu") )
-   plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-     plot(xu, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE ) 
-
+# library(terra)
+# if(!unlist(lapply("RStoolbox", requireNamespace, quietly=TRUE)))
+#   message("Can't run examples, please install RStoolbox")
+# 
+# data(lsat, package = "RStoolbox")
+# lsat <- radCor(lsat, metaData = readMeta(system.file(
+#                "external/landsat/LT52240631988227CUB02_MTL.txt", 
+#                 package="RStoolbox")), method = "apref")
+#    # plotRGB(lsat, r=3, g=2, b=1, scale=1.0, stretch="lin")
+# 			   
+#  # Using Bouhennache et al., (2018) method (needs green, red, swir1 and swir2) 
+#  ( bouh <- built.index(red = lsat[[3]], green = lsat[[4]], swir1 = lsat[[5]], 
+#                       swir2 = lsat[[7]]) )
+#     plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+#       plot(bouh, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), 
+# 	       add=TRUE )
+# 
+#  # Using simple Zha et al., (2003) method (needs nir and swir1)
+#  ( zha <- built.index(nir = lsat[[4]], swir1 = lsat[[5]], method = "Zha") )
+#    plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+#      plot(zha, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
+# 
+#  # Using Xu (2008) normalized modification of Zha (needs green, red, nir and swir1)
+#  ( xu <- built.index(green= lsat[[3]], red = lsat[[3]], nir = lsat[[4]], 
+#                      swir1 = lsat[[5]], , method = "Xu") )
+#    plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+#      plot(xu, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE ) 
+# 
 }
 
 }
