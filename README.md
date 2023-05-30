@@ -79,6 +79,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `kendall`                    | Kendall tau trend with continuity correction for time-series                      
 | `kl.divergence`              | Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical component distributions. Divergence is calculated as: int[f(x) (log f(x) |log g(x)) dx] for distributions with densities f() and g().
 | `knn`                        | returns ids, rownames and distance of nearest neighbors in two (or single) spatial objects. Optional radius distance constraint. Added optional covariates (weights)
+| `lai`                        | Calculates two versions of Leaf Area Index                                
 | `local.min.max`              | Calculates the local minimums and maximums in a numeric vector, indicating inflection points in the distribution.
 | `loess.boot`                 | Bootstrap of a Local Polynomial Regression (loess)                                
 | `loess.ci`                   | Calculates a local polynomial regression fit with associated confidence intervals 
