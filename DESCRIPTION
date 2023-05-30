@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-01
-Date: 2023-05-09
+Date: 2023-05-30
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
@@ -14,7 +14,7 @@ Description: Utilities to support spatial data manipulation, query, sampling
 	model for creating pseudo- absences and sub-sampling, Quadrant-based sampling and 
 	analysis, auto-logistic modeling, sampling models, cluster optimization, statistical 
 	exploratory tools and raster-based metrics.
-Depends: R (>= 4.0)
+Depends: R (>= 4.2)
 Imports:
   sf,
   terra,
@@ -43,7 +43,6 @@ Suggests:
   methods,  
   units,
   sp,
-  raster,
   stringr    
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3

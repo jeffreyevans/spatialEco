@@ -292,3 +292,5 @@ spatialEco_2.0-01
 * Updated knn function to use sf class objects  
 
 * Fixed bug in wt.centroid when sf object is tibble (thanks to Andrew Gustar for drawing my attention to the bug) 
+
+* Added new function for deriving Leaf Area Index (LAI)
