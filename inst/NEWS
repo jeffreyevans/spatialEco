@@ -290,3 +290,5 @@ spatialEco_2.0-01
 * Fixed a bug in curvature (thanks to Rachel Wright) where type="mcnab" was returning source raster values 
 
 * Updated knn function to use sf class objects  
+
+* Fixed bug in wt.centroid when sf object is tibble (thanks to Andrew Gustar for drawing my attention to the bug) 

@@ -51,14 +51,19 @@ wt.centroid <- function(x, p = NULL, spatial = TRUE) {
     stop(deparse(substitute(x)), " must be POINT or POLYGON geometry ")
   if(any(unique(as.character(sf::st_geometry_type(x))) == gtypes[c(2,4)]))
     stop("Function cannot accept multi-part geometry, please use st_cast 
-	      to create single-part geometry")
-  if(!is.na(sf::st_crs(x))) {
-    if(sf::st_is_longlat(x) )
-      stop("Projection must be in distance units, not lat/long") 
+	      to create single-part geometry")	    
+  if(is.na(sf::st_crs(x))) 
+    stop("Projection is not defined, lat/long not acceptable input")
+  if(sf::st_is_longlat(x))
+    stop("Projection must be in distance units, not lat/long") 
+  #if(any(class(x) %in% c("tbl_df", "tbl"))) {
+  #  x <- as.data.frame(x)
+  #}
+  if(any(names(x) %in% p)){
+    p <- as.data.frame(sf::st_drop_geometry(x[,p]))[,1]
   } else {
-    warning("Projection is not defined, lat/long not acceptable input")
+    stop(p, " does not appear to be a column in ", deparse(substitute(x)))
   }
-  p <- sf::st_drop_geometry(x[,p])[,1]
     if(!is.numeric(p))
 	  stop(deparse(substitute(p)), " must be numeric")
     Xw <- sum(sf::st_coordinates(x)[,1] * p)
