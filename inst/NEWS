@@ -294,3 +294,5 @@ spatialEco_2.0-01
 * Fixed bug in wt.centroid when sf object is tibble (thanks to Andrew Gustar for drawing my attention to the bug) 
 
 * Added new function for deriving Leaf Area Index (LAI)
+
+* Fixed bug in stratified.random where if there are no replicates with replace = FALSE no results returned

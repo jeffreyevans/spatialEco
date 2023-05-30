@@ -98,7 +98,8 @@ stratified.random <- function(x, strata, n = 10, reps = 1, replace = FALSE) {
       }
     results <- do.call(rbind, results)
 	  if(!replace){
-	    results <- results[-which(duplicated(results$rowname)),]
+	    didx <- which(duplicated(results$rowname))
+	    if(length(didx) > 0) results <- results[-didx,]
 	  }
 	  results <- stats::na.omit(results[,c("rowname","REP")])	
     results <- merge(x, results, by.y="rowname", by.x = 'row.names', 
