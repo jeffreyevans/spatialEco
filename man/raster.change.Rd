@@ -23,7 +23,7 @@ must be odd but not necessarily square}
 \item{stat}{Statistic to use in comparison, please see details for 
 options.}
 
-\item{...}{Additional arguments passed to terra::focalCor}
+\item{...}{Additional arguments passed to terra::focalPairs}
 }
 \value{
 A terra SpatRaster layer containing one of the following layers:

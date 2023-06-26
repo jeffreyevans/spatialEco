@@ -6,11 +6,12 @@
 \usage{
 raster.kendall(
   x,
-  intercept = FALSE,
-  p.value = FALSE,
-  z.value = FALSE,
-  confidence = FALSE,
-  tau = FALSE,
+  intercept = TRUE,
+  p.value = TRUE,
+  confidence = TRUE,
+  tau = TRUE,
+  min.obs = 6,
+  method = c("zhang", "yuepilon", "none"),
   ...
 )
 }
@@ -23,31 +24,27 @@ wise intercept values}
 \item{p.value}{(FALSE/TRUE) return a raster with the pixel 
 wise p.values}
 
-\item{z.value}{(FALSE/TRUE) return a raster with the pixel 
-wise z.values}
-
 \item{confidence}{(FALSE/TRUE) return a raster with the pixel 
 wise 95 pct confidence levels}
 
 \item{tau}{(FALSE/TRUE) return a raster with the pixel wise 
 tau correlation values}
 
-\item{...}{Additional arguments passed to the raster 
-overlay function}
+\item{min.obs}{The threshold of minimum number of observations (default 6)}
+
+\item{method}{Kendall method to use c("zhang", "yuepilon","none"), see kendall function}
+
+\item{...}{Additional arguments passed to the terra app function}
 }
 \value{
 Depending on arguments, a raster layer or rasterBrick object containing:
 \itemize{
   \item {raster layer 1} {slope for trend, always returned}
-  \item {raster layer 2} {intercept for trend if intercept TRUE}
-  \item {raster layer 3} {p value for trend fit if p.value TRUE}
-  \item {raster layer 4} {z value for trend fit if z.value TRUE}
-  \item {raster layer 5} {lower confidence level at 95 pct, if 
-                          confidence TRUE}
-  \item {raster layer 6} {upper confidence level at 95 pct, if 
-                          confidence TRUE}
-  \item {raster layer 7} {Kendall's tau two-sided test, reject null at 0, 
-                          if tau TRUE}
+  \item {raster layer 2} {Kendall's tau two-sided test, reject null at 0, if tau TRUE}
+  \item {raster layer 3} {intercept for trend if intercept TRUE}
+  \item {raster layer 4} {p value for trend fit if p.value TRUE}
+  \item {raster layer 5} {lower confidence level at 95 pct, if confidence TRUE}
+  \item {raster layer 6} {upper confidence level at 95 pct, if confidence TRUE}
 }
 }
 \description{
@@ -64,17 +61,15 @@ the slope and related confidence intervals.
 \donttest{
  library(terra)
 
- # note; nonsense example
+ # note; nonsense example with n=9
  r <- c(rast(system.file("ex/logo.tif", package="terra")),
         rast(system.file("ex/logo.tif", package="terra")),
         rast(system.file("ex/logo.tif", package="terra"))) 
  
  # Calculate trend slope with p-value and confidence level(s)
  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
-   k <- raster.kendall(r, p.value=TRUE, z.value=TRUE, 
-                       intercept=TRUE, confidence=TRUE, 
-                       tau=TRUE)
-     plot(k)
+   k <- raster.kendall(r, method="none")
+   plot(k)
 }
 
 }
@@ -90,9 +85,9 @@ Siegel, A.F. (1982) Robust Regression Using Repeated Medians.
   Biometrika, 69(1):242-244
 }
 \seealso{
-\code{\link[EnvStats]{kendallTrendTest}} for model details
+\code{\link[zyp]{zyp.trend.vector}} for model details
 
-\code{\link[raster]{overlay}} for available ... arguments
+\code{\link[terra]{app}} for available ... arguments
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

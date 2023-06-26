@@ -3,28 +3,22 @@
 #' Calculates a nonparametric statistic for a monotonic trend based 
 #' on the Kendall tau statistic and the Theil-Sen slope modification
 #'
-#' @param y          A vector representing a timeseries with >= 8 obs
-#' @param tau        (FALSE/TRUE) return tau values
-#' @param intercept  (FALSE/TRUE) return intercept values 
-#' @param p.value    (FALSE/TRUE) return p.values
-#' @param z.value    (FALSE/TRUE) return z values
-#' @param confidence (FALSE/TRUE) return 95 pct confidence levels
-#' @param prewhiten  (FALSE/TRUE) Apply autocorrelation correction using 
-#'                    pre-whitening 
-#' @param na.rm      (FALSE/TRUE) Remove NA values
-#' @param ...         Not used
+#' @param y            A vector representing a timeseries with >= 8 obs
+#' @param tau          (FALSE/TRUE) return tau values
+#' @param intercept    (FALSE/TRUE) return intercept values 
+#' @param p.value      (FALSE/TRUE) return p.values
+#' @param confidence   (FALSE/TRUE) return 95 pct confidence levels
+#' @param method       Method for deriving tau and slope ("zhang", "yuepilon", "none")
+#' @param threshold    The threshold for number of minimum observations in the time-series
+#' @param ...          Not used
 #'
 #' @return Depending on arguments, a vector containing: 
 #' * Theil-Sen slope, always returned 
 #' * Kendall's tau two-sided test, if tau TRUE
-#' * intercept for trend if intercept TRUE, not 
-#'                    if prewhitened
+#' * intercept for trend if intercept TRUE
 #' * p value for trend fit if p.value TRUE
-#' * Z value for trend fit if z.value TRUE
-#' * lower confidence level at 95-pct if confidence 
-#'                    TRUE, not if prewhitened
-#' * upper confidence level at 95-pct if confidence 
-#'                    TRUE, not if prewhitened
+#' * lower confidence level at 95-pct if confidence TRUE
+#' * upper confidence level at 95-pct if confidence TRUE
 #' @md
 #'
 #' @details 
@@ -33,8 +27,13 @@
 #' the slope and related confidence intervals. Critical values are Z > 1.96 
 #' representing a significant increasing trend and a Z < -1.96 a significant 
 #' decreasing trend (p < 0.05). The null hypothesis can be rejected if Tau = 0. 
-#' There is also an option for autocorrelation correction using the method proposed 
-#' in Yue & Wang (2002). 
+#' Autocorrelation in the time-series is addressed using a prewhitened linear trend 
+#' following the Zhang et al., (2000) or  Yue & Pilon (2002) methods. If you do not
+#' have autocorrelation in the data, the "none" or "yuepilon" method is recommended. 
+#' Please note that changing the threshold to fewer than 6 observations (ideally 8) may 
+#' prevent the function from failing but, will likely invalidate the statistic. 
+#' A threshold of <=4 will yield all NA values. If method= "none" a modification of the
+#' EnvStats::kendallTrendTest code is implemented.       
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -49,123 +48,110 @@
 #' Siegel, A.F. (1982) Robust Regression Using Repeated Medians. 
 #'   Biometrika, 69(1):242-244
 #' @references 
-#' Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate 
-#' the influence of serial correlation on the Mann-Kendall test. Water 
-#' Resources Research, 38(6):41-47. 
+#' Yue, S., P. Pilon, B. Phinney and G. Cavadias, (2002) The influence of autocorrelation 
+#'   on the ability to detect trend in hydrological series. 
+#'   Hydrological Processes, 16: 1807-1829.
+#' @references 
+#' Zhang, X., Vincent, L.A., Hogg, W.D. and Niitsoo, A., (2000) Temperature 
+#'   and Precipitation Trends in Canada during the 20th Century. 
+#'   Atmosphere-Ocean 38(3): 395-429. 
 #'
 #' @examples
 #' data(EuStockMarkets)
 #' d <- as.vector(EuStockMarkets[,1])
 #' kendall(d)
 #' 
+#' @seealso \code{\link[zyp]{zyp.trend.vector}} for model details
+#'
 #' @export kendall
 kendall <- function(y, tau = TRUE, intercept = TRUE, p.value = TRUE, 
-                    z.value = TRUE, confidence = TRUE, 
-					prewhiten = FALSE, na.rm, ...) {
-    if(length(y[!is.na(y)]) < 8) 
-      stop("The Kendall Tau needs at least 8 observations")
-    pass.sum <- 0
-	out.names <- 
-	c("slope", "tau", "intercept", "p-value", "z-value", "limits.LCL", "limits.UCL")[
-	  which(c(TRUE, tau, intercept, p.value, z.value,  rep(confidence,2)))]
-	if(prewhiten) {
-	  confidence = FALSE
-	  intercept = FALSE 
-    }
-      if( p.value ) pass.sum = pass.sum + 1
-	    if( z.value ) pass.sum = pass.sum + 1
-	    if( tau ) pass.sum = pass.sum + 1
-	  if( confidence ) pass.sum = pass.sum + 2
-	if( intercept ) pass.sum = pass.sum + 1
-      fit.results <- c(rep(NA,pass.sum + 1))
-    if(!prewhiten) {
-      if(!any(which(utils::installed.packages()[,1] %in% "EnvStats")))
-        stop("please install EnvStats package before running this function")	
-      fit <- EnvStats::kendallTrendTest(y ~ 1)
-      fit.results <- fit$estimate[2]
-        if(tau == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }
-            if(intercept == TRUE) { fit.results <- c(fit.results, fit$estimate[3]) }  
-              if(p.value == TRUE) { fit.results <- c(fit.results, fit$p.value) } 
-                if(z.value == TRUE) { fit.results <- c(fit.results, fit$statistic) }
-	        if(confidence == TRUE) { 
-          ci <- unlist(fit$interval["limits"])
-            if( length(ci) == 2) { 
-              fit.results <- c(fit.results, ci)
-              } else {
-                fit.results <- c(fit.results, c(NA,NA))
-              }			  
-         }
+                    confidence = TRUE, method=c("zhang", "yuepilon", "none"),
+					threshold = 6, ...) {
+    if(!any(which(utils::installed.packages()[,1] %in% "zyp")))
+      stop("please install zyp package before running this function")
+    if(threshold < 6)
+    warning("Setting the time-series threshold to fewer than 6 obs may invalidate 
+	  the statistic and <= 4 will result in NA's") 
+    if(length(y[!is.na(y)]) < threshold) 
+      stop("The Kendall Tau should have at least 6 observations")	  
+    out.names <- c("slope", "tau", "intercept", "p-value", "limits.LCL", "limits.UCL")[
+	               which(c(TRUE, tau, intercept, p.value, rep(confidence,2)))]  
+    idx <- 2
+      if(tau == TRUE) { idx = append(idx, 5) }
+        if(intercept == TRUE) { idx = append(idx, 11) }  
+          if(p.value == TRUE) { idx = append(idx, 6) }
+	        if(confidence == TRUE) { idx = append(idx, c(1,4)) }
+
+  mk.trend <- function (y, x = seq(along = y), alternative = "two.sided", 
+                        conf.level = 0.95, ...)  {
+  out.names <- c("slope", "tau", "intercept", "p-value", "limits.LCL", "limits.UCL")	
+    n <- length(y)
+    alternative <- match.arg(alternative, c("two.sided", "greater", "less"))						
+    vark <- function(x, y) {
+        ties.x <- rle(sort(x))$lengths
+        ties.y <- rle(sort(y))$lengths
+        n <- length(x)
+        t1 <- n * (n - 1) * (2 * n + 5)
+        t2 <- sum(ties.x * (ties.x - 1) * (2 * ties.x + 5))
+        t3 <- sum(ties.y * (ties.y - 1) * (2 * ties.y + 5))
+        v1 <- (t1 - t2 - t3)/18
+        if (n > 2) {
+          t1 <- sum(ties.x * (ties.x - 1) * (ties.x - 2))
+          t2 <- sum(ties.y * (ties.y - 1) * (ties.y - 2))
+          v2 <- (t1 * t2)/(9 * n * (n - 1) * (n - 2))
+        } else  {
+        v2 <- 0
+          t1 <- sum(ties.x * (ties.x - 1)) * sum(ties.y * (ties.y - 1))
+          v3 <- t1/(2 * n * (n - 1))
+          v1 + v2 + v3
+      }
+      return(v1)
+    }						
+   if(length(stats::na.omit(y)) < threshold) { 
+     v <- c(NA,NA,NA,NA, NA, NA) 
+	   names(v) <- out.names
     } else {
-    # kendall autocorrelation correction (pre-whitening)
-    x = y
-	  z = NULL
-        pval = NULL
-        S = 0
-      var.S = NULL
-    Tau = NULL
-      if (any(is.finite(x) == FALSE)) {
-        x <- x[-c(which(is.finite(x) == FALSE))]
-      }
-      n <- length(x)
-    V <- rep(NA, n * (n - 1)/2)
-    k = 0
-      for (i in 1:(n - 1)) {
-        for (j in (i + 1):n) {
-          k = k + 1
-          V[k] = (x[j] - x[i])/(j - i)
-        }
-      }
-    slp <- stats::median(V, na.rm = TRUE)
-      t1 = 1:length(x)
-        xt <- (x[1:n]) - ((slp) * (t1))
-    ro <- stats::acf(xt, lag.max = 1, plot = FALSE)$acf[-1]
-      a = 1:(length(xt) - 1)
-        b = 2:(length(xt))
-          xp <- (xt[b] - (xt[a] * ro))
-          l <- length(xp)
-        q = 1:l
-      y <- (xp[1:l] + ((slp) * (q)))
-    n1 <- length(y)
-      for (i in 1:(n1 - 1)) {
-        for (j in (i + 1):n1) {
-          S = S + sign(y[j] - y[i])
-        }
-      }
-    var.S = n1 * (n1 - 1) * (2 * n1 + 5) * (1/18)
-      if (length(unique(y)) < n1) {
-        aux <- unique(y)
-          for (i in 1:length(aux)) {
-            tie <- length(which(y == aux[i]))
-              if (tie > 1) {
-                var.S = var.S - tie * (tie - 1) * (2 * tie + 5) * (1/18)
-              }
-          }
-      }
-    if (S == 0) { z = 0 }
-    if (S > 0) {
-      z = (S - 1)/sqrt(var.S)
-    } else {
-      z = (S + 1)/sqrt(var.S)
+    index <- 2:n
+    S <- sum(sapply(index, function(i, x, y) {
+        sum(sign((x[i] - x[1:(i - 1)]) * (y[i] - y[1:(i - 1)])))}, x, y))
+    tau <- (2 * S)/(n * (n - 1))
+    slopes <- unlist(lapply(index, function(i, x, y) (y[i] -
+                     y[1:(i - 1)])/(x[i] - x[1:(i - 1)]), x, y))
+    slopes <- sort(slopes[is.finite(slopes)])
+    slope <- stats::median(slopes)
+    intercept <- stats::median(y) - slope * stats::median(x)
+    estimate <- c(tau, slope, intercept)
+    names(estimate) <- c("tau", "slope", "intercept")
+    var.S <- vark(x, y)       
+	stat <- S/sqrt(var.S)
+        names(stat) <- "z"
+      p.value <- switch(alternative, greater = 1 - stats::pnorm(stat),
+          less = stats::pnorm(stat), two.sided = 2 * stats::pnorm(-abs(stat)))		
+    N.prime <- length(slopes)
+    type <- switch(alternative, two.sided = "two-sided",
+        greater = "lower", less = "upper")
+    alpha <- 1 - conf.level
+    Z <- ifelse(type == "two-sided", stats::qnorm(1 - alpha/2),
+                 stats::qnorm(conf.level))
+    C.alpha <- Z * sqrt(var.S)
+    M1 <- (N.prime - C.alpha)/2
+    M2 <- (N.prime + C.alpha)/2
+    limits <- switch(type, `two-sided` = stats::approx(1:N.prime,
+        slopes, xout = c(M1, M2 + 1))$y, lower = c(stats::approx(1:N.prime,
+        slopes, xout = M1)$y, Inf), upper = c(-Inf, stats::approx(1:N.prime,
+        slopes, xout = M2 + 1)$y))
+          names(limits) <- c("LCL", "UCL")
+    v <-c(estimate[c(2,1,3)], p.value, limits) 
+      names(v) <- out.names	  
     }
-    pval = 2 * stats::pnorm(-abs(z))
-      Tau = S/(0.5 * n1 * (n1 - 1))
-        W <- rep(NA, n1 * (n1 - 1)/2)
-          m = 0
-    for (i in 1:(n1 - 1)) {
-      for (j in (i + 1):n1) {
-        m = m + 1
-        W[m] = (y[j] - y[i])/(j - i)
-      }
-    }
-    slp1 <- stats::median(W, na.rm = TRUE)
-	  fit.results <- slp1 
-	  if(tau == TRUE) { fit.results <- c(fit.results, Tau) }
-        if(p.value == TRUE) { fit.results <- c(fit.results, pval) } 
-          if(z.value == TRUE) { fit.results <- c(fit.results, z) }
-	  fit.results <- as.numeric(fit.results) 
-	    
-    }
-	names(fit.results) <- out.names
+  return(v)
+}
+  if(method[1] == "none") {
+    fit.results <- mk.trend(y)
+  } else {
+    fit.results <- zyp::zyp.trend.vector(y, method=method[1])[idx]	
+  }	
+    names(fit.results) <- out.names  
   return(fit.results)
 }	
   

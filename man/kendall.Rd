@@ -9,10 +9,9 @@ kendall(
   tau = TRUE,
   intercept = TRUE,
   p.value = TRUE,
-  z.value = TRUE,
   confidence = TRUE,
-  prewhiten = FALSE,
-  na.rm,
+  method = c("zhang", "yuepilon", "none"),
+  threshold = 6,
   ...
 )
 }
@@ -25,14 +24,11 @@ kendall(
 
 \item{p.value}{(FALSE/TRUE) return p.values}
 
-\item{z.value}{(FALSE/TRUE) return z values}
-
 \item{confidence}{(FALSE/TRUE) return 95 pct confidence levels}
 
-\item{prewhiten}{(FALSE/TRUE) Apply autocorrelation correction using
-pre-whitening}
+\item{method}{Method for deriving tau and slope ("zhang", "yuepilon", "none")}
 
-\item{na.rm}{(FALSE/TRUE) Remove NA values}
+\item{threshold}{The threshold for number of minimum observations in the time-series}
 
 \item{...}{Not used}
 }
@@ -41,14 +37,10 @@ Depending on arguments, a vector containing:
 \itemize{
 \item Theil-Sen slope, always returned
 \item Kendall's tau two-sided test, if tau TRUE
-\item intercept for trend if intercept TRUE, not
-if prewhitened
+\item intercept for trend if intercept TRUE
 \item p value for trend fit if p.value TRUE
-\item Z value for trend fit if z.value TRUE
-\item lower confidence level at 95-pct if confidence
-TRUE, not if prewhitened
-\item upper confidence level at 95-pct if confidence
-TRUE, not if prewhitened
+\item lower confidence level at 95-pct if confidence TRUE
+\item upper confidence level at 95-pct if confidence TRUE
 }
 }
 \description{
@@ -61,8 +53,13 @@ using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate
 the slope and related confidence intervals. Critical values are Z > 1.96
 representing a significant increasing trend and a Z < -1.96 a significant
 decreasing trend (p < 0.05). The null hypothesis can be rejected if Tau = 0.
-There is also an option for autocorrelation correction using the method proposed
-in Yue & Wang (2002).
+Autocorrelation in the time-series is addressed using a prewhitened linear trend
+following the Zhang et al., (2000) or  Yue & Pilon (2002) methods. If you do not
+have autocorrelation in the data, the "none" or "yuepilon" method is recommended.
+Please note that changing the threshold to fewer than 6 observations (ideally 8) may
+prevent the function from failing but, will likely invalidate the statistic.
+A threshold of <=4 will yield all NA values. If method= "none" a modification of the
+EnvStats::kendallTrendTest code is implemented.
 }
 \examples{
 data(EuStockMarkets)
@@ -81,9 +78,16 @@ Journal of the American Statistical Association. 63(324):1379-1389.
 Siegel, A.F. (1982) Robust Regression Using Repeated Medians.
 Biometrika, 69(1):242-244
 
-Yue, S., & Wang, C. Y. (2002). Applicability of prewhitening to eliminate
-the influence of serial correlation on the Mann-Kendall test. Water
-Resources Research, 38(6):41-47.
+Yue, S., P. Pilon, B. Phinney and G. Cavadias, (2002) The influence of autocorrelation
+on the ability to detect trend in hydrological series.
+Hydrological Processes, 16: 1807-1829.
+
+Zhang, X., Vincent, L.A., Hogg, W.D. and Niitsoo, A., (2000) Temperature
+and Precipitation Trends in Canada during the 20th Century.
+Atmosphere-Ocean 38(3): 395-429.
+}
+\seealso{
+\code{\link[zyp]{zyp.trend.vector}} for model details
 }
 \author{
 Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}

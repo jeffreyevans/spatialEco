@@ -33,10 +33,12 @@
 #' # Remove identified variable(s)
 #' head( dat[,-which(names(dat) %in% cor.vars)] )
 #'
+#' \donttest{
 #' # Evaluate linear correlations on nonlinear data
 #' #   using nonlinear correlation function
 #' plot(cor.data[[1]], pch=20) 
-#'   collinear(cor.data[[1]], p=0.80, nonlinear = TRUE ) 		       
+#'   collinear(cor.data[[1]], p=0.80, nonlinear = TRUE ) 	
+#' }	       
 #'
 #' @export collinear
 collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {

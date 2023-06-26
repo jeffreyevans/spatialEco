@@ -17,7 +17,7 @@ sf.kde(
 )
 }
 \arguments{
-\item{x}{sp SpatialPointsDataFrame object}
+\item{x}{sf POINT object}
 
 \item{y}{Optional values, associated with x coordinates, 
 to be used as weights}

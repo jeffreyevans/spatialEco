@@ -296,3 +296,5 @@ spatialEco_2.0-01
 * Added new function for deriving Leaf Area Index (LAI)
 
 * Fixed bug in stratified.random where if there are no replicates with replace = FALSE no results returned
+
+* Enhancement added support for prewhiting of autocorrelated time-series in kendall function

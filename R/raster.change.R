@@ -8,7 +8,7 @@
 #'                     must be odd but not necessarily square
 #' @param stat         Statistic to use in comparison, please see details for 
 #'                     options. 
-#' @param ...          Additional arguments passed to terra::focalCor 
+#' @param ...          Additional arguments passed to terra::focalPairs
 #'
 #' @return A terra SpatRaster layer containing one of the following layers:
 #' \itemize{ 
@@ -161,25 +161,25 @@ raster.change <- function(x, y, s = 3, stat = c("kappa", "t.test",
   }
   
   if(stat == "kappa") {	   
-    r <- terra::focalCor(c(x,y), w=s, function(x, y) { cohens(x, y) }, ...)
+    r <- terra::focalPairs(c(x,y), w=s, function(x, y) { cohens(x, y) }, ...)
   }						 
   if(stat == "divergence") {
-    r <- terra::focalCor(c(x,y), w=s, function(x, y) { 
+    r <- terra::focalPairs(c(x,y), w=s, function(x, y) { 
                          divergence(x, y, type = "Kullback-Leibler") }, ...)  
    }
   if(stat == "cross-entropy") {
-    r <- terra::focalCor(c(x,y), w=s, function(x, y) { divergence(x, y,
+    r <- terra::focalPairs(c(x,y), w=s, function(x, y) { divergence(x, y,
   				         type = "cross-entropy") }, ...)  
    }   
   if(stat == "cor") {
-    r <- terra::focalCor(c(x,y), w=s, function(x, y){ stats::cor(x, y, 
+    r <- terra::focalPairs(c(x,y), w=s, function(x, y){ stats::cor(x, y, 
   					     method = "spearman") }, ...) 
   }				    
   if(stat == "entropy") {
-    r <- terra::focalCor(c(x,y), w=s, function(x, y) { ent(x, y) }, ...)
+    r <- terra::focalPairs(c(x,y), w=s, function(x, y) { ent(x, y) }, ...)
   }  
   if(stat == "t.test") {
-    r <- terra::focalCor(c(x,y), w=s, function(x, y){ ttest(x,y) }, ...)
+    r <- terra::focalPairs(c(x,y), w=s, function(x, y){ ttest(x,y) }, ...)
       names(r) <- c("t", "p.value")					
   }
 return(r)  

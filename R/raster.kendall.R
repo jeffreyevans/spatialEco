@@ -4,31 +4,26 @@
 #'              modification
 #'
 #' @param x             A multiband terra SpatRaster object with at least 5 layers
+#' @param tau           (FALSE/TRUE) return a raster with the pixel wise 
+#'                       tau correlation values
 #' @param intercept     (FALSE/TRUE) return a raster with the pixel 
 #'                       wise intercept values 
 #' @param p.value       (FALSE/TRUE) return a raster with the pixel 
 #'                       wise p.values
-#' @param z.value       (FALSE/TRUE) return a raster with the pixel 
-#'                       wise z.values
 #' @param confidence    (FALSE/TRUE) return a raster with the pixel 
 #'                       wise 95 pct confidence levels
-#' @param tau           (FALSE/TRUE) return a raster with the pixel wise 
-#'                       tau correlation values
-#' @param ...           Additional arguments passed to the raster 
-#'                      overlay function
+#' @param min.obs       The threshold of minimum number of observations (default 6)
+#' @param method        Kendall method to use c("zhang", "yuepilon","none"), see kendall function
+#' @param ...           Additional arguments passed to the terra app function 
 #'
 #' @return Depending on arguments, a raster layer or rasterBrick object containing:
 #' \itemize{
 #'   \item {raster layer 1} {slope for trend, always returned}
-#'   \item {raster layer 2} {intercept for trend if intercept TRUE}
-#'   \item {raster layer 3} {p value for trend fit if p.value TRUE}
-#'   \item {raster layer 4} {z value for trend fit if z.value TRUE}
-#'   \item {raster layer 5} {lower confidence level at 95 pct, if 
-#'                           confidence TRUE}
-#'   \item {raster layer 6} {upper confidence level at 95 pct, if 
-#'                           confidence TRUE}
-#'   \item {raster layer 7} {Kendall's tau two-sided test, reject null at 0, 
-#'                           if tau TRUE}
+#'   \item {raster layer 2} {Kendall's tau two-sided test, reject null at 0, if tau TRUE}
+#'   \item {raster layer 3} {intercept for trend if intercept TRUE}
+#'   \item {raster layer 4} {p value for trend fit if p.value TRUE}
+#'   \item {raster layer 5} {lower confidence level at 95 pct, if confidence TRUE}
+#'   \item {raster layer 6} {upper confidence level at 95 pct, if confidence TRUE}
 #' }
 #'
 #' @details 
@@ -53,54 +48,39 @@
 #' \donttest{
 #'  library(terra)
 #'
-#'  # note; nonsense example
+#'  # note; nonsense example with n=9
 #'  r <- c(rast(system.file("ex/logo.tif", package="terra")),
 #'         rast(system.file("ex/logo.tif", package="terra")),
 #'         rast(system.file("ex/logo.tif", package="terra"))) 
 #'  
 #'  # Calculate trend slope with p-value and confidence level(s)
 #'  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
-#'    k <- raster.kendall(r, p.value=TRUE, z.value=TRUE, 
-#'                        intercept=TRUE, confidence=TRUE, 
-#'                        tau=TRUE)
-#'      plot(k)
+#'    k <- raster.kendall(r, method="none")
+#'    plot(k)
 #' }
 #'
-#' @seealso \code{\link[EnvStats]{kendallTrendTest}} for model details
-#' @seealso \code{\link[raster]{overlay}} for available ... arguments
+#' @seealso \code{\link[zyp]{zyp.trend.vector}} for model details
+#' @seealso \code{\link[terra]{app}} for available ... arguments
 #'
 #' @export
-raster.kendall <- function(x, intercept = FALSE, p.value = FALSE, z.value = FALSE,   
-                           confidence = FALSE, tau = FALSE, ...) {
-  if(!any(which(utils::installed.packages()[,1] %in% "EnvStats")))
-    stop("please install EnvStats package before running this function")
-   if (!inherits(x, "SpatRaster")) 
-	  stop(deparse(substitute(x)), " must be a terra SpatRaster object")
-  if(confidence) {confidence = c(TRUE,TRUE)} else {confidence = c(FALSE,FALSE)}
-    n <- c("intercept", "p.value", "z.value", "LCI", "UCI", "tau")	
-	n <- n[which(c(intercept, p.value, z.value,confidence, tau))]	
-    if( terra::nlyr(x) < 5) 
-	  stop("Too few layers (n < 5) to calculate a trend")
-  trend.slope <- function(y, tau.pass = tau, p.value.pass = p.value,  
-                          confidence.pass = confidence[1], z.value.pass = z.value,
-                          intercept.pass = intercept) {
-    fit <- suppressWarnings( EnvStats::kendallTrendTest(y ~ 1) )
-      fit.results <- fit$estimate[2]
-        if(p.value.pass == TRUE) { fit.results <- c(fit.results, fit$p.value) } 
-		  if(z.value.pass == TRUE) { fit.results <- c(fit.results, fit$statistic) } 
-  	        if(confidence.pass == TRUE) { 
-		      ci <- unlist(fit$interval["limits"])
-		        if( length(ci) == 2) { 
-		          fit.results <- c(fit.results, ci)
-                } else {
-                  fit.results <- c(fit.results, c(NA,NA))
-                }			  
-		    }
-        if(intercept.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[3]) }  
-		  if(tau.pass == TRUE) { fit.results <- c(fit.results, fit$estimate[1]) }  
-    return( fit.results )
-  }
+raster.kendall <- function(x, intercept = TRUE, p.value = TRUE, 
+                           confidence = TRUE, tau = TRUE, min.obs = 6,  
+						   method=c("zhang", "yuepilon","none"), ...) {
+  if(!any(which(utils::installed.packages()[,1] %in% "zyp")))
+    stop("please install zyp package before running this function")
+  if (!inherits(x, "SpatRaster")) 
+    stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+  if(min.obs < 6)
+    warning("Setting the time-series threshold (n) to fewer than 6 obs may invalidate 
+	  the statistic and <= 4 will result in NA's") 
+  if( terra::nlyr(x) < min.obs) 
+    stop("Too few layers to calculate a trend")
+  idx <- which(c(TRUE, tau, intercept, p.value, rep(confidence,2)))	
+  out.names <- c("slope", "tau", "intercept", "p-value", "limits.LCL", "limits.UCL")[idx]
+    trend.slope <- function(y, metrics=idx, method=method[1]) {
+      kendall(y)[metrics]
+    }
   k <- terra::app(x, fun=trend.slope, ...)
-    names(k) <- c("slope", n)
+    names(k) <- out.names
   return( k )
 }

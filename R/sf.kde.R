@@ -2,7 +2,7 @@
 #' @description A weighted or unweighted Gaussian Kernel Density estimate 
 #'              for point spatial data
 #'
-#' @param x             sp SpatialPointsDataFrame object
+#' @param x             sf POINT object
 #' @param y             Optional values, associated with x coordinates, 
 #'                      to be used as weights
 #' @param bw            Distance bandwidth of Gaussian Kernel, must be units 

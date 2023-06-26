@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-01
-Date: 2023-05-30
+Date: 2023-06-26
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
@@ -17,7 +17,9 @@ Description: Utilities to support spatial data manipulation, query, sampling
 Depends: R (>= 4.2)
 Imports:
   sf,
-  terra,
+  terra
+Suggests:
+  alphahull,
   spatstat.geom (>= 3.0-3), 
   spatstat.explore, 
   spdep,
@@ -29,11 +31,9 @@ Imports:
   rms,
   yaImpute,
   mgcv,
-  EnvStats,
+  zyp,
   SpatialPack (>= 0.3),
-  MASS
-Suggests:
-  alphahull,
+  MASS,
   caret,
   dplyr,
   earth,

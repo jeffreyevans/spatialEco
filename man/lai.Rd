@@ -37,10 +37,6 @@ library(terra)
  lai01 <- lai(ndvi)
    plot(lai01)
 
- # Using Chen et al., (2014) method
- lai02 <- lai(ndvi, method = "Chen")
-   plot(lai02)
-
 }
 
 }
