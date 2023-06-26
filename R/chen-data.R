@@ -5,7 +5,6 @@
 #'
 #' @description Urbanization and economic development data from Chen (2015)
 #' compiled from, National Bureau of Statistics of China 
-#'  \url{http://www.stats.gov.cn/tjsj/ndsj/}
 #'
 #' @format A list object with 3 elements:
 #' \describe{
