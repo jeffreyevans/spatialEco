@@ -1,5 +1,5 @@
-#' @title built index
-#' @description Remote sensing built-up index
+#' @title Leaf Area Index
+#' @description Remote sensing measure of LAI (leaf area per ground-unit area)
 #'
 #' @param ndvi     NDVI in floating point standard scale range (-1 to 1)
 #' @param method   Method to use for index options c("Jonckheere", "Chen")

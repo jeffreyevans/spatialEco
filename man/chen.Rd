@@ -17,8 +17,7 @@ A list object with 3 elements:
 }
 \description{
 Urbanization and economic development data from Chen (2015)
-compiled from, National Bureau of Statistics of China 
- \url{http://www.stats.gov.cn/tjsj/ndsj/}
+compiled from, National Bureau of Statistics of China
 }
 \references{
 Chen, Y.G. (2012) On the four types of weight functions for spatial contiguity 

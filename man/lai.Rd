@@ -2,7 +2,7 @@
 % Please edit documentation in R/lai.R
 \name{lai}
 \alias{lai}
-\title{built index}
+\title{Leaf Area Index}
 \usage{
 lai(ndvi, method = c("Jonckheere", "Chen"))
 }
@@ -12,7 +12,7 @@ lai(ndvi, method = c("Jonckheere", "Chen"))
 \item{method}{Method to use for index options c("Jonckheere", "Chen")}
 }
 \description{
-Remote sensing built-up index
+Remote sensing measure of LAI (leaf area per ground-unit area)
 
 This function calculates the Leaf Area Index (LAI) representing the amount of leaf area 
 per unit of ground area. This is an important parameter for understanding the structure 
