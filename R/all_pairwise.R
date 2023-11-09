@@ -39,5 +39,6 @@ all_pairwise <- function(x) {
     idx <- lapply(2:n, function(y) {
       utils::combn(x, y, simplify = FALSE)
     })
+  return(idx)
 } 
  
