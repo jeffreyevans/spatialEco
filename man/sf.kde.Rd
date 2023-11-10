@@ -12,7 +12,7 @@ sf.kde(
   ref = NULL,
   res = NULL,
   standardize = FALSE,
-  scale.factor = NULL,
+  scale.factor = 10000,
   mask = FALSE
 )
 }
@@ -32,7 +32,7 @@ vector to estimate the kde extent}
 
 \item{standardize}{Standardize results to 0-1 (FALSE/TRUE)}
 
-\item{scale.factor}{Optional numeric scaling factor for the KDE (eg., 10000),
+\item{scale.factor}{Numeric scaling factor for the KDE (defaults to 10000),
 to account for very small estimate values}
 
 \item{mask}{(TRUE/FALSE) mask resulting raster if ref is provided
@@ -46,9 +46,10 @@ A weighted or unweighted Gaussian Kernel Density estimate
              for point spatial data
 }
 \details{
-The automatic bandwidth selection for unweighted KDE uses the Wand & Jones (1994)
-univariate plug-in whereas, weighted KDE's use the Duong & Hazelton (2005) smoothed
-cross-validation for creating a diagonal bandwidth matrix.
+Please note that ks methods for estimation has been reverted to the Gussian method proposed
+in Venables & Ripley (2002). There was not enought evendence that the Chacon & Duong (2018)
+multivariate method(s) for bandwidth selection and kernal estimation were suitable for 
+spatial random fields.
 }
 \examples{
 \donttest{ 
@@ -59,20 +60,18 @@ data(meuse, package = "sp")
 meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
                   agr = "constant") 
   			
-# Unweighted KDE (spatial locations only)				
-pt.kde <- sf.kde(x = meuse, bw = 1000, standardize = TRUE, 
-                 scale.factor = 10000, res=40)
+# Unweighted KDE (spatial locations only) with 40m resoultion  				
+pt.kde <- sf.kde(x = meuse, bw = 1000, standardize = TRUE, res=40)
   plot(pt.kde, main="Unweighted kde")
     plot(st_geometry(meuse), pch=20, col="red", add=TRUE) 
 
-# Weighted KDE using cadmium and extent with automatic bandwidth selection
-( e <- st_bbox(meuse)[c(1,3,2,4)] ) 
-cadmium.kde <- sf.kde(x = meuse, y = meuse$cadmium, ref = e,  
-                      standardize = TRUE, 
-					  scale.factor = 10000, res=40)
-plot(cadmium.kde)
-  plot(st_geometry(meuse), pch=20, col="red", add=TRUE)
- 			
+# cadmium weighted KDE usign extent with 40m resoultion and 500m and 1000m bw 
+cadmium.kde.500 <- sf.kde(x = meuse, y = meuse$cadmium, res=40, 
+                          bw = 500, standardize = TRUE)
+cadmium.kde.1000 <- sf.kde(x = meuse, y = meuse$cadmium, res=40, 
+                          bw = 1000, standardize = TRUE)						  
+  plot(c(cadmium.kde.500, cadmium.kde.1000))
+  			  			
 }
 
 }
@@ -81,7 +80,10 @@ Duong, T. & Hazelton, M.L. (2005) Cross-validation bandwidth matrices for multiv
   kernel density estimation. Scandinavian Journal of Statistics, 32, 485-506. 
 
 Wand, M.P. & Jones, M.C. (1994) Multivariate plug-in bandwidth selection. Computational 
-  Statistics, 9, 97-116.
+  Statistics, 9, 97-116. 
+
+Venables, W. N. and Ripley, B. D. (2002) Modern Applied Statistics with S. 
+  Fourth edition. Springer.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>
