@@ -67,7 +67,9 @@ background <- function(x, p=1000, known=NULL, d=NULL,
 	if(inherits(x, c("sf", "sfc"))) {   
 	  if(as.character(unique(sf::st_geometry_type(x))) != "POLYGON")
         stop(deparse(substitute(x)), " x must be an sf POLYGON object")	
-    }    	
+    }
+  if(!any(which(utils::installed.packages()[,1] %in% "lwgeom")))
+      stop("please install lwgeom package before running this function")
   if(!is.null(known)){
     if(!inherits(known, c("sf", "sfc")))  
       stop(deparse(substitute(known)), " must be an sf POINT object")
