@@ -1,4 +1,4 @@
-# spatialEco (dev 2.0-2) <img src="man/figures/logo.png" align="right" height="132" />
+# spatialEco (dev 2.0-3) <img src="man/figures/logo.png" align="right" height="132" />
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -11,6 +11,11 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 	for creating pseudo-  absences and sub-sampling, polygon and point-distance structural metrics,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
+
+The spatialEco package was archived on CRAN due to a dependency change of lwgeom in sf. This has
+been corrected and a new version subbmited to CRAN on 2023/13/11 however, they are treating it
+as a new submission so it may take up to three weeks for it to be back up on the CRAN repository.
+In the meantime, you can install the GitHub development version of from R-Universe (see instructions below) 
 
 I jumped to a major release and pushed the version to 2.0-0. All spatial functions are now using the 
 `sf` and `terra` packages due to `sp`, `rgeos`, `rgdal`, `maptools` and `raster` being retired. Sorry 
