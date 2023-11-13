@@ -21,35 +21,35 @@ partial.cor(
 
 \item{method}{Type of correlation: "partial" or "semipartial"}
 
-\item{statistic}{Correlation statistic, options are: "kendall", 
+\item{statistic}{Correlation statistic, options are: "kendall",
 "pearson", "spearman"}
 }
 \value{
 data.frame containing:
 \itemize{
-  \item {correlation} {correlation coefficient}
-  \item {p.value} {p-value of correlation}
-  \item {test.statistic} {test statistic}
-  \item {n} {sample size}
-  \item {Method} {indicating partial or semipartial correlation}
-  \item {Statistic} {the correlation statistic used}
+\item correlation - correlation coefficient
+\item p.value - p-value of correlation
+\item test.statistic - test statistic
+\item n - sample size
+\item Method - indicating partial or semipartial correlation
+\item Statistic - the correlation statistic used
 }
 }
 \description{
-Calculates a partial or semi-partial correlation  
-             with parametric and nonparametric options
+Calculates a partial or semi-partial correlation
+with parametric and nonparametric options
 }
 \details{
-Partial and semipartial correlations show the association between two 
-variables when one or more peripheral variables are controlled 
-to hold them constant. 
+Partial and semipartial correlations show the association between two
+variables when one or more peripheral variables are controlled
+to hold them constant.
 
-Suppose we have three variables, X, Y, and Z. Partial correlation holds 
-constant one variable when computing the relations two others. Suppose we 
-want to know the correlation between X and Y holding Z constant for both 
-X and Y. That would be the partial correlation between X and Y controlling 
-for Z. Semipartial correlation holds Z constant for either X or Y, but not 
-both, so if we wanted to control X for Z, we could compute the semipartial 
+Suppose we have three variables, X, Y, and Z. Partial correlation holds
+constant one variable when computing the relations two others. Suppose we
+want to know the correlation between X and Y holding Z constant for both
+X and Y. That would be the partial correlation between X and Y controlling
+for Z. Semipartial correlation holds Z constant for either X or Y, but not
+both, so if we wanted to control X for Z, we could compute the semipartial
 correlation between X and Y holding Z constant for X.
 }
 \examples{
@@ -78,5 +78,5 @@ partial.cor(x=scholar[,2], y=scholar[,1], z=scholar[,3],
 
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

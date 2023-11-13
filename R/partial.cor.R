@@ -10,14 +10,13 @@
 #'                   "pearson", "spearman" 
 #'
 #' @return data.frame containing:
-#' \itemize{
-#'   \item {correlation} {correlation coefficient}
-#'   \item {p.value} {p-value of correlation}
-#'   \item {test.statistic} {test statistic}
-#'   \item {n} {sample size}
-#'   \item {Method} {indicating partial or semipartial correlation}
-#'   \item {Statistic} {the correlation statistic used}
-#' }
+#' * correlation - correlation coefficient
+#' * p.value - p-value of correlation
+#' * test.statistic - test statistic
+#' * n - sample size
+#' * Method - indicating partial or semipartial correlation
+#' * Statistic - the correlation statistic used
+#' @md
 #'
 #' @details
 #' Partial and semipartial correlations show the association between two 

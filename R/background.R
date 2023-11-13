@@ -62,8 +62,6 @@ background <- function(x, p=1000, known=NULL, d=NULL,
       stop("distance (d) must be defined")  
     if(missing(x))
       stop("extent or x argument must be defined")	 
-    if(inherits(x, c("SpatialPolygons", "SpatialPolygonsDataFrame")))	
-      x <- sf::st_as_sf(x)  
 	if(inherits(x, c("sf", "sfc"))) {   
 	  if(as.character(unique(sf::st_geometry_type(x))) != "POLYGON")
         stop(deparse(substitute(x)), " x must be an sf POLYGON object")	

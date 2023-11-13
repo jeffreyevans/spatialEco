@@ -17,9 +17,6 @@
 #' H increases with the number of different values in the window. The ellipsis
 #' arguments can be used to write to disk using the filename argument. 
 #'
-#' Maximum entropy is reached when all values are different, same as log(m)
-#'   max.ent <- function(x) { log( length( unique(x) ) ) }
-#'
 #' @references
 #' Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS 
 #'   GIS - Comparison of images taken by different sensor. 
@@ -35,6 +32,9 @@
 #'       plot(r)
 #'         plot(rEnt)
 #'   par(opar)
+#'
+#' # Maximum entropy is reached when all values are different, same as log(m)
+#' #   for example; log( length( unique(x) ) ) 
 #'
 #' @export raster.entropy  
 raster.entropy <- function(x, d = 5, categorical = FALSE, 

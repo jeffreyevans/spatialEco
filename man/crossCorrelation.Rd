@@ -61,23 +61,23 @@ be scaled using (w/sum(w))}
 \value{
 When not simulated k=0, a list containing:
 \itemize{
-\item {I} {Global autocorrelation statistic}
-\item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
-\item {nsim} {value of NULL to represent p values were derived from observed data (k=0)}
-\item {p} {Probability based observations above/below confidence interval}
-\item {t.test} {Probability based on t-test}
-\item {clusters} {If "clust" argument TRUE, vector representing LISA clusters}
+\item I - Global autocorrelation statistic
+\item SCI - - A data.frame with two columns representing the xy and yx autocorrelation
+\item nsim - value of NULL to represent p values were derived from observed data (k=0)
+\item p - Probability based observations above/below confidence interval
+\item t.test - Probability based on t-test
+\item clusters - If "clust" argument TRUE, vector representing LISA clusters
 }
 
 when simulated (k>0), a list containing:
 \itemize{
-\item {I} {Global autocorrelation statistic}
-\item {SCI} {A data.frame with two columns representing the xy and yx autocorrelation}
-\item {nsim} {value representing number of simulations}
-\item {global.p} {p-value of global autocorrelation statistic}
-\item {local.p} {Probability based simulated data using successful rejection of t-test}
-\item {range.p} {Probability based on range of probabilities resulting from paired t-test}
-\item {clusters} {If "clust" argument TRUE, vector representing lisa clusters}
+\item I - Global autocorrelation statistic
+\item SCI - A data.frame with two columns representing the xy and yx autocorrelation
+\item nsim - value representing number of simulations
+\item global.p - p-value of global autocorrelation statistic
+\item local.p - Probability based simulated data using successful rejection of t-test
+\item range.p - Probability based on range of probabilities resulting from paired t-test
+\item clusters - If "clust" argument TRUE, vector representing lisa clusters
 }
 }
 \description{

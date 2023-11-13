@@ -17,14 +17,13 @@
 #' @param ...           Additional arguments passed to the terra app function 
 #'
 #' @return Depending on arguments, a raster layer or rasterBrick object containing:
-#' \itemize{
-#'   \item {raster layer 1} {slope for trend, always returned}
-#'   \item {raster layer 2} {Kendall's tau two-sided test, reject null at 0, if tau TRUE}
-#'   \item {raster layer 3} {intercept for trend if intercept TRUE}
-#'   \item {raster layer 4} {p value for trend fit if p.value TRUE}
-#'   \item {raster layer 5} {lower confidence level at 95 pct, if confidence TRUE}
-#'   \item {raster layer 6} {upper confidence level at 95 pct, if confidence TRUE}
-#' }
+#' * raster layer 1 - slope for trend, always returned
+#' * raster layer 2 - Kendall's tau two-sided test, reject null at 0, if tau TRUE
+#' * raster layer 3 - intercept for trend if intercept TRUE
+#' * raster layer 4 - p value for trend fit if p.value TRUE
+#' * raster layer 5 - lower confidence level at 95 pct, if confidence TRUE
+#' * raster layer 6 - upper confidence level at 95 pct, if confidence TRUE
+#' @md
 #'
 #' @details 
 #' This function implements Kendall's nonparametric test for a monotonic trend 
