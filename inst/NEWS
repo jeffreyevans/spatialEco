@@ -298,3 +298,15 @@ spatialEco_2.0-01
 * Fixed bug in stratified.random where if there are no replicates with replace = FALSE no results returned
 
 * Enhancement added support for prewhiting of autocorrelated time-series in kendall function
+
+spatialEco_2.0-2
+=================   
+
+* Added suggest for the lwgeom package after sf dropped as dependency
+
+* Added function to derive LAI (leaf area index) from NDVI
+
+* Fixed bug in sf.de where bandwidth was not being reconized as argument
+
+* Reverted sf.kde to use modification of MASS 2dkde as, ks methods are somewhat
+  questionable with spatial data. 
