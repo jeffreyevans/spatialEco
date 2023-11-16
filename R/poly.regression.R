@@ -10,15 +10,7 @@
 #' @param ci         (FALSE/TRUE) Should confidence intervals be returned
 #' @param ...        Additional arguments passed to loess 
 #'
-#' @return If ci = FALSE, a vector of smoothed values,
-#'         otherwise a list object with:
-#' *  loess - A vector, same length of y, representing the smoothed or 
-#'            inputed data 
-#' *  lower.ci - Lower confidence interval 
-#' *  upper.ci - Upper confidence interval
-#' @md
-#'
-#' @description
+#' @details
 #' This is a wrapper function for loess that simplifies data smoothing and imputation 
 #' of missing values. The function allows for smoothing a vector, based on an index 
 #' (derived automatically) or covariates. If the impute option is TRUE NA values are 
@@ -27,6 +19,14 @@
 #' NA values filled in. The loess weight function is defined using the tri-cube weight 
 #' function w(x) = (1-|x|^3)^3 where; x is the distance of a data point from the point 
 #'  the curve being fitted.  
+#'
+#' @return If ci = FALSE, a vector of smoothed values,
+#'         otherwise a list object with:
+#' *  loess - A vector, same length of y, representing the smoothed or 
+#'            inputed data 
+#' *  lower.ci - Lower confidence interval 
+#' *  upper.ci - Upper confidence interval
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                              

@@ -51,8 +51,7 @@ absorbed by the vegetation
 \item ndvi     Normalized Difference Vegetation Index
 }
 
-Not yet implemented; Soil Water Index, Surface Soil Moisture,
-Copernicus product details: http://land.copernicus.eu/global/products/
+Not yet implemented; Soil Water Index, Surface Soil Moisture, and Land Surface Temperature.
 }
 \examples{
 \donttest{
@@ -84,6 +83,7 @@ all.urls <- cgls_urls(dates = d, resolution = 300,
 # 	              basename(all.urls[i])), mode = 'wb') 
 #   }
 }
+
 }
 \author{
 Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}

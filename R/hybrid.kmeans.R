@@ -9,9 +9,6 @@
 #' @param stat     The statistic to aggregate class centers (mean or median) 
 #' @param ...      Additional arguments passed to \code{\link[stats]{kmeans}}
 #'
-#' @return 
-#' returns an object of class "kmeans" which has a print and a fitted method
-#'
 #' @details 
 #' This method uses hierarchical clustering to define the cluster-centers in the K-means 
 #' clustering algorithm. This mitigates some of the know convergence issues in K-means.   
@@ -20,12 +17,15 @@
 #' options for hmethod are: "ward.D", "ward.D2", "single", 
 #' "complete", "average", mcquitty", "median", "centroid"
 #'
+#' @return 
+#' returns an object of class "kmeans" which has a print and a fitted method
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references 
 #' Singh, H., & K. Kaur (2013) New Method for Finding Initial Cluster Centroids in 
 #'   K-means Algorithm. International Journal of Computer Application. 74(6):27-30
-#' @references
+#' 
 #' Ward, J.H., (1963) Hierarchical grouping to optimize an objective function. Journal 
 #'   of the American Statistical Association. 58:236-24
 #'

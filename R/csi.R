@@ -5,10 +5,7 @@
 #' @param x A vector or matrix object 
 #' @param y If x is a vector, then a vector object 
 #'
-#' @return If x is a matrix, a list object with: similarity and angular.similarity 
-#' matrices or, if x and y are vectors, a vector of similarity and angular.similarity   
-#'
-#' @note 
+#' @details 
 #' The cosine similarity index is a measure of similarity between two 
 #' vectors of an inner product space. This index is bested suited for high-dimensional 
 #' positive variable space. One useful application of the index is to measure separability 
@@ -17,24 +14,27 @@
 #' cosine similarity index is mathematically, and often numerically, equivalent to the 
 #' Pearson's correlation coefficient   
 #'
-#' @note 
 #' The cosine similarity index is derived: 
 #' s(xy) = x * y / ||x|| * ||y||, where the expected is 1.0 (perfect similarity)  
 #' to -1.0 (perfect dissimilarity). A normalized angle between the vectors can 
 #' be used as a bounded similarity function within [0,1] 
 #' angular similarity  = 1 - (cos(s)^-1/pi)
 #'
+#' @return 
+#' If x is a matrix, a list object with: similarity and angular.similarity matrices or,  
+#' if x and y are vectors, a vector of similarity and angular.similarity   
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
 #' # Compare two vectors (centered using scale)
-#'   x=runif(100)
-#'   y=runif(100)^2
-#'   csi(as.vector(scale(x)),as.vector(scale(y)))
+#' x=runif(100)
+#' y=runif(100)^2
+#' csi(as.vector(scale(x)),as.vector(scale(y)))
 #'   
-#'   #' # Compare columns (vectors) in a matrix (centered using scale)
-#'   x <- matrix(round(runif(100),0),nrow=20,ncol=5)
-#'   ( s <- csi(scale(x)) )
+#' # Compare columns (vectors) in a matrix (centered using scale)
+#' x <- matrix(round(runif(100),0),nrow=20,ncol=5)
+#' ( s <- csi(scale(x)) )
 #'     
 #' # Compare vector (x) to each column in a matrix (y)
 #' y <- matrix(round(runif(500),3),nrow=100,ncol=5)

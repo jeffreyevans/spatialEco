@@ -8,9 +8,9 @@
 #' @param azimuth       Azimuth to new point
 #' @param EastOfNorth   Specified surveying convention
 #'
-#' @return a new point representing location of baring and distance 
+#' @details East of north is a surveying convention and defaults to true. 
 #'
-#' @note East of north is a surveying convention and defaults to true. 
+#' @return a new point representing location of baring and distance 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'

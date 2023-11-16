@@ -14,8 +14,7 @@ shift(x, lag = 1, pad = NA)
 \item{pad}{Value to fill the lagged offset with, default is NA}
 }
 \value{
-a vector, length equal to x, with offset length filled 
-        with pad values
+A vector, length equal to x, with offset length filled with pad values
 }
 \description{
 Shift a vector by specified positive or negative lag

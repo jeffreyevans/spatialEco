@@ -6,22 +6,22 @@
 #' @param ens      Calculate effective number of species (TRUE/FALSE)
 #' @param margin   Calculate diversity for rows or columns. c("row", "col")    
 #'
+#' @details 
+#' The expected for H is 0-3+ where a value of 2 has been suggested as medium-high diversity, 
+#' for evenness is 0-1 with 0 signifying no evenness and 1, complete evenness. 
+#'
 #' @return 
 #' data.frame with "H" (Shannon's diversity) and "evenness" (Shannon's 
 #' evenness where H / max( sum(x) ) ) and ESN 
-#'
-#' @note 
-#' The expected for H is 0-3+ where a value of 2 has been suggested as medium-high diversity, 
-#' for evenness is 0-1 with 0 signifying no evenness and 1, complete evenness. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references 
 #' Shannon, C. E. and W. Weaver (1948) A mathematical theory of communication. The Bell 
 #'   System Technical Journal, 27:379-423.
-#' @references 
+#' 
 #' Simpson, E. H. (1949) Measurement of diversity. Nature 163:688
-#' @references 
+#' 
 #' Roth, D. S., I. Perfecto, and B. Rathcke (1994) The effects of management systems on 
 #'   ground-foraging ant diversity in Costa Rica. Ecological Applications 4(3):423-436.
 #'

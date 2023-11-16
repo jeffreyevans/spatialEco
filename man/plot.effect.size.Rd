@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments passed to plot}
 }
+\value{
+Plot of effect size object with group effect sizes and 95% confidence
+}
 \description{
 Plot function for effect.size object
 }

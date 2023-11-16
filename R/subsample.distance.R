@@ -18,8 +18,8 @@
 #'
 #' @examples      
 #' \donttest{
+#' if(require(sp, quietly = TRUE)) {
 #' library(sf)
-#'  if(require(sp, quietly = TRUE)) {
 #'   data(meuse, package = "sp")
 #'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
 #'                     agr = "constant")
@@ -34,7 +34,10 @@
 #'   diag(dm) <- NA
 #' cat("\n", "Min distance for subsample", min(dm, na.rm=TRUE), "\n")  
 #' cat("Max distance for subsample", max(dm, na.rm=TRUE), "\n")  
-#'   }
+#' 
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
+#' }
 #' }
 #' @export subsample.distance
 subsample.distance <- function(x, size, d, d.max = NULL, 

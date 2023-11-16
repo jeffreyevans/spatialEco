@@ -20,14 +20,14 @@ sample.annulus(x, r1, r2, size = 10, ...)
 \item{...}{Additional arguments passed to sf::st_sample}
 }
 \value{
-sp SpatialPointsataFrame OBJECT
+sf POINTS object
 }
 \description{
 Creates sample points based on annulus with defined 
-             inner and outer radius
+inner and outer radius
 }
-\note{
-Function can be used for distance based sampling. This is a sampling method 
+\details{
+Function can be used for distance based sampling which is a sampling method 
 that can be used to capture spatially lagged variation.
 }
 \examples{
@@ -36,7 +36,6 @@ that can be used to capture spatially lagged variation.
    data(meuse, package = "sp")
    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
                      agr = "constant")
- }
 
  xy <- meuse[2,]
  rs100 <- sample.annulus(xy, r1=50, r2=100, size = 50)
@@ -48,7 +47,7 @@ that can be used to capture spatially lagged variation.
  legend("topright", legend=c("50-100m", "100-200m", "source"), 
         pch=c(20,20,20), col=c("blue","red","black"))
 
- \dontrun{
+\donttest{
 # Run on multiple points
 rs100 <- sample.annulus(meuse[1:3,], r1=50, r2=100, 
                         size = 50)
@@ -60,6 +59,10 @@ plot(st_geometry(rs200), pch=20, col="red")
  legend("topright", legend=c("50-100m", "100-200m", "source"), 
         pch=c(20,20,20), col=c("blue","red","black"))
 }
+} else { 
+  cat("Please install sp package to run example", "\n")
+}
+
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

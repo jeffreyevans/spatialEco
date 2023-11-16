@@ -9,8 +9,8 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
-#'  Iglewicz, B. & D.C. Hoaglin (1993) How to Detect and Handle Outliers, 
-#'    American Society for Quality Control, Milwaukee, WI.
+#' Iglewicz, B. & D.C. Hoaglin (1993) How to Detect and Handle Outliers, 
+#'   American Society for Quality Control, Milwaukee, WI.
 #'
 #' @examples 
 #'  # Create data with 3 outliers

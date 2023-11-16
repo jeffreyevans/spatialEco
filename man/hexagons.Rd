@@ -4,30 +4,28 @@
 \alias{hexagons}
 \title{Hexagons}
 \usage{
-hexagons(x, res = 100, ...)
+hexagons(x, res = 100)
 }
 \arguments{
-\item{x}{sp SpatialDataFrame class object}
+\item{x}{sf class object indicating extent}
 
 \item{res}{Area of resulting hexagons}
-
-\item{...}{Additional arguments passed to spsample}
 }
 \value{
-SpatialPolygonsDataFrame OBJECT
+sf POLYGONS object
 }
 \description{
 Create hexagon polygons
 }
-\note{
-depends: sp
+\details{
+Based on extent of x, creates a hexagon mesh with size of hexagons defined by res argumnet
 }
 \examples{
- library(sf)
- if(require(sp, quietly = TRUE)) {
-   data(meuse, package = "sp")
-   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-                     agr = "constant")
+library(sf)
+if(require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
 
 hex <- hexagons(meuse, res=300)   
   plot(st_geometry(hex))
@@ -38,5 +36,9 @@ idx <- which(apply(st_intersects(hex, meuse, sparse=FALSE), 1, any))
 hex.sub <- hex[idx,] 
   plot(st_geometry(hex.sub))
     plot(st_geometry(meuse),pch=20,add=TRUE)
+
+} else { 
+  cat("Please install sp package to run example", "\n")
 }
+
 }

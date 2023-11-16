@@ -1,6 +1,4 @@
 #' @title Probability density plot by group
-#' @description Creates a probability density plot of y for 
-#'              each group of x 
 #'
 #' @param y Numeric vector (density variable)
 #' @param x Numeric, character or factorial vector of grouping 
@@ -13,11 +11,15 @@
 #' @param ly Position of legend (y coordinate)
 #' @param ... Additional arguments passed to plot
 #'
+#' @description Creates a probability density plot of y for 
+#'              each group of x 
+#'
+#' @return Plot of grouped PDF's
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'
 #' @references
-#'  Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, 
-#'    New York.
+#' Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, New York.
 #'
 #' @examples 
 #' y=dnorm(runif(100))
@@ -28,6 +30,8 @@
 #' @export
 group.pdf <- function(x, y, col = NULL, lty = NULL, lwd = NULL, 
                      lx = "topleft", ly = NULL, ...) {
+  oops <- options() 
+    on.exit(options(oops)) 
     if (!is.numeric(y)) 
         stop("y MUST BE NUMERIC")
     if (length(x) != length(y)) 

@@ -9,9 +9,7 @@
 #' @param na.action  c("fail", "ignore"), if "fail" function will return error with NA's
 #'                   with "ignore" NA values will be included in count to event
 #'
-#' @return A vector value representing the time to event 
-#'
-#' @description
+#' @details
 #' The time to event represents the sum of positions, in the vector,
 #' until the specified value is found ie., (0,0,1) would be 3 or, 
 #' 2 with up.to=TRUE. The int argument allows for rounding a continuous  
@@ -23,10 +21,11 @@
 #' function behavior, causing it to fail or count NAs. Note that it makes no
 #' sense to actually remove NAs as it will make the run uninterpretable.    
 #'
+#' @return A vector value representing the time to event 
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
-#' 
 #' # Binomial instance
 #' time_to_event(c(0,0,0,0,1,0,0,0,1,0))
 #' time_to_event(c(0,0,0,0,1,0,0,0,1,0), up.to = TRUE)

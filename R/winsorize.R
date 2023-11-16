@@ -11,14 +11,14 @@
 #'                    quantile function. 
 #' @param na.rm       (FALSE/TRUE) should NAs be omitted? 
 #' 
-#' @return 
-#' A transformed vector the same length as x, unless na.rm is TRUE, then x is length 
-#' minus number of NA's
-#' 
-#' @description 
+#' @details
 #' Winsorization is the transformation of a distribution by limiting extreme values 
 #' to reduce the effect of spurious outliers. This is done by shrinking outlying 
 #' observations to the border of the main part of the distribution. 
+#' 
+#' @return 
+#' A transformed vector the same length as x, unless na.rm is TRUE, then x is length 
+#' minus number of NA's
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

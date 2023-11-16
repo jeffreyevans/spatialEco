@@ -50,6 +50,6 @@ date_seq <- function(start, end, step = c("day", "week", "month", "quarter", "ye
   y <- unique(as.numeric(format(d,"%Y")))
   leap.idx <- which(sapply(y, is.leap))
   if(length(leap.idx) > 0)
-    cat("The following are leap years", y[leap.idx], "\n",sep="\t")
+    message("The following are leap years ", y[leap.idx], "\n" ,sep="\t")
   return(d)
 }

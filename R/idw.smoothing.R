@@ -8,16 +8,16 @@
 #' @param d   Distance constraint       
 #' @param k   Maximum number of k-nearest neighbors within d    
 #' 
-#' @return A vector, same length as nrow(x), of smoothed y values 
-#'
-#' @note
+#' @details
 #' Smoothing is conducted with a weighted-mean where; weights represent inverse 
 #' standardized distance lags Distance-based or neighbour-based smoothing can be 
 #' specified by setting the desired neighbour smoothing method to a specified value 
 #' then the other parameter to the potential maximum. For example; a constraint 
 #' distance, including all neighbors within 1000 (d=1000) would require k to equal 
 #' all of the potential neighbors (n-1 or k=nrow(x)-1).  
-#'                                                                     
+#'    
+#' @return A vector, same length as nrow(x), of smoothed y values 
+#'                                                                 
 #' @examples 
 #' 
 #' library(sf)
@@ -25,7 +25,6 @@
 #'   data(meuse, package = "sp")
 #'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
 #'                     agr = "constant")
-#' }
 #'       
 #'  # Calculate distance weighted mean on cadmium variable in meuse data   
 #'    cadmium.idw <- idw.smoothing(meuse, 'cadmium', k=nrow(meuse), d = 1000)                
@@ -39,9 +38,13 @@
 #' 
 #' plot(meuse[c("cadmium","cadmium.wm")], pch=20)   
 #'
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
+#' }
+#'
 #' @export
 idw.smoothing <- function(x, y, d, k) {
-    if(!any(which(utils::installed.packages()[,1] %in% "RANN")))
+    if(length(find.package("RANN", quiet = TRUE)) == 0)
       stop("please install RANN package before running this function")
     if (!inherits(x, "sf")) 
       stop(deparse(substitute(x)), " Must be an sf object")

@@ -21,9 +21,9 @@ matrix values.}
 A terra SpatRaster class object
 }
 \description{
-Multidimensional scaling of raster values within an 
-             N x N focal window
-
+Multidimensional scaling of raster values within an N x N focal window
+}
+\details{
 An MDS focal function. If only one value provided for s, then a square matrix 
 (window) will be used. If window.median = FALSE then the center value of the 
 matrix is returned and not the median of the matrix

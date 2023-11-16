@@ -7,6 +7,18 @@
 #' @param cloud.cover percent cloud cover
 #' @param processing  processing level ("L1GT" or "L1T")
 #'
+#' @details 
+#' Amazons AWS cloud service is hosting OLI Landsat 8 data granules
+#'   \url{https://registry.opendata.aws/landsat-8}
+#'   \url{https://aws.amazon.com/blogs/aws/start-using-landsat-on-aws/}
+#'
+#' USGS Landsat collections: \url{https://www.usgs.gov/landsat-missions}
+#' Pre-collection processing levels: "L1T", "L1GT", "L1G"
+#' Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
+#'     "L1T" and "L1TP" - Radiomertically calibrated and orthorectified (highest level processing) 
+#'     "L1GT" and "L1GT" - Radiomertically calibrated and systematic geometric corrections   
+#'     "L1G" and "L1GS" - Radiomertically calibrated with systematic ephemeris correction   
+#'
 #' @return
 #' data.frame object with:
 #' \itemize{ 
@@ -27,22 +39,10 @@
 #' \item row - Landsat row
 #' }
 #'
-#' @note 
-#' Amazons AWS cloud service is hosting OLI Landsat 8 data granules
-#'   \url{https://registry.opendata.aws/landsat-8}
-#'   \url{https://aws.amazon.com/blogs/aws/start-using-landsat-on-aws/}
-#'
-#' USGS Landsat collections: \url{https://www.usgs.gov/landsat-missions}
-#' Pre-collection processing levels: "L1T", "L1GT", "L1G"
-#' Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
-#'     "L1T" and "L1TP" - Radiomertically calibrated and orthorectified (highest level processing) 
-#'     "L1GT" and "L1GT" - Radiomertically calibrated and systematic geometric corrections   
-#'     "L1G" and "L1GS" - Radiomertically calibrated with systematic ephemeris correction   
-#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20% cloud cover    
 #' ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), 
 #'                           cloud.cover = 20) )
@@ -64,7 +64,7 @@
 oli.asw <- function(path, row, dates, cloud.cover = 10, 
                     processing) {
     aws.url <- "http://landsat-pds.s3.amazonaws.com/scene_list.gz"
-  if(!any(which(utils::installed.packages()[,1] %in% "readr")))
+  if(length(find.package("readr", quiet = TRUE)) == 0)
     stop("please install readr package before running this function")
 	if( missing(path) ) stop("Must specify landsat path")
       if( missing(row) ) stop("Must specify landsat row")

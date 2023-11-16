@@ -21,14 +21,6 @@
 #'                  default is 1, for no adjustment (downweight < 1 | upweight > 1)   
 #' @param p         Minimum value for probability distribution (must be >  0)
 #' @param edge      Apply Diggle edge correction (TRUE/FALSE)
-#' 
-#' @return A list class object with the following components:
-#' \itemize{ 
-#' \item   sample  A sf POINT geometry object containing random samples
-#' \item   kde     A terra SpatRaster class of inverted Isotropic KDE estimates 
-#'                 used as sample weights (IF KDE = TRUE)
-#' \item   sigma   Selected bandwidth of KDE 
-#'  }
 #'
 #' @details
 #' The window type creates a convex hull by default or, optionally, uses the 
@@ -36,26 +28,31 @@
 #' areas defined by the mask and defines the area that pseudo absence data 
 #' will be generated.
 #' 
-#' @details
 #' Available bandwidth selection methods are:
-#' \itemize{
-#' \item   Scott (Scott 1992), Scott's Rule for Bandwidth Selection (1st order)
-#' \item   Diggle (Berman & Diggle 1989), Minimize the mean-square error via cross 
-#'         validation (2nd order)  
-#' \item   likelihood (Loader 1999), Maximum likelihood cross validation (2nd order)
-#' \item   geometry, Bandwidth is based on simple window geometry (1st order)
-#' \item   Stoyan (Stoyan & Stoyan 1995), Based on pair-correlation function 
-#'        (strong 2nd order)
-#' \item   User defined numeric distance bandwidth
-#'  }
+#'   * Scott (Scott 1992), Scott's Rule for Bandwidth Selection (1st order)
+#'   * Diggle (Berman & Diggle 1989), Minimize the mean-square error via cross 
+#'   * validation (2nd order)  
+#'   * likelihood (Loader 1999), Maximum likelihood cross validation (2nd order)
+#'   * geometry, Bandwidth is based on simple window geometry (1st order)
+#'   * Stoyan (Stoyan & Stoyan 1995), Based on pair-correlation function (strong 2nd order)
+#'   * User defined numeric distance bandwidth
+#' @md
 #'
-#' @details
-#' Note; resulting bandwidth can vary widely by method. the 'diggle' method 
+#' @note
+#' resulting bandwidth can vary widely by method. the 'diggle' method 
 #' is intended for selecting bandwidth representing 2nd order spatial variation 
 #' whereas the 'scott' method will represent 1st order trend. the 'geometry' approach 
 #' will also represent 1st order trend. For large datasets, caution should be used with 
 #' the 2nd order 'likelihood' approach, as it is slow and computationally expensive. 
 #' finally, the 'stoyan' method will produce very strong 2nd order results.
+#' 
+#' @return 
+#' A list class object with the following components:
+#'   * sample  A sf POINT geometry object containing random samples
+#'   * kde     A terra SpatRaster class of inverted Isotropic KDE estimates 
+#'             used as sample weights (IF KDE = TRUE)
+#'   * sigma   Selected bandwidth of KDE 
+#' @md
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
@@ -63,29 +60,32 @@
 #' Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order 
 #'   intensity of a spatial point process. Journal of the Royal Statistical Society, 
 #'   series B 51, 81-92. 
-#' @references
+#' 
 #' Fithian, W & T. Hastie (2013) Finite-sample equivalence in statistical models for 
 #'   presence-only data. Annals of Applied Statistics 7(4): 1917-1939
-#' @references
+#' 
 #' Hengl, T., H. Sierdsema, A. Radovic, and A. Dilo (2009) Spatial prediction of species 
 #'   distributions from occurrence-only records: combining point pattern analysis, 
 #'   ENFA and regression-kriging. Ecological Modelling, 220(24):3499-3511  
-#' @references
+#' 
 #' Loader, C. (1999) Local Regression and Likelihood. Springer, New York. 
-#' @references
+#' 
 #' Scott, D.W. (1992) Multivariate Density Estimation. Theory, Practice and Visualization. 
 #'   New York, Wiley. 
-#' @references
+#' 
 #' Stoyan, D. and Stoyan, H. (1995) Fractals, random shapes and point fields: methods of 
 #'   geometrical statistics. John Wiley and Sons. 
-#' @references
+#' 
 #' Warton, D.i., and L.C. Shepherd (2010) Poisson Point Process Models Solve the Pseudo-Absence 
 #'   Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
 #'
 #' @examples
-#' library(sf) 
-#' library(terra) 
-#' library(spatstat.data)
+#'  p = c("sf", "sp", "terra", "spatstat.data")
+#'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+#'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+#'    message("Can't run examples, please install ", paste(p[m], collapse = " "))
+#'  } else {
+#'    invisible(lapply(p, require, character.only=TRUE))
 #'   
 #' data(meuse, package = "sp")
 #' meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
@@ -116,7 +116,7 @@
 #'         plot(st_geometry(trees.abs$sample), col='red', pch=20, cex=1, add=TRUE)
 #'           legend('top', legend=c('Presence', 'Pseudo-absence'), 
 #'                  pch=c(20,20),col=c('black','red'),bg="white")
-#'     
+#' }     
 #' @export     
 pseudo.absence <- function(x, n, window = "hull", ref = NULL, s = NULL, sigma = "Scott", 
                            wts = NULL, KDE = FALSE, gradient = 1, p = NULL, edge = FALSE) {

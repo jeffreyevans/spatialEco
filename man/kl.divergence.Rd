@@ -20,6 +20,9 @@ has a value smaller than eps.}
 pairwise Kullback-Leibler divergence index (matrix)
 }
 \description{
+Calculates the Kullback-Leibler divergence (relative entropy)
+}
+\details{
 Calculates the Kullback-Leibler divergence (relative entropy) between 
 unweighted theoretical component distributions. Divergence is calculated 
 as: int [f(x) (log f(x) - log g(x)) dx] for distributions with densities 

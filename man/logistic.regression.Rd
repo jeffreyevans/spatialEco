@@ -62,7 +62,8 @@ auto-covariance term
 Performs a logistic (binomial) or auto-logistic
 (spatially lagged binomial) regression using maximum
 likelihood or penalized maximum likelihood estimation.
-
+}
+\details{
 It should be noted that the auto-logistic model (Besag 1972) is intended for
 exploratory analysis of spatial effects. Auto-logistic are know to underestimate
 the effect of environmental variables and tend to be unreliable (Dormann 2007).

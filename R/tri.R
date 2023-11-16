@@ -8,23 +8,23 @@
 #'               approximation. 
 #' @param ...    Additional arguments passed to terra::focal or terra::app
 #'
-#' @return A terra SpatRaster class object of the TRI
-#'
-#' @description
+#' @details
 #' The algebraic approximation is considerably faster. However, because 
 #' inclusion of the center cell, the larger the scale the larger the divergence 
-#' of the minimum value.
+#' of the minimum value. Resuls are driven by local variations so, fixed thresholds
+#' are not very reliable. However there are some reccomended breaks (eg., Riley et al., 1999). 
 #' 
-#' @description
-#' Recommended ranges for classifying Topographic Ruggedness Index:
-#' * 0-80 - level terrain surface.
-#' * 81-116 - nearly level surface.
-#' * 117-161 - slightly rugged surface.
-#' * 162-239 - intermediately rugged surface.
-#' * 240-497 - moderately rugged surface.
-#' * 498-958 - highly rugged surface.
-#' * gt 959 - extremely rugged surface. 
+#' Riley et al., (1999) ranges for classifying Topographic Ruggedness Index:
+#'   * 0-80 - level terrain surface.
+#'   * 81-116 - nearly level surface.
+#'   * 117-161 - slightly rugged surface.
+#'   * 162-239 - intermediately rugged surface.
+#'   * 240-497 - moderately rugged surface.
+#'   * 498-958 - highly rugged surface.
+#'   * gt 959 - extremely rugged surface. 
 #' @md 
+#'
+#' @return A terra SpatRaster class object of the TRI
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  

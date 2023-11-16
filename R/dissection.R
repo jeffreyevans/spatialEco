@@ -6,11 +6,11 @@
 #' @param s    Focal window size
 #' @param ...  Additional arguments passed to terra::lapp
 #' 
-#' @return A SpatRaster class object of Martonne's modified dissection  
-#'
-#' @note
+#' @details 
 #' Dissection is calculated as: 
 #' ( z(s) - min(z(s)) ) / ( max(z(s)) - min(z(s)) ) 
+#'
+#' @return A SpatRaster class object of Martonne's modified dissection  
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

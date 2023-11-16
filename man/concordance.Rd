@@ -18,7 +18,7 @@ list object with: concordance, discordance, tied and pairs
 Performs a concordance/disconcordance (C-statistic) test on 
              binomial models.
 }
-\note{
+\details{
 Test of binomial regression for the hypothesis that probabilities of all 
 positives [1], are greater than the probabilities of the nulls [0]. The 
 concordance would be 100% for a perfect model where, disconcordance is the 

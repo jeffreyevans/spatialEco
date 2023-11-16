@@ -34,7 +34,7 @@ A list object with:
 Calculates breeding density areas base on population counts and 
              spatial point density.
 }
-\note{
+\details{
 The breeding density areas model identifies the Nth-percent population exhibiting 
 the highest spatial density and counts/frequency. It then buffers these points by 
 a specified distance to produce breeding area polygons. If you would like to recreate 
@@ -42,7 +42,7 @@ the results in Doherty et al., (2010), then define bw = 6400m and b[if p < 0.75
 b = 6400m, | p >= 0.75 b = 8500m]
 }
 \examples{
-if(require(sf, quietly = TRUE)) { 
+library(sf)
 
 n=1500
 bb <- rbind(c(-1281299,-761876.5),c(1915337,2566433.5))
@@ -61,8 +61,6 @@ bb.mat <- round(cbind(c(bb[1,1], bb[1,2], bb[1,2], bb[1,1]),
          plot(st_geometry(bd75$pop.pts), pch=20, col='red', add=TRUE)
       legend("bottomright", legend=c("selected areas","selected sites", "all sites"),
              bg="white", fill=c("grey","red", "black"), pt.cex = 2) 
-
-}
 
 }
 \references{

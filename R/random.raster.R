@@ -17,11 +17,10 @@
 #' @param distribution Available distributions, c("random", "normal", 
 #'                     "seq", "binominal", "gaussian", "sample")
 #'
-#' @return terra SpatRaster object with random rasters
-#'
 #' @details 
-#' Options for distributions are for random, normal, seq, binominal, 
-#' gaussian and sample raster(s)
+#' Options for distributions are; random, normal, seq, binominal, gaussian and sample raster(s)
+#'
+#' @return terra SpatRaster object with random rasters
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

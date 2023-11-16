@@ -4,26 +4,25 @@
 #' @param x       An sf line or polygon class object
 #' @param join    (TRUE/FALSE) Joint attributes from original object 
 #'
-#' @return 
-#' An sf POINT object
-#'
-#' @note
+#' @details 
 #' This function returns the vertices of a line or polygon object, as opposed
 #' to the polygon centroids or line start/stop coordinates 
+#'
+#' @return 
+#' An sf POINT object of extrated line or polygon vertices
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
 #'
-#' if(require(sf, quietly = TRUE)) {
-#'   nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
-#'     nc <- suppressWarnings(sf::st_cast(nc, "POLYGON"))
-#'       nc <- nc[c(10,50),]
+#' library(sf)
+#' nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
+#'   nc <- suppressWarnings(sf::st_cast(nc, "POLYGON"))
+#'     nc <- nc[c(10,50),]
 #'   
-#'   ( v <- extract.vertices(nc) )
-#'      plot(st_geometry(nc))
-#'        plot(st_geometry(v), pch=20, cex=2, col="red", add=TRUE)
-#' } 
+#' ( v <- extract.vertices(nc) )
+#'   plot(st_geometry(nc))
+#'     plot(st_geometry(v), pch=20, cex=2, col="red", add=TRUE)
 #'
 #' @export extract.vertices 
 extract.vertices <- function(x, join = TRUE) {

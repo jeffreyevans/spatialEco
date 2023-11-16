@@ -34,7 +34,7 @@ A terra SpatRaster class object of the local distributional moment
 \description{
 Applies a Gaussian smoothing kernel to smooth raster.
 }
-\note{
+\details{
 This applies a Gaussian Kernel smoother. The convolution option performs
 a Gaussian decomposition whereas the other options use the kernel
 as weights for the given statistic.

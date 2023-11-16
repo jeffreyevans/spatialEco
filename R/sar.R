@@ -6,9 +6,10 @@
 #'               is in planar units)
 #' @param scale  (TRUE/FALSE) Scale (row standardize) results 
 #' 
-#' @return A terra SpatRaster class object of the Surface Area Ratio
+#' @details  
+#' SAR is calculated as: resolution^2 * cos( (degrees(slope) * (pi / 180)) )
 #'
-#' @note SAR is calculated as: resolution^2 * cos( (degrees(slope) * (pi / 180)) )
+#' @return A terra SpatRaster class object of the Surface Area Ratio
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

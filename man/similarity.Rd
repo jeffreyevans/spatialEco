@@ -35,7 +35,7 @@ freq column represents the number of times a row (ID) was selected as a neighbor
 \description{
 Uses row imputation to identify "k" ecological similar observations
 }
-\note{
+\details{
 This function uses row-based imputation to identify k similar neighbors for each 
 observation. Has been used to identify offsets based on ecological similarity.
 }

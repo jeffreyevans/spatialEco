@@ -9,13 +9,13 @@
 #' @param inc          Increment to increase scales
 #' @param win          Window type, options are "rectangle" or "circle"
 #' @param normalize    Normalize results to 0-1 scale (FALSE | TRUE)          
-#'  
-#' @return  terra SpatRaster class object of slope position 
 #'    
-#' @note
+#' @details
 #' if win  = "circle" units are distance, if win = "rectangle" units 
 #' are number of cells 
-#'      
+#'   
+#' @return  terra SpatRaster class object of slope position 
+#'     
 #' @references
 #' Murphy M.A., J.S. Evans, and A.S. Storfer (2010) Quantify Bufo boreas 
 #'   connectivity in Yellowstone National Park with landscape genetics. 

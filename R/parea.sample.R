@@ -9,7 +9,7 @@
 #' @param stype     Sampling type ('random', 'regular', 'nonaligned', 'hexagonal')
 #' @param ...       Additional arguments passed to spsample
 #'
-#' @note 
+#' @details 
 #' This function results in an adaptive sample based on the area of 
 #' each polygon. The default scaling factor (sf) converts meters to
 #' acres. You can set sf=1 to stay in the native projection units
@@ -19,14 +19,13 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' if(require(sf, quietly = TRUE)) {
-#'   nc <- st_read(system.file("shape/nc.shp", package="sf"))
-#'     nc <- suppressWarnings(st_cast(nc[c(10,100),], "POLYGON"))
+#' library(sf)
+#' nc <- st_read(system.file("shape/nc.shp", package="sf"))
+#'   nc <- suppressWarnings(st_cast(nc[c(10,100),], "POLYGON"))
 #'   
-#'   ( ars <- parea.sample(nc, pct=0.001, join = TRUE, stype='random') ) 
-#'     plot(st_geometry(nc))
-#'       plot(st_geometry(ars), pch=19, add=TRUE)  
-#' }
+#'  ( ars <- parea.sample(nc, pct=0.001, join = TRUE, stype='random') ) 
+#'      plot(st_geometry(nc))
+#'         plot(st_geometry(ars), pch=19, add=TRUE)  
 #'
 #' @export
 parea.sample <- function(x, pct = 0.1, join = FALSE, sf = 4046.86,    

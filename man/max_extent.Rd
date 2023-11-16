@@ -18,11 +18,11 @@ An sf POLYGON class object representing maximum extents
 returns a extent polygon representing maximum extent of
              input rasters
 }
-\note{
+\details{
 Creates a maximum extent polygon of all specified rasters
 }
 \examples{
-if(require(terra, quietly = TRUE)) { 
+library(terra)
 
 r1 <- rast(ext(61.87125, 76.64458, 23.90153, 37.27042))
 r2 <- rast(ext(67.66625, 81.56847, 20.38458, 35.67347))
@@ -36,8 +36,6 @@ plot(e, border=NA)
   plot(e, border="black", add=TRUE)
 		    
  sf::st_bbox(e) # full extent
-
-}
 
 }
 \author{

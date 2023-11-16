@@ -16,12 +16,11 @@ A vector of polygon perimeters in projection units
 Calculates the perimeter length(s) for a polygon object
 }
 \examples{
-if(require(sf, quietly = TRUE)) {
+library(sf)
   polys <- st_read(system.file("shape/nc.shp", package="sf"))
     polys <- suppressWarnings(st_cast(polys[c(10,100),], "POLYGON"))
  
  polyPerimeter(polys)
-}
 
 }
 \author{

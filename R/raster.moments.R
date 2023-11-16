@@ -10,11 +10,10 @@
 #' @param p         if type="quantile", the returned percentile. 
 #' @param ...       Additional arguments passed to terra::focal 
 #' 
-#' @return A terra SpatRaster object representing the local distributional moment
+#' @details
+#' This is a simple wrapper for the terra focal function, returning local statistical moments 
 #'
-#' @note
-#'  This is a simple wrapper for the focal function, returning local 
-#'  statistical moments 
+#' @return A terra SpatRaster object representing the local distributional moment
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

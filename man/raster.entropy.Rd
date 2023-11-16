@@ -23,7 +23,8 @@ terra SpatRaster class object
 }
 \description{
 Calculates entropy on integer raster (i.e., 8 bit 0-255)
-
+}
+\details{
 Entropy calculated as: H = -sum(Pi*ln(Pi)) where; Pi, Proportion of one value 
 to total values Pi=n(p)/m and m, Number of unique values. Expected range: 
 0 to log(m) H=0 if window contains the same value in all cells.
@@ -49,4 +50,7 @@ rEnt <- raster.entropy(r, d=5, categorical = TRUE, global = TRUE)
 \references{
 Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS 
   GIS - Comparison of images taken by different sensor.
+}
+\author{
+Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

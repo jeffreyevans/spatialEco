@@ -24,7 +24,7 @@ a new point representing location of baring and distance
 Calculates a new point [X,Y] based on defined 
              bearing and distance
 }
-\note{
+\details{
 East of north is a surveying convention and defaults to true.
 }
 \examples{

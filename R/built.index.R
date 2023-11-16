@@ -14,22 +14,20 @@
 #' @param L              The L factor for the savi index 
 #' @param method         Method to use for index options are "Bouhennache", "Zha", "Xu"
 #'
-#' @description
+#' @details 
 #' This function calculates the built-up index. Three methods are available:
 #' * Bouhennache is a new method that uses a larger portion of the VIR/NIR 
 #'     following OLI bands (((b3+b4+b7)-b6)/3) / (((b3+b4+b7)+b6)/3)   
 #' * Zha is the original band ratio method using TM5 ndbi = (b5 - b4) / (b5 + b4)
 #' * Xu is a modification to eliminate noise using ETM+7 
 #'    (ndbi-((savi-nndwi)/2) / (ndbi+((savi-nndwi)/2) 
-#'
-#' @description 
+#' 
 #' Generally water has the highest values where built-up areas will occur in the
 #' mid portion of the distribution. Since Bouhennache et al (2018) index exploits 
 #' a larger portion of the visible (Vis) and infra red spectrum, vegetation will 
 #' occur as the  lowest values and barren will exhibit greater values than the 
 #' vegetation and lower values than the built-up areas.    
 #'
-#' @description
 #' Band wavelength (nanometers) designations for landsat
 #' TM4, TM5 and ETM+7
 #' * band-2 0.52-0.60 (green) 
@@ -46,6 +44,8 @@
 #' * band-7 2.11-2.29 (SWIR 2) 
 #' @md
 #'
+#' @return A terra raster object of the built index
+#'
 #' @references 
 #' Bouhennache, R., T. Bouden, A. Taleb-Ahmed & A. Chaddad(2018) A new spectral index 
 #'   for the extraction of built-up land features from Landsat 8 satellite imagery, 
@@ -61,9 +61,9 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(terra)
-#'  lsat <- rast(system.file("extdata/Landsat_TM5", package="spatialEco"))
+#'  lsat <- rast(system.file("/extdata/Landsat_TM5.tif", package="spatialEco"))
 #'    plotRGB(lsat, r=3, g=2, b=1, scale=1.0, stretch="lin")
 #' 			   
 #'  # Using Bouhennache et al., (2018) method (needs green, red, swir1 and swir2) 
@@ -83,7 +83,6 @@
 #'                      swir1 = lsat[[5]], , method = "Xu") )
 #'    plotRGB(lsat, r=3, g=2, b=1, scale=1, stretch="lin")
 #'      plot(xu, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE ) 
-#' 
 #' }
 #' 
 #' @export built.index

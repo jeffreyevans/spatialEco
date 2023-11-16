@@ -6,15 +6,16 @@
 #' @param na.empty    (TRUE / FALSE) Return TRUE if element is NA
 #' @param trim        (TRUE / FALSE) Trim empty strings
 #'
+#' @details
+#' This function evaluates if an element in a vector is empty the na.empty argument 
+#' allows for evaluating NA values (TRUE if NA) and all.na returns a TRUE if all elements 
+#' are NA. The trim argument trims a character string to account for the fact that c(" ") 
+#' is not empty but, a vector with c("") is empty. Using trim = TRUE will force both 
+#' to return TRUE   
+#'
 #' @return A Boolean indicating empty elements in a vector, if all.na = FALSE
 #' a TRUE/FALSE value will be returned for each element in the vector 
-#' 
-#' @description This function evaluates if an element in a vector is empty
-#' the na.empty argument allows for evaluating NA values (TRUE if NA) and
-#' all.na returns a TRUE if all elements are NA. The trim argument trims
-#' a character string to account for the fact that c(" ") is not empty but,
-#' a vector with c("") is empty. Using trim = TRUE will force both to return TRUE   
-#' 
+#'  
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples

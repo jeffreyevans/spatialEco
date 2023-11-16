@@ -6,8 +6,6 @@
 #' @param variance  (FALSE|TRUE) Output spherical variance rather than standard deviation
 #' @param ...       Additional arguments passed to terra:app (can write raster to disk here)
 #'
-#' @return A terra SpatRaster class object of the spherical standard deviation   
-#'
 #' @details
 #' Surface variability using spherical variance/standard deviation. 
 #' The variation can be assessed using the spherical standard deviation of the normal 
@@ -25,6 +23,8 @@
 #' The slope and aspect values are expected to be in radians. 
 #' The value of (1 - R^2), which will lie between 0 and 1, is the spherical variance. 
 #' and it's square root can be considered the spherical standard deviation.
+#'
+#' @return A terra SpatRaster class object of the spherical standard deviation   
 #'
 #' @author Jeffrey S. Evans <jeffrey_evans<at>tnc.org>
 #'

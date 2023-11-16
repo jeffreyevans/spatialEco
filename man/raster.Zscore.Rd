@@ -20,8 +20,7 @@ raster (FALSE/TRUE)}
 raster class object or raster written to disk
 }
 \description{
-Calculates the modified z-score for all cells 
-             in a raster
+Calculates the modified z-score for raster values
 }
 \note{
 Since this functions needs to operate on all of the raster values, 

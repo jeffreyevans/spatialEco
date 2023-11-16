@@ -19,7 +19,7 @@ Numeric vector of Nth values
 \description{
 Returns the Nth highest or lowest values in a vector
 }
-\note{
+\details{
 This function returns n lowest or highest elements in a vector
 }
 \examples{

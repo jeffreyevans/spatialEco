@@ -20,7 +20,7 @@ A terra SpatRaster class object of the Surface Area Ratio
 \description{
 Calculates the Berry (2002) Surface Area Ratio based on slope
 }
-\note{
+\details{
 SAR is calculated as: resolution^2 * cos( (degrees(slope) * (pi / 180)) )
 }
 \examples{

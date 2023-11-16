@@ -9,9 +9,7 @@
 #' @param d      Threshold distance for known proximity 
 #' @param type   Type of sample c("systematic", "random", "hexagon", "nonaligned")
 #'
-#' @return A sf POINT feature class or data.frame with x,y coordinates
-#'
-#' @note 
+#' @details 
 #' This function creates a background point sample based on an extent 
 #' or polygon sampling region. The known argument can be used with d 
 #' to remove sample points based on distance-based proximity to existing  
@@ -19,6 +17,8 @@
 #' sample will be dependent on the known locations and the influence of 
 #' the distance threshold (d). As such, if the know and d arguments are
 #' provided the exact value provided in p will not be returned. 
+#'
+#' @return A sf POINT feature class or data.frame with x,y coordinates
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
@@ -66,7 +66,7 @@ background <- function(x, p=1000, known=NULL, d=NULL,
 	  if(as.character(unique(sf::st_geometry_type(x))) != "POLYGON")
         stop(deparse(substitute(x)), " x must be an sf POLYGON object")	
     }
-  if(!any(which(utils::installed.packages()[,1] %in% "lwgeom")))
+  if(length(find.package("lwgeom", quiet = TRUE)) == 0)
       stop("please install lwgeom package before running this function")
   if(!is.null(known)){
     if(!inherits(known, c("sf", "sfc")))  

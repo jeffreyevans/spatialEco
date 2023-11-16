@@ -1,6 +1,6 @@
 #' @title Raster change between two nominal rasters
-#' @description Compares two categorical rasters with a variety of 
-#'              statistical options
+#' @description 
+#' Compares two categorical rasters with a variety of statistical options
 #'       
 #' @param x            A terra SpatRaster 
 #' @param y            A terra SpatRaster for comparison to x   
@@ -10,46 +10,42 @@
 #'                     options. 
 #' @param ...          Additional arguments passed to terra::focalPairs
 #'
-#' @return A terra SpatRaster layer containing one of the following layers:
-#' \itemize{ 
-#' \item   kappa         Kappa or Weighted Kappa statistic (if stat = "kappa")
-#' \item   correlation   Paired t.test statistic  (if stat = "cor")
-#' \item   entropy       Local entropy  (if stat = "entropy")
-#' \item   divergence    Kullback-Leibler divergence (if stat = "divergence")
-#' \item   cross.entropy Local Cross-entropy (if stat = "cross.entropy")
-#' \item   t.test        Paired t.test statistic  (if stat = "t.test")
-#' \item   p.value       p-value of the paired t.test statistic (if stat = "t.test")
-#'  } 
-#'
-#' @description
+#' @details
 #' This function provides a various statistics for comparing two classified maps. 
-#' Valid options are:
-#' \itemize{ 
-#' \item   kappa - Cohen's Kappa 
-#' \item   t.test - Two-tailed paired t-test 
-#' \item   cor - Persons Correlation 
-#' \item   entropy - Delta entropy 
-#' \item   cross-entropy - Cross-entropy loss function 
-#' \item   divergence - Kullback-Leibler divergence (relative entropy) 
-#' }
+#' Valid options are: 
+#'   * kappa - Cohen's Kappa 
+#'   * t.test - Two-tailed paired t-test 
+#'   * cor - Persons Correlation 
+#'   * entropy - Delta entropy 
+#'   * cross-entropy - Cross-entropy loss function 
+#'   * divergence - Kullback-Leibler divergence (relative entropy) 
 #'
-#' @note
 #' Kappa and t-test values < 0 are reported as 0. For a weighted kappa, a matrix must 
 #' be provided that correspond to the pairwise weights for all values in both rasters. 
 #' Delta entropy is derived by calculating Shannon's on each focal window then 
 #' differencing  them (e(x) - e(y)). The s argument can be a single scalar, defining
 #' a symmetrical kernel, two scalers defining the dimensions of the kernel eg., c(3,5)
 #' or a matrix defining the kernel say, resulting from terra::focalMat   
+#'
+#' @return 
+#' A terra SpatRaster layer containing one of the following layers:
+#'   * kappa - Kappa or Weighted Kappa statistic (if stat = "kappa")
+#'   * correlation - Paired t.test statistic  (if stat = "cor")
+#'   * entropy - Local entropy  (if stat = "entropy")
+#'   * divergence - Kullback-Leibler divergence (if stat = "divergence")
+#'   * cross.entropy - Local Cross-entropy (if stat = "cross.entropy")
+#'   * t.test - Paired t.test statistic  (if stat = "t.test")
+#'   * p.value - p-value of the paired t.test statistic (if stat = "t.test") 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #' Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational  
 #'   and Psychological Measurement, 20:37-46 
-#' @references
+#' 
 #' McHugh M.L. (2012) Interrater reliability: the kappa statistic. 
 #'   Biochemia medica, 22(3):276–282. 
-#' @references
+#' 
 #'  Kullback, S., R.A. Leibler (1951). On information and sufficiency. Annals of 
 #'    Mathematical Statistics. 22(1):79–86
 #' 
@@ -83,6 +79,7 @@
 #'    par(opar) 
 #' }
 #' 
+#' @md
 #' @export raster.change
 raster.change <- function(x, y, s = 3, stat = c("kappa", "t.test",    
                           "cor", "entropy", "cross-entropy", 

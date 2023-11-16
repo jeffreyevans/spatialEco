@@ -7,9 +7,7 @@
 #' @param smin    Minimum value for stretch 
 #' @param smax    Maximum value for stretch
 #' 
-#' @return A terra SpatRaster class object of specified transformation
-#'
-#' @description
+#' @details
 #' Transformation option details:
 #' * norm - (Normalization_ (0-1): if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )
 #' * rstd - (Row standardize) (0-1): if min(x) >= 0 x / max(x) This normalizes data 
@@ -23,6 +21,8 @@
 #'           sign(x)*log10(abs(x))) 
 #' * sr - (Square-root) if min(x) >= 0 sqrt(x) 
 #' @md
+#'
+#' @return A terra SpatRaster class object of specified transformation
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 
@@ -65,7 +65,7 @@ raster.transformation <- function(x, trans = "norm", smin=0, smax=255) {
     stop(" Minimum value < 0, cannot log transform")
   }
   if( trans == "norm" && rmin < 0) {
-    print(" Min value < 0, running row standardization instead")
+    message(" Min value < 0, running row standardization instead")
     return( x / rmax )
   }
   if( trans == "norm") {

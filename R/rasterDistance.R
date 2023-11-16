@@ -6,23 +6,24 @@
 #' @param  y          Value(s) in x to to calculate distance to
 #' @param  scale      (FALSE/TRUE) Perform a row standardization on results 
 #'
-#' @return a distance terra SpatRast raster
-#'
-#' @note  
+#' @details 
 #' This replicates the terra distance function but uses the Arya & Mount
 #' Approximate Near Neighbor (ANN) C++ library for calculating distances. Where this
 #' results in a notable increase in performance it is not memory safe, needing to read
 #' in the entire raster and does not use the GeographicLib (Karney, 2013) spheroid 
 #' distance method for geographic data.  
-#' 
+#'
+#' @return A terra SpatRast raster representing distances
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
+#'
 #' @references 
 #' Arya S., Mount D. M., Netanyahu N. S., Silverman R. and Wu A. Y (1998), An 
 #'   optimal algorithm for approximate nearest neighbor searching, Journal of 
 #'   the ACM, 45, 891-923.
 #'
-#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
-#'
 #' @examples
+#' \donttest{
 #' library(sf)
 #' library(terra)
 #' 
@@ -44,21 +45,13 @@
 #'   plot(rd)
 #'     plot( st_geometry(nc.sub), add=TRUE)
 #' 
-#' #### Benchmark rasterDistance and terra::distance
-#' ####   at res=90m the differences are quite notable
-#' # ref <- rast(ext(nc), resolution=500)
-#' #   rnc <- mask(rasterize(vect(nc.sub), ref, background=2),
-#' #               vect(nc)) 
-#' #     crs(rnc) <- "ESRI:102008" 
-#' # system.time({ rasterDistance(rnc, y=1) })  
-#' # system.time({ distance(rnc, target=2) }) 
-#'
+#' }
 #' @seealso \code{\link[terra]{distance}, \link[terra]{distance}}
 #'
 #' @import terra
 #' @export rasterDistance 
 rasterDistance <- function(x, y, scale = FALSE){
-  if(!any(which(utils::installed.packages()[,1] %in% "RANN")))
+  if(length(find.package("RANN", quiet = TRUE)) == 0)
     stop("please install RANN package before running this function")
   if(missing(x))
     stop("x argument is missing")

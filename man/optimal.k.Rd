@@ -27,7 +27,7 @@ Find optimal k of k-Medoid partitions using
              silhouette widths
 }
 \examples{
-library(cluster)
+if (require(cluster, quietly = TRUE)) {
   x <- rbind(cbind(rnorm(10,0,0.5), rnorm(10,0,0.5)),
              cbind(rnorm(15,5,0.5), rnorm(15,5,0.5)))
 
@@ -41,6 +41,10 @@ library(cluster)
 
 # join clusters to data
   x <- data.frame(x, k=clust$model$clustering) 
+
+} else { 
+  cat("Please install cluster package to run example", "\n")
+}
 
 }
 \references{

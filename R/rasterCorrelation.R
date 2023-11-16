@@ -1,6 +1,6 @@
 #' @title Raster correlation
-#' @description Performs a moving window correlation between 
-#'              two rasters
+#' @description 
+#' Performs a moving window correlation between two rasters
 #'
 #' @param x          A terra SpatRaster class object for x
 #' @param y          A terra SpatRasterclass object for y
@@ -11,11 +11,12 @@
 #' @param type       Type of output, options are: "pearson", "spearman", 
 #'                   "covariance"  
 #'
+#' @note 
+#' The NA behavior is set to na.rm = TRUE to make default outputs
+#' consistent between the terra and raster packages. 
+#'
 #' @return A terra SpatRaster class object
 #' 
-#' @note The NA behavior is set to na.rm = TRUE to make default outputs
-#'       consistent between the terra and raster packages. 
-#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
 #' @examples 

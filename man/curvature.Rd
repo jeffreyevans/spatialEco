@@ -19,7 +19,7 @@ raster class object of surface curvature
 \description{
 Calculates Zevenbergen & Thorne, McNab's or Bolstad's curvature
 }
-\note{
+\details{
 The planform and profile curvatures are the second derivative(s) of the 
 elevation surface, or the slope of the slope. Profile curvature is in 
 the direction of the maximum slope, and the planform curvature is 
@@ -34,7 +34,7 @@ Total curvature is the sigma of the profile and planform curvatures. A value of
 0 in profile, planform or total curvature, indicates the surface is flat. 
 The planform, profile and total curvatures are derived using 
 Zevenbergen & Thorne (1987) via a quadratic equation fit to eight neighbors 
-as such, the s (focal window size) argument is ignored.
+as such, the s (focal window size) argument is ignored. 
 
 McNab's and Bolstad's variants of the surface curvature (concavity/convexity) 
 index (McNab 1993; Bolstad & Lillesand 1992; McNab 1989). The index is based 

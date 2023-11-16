@@ -11,6 +11,10 @@
 
 \item{...}{Ignored}
 }
+\value{
+Prints the output data.frame contaning; effect size with upper and lower confidence 
+and, mean and sd by group
+}
 \description{
 Summary method for class "effect.size".
 }

@@ -19,18 +19,7 @@
 #' @param longlat Are coordinates (coords) in geographic, lat/long (TRUE/FALSE)
 #' @param ... Additional arguments passed to lrm
 #'
-#' @return A list class object with the following components: 
-#' * model - lrm model object (rms class)
-#' * bandwidth - If AutoCov = TRUE returns the distance bandwidth used for the 
-#'   auto-covariance function
-#' * diagTable - data.frame of regression diagnostics
-#' * coefTable - data.frame of regression coefficients (log-odds)
-#' * Residuals - data.frame of residuals and standardized residuals
-#' * AutoCov - If an auto-logistic model, AutoCov represents lagged 
-#'             auto-covariance term
-#' @md
-#'
-#' @description
+#' @details
 #' It should be noted that the auto-logistic model (Besag 1972) is intended for 
 #' exploratory analysis of spatial effects. Auto-logistic are know to underestimate 
 #' the effect of environmental variables and tend to be unreliable (Dormann 2007).     
@@ -42,18 +31,30 @@
 #' If the object passed to the function is an sp class there is no need to call the data 
 #' slot directly via "object@data", just pass the object name.
 #'
+#' @return 
+#' A list class object with the following components: 
+#' * model - lrm model object (rms class)
+#' * bandwidth - If AutoCov = TRUE returns the distance bandwidth used for the 
+#'   auto-covariance function
+#' * diagTable - data.frame of regression diagnostics
+#' * coefTable - data.frame of regression coefficients (log-odds)
+#' * Residuals - data.frame of residuals and standardized residuals
+#' * AutoCov - If an auto-logistic model, AutoCov represents lagged 
+#'             auto-covariance term
+#' @md
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #' Besag, J.E., (1972) Nearest-neighbour systems and the auto-logistic model for binary 
 #'   data. Journal of the Royal Statistical Society, Series B Methodological 34:75-83
-#' @references
+#' 
 #' Dormann, C.F., (2007) Assessing the validity of autologistic regression. Ecological 
 #'   Modelling 207:234-242   
-#' @references
+#' 
 #' Le Cessie, S., Van Houwelingen, J.C., (1992) Ridge estimators in logistic regression. 
 #'   Applied Statistics 41:191-201
-#' @references
+#' 
 #' Shao, J., (1993) Linear model selection by cross-validation. JASA 88:486-494
 #'
 #' @examples 
@@ -128,7 +129,7 @@
 logistic.regression <- function(ldata, y, x, penalty = TRUE, autologistic = FALSE, 
                                 coords = NULL, bw = NULL, type = "inverse", style = "W",  
                                 longlat = FALSE, ...) {
-    if(!any(which(utils::installed.packages()[,1] %in% "rms")))
+	if(length(find.package("rms", quiet = TRUE)) == 0)
       stop("please install rms package before running this function")							
 	if(inherits(ldata, "sf")) 
 	  ldata <- sf::st_drop_geometry(ldata)

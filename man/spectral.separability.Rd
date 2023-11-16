@@ -16,12 +16,12 @@ row wise values in x}
 \item{jeffries.matusita}{(TRUE/FALSE) Return J-M distance (default) else Bhattacharyya}
 }
 \value{
-A matrix of class-wise Jeffries-Matusita or Bhattacharyya distance
-separability values
+A matrix of class-wise Jeffries-Matusita or Bhattacharyya distance separability values
 }
 \description{
 Calculates spectral separability by class
-
+}
+\details{
 Available statistics:
 \itemize{
 \item Bhattacharyya distance (Bhattacharyya 1943; Harold 2003) measures the similarity
@@ -32,8 +32,8 @@ where 2 suggest complete separability.
 }
 }
 \examples{
-#' # Create example data 
 require(MASS)                
+# Create example data 
 d <- 6                 # Number of bands
 n.class <- 5           # Number of classes
 n <- rep(1000, 5)                

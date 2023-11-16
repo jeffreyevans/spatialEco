@@ -1,6 +1,6 @@
 #' @title Sample annulus
 #' @description Creates sample points based on annulus with defined 
-#'              inner and outer radius
+#' inner and outer radius
 #' 
 #' @param x      An sf POINT class object
 #' @param r1     Numeric value defining inner radius of annulus 
@@ -10,11 +10,11 @@
 #' @param size   Number of samples
 #' @param ...    Additional arguments passed to sf::st_sample
 #'
-#' @return sp SpatialPointsataFrame OBJECT
-#'
-#' @note 
-#' Function can be used for distance based sampling. This is a sampling method 
+#' @details
+#' Function can be used for distance based sampling which is a sampling method 
 #' that can be used to capture spatially lagged variation.
+#'
+#' @return sf POINTS object
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
@@ -24,7 +24,6 @@
 #'    data(meuse, package = "sp")
 #'    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
 #'                      agr = "constant")
-#'  }
 #' 
 #'  xy <- meuse[2,]
 #'  rs100 <- sample.annulus(xy, r1=50, r2=100, size = 50)
@@ -36,7 +35,7 @@
 #'  legend("topright", legend=c("50-100m", "100-200m", "source"), 
 #'         pch=c(20,20,20), col=c("blue","red","black"))
 #' 
-#'  \dontrun{
+#' \donttest{
 #' # Run on multiple points
 #' rs100 <- sample.annulus(meuse[1:3,], r1=50, r2=100, 
 #'                         size = 50)
@@ -48,7 +47,10 @@
 #'  legend("topright", legend=c("50-100m", "100-200m", "source"), 
 #'         pch=c(20,20,20), col=c("blue","red","black"))
 #' }
-
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
+#' }
+#'
 #' @export sample.annulus
 sample.annulus <- function(x, r1, r2, size = 10, ...) {
   if(!inherits(x, c("sf", "sfc")))		

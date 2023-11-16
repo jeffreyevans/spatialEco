@@ -22,38 +22,39 @@ raster.modified.ttest(
 
 \item{sample}{Apply sub-sampling options; c("none", "random", "hexagonal", "regular")}
 
-\item{p}{If sample != "none", what proportion of population 
+\item{p}{If sample != "none", what proportion of population
 should be sampled}
 
 \item{size}{Fixed sample size (default NULL)}
 }
 \value{
-A terra SpatRaster or sf POINT class object with the 
-        following attributes:
-\itemize{ 
-\item   corr        Correlation 
-\item   Fstat       The F-statistic calculated as [degrees of freedom * 
-                    unscaled F-statistic]
-\item   p.value     p-value for the test
-\item   moran.x     Moran's-I for x 
-\item   moran.y     Moran's-I for y  
- }
+A terra SpatRaster or sf POINT class object with the following attributes:
+\itemize{
+\item corr - Correlation
+\item Fstat - The F-statistic calculated as degrees of freedom unscaled F-statistic
+\item p.value - p-value for the test
+\item moran.x - Moran's-I for x
+\item moran.y - Moran's-I for y
+}
 }
 \description{
-A bivarate raster correlation using Dutilleul's 
-             modified t-test
+A bivarate raster correlation using Dutilleul's
+modified t-test
 
-This function provides a bivariate moving window correlation using the modified  
-t-test to account for spatial autocorrelation. Point based subsampling is provided 
-for computation tractability. The hexagon sampling is recommended as it it good  
+This function provides a bivariate moving window correlation using the modified
+t-test to account for spatial autocorrelation. Point based subsampling is provided
+for computation tractability. The hexagon sampling is recommended as it it good
 at capturing spatial process that includes nonstationarity and anistropy.
 }
 \examples{
-\dontrun{
-library(gstat) 
-library(sf) 
-library(terra) 
- 
+\donttest{
+ p = c("sf", "sp", "terra", "gstat")
+ if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+   m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+   message("Can't run examples, please install ", paste(p[m], collapse = " "))
+ } else {
+   invisible(lapply(p, require, character.only=TRUE))
+
 data(meuse, package = "sp")
 meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
                   agr = "constant") 
@@ -86,20 +87,19 @@ acor <- raster.modified.ttest(G1, G2)
 # Sample-based corrected correlation
 ( cor.hex <- raster.modified.ttest(G1, G2, sample = "hexagonal") )	 
   plot(cor.hex["corr"], pch=20)
-
 }
-
+}
 }
 \references{
-Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the  
-  correlationbetween two spatial processes. Biometrics 45:123-134.
+Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the
+correlationbetween two spatial processes. Biometrics 45:123-134.
 
-Dutilleul, P. (1993), Modifying the t test for assessing the correlation between 
-  two spatial processes. Biometrics 49:305-314.
+Dutilleul, P. (1993), Modifying the t test for assessing the correlation between
+two spatial processes. Biometrics 49:305-314.
 }
 \seealso{
 \code{\link[SpatialPack]{modified.ttest}} for test details
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }

@@ -38,22 +38,21 @@ at same resolution as y. Options are c("none", "prediction", "confidence")}
 \value{
 A list object containing:
 \itemize{
-\item downscale      downscaled terra SpatRaster object
-\item model          MASS rlm model object
-\item MSE            Mean Square Error
-\item AIC            Akaike information criterion
-\item parm.ci        Parameter confidence intervals
-\item residuals      If residuals = TRUE, a SpatRaster of the residual error
-\item uncertainty    If pred.int = TRUE, SpatRaster's of the
-lower/upper prediction intervals
-\item std.error      If se = TRUE, SpatRaster's of the standard error
+\item downscale - downscaled terra SpatRaster object
+\item model - MASS rlm model object
+\item MSE - Mean Square Error
+\item AIC - Akaike information criterion
+\item parm.ci - Parameter confidence intervals
+\item residuals - If residuals = TRUE, a SpatRaster of the residual error
+\item uncertainty - If pred.int = TRUE, SpatRaster's of the lower/upper prediction intervals
+\item std.error - If se = TRUE, SpatRaster's of the standard error
 }
 }
 \description{
 Downscales a raster to a higher resolution raster using
 a robust regression
 }
-\note{
+\details{
 This function uses a robust regression, fit using an M-estimation with Tukey's biweight
 initialized by a specific S-estimator, to downscale a raster based on higher-resolution
 or more detailed raster data specified as covariate(s). You can optionally output residual
@@ -70,16 +69,16 @@ the prediction interval for standard error defaults to "confidence" else is the 
 uncertainty (eg., prediction or confidence).
 }
 \examples{
-\dontrun{
-library(geodata)
+\donttest{
+if (require(geodata, quietly = TRUE)) {
 library(terra)
+library(geodata)
 
 # Download example data (requires geodata package)
-  elev <- geodata::elevation_30s(country="SWZ",  path=tempdir())
- slp <- terrain(elev, v="slope")
-  tmax <- geodata::worldclim_country(country="SWZ", var="tmax", 
-                                     path=tempdir())
-    tmax <- crop(tmax[[1]], ext(elev))
+elev <- elevation_30s(country="SWZ", path=tempdir())
+slp <- terrain(elev, v="slope")
+tmax <- worldclim_country(country="SWZ", var="tmax", path=tempdir())
+  tmax <- crop(tmax[[1]], ext(elev))
 
 # Downscale temperature
 x=c(elev,slp)
@@ -118,7 +117,10 @@ tmax.ds <- raster.downscale(x, y, scatter=TRUE, residuals = TRUE,
       plot(tmax.ds$downscale - tmax.ds$uncertainty[[2]], 
 	       main="upper prediction interval")  
   par(opar)  
- 
+
+} else { 
+  cat("Please install geodata package to run example", "\n")
+}
 }
 }
 \references{

@@ -7,12 +7,14 @@
 #' @param stat          Statistic (mean or median)
 #' @param std.error     Return standard error (TRUE/FALSE)
 #'
-#' @return lci          Lower confidence interval value
-#' @return uci          Upper confidence interval value
-#' @return mean         If stat = "mean", mean value of distribution
-#' @return mean         Value of the mean or median
-#' @return conf.level   Confidence level used for confidence interval  
-#' @return std.error    If std.error = TRUE standard error of distribution
+#' @return data.frame contaning: 
+#'   * lci - Lower confidence interval value
+#'   * uci - Upper confidence interval value
+#'   * mean - If stat = "mean", mean value of distribution
+#'   * mean - Value of the mean or median
+#'   * conf.level - Confidence level used for confidence interval  
+#'   * std.error - If std.error = TRUE standard error of distribution
+#' @md
 #'   
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

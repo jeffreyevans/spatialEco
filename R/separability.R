@@ -8,15 +8,7 @@
 #' @param clabs     labels for two classes
 #' @param ...       additional arguments passes to plot
 #'
-#' @return A data.frame with the following separability metrics: 
-#' *  B - Bhattacharryya distance statistic 
-#' * JM - Jeffries-Matusita distance statistic
-#' *  M - M-Statistic
-#' *  D - Divergence index
-#' * TD - Transformed Divergence index
-#' @md
-#'
-#' @description
+#' @details 
 #' Available statistics:
 #' * M-Statistic (Kaufman & Remer 1994) - This is a measure of the difference of the 
 #'   distributional peaks. A large M-statistic indicates good separation between the 
@@ -37,28 +29,36 @@
 #'
 #' @md 
 #'
+#' @return A data.frame with the following separability metrics: 
+#' *  B - Bhattacharryya distance statistic 
+#' *  JM - Jeffries-Matusita distance statistic
+#' *  M - M-Statistic
+#' *  D - Divergence index
+#' * TD - Transformed Divergence index
+#' @md
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #' Anderson, M. J., & Clements, A. (2000) Resolving environmental disputes: a  
 #'   statistical method for choosing among competing cluster models. Ecological  
 #'   Applications 10(5):1341-1355
-#' @references
+#' 
 #' Bhattacharyya, A. (1943) On a measure of divergence between two statistical 
 #'   populations defined by their probability distributions'. Bulletin of the 
 #'   Calcutta Mathematical Society 35:99-109
-#' @references
+#' 
 #' Bruzzone, L., F. Roli, S.B. Serpico (1995) An extension to multiclass cases of 
 #'   the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and  
 #'   Machine Intelligence 33:1318-1321
-#' @references
+#' 
 #' Du, H., C.I. Chang, H. Ren, F.M. D'Amico, J. O. Jensen, J., (2004) New 
 #'   Hyperspectral Discrimination Measure for Spectral Characterization. Optical 
 #'   Engineering 43(8):1777-1786.
-#' @references
+#' 
 #' Kailath, T., (1967) The Divergence and Bhattacharyya measures in signal  
 #'   selection. IEEE Transactions on Communication Theory 15:52-60  
-#' @references
+#' 
 #' Kaufman Y., and L. Remer (1994) Detection of forests using mid-IR reflectance: 
 #'   An application for aerosol studies. IEEE T. Geosci.Remote. 32(3):672-683.
 #' 

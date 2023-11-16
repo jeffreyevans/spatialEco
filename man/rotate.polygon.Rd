@@ -27,7 +27,7 @@ an sp or sf polygon object with rotated polygon
 \description{
 rotates polygon by specified angle
 }
-\note{
+\details{
 The anchor is the location that the rotation is anchored to. The center
 is the centroid where the lower.left and upper.right are based on the 
 min or max of the coordinates respectively.

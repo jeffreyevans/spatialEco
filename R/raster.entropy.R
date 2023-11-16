@@ -8,14 +8,16 @@
 #'                     entropy (FALSE/TRUE)
 #' @param ...          Optional arguments passed terra focal function              
 #'  
-#' @return terra SpatRaster class object            
-#'
-#' @description
+#' @details
 #' Entropy calculated as: H = -sum(Pi*ln(Pi)) where; Pi, Proportion of one value 
 #' to total values Pi=n(p)/m and m, Number of unique values. Expected range: 
 #' 0 to log(m) H=0 if window contains the same value in all cells.
 #' H increases with the number of different values in the window. The ellipsis
 #' arguments can be used to write to disk using the filename argument. 
+#'
+#' @return terra SpatRaster class object            
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #' Fuchs M., R. Hoffmann, F. Schwonke (2008) Change Detection with GRASS 

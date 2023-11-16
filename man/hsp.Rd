@@ -33,7 +33,7 @@ terra SpatRaster class object of slope position
 Calculates a hierarchical scale decomposition of topographic 
 position index
 }
-\note{
+\details{
 if win  = "circle" units are distance, if win = "rectangle" units 
 are number of cells
 }

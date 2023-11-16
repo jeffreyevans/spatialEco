@@ -22,7 +22,7 @@ A vector, same length as nrow(x), of smoothed y values
 Distance weighted smoothing of a variable in a 
          spatial point object
 }
-\note{
+\details{
 Smoothing is conducted with a weighted-mean where; weights represent inverse 
 standardized distance lags Distance-based or neighbour-based smoothing can be 
 specified by setting the desired neighbour smoothing method to a specified value 
@@ -37,7 +37,6 @@ if(require(sp, quietly = TRUE)) {
   data(meuse, package = "sp")
   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
                     agr = "constant")
-}
       
  # Calculate distance weighted mean on cadmium variable in meuse data   
    cadmium.idw <- idw.smoothing(meuse, 'cadmium', k=nrow(meuse), d = 1000)                
@@ -50,5 +49,9 @@ if(require(sp, quietly = TRUE)) {
    par(opar)
 
 plot(meuse[c("cadmium","cadmium.wm")], pch=20)   
+
+} else { 
+  cat("Please install sp package to run example", "\n")
+}
 
 }

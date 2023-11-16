@@ -11,9 +11,13 @@ lai(ndvi, method = c("Jonckheere", "Chen"))
 
 \item{method}{Method to use for index options c("Jonckheere", "Chen")}
 }
+\value{
+A terra SpatRaster object with derived LAI vaues
+}
 \description{
 Remote sensing measure of LAI (leaf area per ground-unit area)
-
+}
+\details{
 This function calculates the Leaf Area Index (LAI) representing the amount of leaf area 
 per unit of ground area. This is an important parameter for understanding the structure 
 and function of vegetation, as it affects processes such as photosynthesis, transpiration, 
@@ -26,9 +30,9 @@ between NDVI and LAI can vary depending on factors such as vegetation type, cano
 and environmental conditions.
 }
 \examples{
-\dontrun{
+\donttest{
 library(terra)
- lsat <- rast(system.file("extdata/Landsat_TM5", package="spatialEco"))
+lsat <- rast(system.file("/extdata/Landsat_TM5.tif", package="spatialEco"))
    plotRGB(lsat, r=3, g=2, b=1, scale=1.0, stretch="lin")
 	
   ndvi <-  ( lsat[[4]] - lsat[[3]] ) / (lsat[[4]] + lsat[[3]]) 
@@ -44,7 +48,7 @@ library(terra)
 Jonckheere, I., Fleck, S., Nackaerts, K., Muys, B., Coppin, P. (2004). A comparison of two 
   methods to retrieve the leaf area index (LAI) from SPOT-4 HRVIR data. International 
   Journal of Remote Sensing, 25(21):4407–4425.
-
+ 
 Chen, J. M., Liu, R., & Ju, W. (2014). A simple and effective method for estimating 
   leaf area index from Landsat imagery. Remote Sensing of Environment, 152:538–548.
 }

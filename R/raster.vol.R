@@ -8,14 +8,13 @@
 #' @param spct     sample percent, if sample (TRUE)
 #' @param type     If sample=TRUE type of sample, options are "random" or "regular"
 #'
+#' @note 
+#' Since this model needs to operate on all of the raster values, it is not memory safe 
+#'
 #' @return 
 #' if sample (FALSE) binary raster object with 1 representing designated 
 #' percent volume else, if sample (TRUE) n sf POINT object with points 
 #' that represent the percent volume of the sub-sample
-#'
-#' @note 
-#' Since this model needs to operate on all of the raster values, 
-#' it is not memory safe 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

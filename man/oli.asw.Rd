@@ -40,7 +40,7 @@ data.frame object with:
 \description{
 Query of Amazon AWS OLI-Landsat 8 cloud service
 }
-\note{
+\details{
 Amazons AWS cloud service is hosting OLI Landsat 8 data granules
   \url{https://registry.opendata.aws/landsat-8}
   \url{https://aws.amazon.com/blogs/aws/start-using-landsat-on-aws/}
@@ -53,7 +53,7 @@ Collection 1 processing levels: "L1TP", "L1GT", "L1GS"
     "L1G" and "L1GS" - Radiomertically calibrated with systematic ephemeris correction
 }
 \examples{
-\dontrun{
+\donttest{
 # Query path 126, row 59, 2013-04-15 to 2017-03-09, <20\% cloud cover    
 ( p126r59.oli <- oli.asw(path=126, row=59, dates = c("2013-04-15", "2017-03-09"), 
                           cloud.cover = 20) )

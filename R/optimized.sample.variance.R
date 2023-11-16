@@ -1,6 +1,6 @@
 #' @title Optimized sample variance 
-#' @description Draws an optimal sample that minimizes or maximizes the 
-#'              sample variance 
+#' @description 
+#' Draws an optimal sample that minimizes or maximizes the sample variance 
 #'
 #' @param x       A vector to draw a sample from
 #' @param n       Number of samples to draw
@@ -15,9 +15,9 @@
 #'
 #' @examples
 #' library(sf)
-#' data(meuse, package = "sp")
-#' meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-#'                   agr = "constant")
+#' if (require(sp, quietly = TRUE)) {
+#'   data(meuse, package = "sp")
+#'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, agr = "constant")
 #'	
 #'  n = 15
 #'  # Draw n samples that maximize the variance of y
@@ -36,6 +36,9 @@
 #'             "minimized variance"), col=c("grey","red","blue"),  
 #'             pch=c(19,19,19))  
 #'  
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
+#' }
 #' @export optimized.sample.variance  
 optimized.sample.variance <- function(x, n, type = "maximized") {
   if(!is.numeric(x)) stop("x is not a numeric vector")

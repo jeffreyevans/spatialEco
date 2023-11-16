@@ -19,7 +19,7 @@ A single feature sf class polygon object
 \description{
 Creates a square buffer of a feature class
 }
-\note{
+\details{
 Function creates a square buffer of feature class.
 }
 \examples{

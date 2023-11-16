@@ -10,27 +10,21 @@ combine(x)
 \item{x}{raster stack/brick or SpatialPixelsDataFrame object}
 }
 \value{
-A  ratified rasterLayer or a list containing a SpatialPixelsDataFrame 
-and a data.frame of unique combinations.
+A ratified (factor) terra SpatRaster representing unique combinations.
 }
 \description{
 Combines rasters into all unique combinations of inputs
 }
 \details{
+A single ratified raster object is returned with the summary table
+as the raster attribute table, this is most similar to the ESRI 
+format resulting from their combine function. 
+    
 Please note that this is not a memory safe function that utilizes
-rasters out of memory in the manner that the raster package does.
-
-If sp = TRUE the object will be a list with "combine", containing 
-the SpatialPixelsDataFrame with the value attribute containing the 
-unique combinations, and "summary" with the summary table of collapsed
-combinations and associated attributes.
-
-If sp = FALSE the a single ratified rasterLayer class object is returned 
-with the summary table as the raster attribute table, this is most similar
-to the ESRI format resulting from their combine function.
+out of memory in the manner that the terra package does.
 }
 \examples{
-if(require(terra, quietly = TRUE)) { 
+library(terra)
 
 # Create example data (with a few NA's introduced)
  r1 <- rast(nrows=100, ncol=100)
@@ -55,8 +49,6 @@ if(require(terra, quietly = TRUE)) {
 
 # or, from separate layers
  cr <- combine(c(r1,r3))
-
-}
 
 }
 \author{

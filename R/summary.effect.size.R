@@ -1,7 +1,11 @@
 #' @title Summarizing effect size
 #' @description Summary method for class "effect.size".
+#'
 #' @param object  Object of class effect.size
 #' @param ... Ignored
+#'
+#' @return Prints the output data.frame contaning; effect size with upper and lower confidence 
+#' and, mean and sd by group  
 #'
 #' @method summary effect.size
 #' @export

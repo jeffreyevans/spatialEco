@@ -17,18 +17,14 @@
 #' @param weight.factor  Apply partial weights (w * weight.factor) to the NDSVI weights 
 #' @param ...            Additional arguments passed to terra::lapp function
 #'
-#' @return A terra SpatRaster class object of the weighted MSAVI metric 
-#'
-#' @description
+#' @details
 #' The intent of this index is to correct the MSAVI or MTVI index for bias associated 
 #' with senescent vegetation. This is done by: 
-#' * deriving the NDSVI;
-#' * applying a threshold to limit NDSVI to values associated with senescent vegetation; 
-#' * converting the index to inverted weights (-1*(NDSVI/sum(NDSVI))); 
-#' * applying weights to MSAVI or MTVI 
-#' @md
+#'   1 deriving the NDSVI
+#'   2 applying a threshold to limit NDSVI to values associated with senescent vegetation 
+#'   3 converting the index to inverted weights (-1*(NDSVI/sum(NDSVI))) 
+#'   4 applying weights to MSAVI or MTVI 
 #' 
-#' @description
 #' The MSAVI formula follows the modification proposed by Qi et al. (1994), 
 #' often referred to as MSAVI2. MSAVI index reduces soil noise and increases 
 #' the dynamic range of the vegetation signal. The implemented modified version 
@@ -43,53 +39,48 @@
 #' for the background signature of soils while preserving sensitivity to LAI  and resistance 
 #' to the influence of chlorophyll. 
 #'
-#' @description
 #' The Normalized difference senescent vegetation index (NDSVI) follows methods from 
 #' Qi et a., (2000). The senescence is used to threshold the NDSVI. Values less then this value 
 #' will be NA. The threshold argument is used to apply a threshold to MSAVI. The default is NULL 
 #' but if specified all values (MSAVI <= threshold) will be NA. Applying a weight.factor can be 
 #' used to change the influence of the weights on MSAVI. 
+#' @md
 #' 
+#' @return A terra SpatRaster class object of the weighted MSAVI metric 
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
+#'
 #' @references 
 #' Haboudane, D., et al. (2004) Hyperspectral Vegetation Indices and Novel Algorithms 
 #'   for Predicting Green LAI of Crop Canopies: Modeling and Validation in the Context 
 #'   of Precision Agriculture. Remote Sensing of Environment 90:337-352.
-#' @references 
+#'  
 #' Qi J., Chehbouni A., Huete A.R., Kerr Y.H., (1994). Modified Soil Adjusted Vegetation 
 #'   Index (MSAVI). Remote Sens Environ 48:119-126.
-#' @references 
+#' 
 #' Qi J., Kerr Y., Chehbouni A., (1994). External factor consideration in vegetation 
 #'   index development. Proc. of Physical Measurements and Signatures in Remote Sensing, 
 #'   ISPRS, 723-730.
-#' @references 
+#'  
 #' Qi, J., Marsett, R., Moran, M.S., Goodrich, D.C., Heilman, P., Kerr, Y.H., Dedieu, 
 #'   G., Chehbouni, A., Zhang, X.X. (2000). Spatial and temporal dynamics of vegetation
 #    in the San Pedro River basin area. Agricultural and Forest Meteorology. 105:55-68. 
 #'
-#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
-#'
 #' @examples
-#' \dontrun{
-#' # library(terra)
-#' # if(!unlist(lapply("RStoolbox", requireNamespace, quietly=TRUE)))
-#' #   message("Can't run examples, please install RStoolbox")
-#' # 
-#' # data(lsat)
-#' # lsat <- radCor(lsat, metaData = readMeta(system.file(
-#' #               "external/landsat/LT52240631988227CUB02_MTL.txt", 
-#' #               package="RStoolbox")), method = "apref")
-#' #   lsat <- rast(lsat)
-#' #   
-#' # # Using Modified Soil-adjusted Vegetation Index (MSAVI)
-#' # ( wmsavi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]]) )
-#' #     plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-#' #       plot(wmsavi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
-#' # 
-#' # # Using Modified Triangular Vegetation Index 2 (MTVI) 
-#' # ( wmtvi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]],
-#' #                           green = lsat[[3]], mtvi = TRUE) )
-#' #   plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-#' #     plot(wmtvi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
+#' \donttest{
+#' library(terra)
+#' lsat <- rast(system.file("/extdata/Landsat_TM5.tif", package="spatialEco"))
+#'  
+#' # Using Modified Soil-adjusted Vegetation Index (MSAVI)
+#' ( wmsavi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]]) )
+#'     plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+#'       plot(wmsavi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
+#' 
+#' # Using Modified Triangular Vegetation Index 2 (MTVI) 
+#' ( wmtvi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]],
+#'                           green = lsat[[3]], mtvi = TRUE) )
+#'   plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+#'     plot(wmtvi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
 #' }
 #' 
 #' @export swvi

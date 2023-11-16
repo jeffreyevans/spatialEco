@@ -69,7 +69,7 @@ When not simulated k=0, a list containing:
 \item clusters - If "clust" argument TRUE, vector representing LISA clusters
 }
 
-when simulated (k>0), a list containing:
+When simulated (k>0), a list containing:
 \itemize{
 \item I - Global autocorrelation statistic
 \item SCI - A data.frame with two columns representing the xy and yx autocorrelation
@@ -113,30 +113,33 @@ the spatial weights
                         dist.function = "inv.power") ) 
 
 \donttest{
-  library(sp)
-  library(spdep)
-   
-  data(meuse)
-    coordinates(meuse) <- ~x+y  
-
-  #### Using a default spatial weights matrix method (inverse power function)
-  ( I <- crossCorrelation(meuse$zinc, meuse$copper, 
-               coords = coordinates(meuse), k=99) )
-    meuse$lisa <- I$SCI[,"lsci.xy"]
-      spplot(meuse, "lisa")
+library(sf)
+library(spdep)
  
-  #### Providing a distance matrix
-   Wij <- spDists(meuse) 	
-   ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, k=99) )
+  if (require(sp, quietly = TRUE)) {
+   data(meuse, package = "sp")
+   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, agr = "constant")
+  } 
 
-  #### Providing an inverse power function weights matrix
-   Wij <- spDists(meuse)
-     Wij <- 1 / Wij
-           diag(Wij) <- 0 
-         Wij <- Wij / sum(Wij) 
-   diag(Wij) <- 0
-   ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
-                          dist.function = "none", k=99) )
+#### Using a default spatial weights matrix method (inverse power function)
+( I <- crossCorrelation(meuse$zinc, meuse$copper, 
+             coords = st_coordinates(meuse)[,1:2], k=99) )
+  meuse$lisa <- I$SCI[,"lsci.xy"]
+    plot(meuse["lisa"], pch=20)
+
+#### Providing a distance matrix
+if (require(units, quietly = TRUE)) {
+  Wij <- units::drop_units(st_distance(meuse))
+ ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, k=99) )
+
+#### Providing an inverse power function weights matrix
+  Wij <- 1 / Wij
+    diag(Wij) <- 0 
+      Wij <- Wij / sum(Wij) 
+        diag(Wij) <- 0
+ ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
+                         dist.function = "none", k=99) )
+}
 } 
 
 }

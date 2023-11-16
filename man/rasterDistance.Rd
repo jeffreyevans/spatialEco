@@ -14,13 +14,13 @@ rasterDistance(x, y, scale = FALSE)
 \item{scale}{(FALSE/TRUE) Perform a row standardization on results}
 }
 \value{
-a distance terra SpatRast raster
+A terra SpatRast raster representing distances
 }
 \description{
 Calculates the Euclidean distance of a defined raster class and
              all the other cells in a taster
 }
-\note{
+\details{
 This replicates the terra distance function but uses the Arya & Mount
 Approximate Near Neighbor (ANN) C++ library for calculating distances. Where this
 results in a notable increase in performance it is not memory safe, needing to read
@@ -28,6 +28,7 @@ in the entire raster and does not use the GeographicLib (Karney, 2013) spheroid
 distance method for geographic data.
 }
 \examples{
+\donttest{
 library(sf)
 library(terra)
 
@@ -49,15 +50,7 @@ rd <- rasterDistance(rnc, y=ids)
   plot(rd)
     plot( st_geometry(nc.sub), add=TRUE)
 
-#### Benchmark rasterDistance and terra::distance
-####   at res=90m the differences are quite notable
-# ref <- rast(ext(nc), resolution=500)
-#   rnc <- mask(rasterize(vect(nc.sub), ref, background=2),
-#               vect(nc)) 
-#     crs(rnc) <- "ESRI:102008" 
-# system.time({ rasterDistance(rnc, y=1) })  
-# system.time({ distance(rnc, target=2) }) 
-
+}
 }
 \references{
 Arya S., Mount D. M., Netanyahu N. S., Silverman R. and Wu A. Y (1998), An 

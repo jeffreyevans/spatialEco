@@ -33,7 +33,8 @@ minus number of NA's
 }
 \description{
 Removes extreme outliers using a winsorization transformation
-
+}
+\details{
 Winsorization is the transformation of a distribution by limiting extreme values 
 to reduce the effect of spurious outliers. This is done by shrinking outlying 
 observations to the border of the main part of the distribution.

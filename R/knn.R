@@ -11,11 +11,7 @@
 #' @param weights.x  A vector or matrix representing covariates of x
 #' @param indexes    (FALSE/TRUE) Return row indexes of x neighbors
 #'
-#' @return 
-#' A data.frame with row indexes (optional), rownames, ids (optional) and 
-#' distance of k
-#'
-#' @description
+#' @details
 #' Finds nearest neighbor in x based on y and returns rownames, index and distance,
 #' If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
 #' columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
@@ -25,16 +21,19 @@
 #' must match row dimensions with x and y as well as columns matching between weights.
 #' In other words, the covariates must match and be numeric.   
 #'
+#' @return 
+#' A data.frame with row indexes (optional), rownames, ids (optional) and 
+#' distance of k
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples 
 #' \donttest{
-#' library(sf)
-#' 
 #' if(require(sp, quietly = TRUE)) {
-#'    data(meuse, package = "sp")
-#'    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-#'                      agr = "constant")
+#' library(sf)
+#'   data(meuse, package = "sp")
+#'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                     agr = "constant")
 #'  
 #' # create reference and target obs
 #' idx <- sample(1:nrow(meuse), 10) 
@@ -60,14 +59,18 @@
 #' y <- st_coordinates(pts)[,1:2]
 #' x <- st_coordinates(meuse)[,1:2]
 #' knn(y, x, k=2)
-#' }  
-#' }	  
+#'
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
+#' }
+#' }
+#'	  
 #' @seealso \code{\link[RANN]{nn2}} for details on search algorithm 
 #' @export knn
 knn <- function(y, x, k = 1, d = NULL, ids = NULL, 
                 weights.y = NULL, weights.x = NULL,
                 indexes = FALSE) {
-  if(!any(which(utils::installed.packages()[,1] %in% "RANN")))
+  if(length(find.package("RANN", quiet = TRUE)) == 0)
       stop("please install RANN package before running this function")
 
   gtypes = c("POLYGON", "POINT")
@@ -94,7 +97,7 @@ knn <- function(y, x, k = 1, d = NULL, ids = NULL,
       stop(deparse(substitute(x)), " must be one of ", 
   	  paste(gtypes, collopse=""))
     if(xgeom == gtypes[1]) {
-	  cat("Warning, x has polygon geometry using centroid coordinates", "\n")
+	  warning("x has polygon geometry using centroid coordinates")
       xmat <- sf::st_coordinates(sf::st_centroid(x))[,1:2]
     } else {
       xmat <- sf::st_coordinates(x)[,1:2]
@@ -116,7 +119,7 @@ knn <- function(y, x, k = 1, d = NULL, ids = NULL,
       stop(deparse(substitute(y)), " must be one of ", 
   	  paste(gtypes, collopse=""))
     if(ygeom == gtypes[1]) {
-	  cat("Warning, y has polygon geometry using centroid coordinates", "\n")
+	  warning("y has polygon geometry using centroid coordinates")
       ymat <- sf::st_coordinates(sf::st_centroid(y))[,1:2]
     } else {
       ymat <- sf::st_coordinates(y)[,1:2]

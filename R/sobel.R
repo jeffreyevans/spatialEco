@@ -7,9 +7,7 @@
 #'                     if method="edge", raster::focal (if you want a file 
 #'                      written to disk use filename = "" argument)
 #'
-#' @return A raster class object or raster written to disk 
-#'
-#' @description 
+#' @details
 #' The Sobel-Feldmanh operator is a discrete differentiation operator, deriving an 
 #' approximation of the gradient of the intensity function. abrupt discontinuity 
 #' in the gradient function represents edges, making this a common approach for edge 
@@ -21,6 +19,8 @@
 #' the down-direction. At each pixel in the raster, the resulting gradient can be combined 
 #' to give the gradient intensity, using: SQRT( Gx^2 Gy^2 ). This can be expanded into the 
 #' gradient direction using atan(Gx/Gy)
+#'
+#' @return A raster class object or raster written to disk 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           

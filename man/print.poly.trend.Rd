@@ -11,6 +11,9 @@
 
 \item{...}{Ignored}
 }
+\value{
+Prints trend model summary, order and trend confidence intervals
+}
 \description{
 print method for class "poly.trend"
 }

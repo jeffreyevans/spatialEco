@@ -17,7 +17,8 @@ terra SpatRaster class object Diurnal Anisotropic Heat Index
 }
 \description{
 Simple approximation of the anisotropic diurnal heat (Ha) distribution
-
+}
+\details{
 The Diurnal Anisotropic Heat Index is based on this equation.  
 Ha = cos(amax - a) * arctan(b)
   Where; amax defines the aspect with the maximum total heat  

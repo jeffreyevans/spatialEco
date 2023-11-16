@@ -34,9 +34,13 @@ band 7, OLI (landsat 8) band 7}
 
 \item{method}{Method to use for index options are "Bouhennache", "Zha", "Xu"}
 }
+\value{
+A terra raster object of the built index
+}
 \description{
 Remote sensing built-up index
-
+}
+\details{
 This function calculates the built-up index. Three methods are available:
 \itemize{
 \item Bouhennache is a new method that uses a larger portion of the VIR/NIR
@@ -72,9 +76,9 @@ OLI (Landsat 8)
 }
 }
 \examples{
-\dontrun{
+\donttest{
 library(terra)
- lsat <- rast(system.file("extdata/Landsat_TM5", package="spatialEco"))
+ lsat <- rast(system.file("/extdata/Landsat_TM5.tif", package="spatialEco"))
    plotRGB(lsat, r=3, g=2, b=1, scale=1.0, stretch="lin")
 			   
  # Using Bouhennache et al., (2018) method (needs green, red, swir1 and swir2) 
@@ -94,7 +98,6 @@ library(terra)
                      swir1 = lsat[[5]], , method = "Xu") )
    plotRGB(lsat, r=3, g=2, b=1, scale=1, stretch="lin")
      plot(xu, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE ) 
-
 }
 
 }

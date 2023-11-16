@@ -5,13 +5,13 @@
 #' @param x           sf POLYGON or MULTIPOLYGON object
 #' @param only.holes  Delete holes (FALSE) or returns only holes (FALSE)
 #'
-#' @return sf POLYGON object
-#'
-#' @note 
+#' @details 
 #' A hole is considered a polygon within a polygon (island) representing null 
 #' geometry. If you want to return only holes, no longer NULL, use keep = TRUE. 
 #' To delete holes use default only.holes = FALSE. Single part features will be 
 #' returned regardless of input.  
+#'
+#' @return sf POLYGON object
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

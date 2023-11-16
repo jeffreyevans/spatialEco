@@ -10,6 +10,15 @@
 #' @param plot         (FALSE/TRUE) Plot results
 #' @param ...          Additional arguments passed to earth 
 #'
+#' @details
+#' This function uses Multivariate Adaptive Regression Splines, to downscale a raster based 
+#' on higher-resolution or more detailed raster data specified as covariate(s). This is similar
+#' to the raster.downsample function which uses a robust regression and is a frequentest model for
+#' fitting linear asymptotic relationships whereas, this approach is for fitting nonparametric
+#' functions and should be used when the distributional relationship are complex/nonlinear.
+#' Using add.coords adds spatial coordinates to the model, including creating the associated 
+#' rasters for prediction.      
+#'
 #' @return A list object containing:  
 #' * downscale         Downscaled terra SpatRaster object
 #' * GCV Generalized   Cross Validation (GCV)
@@ -19,15 +28,6 @@
 #' * model             earth MARS model object (if keep.model = TRUE) 
 #' @md
 #'
-#' @note
-#' This function uses Multivariate Adaptive Regression Splines, to downscale a raster based 
-#' on higher-resolution or more detailed raster data specified as covariate(s). This is similar
-#' to the raster.downsample function which uses a robust regression and is a frequentest model for
-#' fitting linear asymptotic relationships whereas, this approach is for fitting nonparametric
-#' functions and should be used when the distributional relationship are complex/nonlinear.
-#' Using add.coords adds spatial coordinates to the model, including creating the associated 
-#' rasters for prediction.      
-#'
 #' @references
 #' Friedman (1991) Multivariate Adaptive Regression Splines (with discussion) 
 #'   Annals of Statistics 19(1):1–141
@@ -35,16 +35,17 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' \dontrun{
-#' library(geodata)
+#' \donttest{
+#' if (require(geodata, quietly = TRUE)) {
 #' library(terra)
+#' library(geodata)
 #' 
 #' # Download example data (requires geodata package)
-#'   elev <- geodata::elevation_30s(country="SWZ",  path=tempdir())
+#'   elev <- elevation_30s(country="SWZ",  path=tempdir())
 #'     slp <- terrain(elev, v="slope")
 #' 	  x <- c(elev,slp)
 #'         names(x) <- c("elev","slope")
-#'   tmax <- geodata::worldclim_country(country="SWZ", var="tmax", 
+#'   tmax <- worldclim_country(country="SWZ", var="tmax", 
 #'                                      path=tempdir())
 #'     tmax <- crop(tmax[[1]], ext(elev))
 #' 	  names(tmax) <- "tmax"
@@ -60,8 +61,12 @@
 #'       plot(x[[2]], main="slope")
 #'       plot(tmax.ds$downscale, main="Downscaled Temp max")
 #'   par(opar)
-#'  
+#'
+#' } else { 
+#'   cat("Please install geodata package to run example", "\n")
 #' }
+#' }
+#'
 #' @export
 aspline.downscale <- function(x, y, add.coords = TRUE, keep.model = FALSE, 
                               grid.search = FALSE, plot = FALSE, ...) {
@@ -75,7 +80,7 @@ aspline.downscale <- function(x, y, add.coords = TRUE, keep.model = FALSE,
           y <- y[[1]]
     }
     if(grid.search) {
-      if(!any(which(utils::installed.packages()[,1] %in% "caret")))
+      if(length(find.package("caret", quiet = TRUE)) == 0)
         stop("please install caret package to implement grid search")
     }	
   sub.samp.sp <- terra::as.points(x, na.rm=TRUE)
@@ -101,7 +106,7 @@ aspline.downscale <- function(x, y, add.coords = TRUE, keep.model = FALSE,
       names(x)[(nlyr(x)-1):nlyr(x)] <- c("xcoord", "ycoord")
   } 
     if(grid.search) {
-      if(!any(which(utils::installed.packages()[,1] %in% "caret")))
+      if(length(find.package("caret", quiet = TRUE)) == 0)
         stop("please install caret package to implement grid search")
       hyper_grid <- expand.grid(
       degree = 1:3, 

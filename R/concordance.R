@@ -5,9 +5,7 @@
 #' @param y vector of binomial response variable used in model
 #' @param p estimated probabilities from fit binomial model 
 #'
-#' @return list object with: concordance, discordance, tied and pairs
-#'
-#' @note
+#' @details 
 #' Test of binomial regression for the hypothesis that probabilities of all 
 #' positives [1], are greater than the probabilities of the nulls [0]. The 
 #' concordance would be 100% for a perfect model where, disconcordance is the 
@@ -18,6 +16,8 @@
 #' probabilities of nulls. discordance - concordance inverse of concordance 
 #' representing the null class, tied - number of tied probabilities and 
 #' pairs - number of pairs compared
+#'
+#' @return list object with: concordance, discordance, tied and pairs
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

@@ -27,9 +27,9 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#'     x <- runif(1000,0,100)
-#'     ( d <- moments(x, plot=TRUE) )
-#'     ( mode.x <- moments(x, plot=FALSE)[16] )
+#' x <- runif(1000,0,100)
+#' ( d <- moments(x, plot=TRUE) )
+#' ( mode.x <- moments(x, plot=FALSE)[16] )
 #'  
 #' @export 
 moments <- function(x, plot = FALSE) {

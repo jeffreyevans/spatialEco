@@ -14,12 +14,12 @@ erase.point(y, x, inside = TRUE)
 \item{inside}{(TRUE/FALSE) Remove points inside polygon, else outside polygon}
 }
 \value{
-A sf POINT object
+An sf POINT object
 }
 \description{
 Removes points intersecting a polygon feature class
 }
-\note{
+\details{
 Used to erase points that intersect polygon(s). The default of inside=TRUE
 erases points inside the polygons however, if inside=FALSE then
 the function results in an intersection where points that
@@ -27,16 +27,11 @@ intersect the polygon are retained.
 }
 \examples{
 
-p = c("sf", "sp")
-  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
-    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
-    message("Can't run examples, please install ", paste(p[m], collapse = " "))
-  } else {
-  invisible(lapply(p, require, character.only=TRUE))
+library(sf)
   
+if (require(sp, quietly = TRUE)) {
   data(meuse, package = "sp")
-  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-                    agr = "constant")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, agr = "constant")
 
   s <- st_as_sf(st_sample(st_as_sfc(st_bbox(meuse)), size=1000, 
                  type = "regular"))
@@ -59,6 +54,8 @@ out.erase <- erase.point(s, b, inside = FALSE)
      plot(st_geometry(b),add=TRUE)
  par(opar)
 
+} else { 
+  cat("Please install sp package to run example", "\n")
 }
 
 }

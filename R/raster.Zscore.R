@@ -1,6 +1,6 @@
 #' @title Modified z-score for a raster
-#' @description Calculates the modified z-score for all cells 
-#'              in a raster
+#' @description 
+#' Calculates the modified z-score for raster values
 #' 
 #' @param x                A raster class object
 #' @param p.value          Return p-value rather than z-score 
@@ -8,11 +8,11 @@
 #' @param file.name        Name of raster written to disk
 #' @param ...              Additional arguments passed to writeRaster
 #'
-#' @return raster class object or raster written to disk
-#'
 #' @note 
 #' Since this functions needs to operate on all of the raster values, 
 #' it is not memory safe 
+#'
+#' @return raster class object or raster written to disk
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

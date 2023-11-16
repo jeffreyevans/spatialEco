@@ -38,7 +38,8 @@ A data.frame with the following separability metrics:
 }
 \description{
 Calculates variety of two-class sample separability metrics
-
+}
+\details{
 Available statistics:
 \itemize{
 \item M-Statistic (Kaufman & Remer 1994) - This is a measure of the difference of the

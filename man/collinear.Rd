@@ -54,4 +54,6 @@ plot(cor.data[[1]], pch=20)
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
+
+Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

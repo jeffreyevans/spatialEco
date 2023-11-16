@@ -15,9 +15,9 @@ trasp(x, ...)
 A terra SpatRaster object of Roberts and Cooper (1989) Solar-radiation Aspect Index
 }
 \description{
-Calculates the Roberts and Cooper (1989) Solar-radiation 
-             Aspect Index
-
+Calculates the Roberts and Cooper (1989) Solar-radiation Aspect Index
+}
+\details{
 Roberts and Cooper (1989) rotates (transforms) the circular aspect to assign a 
 value of zero to land oriented in a north-northeast direction, (typically the 
 coolest and wettest orientation), and a value of one on the hotter, dryer 
@@ -34,8 +34,8 @@ elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 }
 \references{
 Roberts. D.W., and Cooper, S.V. (1989). Concepts and techniques of vegetation mapping. 
-In Land Classifications Based on Vegetation: Applications for Resource Management.
-USDA Forest Service GTR INT-257, Ogden, UT, pp 90-96
+  In Land Classifications Based on Vegetation: Applications for Resource Management.
+  USDA Forest Service GTR INT-257, Ogden, UT, pp 90-96
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

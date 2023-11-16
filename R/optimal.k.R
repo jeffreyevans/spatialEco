@@ -17,7 +17,7 @@
 #' Theodoridis, S. & K. Koutroumbas(2006) Pattern Recognition 3rd ed.   
 #'
 #' @examples 
-#' library(cluster)
+#' if (require(cluster, quietly = TRUE)) {
 #'   x <- rbind(cbind(rnorm(10,0,0.5), rnorm(10,0,0.5)),
 #'              cbind(rnorm(15,5,0.5), rnorm(15,5,0.5)))
 #'
@@ -32,12 +32,16 @@
 #' # join clusters to data
 #'   x <- data.frame(x, k=clust$model$clustering) 
 #'
+#' } else { 
+#'   cat("Please install cluster package to run example", "\n")
+#' }
+#'
 #' @seealso \code{\link[cluster]{pam}} for details on Partitioning Around Medoids (PAM)  
 #' @seealso \code{\link[cluster]{clara}} for details on Clustering Large Applications (clara) 
 #'
 #' @export  
 optimal.k <- function(x, nk = 10, plot = TRUE, cluster = TRUE, clara = FALSE, ...) {
-    if(!any(which(utils::installed.packages()[,1] %in% "cluster")))
+	if(length(find.package("cluster", quiet = TRUE)) == 0)
       stop("please install cluster package before running this function")
     asw <- numeric(nk)
       for (k in 2:nk) {

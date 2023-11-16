@@ -7,14 +7,12 @@
 #' @param reps         Number of replicates per strata
 #' @param replace      (TRUE/FALSE) Sampling with replacement 
 #'
-#' @return An sf class object containing random samples
-#'
-#' @note
+#' @details 
 #' If replace=FALSE features are removed from consideration in subsequent replicates.
 #' Conversely, if replace=TRUE, a feature can be selected multiple times across 
 #' replicates. Not applicable if rep=1.
 #'
-#' @note Depends: sf
+#' @return An sf class object containing random samples
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
@@ -25,8 +23,8 @@
 #'   Canadian Journal of Remote Sensing 32: 126-138.
 #'
 #' @examples 
+#' if(require(sp, quietly = TRUE)) {
 #' library(sf)
-#'  if(require(sp, quietly = TRUE)) {
 #'   data(meuse, package = "sp")
 #'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
 #'                     agr = "constant")
@@ -60,7 +58,11 @@
 #' # Plot random samples colored by replacement
 #' ssample$REP <- factor(ssample$REP)
 #'   plot(ssample['REP'], pch=20)
-#' } 
+#'
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
+#' }
+#' 
 #' @export stratified.random
 stratified.random <- function(x, strata, n = 10, reps = 1, replace = FALSE) {
   gtypes = c("POLYGON", "POINT", "LINESTRING", "MULTIPOLYGON", 

@@ -34,7 +34,7 @@ statistic (dev argument)
 Calculates the local minimums and maximums in a numeric vector,
 indicating inflection points in the distribution.
 }
-\note{
+\details{
 Useful function for identifying inflection or enveloping points in
 a distribution
 }

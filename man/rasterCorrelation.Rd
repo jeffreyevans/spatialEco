@@ -23,12 +23,11 @@ s=c(3,5) for 3 x 5 window)}
 A terra SpatRaster class object
 }
 \description{
-Performs a moving window correlation between 
-             two rasters
+Performs a moving window correlation between two rasters
 }
 \note{
 The NA behavior is set to na.rm = TRUE to make default outputs
-      consistent between the terra and raster packages.
+consistent between the terra and raster packages.
 }
 \examples{
 \donttest{

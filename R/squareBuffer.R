@@ -5,9 +5,9 @@
 #' @param a    Numeric single or vector indicating buffer distance(s)
 #' @param ...  Additional arguments passed to st_buffer
 #'
-#' @return A single feature sf class polygon object
+#' @details  Function creates a square buffer of feature class.
 #'
-#' @note Function creates a square buffer of feature class.
+#' @return A single feature sf class polygon object
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

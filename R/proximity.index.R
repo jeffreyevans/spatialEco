@@ -46,7 +46,10 @@
 #'  # plot index for just forest class
 #'  forest <- meuse[meuse$LU == "forest",]
 #'   plot(forest["cpidx"])
-#'   }
+#'
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
+#' }
 #' }   
 #' @export proximity.index
 proximity.index <- function(x, y = NULL, min.dist = 0, max.dist = 1000, 

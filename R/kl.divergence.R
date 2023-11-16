@@ -1,10 +1,6 @@
 #' @title Kullback-Leibler divergence (relative entropy)
 #'
-#' @description 
-#' Calculates the Kullback-Leibler divergence (relative entropy) between 
-#' unweighted theoretical component distributions. Divergence is calculated 
-#' as: int [f(x) (log f(x) - log g(x)) dx] for distributions with densities 
-#' f() and g(). 
+#' @description Calculates the Kullback-Leibler divergence (relative entropy)
 #' 
 #' @param object  Matrix or dataframe object with >=2 columns
 #' @param eps  Probabilities below this threshold are replaced by this 
@@ -13,6 +9,11 @@
 #'                 pairs where for each point at least one of the densities 
 #'                 has a value smaller than eps.
 #'
+#' @details
+#' Calculates the Kullback-Leibler divergence (relative entropy) between 
+#' unweighted theoretical component distributions. Divergence is calculated 
+#' as: int [f(x) (log f(x) - log g(x)) dx] for distributions with densities 
+#' f() and g(). 
 #' @return pairwise Kullback-Leibler divergence index (matrix)   
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>

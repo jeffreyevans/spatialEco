@@ -22,14 +22,14 @@ terra SpatRaster class object of McCune & Keon (2002) Heat Load Index
 \description{
 Calculates the McCune & Keon (2002) Heat Load Index
 }
-\note{
+\details{
 Describes A southwest facing slope should have warmer temperatures than a 
 southeast facing slope, even though the amount of solar radiation they receive 
 is equivalent. The McCune and Keon (2002) method accounts for this by "folding" 
 the aspect so that the highest values are southwest and the lowest values are  
 northeast. Additionally, this method account for steepness of slope, which is 
 not addressed in most other aspect rescaling equations. HLI values range 
-from 0 (coolest) to 1 (hottest).
+from 0 (coolest) to 1 (hottest). 
 
 The equations follow McCune (2007) and support northern and southern hemisphere 
 calculations. The folded aspect for northern hemispheres use (180 - (Aspect – 225) ) 

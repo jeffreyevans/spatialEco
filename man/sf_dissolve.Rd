@@ -19,7 +19,7 @@ A dissolved POLYGON or MULTIPOLYGON object
 \description{
 Dissolve polygon feature calss
 }
-\note{
+\details{
 If a dissolve attribute is defined, the result will be a 
 MULTIPOLYGON with the grouping attribute column. If y=NULL all polygons
 will be dissolved into a single attribute, unless there is spatial

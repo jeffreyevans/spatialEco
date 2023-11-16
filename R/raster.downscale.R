@@ -14,19 +14,7 @@
 #' @param uncertainty  Output uncertainty raster(s) of confidence or prediction interval, 
 #'                     at same resolution as y. Options are c("none", "prediction", "confidence")  
 #'
-#' @return A list object containing:  
-#' * downscale      downscaled terra SpatRaster object
-#' * model          MASS rlm model object 
-#' * MSE            Mean Square Error
-#' * AIC            Akaike information criterion
-#' * parm.ci        Parameter confidence intervals
-#' * residuals      If residuals = TRUE, a SpatRaster of the residual error
-#' * uncertainty    If pred.int = TRUE, SpatRaster's of the 
-#'                  lower/upper prediction intervals
-#' * std.error      If se = TRUE, SpatRaster's of the standard error 
-#' @md
-#'
-#' @note
+#' @details
 #' This function uses a robust regression, fit using an M-estimation with Tukey's biweight 
 #' initialized by a specific S-estimator, to downscale a raster based on higher-resolution
 #' or more detailed raster data specified as covariate(s). You can optionally output residual 
@@ -42,22 +30,34 @@
 #' the prediction interval for standard error defaults to "confidence" else is the same output as
 #' uncertainty (eg., prediction or confidence).    
 #'
-#' @references
-#' Bruce, P., & A. Bruce. (2017). Practical Statistics for Data Scientists. O’Reilly Media.
+#' @return 
+#' A list object containing:  
+#'   * downscale - downscaled terra SpatRaster object
+#'   * model - MASS rlm model object 
+#'   * MSE - Mean Square Error
+#'   * AIC - Akaike information criterion
+#'   * parm.ci - Parameter confidence intervals
+#'   * residuals - If residuals = TRUE, a SpatRaster of the residual error
+#'   * uncertainty - If pred.int = TRUE, SpatRaster's of the lower/upper prediction intervals
+#'   * std.error - If se = TRUE, SpatRaster's of the standard error 
+#' @md
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
+#' @references
+#' Bruce, P., & A. Bruce. (2017). Practical Statistics for Data Scientists. O’Reilly Media.
+#'
 #' @examples 
-#' \dontrun{
-#' library(geodata)
+#' \donttest{
+#' if (require(geodata, quietly = TRUE)) {
 #' library(terra)
-#' 
+#' library(geodata)
+#'
 #' # Download example data (requires geodata package)
-#'   elev <- geodata::elevation_30s(country="SWZ",  path=tempdir())
-#'  slp <- terrain(elev, v="slope")
-#'   tmax <- geodata::worldclim_country(country="SWZ", var="tmax", 
-#'                                      path=tempdir())
-#'     tmax <- crop(tmax[[1]], ext(elev))
+#' elev <- elevation_30s(country="SWZ", path=tempdir())
+#' slp <- terrain(elev, v="slope")
+#' tmax <- worldclim_country(country="SWZ", var="tmax", path=tempdir())
+#'   tmax <- crop(tmax[[1]], ext(elev))
 #' 
 #' # Downscale temperature
 #' x=c(elev,slp)
@@ -96,7 +96,10 @@
 #'       plot(tmax.ds$downscale - tmax.ds$uncertainty[[2]], 
 #' 	       main="upper prediction interval")  
 #'   par(opar)  
-#'  
+#'
+#' } else { 
+#'   cat("Please install geodata package to run example", "\n")
+#' }
 #' }
 #' @export raster.downscale
 raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE, 
@@ -138,6 +141,8 @@ raster.downscale <- function(x, y, scatter = FALSE, full.res = FALSE,
     rrr <- MASS::rlm(stats::as.formula(paste(names(sub.samp)[1], xnames, sep=" ~ ")), 
                      data=sub.samp, scale.est="Huber", psi=MASS::psi.hampel, init="lts")
     if(scatter == TRUE) {
+	  oops <- options() 
+        on.exit(options(oops)) 
       n = terra::nlyr(x)
 	  if(n > 1) {
 	    graphics::par(mfrow=c(n,n/2))   

@@ -2,7 +2,7 @@ Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-2
-Date: 2023-11-10
+Date: 2023-11-15
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
@@ -44,7 +44,8 @@ Suggests:
   units,
   sp,
   stringr,
-  lwgeom  
+  lwgeom,
+  geodata  
 Maintainer: Jeffrey S. Evans <jeffrey_evans@tnc.org>
 License: GPL-3
 URL: https://github.com/jeffreyevans/spatialEco, https://jeffreyevans.github.io/spatialEco/

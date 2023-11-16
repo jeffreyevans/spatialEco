@@ -11,6 +11,10 @@
 #'                   plot (TRUE/FALSE)
 #' @param ... Arguments passed to plot
 #' 
+#' @details  
+#' Useful function for identifying inflection or enveloping points in 
+#' a distribution
+#'
 #' @return A list object with:  
 #' * minima - minimum local values of x
 #' * maxima - maximum local values of x
@@ -19,10 +23,6 @@
 #' * maxdev - Absolute deviation of maximum from specified deviation 
 #'          statistic (dev argument) 
 #' @md
-#'
-#' @note 
-#' Useful function for identifying inflection or enveloping points in 
-#' a distribution
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

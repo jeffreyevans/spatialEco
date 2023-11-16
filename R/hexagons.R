@@ -1,20 +1,20 @@
 #' @title Hexagons
 #' @description Create hexagon polygons
 #'                                                                                                                                                                              
-#' @param x sp SpatialDataFrame class object
-#' @param res Area of resulting hexagons
-#' @param ... Additional arguments passed to spsample
+#' @param x     sf class object indicating extent
+#' @param res   Area of resulting hexagons
 #' 
-#' @return SpatialPolygonsDataFrame OBJECT
-#'
-#' @note depends: sp 
-#'                                                                  
+#' @details 
+#' Based on extent of x, creates a hexagon mesh with size of hexagons defined by res argumnet 
+#' 
+#' @return sf POLYGONS object
+#'                                                                 
 #' @examples 
-#'  library(sf)
-#'  if(require(sp, quietly = TRUE)) {
-#'    data(meuse, package = "sp")
-#'    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-#'                      agr = "constant")
+#' library(sf)
+#' if(require(sp, quietly = TRUE)) {
+#'   data(meuse, package = "sp")
+#'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                     agr = "constant")
 #'
 #' hex <- hexagons(meuse, res=300)   
 #'   plot(st_geometry(hex))
@@ -25,9 +25,13 @@
 #' hex.sub <- hex[idx,] 
 #'   plot(st_geometry(hex.sub))
 #'     plot(st_geometry(meuse),pch=20,add=TRUE)
+#'
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
 #' }
+#'
 #' @export      
-hexagons <- function(x, res = 100, ...) {
+hexagons <- function(x, res = 100) {
   if(!inherits(x, "sf"))		
     stop(deparse(substitute(x)), " must be an sf object")
   if(sf::st_is_longlat(x))

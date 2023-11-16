@@ -31,7 +31,8 @@ A vector of the modeled value
 \description{
 The Trigonometric  Stage (1978) 
              [slope * cos(aspect)] or [slope * sin(aspect)]
-
+}
+\details{
 An a priori assumption of a maximum in the NW quadrant (45 azimuth)
 and a minimum in the SW quadrant can be replaced by an empirically
 determined location of the optimum without repeated calculations of
@@ -49,12 +50,11 @@ values.By default this model test all values greater than 100%
 to 101% and flat areas (-1) to nodata.
 }
 \examples{
- sa.trans(slope = 48.146, aspect = 360.000)
-
 library(terra)
-elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
+sa.trans(slope = 48.146, aspect = 360.000)
 
-# Example of slope*cos(aspect)
+# Example of creating slope*cos(aspect) raster
+elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 sa <- terra::terrain(elev, v=c("slope", "aspect"), unit="degrees")
 scosa <- terra::lapp(c(sa[[1]], sa[[2]]), fun = sa.trans)
 

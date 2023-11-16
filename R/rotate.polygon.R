@@ -7,12 +7,12 @@
 #' @param anchor  Location to rotate polygon on options are "center", 
 #'               "lower.left" and "upper.right" 
 #'
-#' @return an sp or sf polygon object with rotated polygon
-#'
-#' @note 
+#' @details 
 #' The anchor is the location that the rotation is anchored to. The center
 #' is the centroid where the lower.left and upper.right are based on the 
 #' min or max of the coordinates respectively. 
+#'
+#' @return an sp or sf polygon object with rotated polygon
 #' 
 #' @examples
 #' library(sf)

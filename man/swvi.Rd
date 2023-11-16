@@ -46,15 +46,14 @@ A terra SpatRaster class object of the weighted MSAVI metric
 Modified Soil-adjusted Vegetation Index (MSAVI) or Modified Triangular
 Vegetation Index 2 (MTVI) weighted by the Normalized difference senescent
 vegetation index (NDSVI)
-
+}
+\details{
 The intent of this index is to correct the MSAVI or MTVI index for bias associated
 with senescent vegetation. This is done by:
-\itemize{
-\item deriving the NDSVI;
-\item applying a threshold to limit NDSVI to values associated with senescent vegetation;
-\item converting the index to inverted weights (-1*(NDSVI/sum(NDSVI)));
-\item applying weights to MSAVI or MTVI
-}
+1 deriving the NDSVI
+2 applying a threshold to limit NDSVI to values associated with senescent vegetation
+3 converting the index to inverted weights (-1*(NDSVI/sum(NDSVI)))
+4 applying weights to MSAVI or MTVI
 
 The MSAVI formula follows the modification proposed by Qi et al. (1994),
 often referred to as MSAVI2. MSAVI index reduces soil noise and increases
@@ -77,27 +76,20 @@ but if specified all values (MSAVI <= threshold) will be NA. Applying a weight.f
 used to change the influence of the weights on MSAVI.
 }
 \examples{
-\dontrun{
-# library(terra)
-# if(!unlist(lapply("RStoolbox", requireNamespace, quietly=TRUE)))
-#   message("Can't run examples, please install RStoolbox")
-# 
-# data(lsat)
-# lsat <- radCor(lsat, metaData = readMeta(system.file(
-#               "external/landsat/LT52240631988227CUB02_MTL.txt", 
-#               package="RStoolbox")), method = "apref")
-#   lsat <- rast(lsat)
-#   
-# # Using Modified Soil-adjusted Vegetation Index (MSAVI)
-# ( wmsavi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]]) )
-#     plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-#       plot(wmsavi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
-# 
-# # Using Modified Triangular Vegetation Index 2 (MTVI) 
-# ( wmtvi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]],
-#                           green = lsat[[3]], mtvi = TRUE) )
-#   plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
-#     plot(wmtvi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
+\donttest{
+library(terra)
+lsat <- rast(system.file("/extdata/Landsat_TM5.tif", package="spatialEco"))
+ 
+# Using Modified Soil-adjusted Vegetation Index (MSAVI)
+( wmsavi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]]) )
+    plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+      plot(wmsavi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
+
+# Using Modified Triangular Vegetation Index 2 (MTVI) 
+( wmtvi <- swvi(red = lsat[[3]], nir = lsat[[4]], swir = lsat[[5]],
+                          green = lsat[[3]], mtvi = TRUE) )
+  plotRGB(lsat, r=6,g=5,b=2, scale=1, stretch="lin")
+    plot(wmtvi, legend=FALSE, col=rev(terrain.colors(100, alpha=0.35)), add=TRUE )
 }
 
 }

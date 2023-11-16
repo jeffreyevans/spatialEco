@@ -32,7 +32,8 @@ specified global statistic
 \description{
 Calculates the local deviation from the raster, a specified global statistic 
 or a polynomial trend of the raster.
-
+}
+\details{
 The deviation from the trend is derived as [y-hat - y] where; y-hat is the 
 Nth-order polynomial. Whereas the deviation from a global statistic is [y - y-hat] 
 where; y-hat is the local (focal) statistic. The global = TRUE argument allows 
@@ -62,7 +63,7 @@ par(opar)
 Magee, Lonnie (1998). Nonlocal Behavior in Polynomial Regressions. The American 
   Statistician. American Statistical Association. 52(1):20-22
 
-Fan, J. (1996). Local Polynomial Modelling and Its Applications: From linear  
+ Fan, J. (1996). Local Polynomial Modelling and Its Applications: From linear  
    regression to nonlinear regression. Monographs on Statistics and Applied 
    Probability. Chapman and  Hall/CRC. ISBN 0-412-98321-4
 }

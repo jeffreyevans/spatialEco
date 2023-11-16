@@ -18,7 +18,7 @@ sf POLYGON object
 Removes or returns all holes (null geometry) in sf polygon 
 class objects
 }
-\note{
+\details{
 A hole is considered a polygon within a polygon (island) representing null 
 geometry. If you want to return only holes, no longer NULL, use keep = TRUE. 
 To delete holes use default only.holes = FALSE. Single part features will be 

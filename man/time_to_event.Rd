@@ -32,7 +32,8 @@ A vector value representing the time to event
 }
 \description{
 Returns the time (sum to position) to a specified value
-
+}
+\details{
 The time to event represents the sum of positions, in the vector,
 until the specified value is found ie., (0,0,1) would be 3 or, 
 2 with up.to=TRUE. The int argument allows for rounding a continuous  
@@ -45,7 +46,6 @@ function behavior, causing it to fail or count NAs. Note that it makes no
 sense to actually remove NAs as it will make the run uninterpretable.
 }
 \examples{
-
 # Binomial instance
 time_to_event(c(0,0,0,0,1,0,0,0,1,0))
 time_to_event(c(0,0,0,0,1,0,0,0,1,0), up.to = TRUE)

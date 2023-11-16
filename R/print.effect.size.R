@@ -1,7 +1,12 @@
 #' @title Print effect size
 #' @description print method for class "effect.size"
+#'
 #' @param x    Object of class effect.size
 #' @param ...  Ignored
+#'
+#' @return
+#' Prints the output data.frame contaning; effect size with upper and lower confidence 
+#' and, mean and sd by group  
 #'
 #' @method print effect.size
 #' @export

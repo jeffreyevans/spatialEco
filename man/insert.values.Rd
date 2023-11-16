@@ -20,14 +20,15 @@ defined by the index
 \description{
 Inserts new values into a vector at 
              specified positions
-
+}
+\details{
 This function inserts new values at specified positions in a vector. It 
 does not replace existing values. If a single value is provided for y 
 and l represents multiple positions y will be replicated for the length 
 of l. In this way you can insert the same value at multiple locations.
 }
 \examples{
- (x=1:10)
+(x=1:10)
 
  # Insert single value in one location
  insert.values(x, 100, 2) 

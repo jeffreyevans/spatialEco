@@ -20,7 +20,7 @@ A SpatRaster class object of Martonne's modified dissection
 Calculates the Evans (1972) Martonne's modified 
              dissection
 }
-\note{
+\details{
 Dissection is calculated as: 
 ( z(s) - min(z(s)) ) / ( max(z(s)) - min(z(s)) )
 }

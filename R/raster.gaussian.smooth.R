@@ -9,13 +9,13 @@
 #' @param type      The statistic to use in the smoothing operator; 
 #'                  "mean", "median", "sd", "convolution"
 #' @param ...       Additional arguments passed to terra::focal 
-#' 
-#' @return A terra SpatRaster class object of the local distributional moment
 #'
-#' @note
+#' @details
 #' This applies a Gaussian Kernel smoother. The convolution option performs
 #' a Gaussian decomposition whereas the other options use the kernel
 #' as weights for the given statistic. 
+#' 
+#' @return A terra SpatRaster class object of the local distributional moment
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

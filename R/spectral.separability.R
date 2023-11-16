@@ -7,10 +7,7 @@
 #'                              row wise values in x
 #' @param jeffries.matusita   (TRUE/FALSE) Return J-M distance (default) else Bhattacharyya  
 #'
-#' @return A matrix of class-wise Jeffries-Matusita or Bhattacharyya distance 
-#'         separability values
-#'
-#' @description
+#' @details 
 #' Available statistics:
 #' * Bhattacharyya distance (Bhattacharyya 1943; Harold 2003) measures the similarity
 #'   of two discrete or continuous probability distributions.
@@ -20,23 +17,26 @@
 #'   where 2 suggest complete separability.
 #' @md 
 #'
+#' @return 
+#' A matrix of class-wise Jeffries-Matusita or Bhattacharyya distance separability values
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #' Bhattacharyya, A. (1943) On a measure of divergence between two statistical 
 #'   populations defined by their probability distributions'. Bulletin of the 
 #'   Calcutta Mathematical Society 35:99-109
-#' @references
+#' 
 #' Bruzzone, L., F. Roli, S.B. Serpico (1995) An extension to multiclass cases of 
 #'   the Jefferys-Matusita distance. IEEE Transactions on Pattern Analysis and  
 #'   Machine Intelligence 33:1318-1321
-#' @references
+#' 
 #' Kailath, T., (1967) The Divergence and Bhattacharyya measures in signal  
 #'   selection. IEEE Transactions on Communication Theory 15:52-60  
 #' 
 #' @examples 
-#'#' # Create example data 
 #' require(MASS)                
+#' # Create example data 
 #' d <- 6                 # Number of bands
 #' n.class <- 5           # Number of classes
 #' n <- rep(1000, 5)                

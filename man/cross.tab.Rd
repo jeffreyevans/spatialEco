@@ -25,7 +25,7 @@ a table with the cross tabulated counts
 \description{
 Creates a labeled cross tabulation between two nominal rasters
 }
-\note{
+\details{
 This function returns a cross tabulation between two nominal rasters. 
 Arguments allow for labeling the results and returning proportions 
 rather than counts. It also accounts for asymmetrical classes between
@@ -56,9 +56,7 @@ cross.tab(lulc2010, lulc2020, values = v, labs = l, pct=TRUE)
 
 }
 \references{
-Pontius Jr, R.G., Shusas, E., McEachern, M. (2004). Detecting
-important categorical land changes while accounting for persistence.
-Agriculture, Ecosystems & Environment 101(2):251-268.
+Pontius Jr, R.G., Shusas, E., McEachern, M. (2004). Detecting important categorical land changes
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

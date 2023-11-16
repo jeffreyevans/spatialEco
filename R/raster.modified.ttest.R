@@ -9,39 +9,41 @@
 #' @param p           If sample != "none", what proportion of population 
 #'                    should be sampled
 #' @param size        Fixed sample size (default NULL)               
-#'
-#' @return A terra SpatRaster or sf POINT class object with the 
-#'         following attributes:
-#' \itemize{ 
-#' \item   corr        Correlation 
-#' \item   Fstat       The F-statistic calculated as [degrees of freedom * 
-#'                     unscaled F-statistic]
-#' \item   p.value     p-value for the test
-#' \item   moran.x     Moran's-I for x 
-#' \item   moran.y     Moran's-I for y  
-#'  } 
+#' 
 #'
 #' @description 
 #' This function provides a bivariate moving window correlation using the modified  
 #' t-test to account for spatial autocorrelation. Point based subsampling is provided 
 #' for computation tractability. The hexagon sampling is recommended as it it good  
 #' at capturing spatial process that includes nonstationarity and anistropy.    
+#'
+#' @return 
+#' A terra SpatRaster or sf POINT class object with the following attributes:
+#'   * corr - Correlation 
+#'   * Fstat - The F-statistic calculated as degrees of freedom unscaled F-statistic
+#'   * p.value - p-value for the test
+#'   * moran.x - Moran's-I for x 
+#'   * moran.y - Moran's-I for y  
+#' @md
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
 #' @references
 #' Clifford, P., S. Richardson, D. Hemon (1989), Assessing the significance of the  
 #'   correlationbetween two spatial processes. Biometrics 45:123-134.
-#' @references
+#' 
 #' Dutilleul, P. (1993), Modifying the t test for assessing the correlation between 
 #'   two spatial processes. Biometrics 49:305-314. 
 #' 
 #' @examples
-#' \dontrun{
-#' library(gstat) 
-#' library(sf) 
-#' library(terra) 
-#'  
+#' \donttest{
+#'  p = c("sf", "sp", "terra", "gstat")
+#'  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+#'    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+#'    message("Can't run examples, please install ", paste(p[m], collapse = " "))
+#'  } else {
+#'    invisible(lapply(p, require, character.only=TRUE))
+#'
 #' data(meuse, package = "sp")
 #' meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
 #'                   agr = "constant") 
@@ -74,15 +76,14 @@
 #' # Sample-based corrected correlation
 #' ( cor.hex <- raster.modified.ttest(G1, G2, sample = "hexagonal") )	 
 #'   plot(cor.hex["corr"], pch=20)
-#' 
 #' }
-#' 
+#' }
 #' @seealso \code{\link[SpatialPack]{modified.ttest}} for test details
 #'
 #' @export raster.modified.ttest
 raster.modified.ttest <- function(x, y, d = "auto", sample = c("none", "random", "hexagonal", "regular"), 
-								  p = 0.10, size = NULL) {						  
-  if(!any(which(utils::installed.packages()[,1] %in% "SpatialPack")))
+								  p = 0.10, size = NULL) {	
+  if(length(find.package("SpatialPack", quiet = TRUE)) == 0)								  
     stop("please install SpatialPack package before running this function")	
   if(missing(x))
     stop("x argument is missing")

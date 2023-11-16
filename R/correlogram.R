@@ -8,7 +8,8 @@
 #' @param ns        Number of simulations to derive simulation envelope 
 #' @param ...       Arguments passed to cor ('pearson', 'kendall' or 'spearman')
 #' 
-#' @return A list object containing: 
+#' @return 
+#' Plot of correlogram and a list object containing: 
 #' * autocorrelation is a data.frame object with the following components
 #' *   autocorrelation - Autocorrelation value for each distance lag 
 #' *   dist - Value of distance lag

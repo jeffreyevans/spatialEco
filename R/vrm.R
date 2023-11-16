@@ -3,16 +3,15 @@
 #'              ruggedness measure
 #'
 #' @param x          A terra SpatRaster class object
-#' @param s          Scale of window. Must be odd number, can 
-#'                   represent 2 dimensions (eg., s=c(3,5) would 
-#'                   represent a 3 x 5 window)
+#' @param s          Scale of window. Must be odd number, can represent 2 dimensions 
+#'                   (eg., s=c(3,5) would represent a 3 x 5 window)
 #'
-#' @return A terra SpatRaster class object of the VRI
-#' 
-#' @note 
+#' @details
 #' This function measures terrain ruggedness by calculating the vector 
 #' ruggedness measure
 #'
+#' @return A terra SpatRaster class object of the VRI
+#' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
 #' @references 

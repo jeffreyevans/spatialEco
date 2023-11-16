@@ -4,6 +4,8 @@
 #' @param  x      A effect.size object
 #' @param  ...    Additional arguments passed to plot
 #'
+#' @return Plot of effect size object with group effect sizes and 95% confidence  
+#' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                    
 #' @method plot effect.size 

@@ -23,16 +23,14 @@ An sf class object containing random samples
 \description{
 Creates a stratified random sample of an sp class object
 }
-\note{
+\details{
 If replace=FALSE features are removed from consideration in subsequent replicates.
 Conversely, if replace=TRUE, a feature can be selected multiple times across 
 replicates. Not applicable if rep=1.
-
-Depends: sf
 }
 \examples{
+if(require(sp, quietly = TRUE)) {
 library(sf)
- if(require(sp, quietly = TRUE)) {
   data(meuse, package = "sp")
   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
                     agr = "constant")
@@ -66,7 +64,11 @@ ssample.ct <- stratified.random(meuse, strata='STRAT', n=1, reps=10,
 # Plot random samples colored by replacement
 ssample$REP <- factor(ssample$REP)
   plot(ssample['REP'], pch=20)
-} 
+
+} else { 
+  cat("Please install sp package to run example", "\n")
+}
+
 }
 \references{
 Hudak, A.T., N.L. Crookston, J.S. Evans, M.J. Falkowski, A.M.S. Smith, P. Gessler 

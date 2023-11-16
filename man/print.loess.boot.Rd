@@ -11,6 +11,28 @@
 
 \item{...}{Ignored}
 }
+\value{
+same as summary lowess.boot of data.frame including;
+\itemize{
+\item nreps        Number of bootstrap replicates
+\item confidence   Confidence interval (region)
+\item span         alpha (span) parameter used loess fit
+\item degree       polynomial degree used in loess fit
+\item normalize    Normalized data (TRUE/FALSE)
+\item family       Family of statistic used in fit
+\item parametric   Parametric approximation (TRUE/FALSE)
+\item surface      Surface fit, see loess.control
+\item data         data.frame of x,y used in model
+\item fit          data.frame including:
+\enumerate{
+\item x - Equally-spaced x index
+\item y.fit - loess fit
+\item up.lim - Upper confidence interval
+\item low.lim - Lower confidence interval
+\item stddev - Standard deviation of loess fit at each x value
+}
+}
+}
 \description{
 print method for class "loess.boot"
 }

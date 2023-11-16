@@ -19,7 +19,7 @@ great circle in kilometers}
 \item{...}{Arguments passed to cor ('pearson', 'kendall' or 'spearman')}
 }
 \value{
-A list object containing:
+Plot of correlogram and a list object containing:
 \itemize{
 \item autocorrelation is a data.frame object with the following components
 \item autocorrelation - Autocorrelation value for each distance lag

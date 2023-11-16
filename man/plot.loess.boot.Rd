@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments passed to plot}
 }
+\value{
+plot of lowess bootstrap
+}
 \description{
 Plot function for loess.boot object
 }
@@ -21,15 +24,6 @@ Plot function for loess.boot object
  sb <- loess.boot(x, y, nreps = 99, confidence = 0.90, span = 0.40)
  plot(sb)
                    
-}
-\references{
-Cleveland, WS, (1979) Robust Locally Weighted Regression and Smoothing Plots Journal of the American Statistical Association 74:829-836
-
-Efron, B., and R. Tibshirani (1993) An Introduction to the Bootstrap Chapman and Hall, New York
-
-Hardle, W., (1989) Applied Nonparametric Regression Cambridge University Press, NY.
-
-Tibshirani, R. (1988) Variance stabilization and the bootstrap. Biometrika 75(3):433-44.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

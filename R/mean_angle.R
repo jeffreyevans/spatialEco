@@ -4,16 +4,17 @@
 #' @param a        vector of angle values
 #' @param angle    ("degree", "radians") to define angle in degrees or radians
 #'
-#' @return A vector of mean angle 
-#'
-#' @note
+#' @details
 #' The arithmetic mean is not correct for calculating the central tendency of
 #' angles. This function is intended to return the mean angle for slope or aspect,
 #' which could be used in a focal or zonal function.  
 #'
+#' @return A vector of mean angle 
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples
+#' library(terra)
 #' mean_angle(c(180, 10))
 #'   mean(c(180, 10))
 #' mean_angle(c(90, 180, 70, 60))
@@ -21,7 +22,6 @@
 #' mean_angle(c(90, 180, 270, 360))
 #'   mean(c(90, 180, 270, 360))
 #'
-#' library(terra)
 #' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #' asp <- terrain(elev, v="aspect")
 #' s <- buffer(spatSample(asp, 20, as.points=TRUE, 

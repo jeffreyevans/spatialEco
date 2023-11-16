@@ -6,17 +6,17 @@
 #' @param p         Weights column in x 
 #' @param spatial   (TRUE/FALSE) Output sf POINT object    
 #' 
-#' @return 
-#' An x,y coordinate or sf POINT object representing the weighted or unweighted 
-#' coordinate centroid      
-#'
-#' @note
+#' @details
 #' The weighted centroid is calculated as:
 #' [Xw]=[X]*[p], [Yw]=[Y]*[p], [sXw]=SUM[Xw], [sYw]=SUM[Yw], [sP]=SUM[p]
 #'    wX=[sXw]/[sP], wY=[sYw]/[sP]    
 #'    where; X=X coordinate(S), Y=Y coordinate(S), p=WEIGHT 
 #'    
-#' @note Depends: sp
+#' @return 
+#' An x,y coordinate or sf POINT object representing the weighted or unweighted 
+#' coordinate centroid      
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                  
 #' @examples 
 #' p = c("sf", "sp")

@@ -9,9 +9,7 @@
 #' @param files       (TRUE/FALSE) Write file to disk
 #' @param echo        (TRUE/FALSE) Echo progress
 #'
-#' @return A data.frame with climate results 
-#'
-#' @note 
+#' @details 
 #' data is available for Long -131.0 W and -53.0 W; lat 52.0 N and 14.5 N
 #' Function uses the Single Pixel Extraction tool and returns year, yday, 
 #'       dayl(s), prcp (mm/day), srad (W/m^2), swe (kg/m^2), tmax (deg c), 
@@ -19,6 +17,8 @@
 #' Metadata for DAYMET single pixel extraction: 
 #' \url{ https://daymet.ornl.gov/files/UserGuides/current/readme_singlepointextraction.pdf }
 #' 
+#' @return A data.frame with geographic coordinate point-level climate results 
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'         
 #' @examples
@@ -30,7 +30,7 @@
 #' @export
 daymet.point <- function (lat, long, start.year, end.year, site=NULL, 
                           files = FALSE, echo = FALSE) {
-    if(!any(which(utils::installed.packages()[,1] %in% "RCurl")))
+	if(length(find.package("RCurl", quiet = TRUE)) == 0)
       stop("please install RCurl package before running this function")
     if(missing(lat)) stop("Please define lat") 
     if(missing(long)) stop("Please define long") 

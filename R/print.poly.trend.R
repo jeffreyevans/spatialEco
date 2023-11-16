@@ -1,8 +1,11 @@
 #' @title Print poly_trend
 #' @description print method for class "poly.trend"
+#'
 #' @param x    Object of class poly.trend
 #' @param ...  Ignored
 #'
+#' @return Prints trend model summary, order and trend confidence intervals
+#' 
 #' @method print poly.trend
 #' @export
 print.poly.trend <- function(x, ...) {

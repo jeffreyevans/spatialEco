@@ -1,6 +1,6 @@
 #' @title Loess with confidence intervals
 #' @description Calculates a local polynomial regression fit 
-#'              with associated confidence intervals
+#' with associated confidence intervals
 #' 
 #' @param y Dependent variable, vector 
 #' @param x Independent variable, vector 
@@ -41,11 +41,13 @@
 #' par(opar)
 #'
 #' @export
-loess.ci <- function(y, x, p=0.95, plot=FALSE, ...) {
+loess.ci <- function(y, x, p = 0.95, plot = FALSE, ...) {
   plx <- stats::predict(stats::loess(y ~ x, ...), se=TRUE)
   lci = plx$fit - stats::qt(p, plx$df) * plx$se.fit
   uci = plx$fit + stats::qt(p, plx$df) * plx$se.fit
     if(plot == TRUE) {
+    oops <- options() 
+      on.exit(options(oops)) 
       graphics::plot(x, y, type="n", main="Loess fit", 
 	    sub=paste("confidence intervals at", p))
       graphics::polygon(c(x,rev(x)), c(lci, rev(uci)), col="grey86")

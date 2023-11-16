@@ -53,7 +53,10 @@ Calculates proximity index for a set of polygons
  # plot index for just forest class
  forest <- meuse[meuse$LU == "forest",]
   plot(forest["cpidx"])
-  }
+
+} else { 
+  cat("Please install sp package to run example", "\n")
+}
 }   
 }
 \references{

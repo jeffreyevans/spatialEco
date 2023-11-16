@@ -7,8 +7,6 @@
 #'                     (FALSE/TRUE)
 #' @param p.value      If nonlinear is TRUE, the p value to accept as the 
 #'                     significance of the correlation
-#' 
-#' @return Messages and a vector of correlated variables 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'
@@ -21,7 +19,11 @@
 #' whether or not that functional estimate is constant, which would indicate 
 #' no relationship between y and x thus, avoiding potentially arbitrary decisions
 #' regarding the order in a polynomial regression. 
-#' 
+#'  
+#' @return Messages and a vector of correlated variables 
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
+#'
 #' @examples 
 #' data(cor.data)
 #'
@@ -58,7 +60,7 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
 	  x <- x[,-which(names(x) %in% cn)] 
 	}
   if(nonlinear == TRUE) {
-    if(!any(which(utils::installed.packages()[,1] %in% "mgcv")))
+    if(length(find.package("mgcv", quiet = TRUE)) == 0)
       stop("please install mgcv package for nonlinear option")  
     nlcor <- function(x, y, pv = 0.05) {
       g <- mgcv::gam(y ~ s(x))

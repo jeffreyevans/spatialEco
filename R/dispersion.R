@@ -4,14 +4,14 @@
 #'
 #' @param  x data.frame object of target values 
 #'
-#' @return 
-#' data.frame with columns H values for each target, H , sH, sHmax 
-#'
-#' @note 
+#' @details  
 #' The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) 
 #' where; P = (sum of target in planning unit / sum of target across all 
 #' planning units) and a = (count of planning units containing 
 #' target / number of planning units)  
+#'
+#' @return 
+#' data.frame with columns H values for each target, H , sH, sHmax 
 #'  
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

@@ -33,7 +33,7 @@ The results can dramatically be effected by the choice of the smoothing
 parameter (f) so caution is warranted and the effect of this parameter tested.
 }
 \examples{
-\dontrun{
+\donttest{
 library(terra)
   random.raster <- function(rows=50, cols=50, l=20, min=0, max=1){ 
     do.call(c, replicate(l, rast(matrix(runif(rows * cols, min, max), 

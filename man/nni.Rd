@@ -18,7 +18,8 @@ distance, observed.mean.distance = Observed meand distance.
 }
 \description{
 Calculates the NNI as a measure of clustering or dispersal
-
+}
+\details{
 The nearest neighbor index is expressed as the ratio of the observed distance
 divided by the expected distance. The expected distance is the average distance
 between neighbors in a hypothetical random distribution. If the index is less than 1,

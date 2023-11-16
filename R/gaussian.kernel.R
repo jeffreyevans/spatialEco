@@ -9,6 +9,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'  
 #' @examples 
+#' opar <- par()
 #'   par(mfrow=c(2,2))
 #'   persp(gaussian.kernel(sigma=1, s=27), theta = 135, 
 #'         phi = 30, col = "grey", ltheta = -120, shade = 0.6, 
@@ -19,7 +20,7 @@
 #'         col = "grey", ltheta = -120, shade = 0.6, border=NA )	
 #'   persp(gaussian.kernel(sigma=4, s=27), theta = 135, phi = 30,
 #'         col = "grey", ltheta = -120, shade = 0.6, border=NA )	
-#'			
+#'  par(opar) 			
 #' @export
 gaussian.kernel <- function(sigma=2, s=5) {
     m <- matrix(ncol=s, nrow=s)

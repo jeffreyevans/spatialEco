@@ -21,13 +21,11 @@ coordinate centroid
 Creates centroid of [x,y] coordinates with optional
              weights field
 }
-\note{
+\details{
 The weighted centroid is calculated as:
 [Xw]=[X]*[p], [Yw]=[Y]*[p], [sXw]=SUM[Xw], [sYw]=SUM[Yw], [sP]=SUM[p]
    wX=[sXw]/[sP], wY=[sYw]/[sP]    
    where; X=X coordinate(S), Y=Y coordinate(S), p=WEIGHT
-
-Depends: sp
 }
 \examples{
 p = c("sf", "sp")
@@ -53,4 +51,7 @@ plot(st_geometry(meuse), pch=20, cex=0.75,
 legend('topleft', legend=c('all','copper', 'zinc'), 
        pch=c(20,19,19),col=c('black','red','blue'))
 }
+}
+\author{
+Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

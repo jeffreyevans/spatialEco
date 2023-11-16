@@ -8,19 +8,19 @@
 #' @param pct        (TRUE/FALSE) return proportions rather than counts
 #' @param ...        Additional arguments 
 #'
-#' @return a table with the cross tabulated counts 
-#'
-#' @note 
+#' @details  
 #' This function returns a cross tabulation between two nominal rasters. 
 #' Arguments allow for labeling the results and returning proportions 
 #' rather than counts. It also accounts for asymmetrical classes between
 #' the two rasters
+#'
+#' @return a table with the cross tabulated counts 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'                                                                           
-#' @references Pontius Jr, R.G., Shusas, E., McEachern, M. (2004). Detecting
-#' important categorical land changes while accounting for persistence.
-#' Agriculture, Ecosystems & Environment 101(2):251-268.
+#' @references 
+#' Pontius Jr, R.G., Shusas, E., McEachern, M. (2004). Detecting important categorical land changes 
+#    while accounting for persistence. Agriculture, Ecosystems & Environment 101(2):251-268.
 #'
 #' @examples
 #' library(terra)

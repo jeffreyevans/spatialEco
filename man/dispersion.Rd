@@ -16,7 +16,7 @@ data.frame with columns H values for each target, H , sH, sHmax
 Calculates the dispersion ("rarity") of targets associated 
              with planning units
 }
-\note{
+\details{
 The dispersion index (H-prime) is calculated H = sum( sqrt(p) / sqrt(a) ) 
 where; P = (sum of target in planning unit / sum of target across all 
 planning units) and a = (count of planning units containing 

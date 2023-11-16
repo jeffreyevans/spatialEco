@@ -18,7 +18,7 @@ sf object, of same feature class as x, with duplicate geometries removed
 \description{
 Removes duplicate geometries in a single-part feature class
 }
-\note{
+\details{
 This function removes duplicate geometries based on order and not "non null" 
 attribution or other factors, the first feature gets to stay. If one needs to 
 know which points were removed sf::st_difference can be used between original 

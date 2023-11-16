@@ -16,19 +16,19 @@
 #' @param method        Kendall method to use c("zhang", "yuepilon","none"), see kendall function
 #' @param ...           Additional arguments passed to the terra app function 
 #'
-#' @return Depending on arguments, a raster layer or rasterBrick object containing:
-#' * raster layer 1 - slope for trend, always returned
-#' * raster layer 2 - Kendall's tau two-sided test, reject null at 0, if tau TRUE
-#' * raster layer 3 - intercept for trend if intercept TRUE
-#' * raster layer 4 - p value for trend fit if p.value TRUE
-#' * raster layer 5 - lower confidence level at 95 pct, if confidence TRUE
-#' * raster layer 6 - upper confidence level at 95 pct, if confidence TRUE
-#' @md
-#'
 #' @details 
 #' This function implements Kendall's nonparametric test for a monotonic trend 
 #' using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate 
 #' the slope and related confidence intervals.  
+#'
+#' @return Depending on arguments, a raster layer or rasterBrick object containing:
+#'   * raster layer 1 - slope for trend, always returned
+#'   * raster layer 2 - Kendall's tau two-sided test, reject null at 0, if tau TRUE
+#'   * raster layer 3 - intercept for trend if intercept TRUE
+#'   * raster layer 4 - p value for trend fit if p.value TRUE
+#'   * raster layer 5 - lower confidence level at 95 pct, if confidence TRUE
+#'   * raster layer 6 - upper confidence level at 95 pct, if confidence TRUE
+#' @md
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -36,10 +36,10 @@
 #' Theil, H. (1950) A rank invariant method for linear and polynomial regression 
 #'   analysis.  Nederl. Akad. Wetensch. Proc. Ser. A 53:386-392 (Part I), 
 #'   53:521-525 (Part II), 53:1397-1412 (Part III).
-#' @references 
+#'  
 #' Sen, P.K. (1968) Estimates of Regression Coefficient Based on Kendall's tau. 
 #'   Journal of the American Statistical Association. 63(324):1379-1389.
-#' @references 
+#'  
 #' Siegel, A.F. (1982) Robust Regression Using Repeated Medians. 
 #'   Biometrika, 69(1):242-244
 #'
@@ -65,7 +65,7 @@
 raster.kendall <- function(x, intercept = TRUE, p.value = TRUE, 
                            confidence = TRUE, tau = TRUE, min.obs = 6,  
 						   method=c("zhang", "yuepilon","none"), ...) {
-  if(!any(which(utils::installed.packages()[,1] %in% "zyp")))
+  if(length(find.package("zyp", quiet = TRUE)) == 0)
     stop("please install zyp package before running this function")
   if (!inherits(x, "SpatRaster")) 
     stop(deparse(substitute(x)), " must be a terra SpatRaster object")

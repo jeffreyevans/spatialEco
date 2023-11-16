@@ -7,15 +7,15 @@
 #' @param outer.scale  Number of outer rings to set to null.value
 #' @param null.value   Value to set inner and outer scale(s) to
 #'
-#' @return A matrix object with defined null.value and 1, representing retained rings  
-#'
-#' @note 
+#' @details 
 #' This function will return a matrix of 1 and defined null.value based on a specification
 #' of the scale, inner scale and outer scale. The scale defines how many rings will be
 #' represented in the matrix based on (2 * scale - 1). So, a scale of 3 will result in a
 #' 5x5 matrix. The inner.scale and outer.scale arguments represent the > and < rings that
 #' will be set to the defined null.value (see examples). The resulting matrix can be used
 #' as the specified window in a focal function.      
+#'
+#' @return A matrix object with defined null.value and 1, representing retained rings  
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'

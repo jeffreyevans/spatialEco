@@ -2,13 +2,14 @@
 #' @description Creates all pairwise combinations list for iteration
 #'
 #' @param x A numeric or character vector 
+#' 
+#' @details 
+#' This returns a list of vector combinations starting with
+#' pairwise, as the first nested list element, then in groups of 
+#'  threes, fours, to length of the vector.  
 #'
 #' @return A list object with increasing all combination objects,
 #'         the first list element are the pairwise comparisons
-#' 
-#' @note This returns a list of vector combinations starting with
-#' pairwise, as the first nested list element, then in groups of 
-#'  threes, fours, to length of the vector.  
 #'
 #' @author Jeffrey S. Evans    <jeffrey_evans<at>tnc.org>
 #'

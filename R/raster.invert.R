@@ -1,13 +1,13 @@
 #' @title Invert raster
 #' @description Inverts (flip) the values of a raster
 #' 
-#' @param x raster object
+#' @param x  A terra SpatRaster object
 #' 
-#' @return 
-#' raster class object with inverted (flipped) raster values
-#'
-#' @note
+#' @details
 #' Inverts raster values using the formula: (((x - max(x)) * -1) + min(x)
+#'
+#' @return 
+#' A terra SpatRaster object with inverted (flipped) raster values
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

@@ -16,24 +16,20 @@ if nothing specified values with be NA}
 
 \item{idx}{Index position to insert row or column}
 
-\item{name}{Name of new column (not used for rows,
-MARGIN=1)}
+\item{name}{Name of new column (not used for rows, MARGIN=1)}
 }
 \value{
 A data.frame with the new row or column inserted
 }
 \description{
-Inserts a new row or column into a data.frame
-             at a specified location
+Inserts a new row or column into a data.frame at a specified location
 }
-\note{
-Where there are methods to easily add a row/column to 
-the end or beginning of a data.frame, it is not straight
-forward to insert data at a specific location within the
-data.frame. This function allows for inserting a vector
-at a specific location eg., between columns or rows 1 and 2
-where row/column 2 is moved to the 3rd position and a new
-vector of values is inserted into the 2nd position.
+\details{
+Where there are methods to easily add a row/column to the end or beginning of a data.frame, 
+it is not straight forward to insert data at a specific location within the data.frame. 
+This function allows for inserting a vector at a specific location eg., between columns or 
+rows 1 and 2 where row/column 2 is moved to the 3rd position and a new vector of values is 
+inserted into the 2nd position.
 }
 \examples{
 d <- data.frame(ID=1:10, y=runif(10))

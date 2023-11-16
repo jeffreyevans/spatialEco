@@ -20,7 +20,8 @@ plot of o-ring and data.frame with plot labels and descriptions
 \description{
 Calculates the inhomogeneous O-ring point pattern statistic 
             (Wiegand & Maloney 2004)
-
+}
+\details{
 The function K(r) is the expected number of points in a circle of radius r centered 
 at an arbitrary point (which is not counted), divided by the intensity l of the pattern. 
 The alternative pair correlation function g(r), which arises if the circles of 
@@ -41,10 +42,14 @@ conditioned probability spectrum) with the interpretation of a neighborhood
 density, which is more intuitive than an accumulative measure.
 }
 \examples{
-library(spatstat.explore) 
+if (require(spatstat.explore, quietly = TRUE)) {
 data(lansing)
-    x  <- spatstat.geom::unmark(split(lansing)$maple)
-    o.ring(x)
+  x  <- spatstat.geom::unmark(split(lansing)$maple)
+  o.ring(x)
+
+} else { 
+  cat("Please install spatstat.explore package to run example", "\n")
+}
 
 }
 \references{

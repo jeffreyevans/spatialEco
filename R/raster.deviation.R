@@ -11,11 +11,7 @@
 #' @param global    Use single global value for deviation or cell-level values 
 #'                 (FALSE/TRUE). Argument is ignored for type="trend"
 #' 
-#' @return 
-#' A SpatRaster class object representing local deviation from the raster or the 
-#' specified global statistic
-#'
-#' @description
+#' @details
 #' The deviation from the trend is derived as [y-hat - y] where; y-hat is the 
 #' Nth-order polynomial. Whereas the deviation from a global statistic is [y - y-hat] 
 #' where; y-hat is the local (focal) statistic. The global = TRUE argument allows 
@@ -23,12 +19,16 @@
 #' where; stat(x) is the global value of the specified statistic and y-hat is the 
 #' specified focal statistic.  
 #'
+#' @return 
+#' A SpatRaster class object representing local deviation from the raster or the 
+#' specified global statistic
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #'  Magee, Lonnie (1998). Nonlocal Behavior in Polynomial Regressions. The American 
 #'   Statistician. American Statistical Association. 52(1):20-22
-#' @references
+#' 
 #'  Fan, J. (1996). Local Polynomial Modelling and Its Applications: From linear  
 #'    regression to nonlinear regression. Monographs on Statistics and Applied 
 #'    Probability. Chapman and  Hall/CRC. ISBN 0-412-98321-4
@@ -86,7 +86,7 @@ raster.deviation <- function(x, type = c("trend", "min", "max", "mean", "median"
       rsf <- sf::st_as_sf(r, coords = c("xcoord", "ycoord"), 
 	                      agr = "constant")
       rstat <- terra::rasterize(terra::vect(rsf), x, field="trend")
-      cat("polynomial confidence intervals", "\n")	  
+      message("polynomial confidence intervals")	  
 	    stats::confint(poly.mdl, level=0.95)
      return( rstat - x ) 
   } 

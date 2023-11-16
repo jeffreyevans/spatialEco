@@ -11,11 +11,7 @@
 #' @param neighbors   If predicate = "contingency" type of neighbors options are 
 #'                    c("queen", "rook")
 #'
-#' @return 
-#' An sf object representing a subset of y based on the spatial query of x or, 
-#' if predicate = contingency a sparse matrix representing neighbor indexes
-#'
-#' @note
+#' @details
 #' Performs a spatial select of features based on an overlay of a polygon (x),   
 #' which can represent multiple features, and a polygon, point or line feature 
 #' classes (y). User can specify a partial or complete intersection, using within 
@@ -23,25 +19,29 @@
 #' query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
 #' that for point to point neighbor selections use the knn function. 
 #' Valid spatial predicates include: intersect, touches, covers, contains, proximity 
-#' and contingency. See DE-9IM topology model for detailed information on data predicates. 
-#' @details
-#' * intersection  Create a spatial intersection between two features
-#' * intersect     Boolean evaluation of features intersecting   
-#' * contains      Boolean evaluation of x containing y
-#' * covers        Boolean evaluation of x covering y
-#' * touches       Boolean evaluation of x touching y
-#' * proximity     Evaluation of distance-based proximity of x to y (x and y can be the same)
-#' * contingency   Evaluation of polygon contingency (eg., 1st, 2nd order)
+#' and contingency. 
+#' See DE-9IM topology model for detailed information on following data predicates. 
+#'   * intersection  Create a spatial intersection between two features
+#'   * intersect     Boolean evaluation of features intersecting   
+#'   * contains      Boolean evaluation of x containing y
+#'   * covers        Boolean evaluation of x covering y
+#'   * touches       Boolean evaluation of x touching y
+#'   * proximity     Evaluation of distance-based proximity of x to y (x and y can be the same)
+#'   * contingency   Evaluation of polygon contingency (eg., 1st, 2nd order)
 #' @md
+#'
+#' @return 
+#' An sf object representing a subset of y based on the spatial query of x or, 
+#' if predicate = contingency a sparse matrix representing neighbor indexes
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'                                                                    
 #' @examples 
+#' if(require(sp, quietly = TRUE)) {
 #' library(sf)
-#'  if(require(sp, quietly = TRUE)) {
-#'    data(meuse, package = "sp")
-#'    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-#'                      agr = "constant")
+#'   data(meuse, package = "sp")
+#'   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+#'                     agr = "constant")
 #' 
 #' spolys <- hexagons(meuse, res=100)
 #'   spolys$ID <- 1:nrow(spolys)
@@ -67,7 +67,10 @@
 #' spatial.select(x=spolys, predicate = "contingency")
 #' spatial.select(spolys, predicate = "contingency", neighbors = "rook") 
 #' 
+#' } else { 
+#'   cat("Please install sp package to run example", "\n")
 #' }
+#'
 #' @seealso \code{\link[sf]{st_intersection}} for details on intersection predicate
 #' @seealso \code{\link[sf]{st_intersects}} for details on intersect predicate
 #' @seealso \code{\link[sf]{st_contains}} for details on contain predicate

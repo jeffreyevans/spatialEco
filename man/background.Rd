@@ -30,7 +30,7 @@ A sf POINT feature class or data.frame with x,y coordinates
 Creates a point sample that can be used as 
              a NULL for SDM's and other modeling approaches.
 }
-\note{
+\details{
 This function creates a background point sample based on an extent 
 or polygon sampling region. The known argument can be used with d 
 to remove sample points based on distance-based proximity to existing  

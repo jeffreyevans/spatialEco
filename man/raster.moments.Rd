@@ -26,9 +26,8 @@ A terra SpatRaster object representing the local distributional moment
 \description{
 Calculates focal statistical moments of a raster
 }
-\note{
-This is a simple wrapper for the focal function, returning local 
- statistical moments
+\details{
+This is a simple wrapper for the terra focal function, returning local statistical moments
 }
 \examples{
 \donttest{

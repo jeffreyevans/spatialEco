@@ -22,7 +22,7 @@ evenness where H / max( sum(x) ) ) and ESN
 \description{
 Calculates Shannon's Diversity Index and Shannon's Evenness Index
 }
-\note{
+\details{
 The expected for H is 0-3+ where a value of 2 has been suggested as medium-high diversity, 
 for evenness is 0-1 with 0 signifying no evenness and 1, complete evenness.
 }

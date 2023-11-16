@@ -38,7 +38,8 @@ distance of k
 }
 \description{
 Find K nearest neighbors for two spatial objects
-
+}
+\details{
 Finds nearest neighbor in x based on y and returns rownames, index and distance,
 If ids is NULL, rownames of x are returned. If coordinate matrix provided, 
 columns need to be ordered [X,Y]. If a radius for d is specified than a maximum 
@@ -50,12 +51,11 @@ In other words, the covariates must match and be numeric.
 }
 \examples{
 \donttest{
-library(sf)
-
 if(require(sp, quietly = TRUE)) {
-   data(meuse, package = "sp")
-   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-                     agr = "constant")
+library(sf)
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
  
 # create reference and target obs
 idx <- sample(1:nrow(meuse), 10) 
@@ -81,8 +81,12 @@ wy = as.matrix(st_drop_geometry(pts[,1:3]))
 y <- st_coordinates(pts)[,1:2]
 x <- st_coordinates(meuse)[,1:2]
 knn(y, x, k=2)
-}  
-}	  
+
+} else { 
+  cat("Please install sp package to run example", "\n")
+}
+}
+  
 }
 \seealso{
 \code{\link[RANN]{nn2}} for details on search algorithm

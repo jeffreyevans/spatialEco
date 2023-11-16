@@ -12,15 +12,6 @@
 #' @param threshold    The threshold for number of minimum observations in the time-series
 #' @param ...          Not used
 #'
-#' @return Depending on arguments, a vector containing: 
-#' * Theil-Sen slope, always returned 
-#' * Kendall's tau two-sided test, if tau TRUE
-#' * intercept for trend if intercept TRUE
-#' * p value for trend fit if p.value TRUE
-#' * lower confidence level at 95-pct if confidence TRUE
-#' * upper confidence level at 95-pct if confidence TRUE
-#' @md
-#'
 #' @details 
 #' This function implements Kendall's nonparametric test for a monotonic trend 
 #' using the Theil-Sen (Theil 1950; Sen 1968; Siegel 1982) method to estimate 
@@ -34,6 +25,15 @@
 #' prevent the function from failing but, will likely invalidate the statistic. 
 #' A threshold of <=4 will yield all NA values. If method= "none" a modification of the
 #' EnvStats::kendallTrendTest code is implemented.       
+#'
+#' @return Depending on arguments, a vector containing: 
+#' * Theil-Sen slope, always returned 
+#' * Kendall's tau two-sided test, if tau TRUE
+#' * intercept for trend if intercept TRUE
+#' * p value for trend fit if p.value TRUE
+#' * lower confidence level at 95-pct if confidence TRUE
+#' * upper confidence level at 95-pct if confidence TRUE
+#' @md
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -68,7 +68,7 @@ kendall <- function(y, tau = TRUE, intercept = TRUE, p.value = TRUE,
                     confidence = TRUE, method=c("zhang", "yuepilon", "none"),
 					threshold = 6, ...) {
 	if(any(method %in% c("zhang", "yuepilon"))) {
-      if(!any(which(utils::installed.packages()[,1] %in% "zyp")))
+	  if(length(find.package("zyp", quiet = TRUE)) == 0)
         stop("please install zyp package before running this function")
 	}    
     if(threshold < 6)

@@ -56,8 +56,7 @@ Create a random raster or raster stack using specified
              distribution
 }
 \details{
-Options for distributions are for random, normal, seq, binominal, 
-gaussian and sample raster(s)
+Options for distributions are; random, normal, seq, binominal, gaussian and sample raster(s)
 }
 \examples{
 library(terra)

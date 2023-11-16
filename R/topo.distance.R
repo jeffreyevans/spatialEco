@@ -1,17 +1,16 @@
 #' @title Topographic distance
-#' @description Calculates topographic corrected distance for a 
-#'              LINESTRING object
+#' @description 
+#' Calculates topographic corrected distance for a line object
 #'
 #' @param x     sf LINESTRING object
-#' @param r     terra or raster class elevation raster
+#' @param r     terra SpatRaster class elevation raster
 #' @param echo  (FALSE/TRUE) print progress to screen
+#'
+#' @details
+#' This function corrects straight-line (euclidean) distances for topographic-slope effect. 
 #'
 #' @return 
 #' Vector of corrected topographic distances same length as nrow(x)
-#'
-#' @note
-#' This function corrects straight-line (euclidean) distances for 
-#' topographic-slope effect. 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -61,7 +60,7 @@ topo.distance <- function(x, r, echo = FALSE) {
   }
   line.dist <- vector()
     for(i in 1:nrow(x)) {
-	  if(echo) cat("Calculating corrected distance for:", i, "of", nrow(x), "\n")
+	  if(echo) message("Calculating corrected distance for: ", i, " of ", nrow(x), "\n")
 	  pts <- sf::st_cast(sf::st_line_sample(x[i,], 
 	           density=1/terra::res(r)[1]), "POINT")		   
 	    pts <- sf::st_as_sf(pts)

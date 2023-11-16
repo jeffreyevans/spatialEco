@@ -31,7 +31,7 @@ A poly.trend class (list) containing
 \description{
 Fits a polynomial trend using specified order
 }
-\note{
+\details{
 A fit using a lm(y ~ x + I(X^2) + I(X^3)) form will be correlated which,
 can cause problems. The function avoids undue correlation using orthogonal
 polynomials

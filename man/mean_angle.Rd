@@ -17,12 +17,13 @@ A vector of mean angle
 \description{
 Calculates the mean angle of a vector
 }
-\note{
+\details{
 The arithmetic mean is not correct for calculating the central tendency of
 angles. This function is intended to return the mean angle for slope or aspect,
 which could be used in a focal or zonal function.
 }
 \examples{
+library(terra)
 mean_angle(c(180, 10))
   mean(c(180, 10))
 mean_angle(c(90, 180, 70, 60))
@@ -30,7 +31,6 @@ mean_angle(c(90, 180, 70, 60))
 mean_angle(c(90, 180, 270, 360))
   mean(c(90, 180, 270, 360))
 
-library(terra)
 elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 asp <- terrain(elev, v="aspect")
 s <- buffer(spatSample(asp, 20, as.points=TRUE, 

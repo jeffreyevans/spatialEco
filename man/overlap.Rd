@@ -13,11 +13,12 @@ overlap(x, y)
 with the same dimensions of x}
 }
 \value{
-A value representing the I similarity statistic
+A vector (single value) representing the I similarity statistic
 }
 \description{
 Similarity Statistic for Quantifying Niche Overlap using Warren's-I
-
+}
+\details{
 The overlap function computes the I similarity statistic (Warren et al. 2008)  
 of two overlapping niche estimates. Similarity is based on the Hellenger distance. 
 It is assumed that the input data share the same extent and cellsize and all values 

@@ -4,12 +4,7 @@
 #' @param x An sf point object
 #' @param win Type of window 'hull' or 'extent'
 #'
-#' @return 
-#' list object containing NNI = nearest neighbor index, z.score = Z 
-#' Score value, p = p value, expected.mean.distance = Expected mean 
-#' distance, observed.mean.distance = Observed meand distance.
-#'
-#' @description
+#' @details
 #' The nearest neighbor index is expressed as the ratio of the observed distance 
 #' divided by the expected distance. The expected distance is the average distance 
 #' between neighbors in a hypothetical random distribution. If the index is less than 1, 
@@ -21,12 +16,17 @@
 #'       Where; D=neighbor distance, A=Area
 #' @md
 #'
+#' @return 
+#' list object containing NNI = nearest neighbor index, z.score = Z 
+#' Score value, p = p value, expected.mean.distance = Expected mean 
+#' distance, observed.mean.distance = Observed meand distance.
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references 
 #' Clark, P.J., and F.C. Evans (1954) Distance to nearest neighbour as a measure 
 #'   of spatial relationships in populations. Ecology 35:445-453
-#' @references 
+#'  
 #' Cressie, N (1991) Statistics for spatial data. Wiley & Sons, New York.
 #'
 #' @examples 

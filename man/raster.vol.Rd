@@ -33,8 +33,7 @@ Calculates a percent volume on a raster or based on a
              systematic sample
 }
 \note{
-Since this model needs to operate on all of the raster values, 
-it is not memory safe
+Since this model needs to operate on all of the raster values, it is not memory safe
 }
 \examples{
 \donttest{

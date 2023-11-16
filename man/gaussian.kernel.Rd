@@ -18,6 +18,7 @@ Symmetrical (NxN) matrix of a Gaussian distribution
 Creates a Gaussian Kernel of specified size and sigma
 }
 \examples{
+opar <- par()
   par(mfrow=c(2,2))
   persp(gaussian.kernel(sigma=1, s=27), theta = 135, 
         phi = 30, col = "grey", ltheta = -120, shade = 0.6, 
@@ -28,7 +29,7 @@ Creates a Gaussian Kernel of specified size and sigma
         col = "grey", ltheta = -120, shade = 0.6, border=NA )	
   persp(gaussian.kernel(sigma=4, s=27), theta = 135, phi = 30,
         col = "grey", ltheta = -120, shade = 0.6, border=NA )	
-		
+ par(opar) 			
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

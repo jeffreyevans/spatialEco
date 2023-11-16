@@ -22,7 +22,7 @@ A matrix object with defined null.value and 1, representing retained rings
 Creates a square matrix representing annulus position values of 1 
              and defined null
 }
-\note{
+\details{
 This function will return a matrix of 1 and defined null.value based on a specification
 of the scale, inner scale and outer scale. The scale defines how many rings will be
 represented in the matrix based on (2 * scale - 1). So, a scale of 3 will result in a

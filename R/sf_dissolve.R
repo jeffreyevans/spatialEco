@@ -5,14 +5,15 @@
 #' @param y         An attribute in x to dissolve by, default is NULL
 #' @param overlaps  (FALSE/TRUE) Dissolve overlapping polygons, negates using attribute
 #'
-#' @return A dissolved POLYGON or MULTIPOLYGON object 
-#'
-#' @note If a dissolve attribute is defined, the result will be a 
+#' @details 
+#' If a dissolve attribute is defined, the result will be a 
 #' MULTIPOLYGON with the grouping attribute column. If y=NULL all polygons
 #' will be dissolved into a single attribute, unless there is spatial
 #' discontinuity (eg., gaps) in the data. The intent of overlaps=TRUE is to 
 #' provide functionality for dissolving overlapping polygons and should only
 #' be used in this specialized case.
+#'
+#' @return A dissolved POLYGON or MULTIPOLYGON object 
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

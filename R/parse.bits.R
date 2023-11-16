@@ -14,46 +14,47 @@
 #' With this function you can parse the values for each bit to assign the 
 #' flag values. 
 #'
+#' @return a vector or data.frame of parsed interger value(s) associated with input bit
+#' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'
 #' @examples 
-#'
-#'  # Return value for bit 5 for integer value 100
-#'  parse.bits(100, 5)
+#' # Return value for bit 5 for integer value 100
+#' parse.bits(100, 5)
 #'  
-#'  # Return value(s) for bits 0 and 1 for integer value 100
-#'  parse.bits(100, c(0,1))
+#' # Return value(s) for bits 0 and 1 for integer value 100
+#' parse.bits(100, c(0,1))
 #'
-#'  # Return value(s) for bits 0 and 1 for integer values 0-255
-#'  for(i in 0:255) { print(parse.bits(i, c(0,1))) }
+#' # Return value(s) for bits 0 and 1 for integer values 0-255
+#' for(i in 0:255) { print(parse.bits(i, c(0,1))) }
 #'  
-#' \dontrun{
+#' \donttest{
 #' #### Applied Example using Harmonized Landsat Sentinel-2 QC 
 #'
 #' # Create dummy data and qc band
-#'  library(raster)
-#'  r <- raster(nrow=100, ncol=100)
-#'    r[] <- round(runif(ncell(r), 0,1)) 
-#'  qc <- raster(nrow=100, ncol=100)
-#'    qc[] <- round(runif(ncell(qc), 64,234)) 
-#'  
-#'  # Calculate bit values from QC table
-#'  ( qc_bits <- data.frame(int=0:255, 
-#'  	cloud = unlist(lapply(0:255, FUN=parse.bits, bit=1)),
-#'  	shadow = unlist(lapply(0:255, FUN=parse.bits, bit=3)),
-#'  	acloud = unlist(lapply(0:255, FUN=parse.bits, bit=2)),
-#'  	cirrus = unlist(lapply(0:255, FUN=parse.bits, bit=0)),
-#'  	aerosol = unlist(lapply(0:255, FUN=parse.bits, bit=c(7,6)))) )
-#'  		
-#'  # Query the results to create a vector of integer values indicating what to mask 
-#   #  cloud is bit 1 and shadow bit 3	
-#'  m <- sort(unique(qc_bits[c(which(qc_bits$cloud == 1),
-#'                             which(qc_bits$shadow == 1)
-#'  						   ),]$int))
-#'  
-#'  # Apply queried integer values to mask image with QA band
-#'  qc[qc %in% m] <- NA
-#'  r <- mask(r, qc)
+#' library(terra)
+#' r <- rast(nrow=100, ncol=100)
+#'   r[] <- round(runif(ncell(r), 0,1)) 
+#' qc <- rast(nrow=100, ncol=100)
+#'   qc[] <- round(runif(ncell(qc), 64,234)) 
+#' 
+#' # Calculate bit values from QC table
+#' ( qc_bits <- data.frame(int=0:255, 
+#' 	cloud = unlist(lapply(0:255, FUN=parse.bits, bit=1)),
+#' 	shadow = unlist(lapply(0:255, FUN=parse.bits, bit=3)),
+#' 	acloud = unlist(lapply(0:255, FUN=parse.bits, bit=2)),
+#' 	cirrus = unlist(lapply(0:255, FUN=parse.bits, bit=0)),
+#' 	aerosol = unlist(lapply(0:255, FUN=parse.bits, bit=c(7,6)))) )
+#' 		
+#' # Query the results to create a vector of integer values indicating what to mask 
+#' #  cloud is bit 1 and shadow bit 3	
+#' m <- sort(unique(qc_bits[c(which(qc_bits$cloud == 1),
+#'                            which(qc_bits$shadow == 1)
+#' 						   ),]$int))
+#' 
+#' # Apply queried integer values to mask image with QA band
+#' qc[qc %in% m] <- NA
+#' r <- mask(r, qc)
 #' }
 #'
 #' @export parse.bits

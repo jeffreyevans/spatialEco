@@ -7,7 +7,7 @@
 quadrats(x, s = 250, n = 100, r = NULL, sp = FALSE)
 }
 \arguments{
-\item{x}{A sp or sf polygon object defining extent}
+\item{x}{An sf POLYGONS object defining extent}
 
 \item{s}{Radius defining single or range of sizes of quadrats}
 
@@ -18,12 +18,12 @@ quadrats(x, s = 250, n = 100, r = NULL, sp = FALSE)
 \item{sp}{(FALSE | TRUE) Output sp class object}
 }
 \value{
-an sf or sp polygon object with rotated polygon(s)
+an sf POLYGONS object with rotated polygon(s)
 }
 \description{
 Creates quadrat polygons for sampling or analysis
 }
-\note{
+\details{
 The radius (s) parameter can be a single value or a range of values, 
 representing a randomization range of resulting quadrat sizes. The
 rotation (r) parameter can also be used to defined a fixed rotation or
@@ -35,23 +35,30 @@ library(sf)
 library(terra) 
 
 # read meuse data and create convex hull 
- data(meuse, package = "sp")
-   meuse <- st_as_sf(meuse, coords = c("x", "y"), 
-                     crs = 28992, agr = "constant") 
-     e <- st_convex_hull(st_union(meuse))
+if (require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, agr = "constant")
+  e <- st_convex_hull(st_union(meuse))
 
  # Fixed size 250 and no rotation 
  s <- quadrats(e, s = 250, n = 10)
    plot(st_geometry(s))
  
 \donttest{   
- # Variable sizes 100-300 and rotation of 0-45 degrees
- s <- quadrats(e, s = c(100,300), n = 10, r = c(0,45))
-   plot(st_geometry(s))
+# Variable sizes 100-300 and rotation of 0-45 degrees
+s <- quadrats(e, s = c(100,300), n = 10, r = c(0,45))
+  plot(st_geometry(s))
  
- # Variable sizes 100-300 and no rotation 
- s <- quadrats(e, s = c(100,300), n = 10)
+# Variable sizes 100-300 and no rotation 
+s <- quadrats(e, s = c(100,300), n = 10)
   plot(st_geometry(s))
 }   
+
+} else { 
+  cat("Please install sp package to run example", "\n")
+}
  
+}
+\author{
+Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

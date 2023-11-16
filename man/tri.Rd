@@ -22,12 +22,14 @@ A terra SpatRaster class object of the TRI
 }
 \description{
 Implementation of the Riley et al (1999) Terrain Ruggedness Index
-
+}
+\details{
 The algebraic approximation is considerably faster. However, because
 inclusion of the center cell, the larger the scale the larger the divergence
-of the minimum value.
+of the minimum value. Resuls are driven by local variations so, fixed thresholds
+are not very reliable. However there are some reccomended breaks (eg., Riley et al., 1999).
 
-Recommended ranges for classifying Topographic Ruggedness Index:
+Riley et al., (1999) ranges for classifying Topographic Ruggedness Index:
 \itemize{
 \item 0-80 - level terrain surface.
 \item 81-116 - nearly level surface.

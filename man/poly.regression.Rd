@@ -42,7 +42,8 @@ inputed data
 \description{
 Calculates a Local Polynomial Regression for smoothing
 or imputation of missing data.
-
+}
+\details{
 This is a wrapper function for loess that simplifies data smoothing and imputation
 of missing values. The function allows for smoothing a vector, based on an index
 (derived automatically) or covariates. If the impute option is TRUE NA values are

@@ -36,9 +36,9 @@ A vector with the following values:
 Calculate statistical moments of a distribution
 }
 \examples{
-    x <- runif(1000,0,100)
-    ( d <- moments(x, plot=TRUE) )
-    ( mode.x <- moments(x, plot=FALSE)[16] )
+x <- runif(1000,0,100)
+( d <- moments(x, plot=TRUE) )
+( mode.x <- moments(x, plot=FALSE)[16] )
  
 }
 \author{

@@ -9,15 +9,6 @@
 #' @param statistic  Correlation statistic, options are: "kendall", 
 #'                   "pearson", "spearman" 
 #'
-#' @return data.frame containing:
-#' * correlation - correlation coefficient
-#' * p.value - p-value of correlation
-#' * test.statistic - test statistic
-#' * n - sample size
-#' * Method - indicating partial or semipartial correlation
-#' * Statistic - the correlation statistic used
-#' @md
-#'
 #' @details
 #' Partial and semipartial correlations show the association between two 
 #' variables when one or more peripheral variables are controlled 
@@ -30,6 +21,15 @@
 #' for Z. Semipartial correlation holds Z constant for either X or Y, but not 
 #' both, so if we wanted to control X for Z, we could compute the semipartial 
 #' correlation between X and Y holding Z constant for X.
+#'
+#' @return data.frame containing:
+#' * correlation - correlation coefficient
+#' * p.value - p-value of correlation
+#' * test.statistic - test statistic
+#' * n - sample size
+#' * Method - indicating partial or semipartial correlation
+#' * Statistic - the correlation statistic used
+#' @md
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'

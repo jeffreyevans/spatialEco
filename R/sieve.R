@@ -5,12 +5,15 @@
 #' @param a      Query area to remove 
 #' @param unit   The unit to use for area query options are c("m", "km", "ha")
 #' 
-#' @return 
-#' A terra SpatRaster with < a set to NA  
-#'
-#' @note 
+#' @details 
 #' A sieve can be used to establish a minimal mapping unit where
-#' contiguous cells < specified query area are set to NA
+#' contiguous cells < specified query area are set to NA. These NA
+#' values can then be filled using focal (majority, median, mean)
+#'
+#' @return 
+#' A terra SpatRaster with cells < a set to NA
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
 #' \donttest{

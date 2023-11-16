@@ -14,9 +14,7 @@
 #'                  default is 1, for no adjustment (downweight < 1 | upweight > 1)   
 #' @param edge      Apply Diggle edge correction (TRUE/FALSE)
 #'
-#' @return sf class POINT geometry containing random subsamples 
-#'
-#' @description
+#' @details
 #' The window type creates a convex hull by default or, optionally, uses the maximum 
 #' extent (envelope). The resulting bandwidth can vary widely by method. the 'diggle' 
 #' method is intended for  bandwidth representing 2nd order spatial variation whereas 
@@ -25,7 +23,6 @@
 #' order 'likelihood' approach, as it is slow and computationally expensive. finally, 
 #' the 'stoyan' method will produce very strong 2nd order results. '
 #' 
-#' @note
 #' Available bandwidth selection methods are:
 #' * Scott - (Scott 1992), Scott's Rule for Bandwidth Selection (1st order)
 #' * Diggle - (Berman & Diggle 1989), Minimise the mean-square error via cross 
@@ -36,34 +33,36 @@
 #' * User defined - using a numeric value for sigma
 #' @md
 #'
+#' @return sf class POINT geometry containing random subsamples 
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #' Berman, M. and Diggle, P. (1989) Estimating weighted integrals of the second-order 
 #'   intensity of a spatial point process. Journal of the Royal Statistical Society, 
 #'   series B 51, 81-92. 
-#' @references
+#' 
 #' Fithian, W & T. Hastie (2013) Finite-sample equivalence in statistical models for 
 #'   presence-only data. Annals of Applied Statistics 7(4): 1917-1939
-#' @references
+#' 
 #' Hengl, T., H. Sierdsema, A. Radovic, and A. Dilo (2009) Spatial prediction of species 
 #'   distributions from occurrence-only records: combining point pattern analysis, 
 #'   ENFA and regression-kriging. Ecological Modelling, 220(24):3499-3511  
-#' @references
+#' 
 #' Loader, C. (1999) Local Regression and Likelihood. Springer, New York. 
-#' @references
+#' 
 #' Scott, D.W. (1992) Multivariate Density Estimation. Theory, Practice and Visualization. 
 #'   New York, Wiley. 
-#' @references
+#' 
 #' Stoyan, D. and Stoyan, H. (1995) Fractals, random shapes and point fields: methods of 
 #'   geometrical statistics. John Wiley and Sons. 
-#' @references
+#' 
 #' Warton, D.i., and L.C. Shepherd (2010) Poisson Point Process Models Solve the Pseudo-Absence 
 #'   Problem for Presence-only Data in Ecology. The Annals of Applied Statistics, 4(3):1383-1402
 #'
 #' @examples  
 #' library(sf) 
-#' library(spatstat.explore) 
+#' if(require(spatstat.explore, quietly = TRUE)) { 
 #' data(bei, package = "spatstat.data")
 #' 
 #' trees <- st_as_sf(bei)
@@ -78,6 +77,10 @@
 #'     legend('bottomright', legend=c('Original sample', 'Subsample'), 
 #'                  col=c('black','red'),pch=c(19,19))   
 #' 
+#' } else { 
+#'   cat("Please install spatstat.explore package to run example", "\n")
+#' }
+#'
 #' @export pp.subsample
 pp.subsample <- function(x, n, window = "hull", sigma = "Scott", wts = NULL, 
                          gradient = 1, edge = FALSE) {

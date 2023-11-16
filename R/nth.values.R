@@ -5,9 +5,10 @@
 #' @param N           Number of (Nth) values returned
 #' @param smallest    (FALSE/TRUE) Return the highest, else smallest values
 #'
-#' @return Numeric vector of Nth values 
+#' @details 
+#' This function returns n lowest or highest elements in a vector
 #'
-#' @note This function returns n lowest or highest elements in a vector
+#' @return Numeric vector of Nth values 
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'

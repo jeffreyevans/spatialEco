@@ -58,7 +58,7 @@
 #' @references 
 #' Evans, J.S., S.R. Schill, G.T. Raber (2015) A Systematic Framework for Spatial Conservation Planning and Ecological Priority Design in St. Lucia, Eastern Caribbean. Chapter 26 in Central American Biodiversity : Conservation, Ecology and a Sustainable Future. F. Huettman (eds). Springer, NY.
 #'
-#' @source \url{https://www.conservationgateway.org}
+#' @source "The Nature Conservancy" 
 NULL
 
 

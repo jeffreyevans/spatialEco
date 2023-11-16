@@ -7,7 +7,17 @@
 #' @param  confidence   Fraction of replicates contained in confidence 
 #'                      region 
 #' @param  ...          Additional arguments passed to loess function
-#'                      
+#'
+#' @details 
+#' The function fits a loess curve and then calculates a symmetric nonparametric 
+#' bootstrap with a confidence region. Fitted curves are evaluated at a fixed number 
+#' of equally-spaced x values, regardless of the number of x values in the data. Some 
+#' replicates do not include the values at the lower and upper end of the range of x   
+#' values. If the number of such replicates is too large, it becomes impossible to 
+#' construct a confidence region that includes a fraction "confidence" of the bootstrap 
+#' replicates. In such cases, the left and/or right portion of the confidence region 
+#' is truncated.
+#'
 #' @return list object containing  
 #' * nreps        Number of bootstrap replicates 
 #' * confidence   Confidence interval (region)
@@ -26,27 +36,17 @@
 #'   5) stddev - Standard deviation of loess fit at each x value
 #' @md
 #'
-#' @description
-#' The function fits a loess curve and then calculates a symmetric nonparametric 
-#' bootstrap with a confidence region. Fitted curves are evaluated at a fixed number 
-#' of equally-spaced x values, regardless of the number of x values in the data. Some 
-#' replicates do not include the values at the lower and upper end of the range of x   
-#' values. If the number of such replicates is too large, it becomes impossible to 
-#' construct a confidence region that includes a fraction "confidence" of the bootstrap 
-#' replicates. In such cases, the left and/or right portion of the confidence region 
-#' is truncated.
-#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
 #' Cleveland, WS, (1979) Robust Locally Weighted Regression and Smoothing Plots Journal  
 #'   of the American Statistical Association 74:829-836
-#' @references
+#' 
 #' Efron, B., and R. Tibshirani (1993) An Introduction to the Bootstrap Chapman and 
 #'   Hall, New York
-#' @references
+#' 
 #' Hardle, W., (1989) Applied Nonparametric Regression Cambridge University Press, NY.
-#' @references
+#' 
 #' Tibshirani, R. (1988) Variance stabilization and the bootstrap. 
 #'   Biometrika 75(3):433-44.
 #'

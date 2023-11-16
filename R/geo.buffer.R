@@ -5,29 +5,28 @@
 #' @param r    Buffer radius in meters
 #' @param ...  Additional arguments passed to sf::st_buffer
 #'
-#' @return an sp or sf polygon class object representing buffer for each feature
-#'
-#' @note 
+#' @details 
 #' Projects (Latitude/Longitude) data in decimal-degree geographic projection 
 #' using an on-the-fly azimuthal equidistant projection in meters centered on
 #  each feature.  
 #' 
+#' @return an sp or sf polygon class object representing buffer for each feature
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' if(require(sf, quietly = TRUE)) {
-#'   e <- c(61.87125, 23.90153, 76.64458, 37.27042)
-#'     names(e) <- c("xmin", "ymin", "xmax", "ymax")
-#'     s <- st_as_sf(st_sample(st_as_sfc(st_bbox(e)), size=100, 
-#'                    type = "regular"))
-#'   	st_crs(s) <- st_crs(4326)
-#'         s$id <- 1:nrow(s)
-#'   
-#'   b <- geo.buffer(x=s, r=1000)
-#'     plot(st_geometry(b[1,]))
-#'        plot(st_geometry(s[1,]), pch=20,cex=2, add=TRUE)
-#' }	 
-#' 	
+#' library(sf)
+#' e <- c(61.87125, 23.90153, 76.64458, 37.27042)
+#'   names(e) <- c("xmin", "ymin", "xmax", "ymax")
+#'   s <- st_as_sf(st_sample(st_as_sfc(st_bbox(e)), size=100, 
+#'                  type = "regular"))
+#' 	st_crs(s) <- st_crs(4326)
+#'       s$id <- 1:nrow(s)
+#' 
+#' b <- geo.buffer(x=s, r=1000)
+#'   plot(st_geometry(b[1,]))
+#'      plot(st_geometry(s[1,]), pch=20,cex=2, add=TRUE)	 
+#' 
 #' @seealso \code{\link[sf]{st_buffer}} for st_buffer ... arguments
 #' 
 #' @export geo.buffer 

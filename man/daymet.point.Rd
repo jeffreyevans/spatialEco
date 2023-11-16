@@ -30,12 +30,12 @@ daymet.point(
 \item{echo}{(TRUE/FALSE) Echo progress}
 }
 \value{
-A data.frame with climate results
+A data.frame with geographic coordinate point-level climate results
 }
 \description{
 Downloads DAYMET climate variables for specified point and time-period
 }
-\note{
+\details{
 data is available for Long -131.0 W and -53.0 W; lat 52.0 N and 14.5 N
 Function uses the Single Pixel Extraction tool and returns year, yday, 
       dayl(s), prcp (mm/day), srad (W/m^2), swe (kg/m^2), tmax (deg c), 

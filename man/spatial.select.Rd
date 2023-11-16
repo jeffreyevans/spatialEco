@@ -34,6 +34,15 @@ Performs a spatial select (feature subset) between a polygon(s) and other
 feature class
 }
 \details{
+Performs a spatial select of features based on an overlay of a polygon (x),
+which can represent multiple features, and a polygon, point or line feature
+classes (y). User can specify a partial or complete intersection, using within
+argument, or within a distance, using distance argument, predicated on the
+query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
+that for point to point neighbor selections use the knn function.
+Valid spatial predicates include: intersect, touches, covers, contains, proximity
+and contingency.
+See DE-9IM topology model for detailed information on following data predicates.
 \itemize{
 \item intersection  Create a spatial intersection between two features
 \item intersect     Boolean evaluation of features intersecting
@@ -44,22 +53,12 @@ feature class
 \item contingency   Evaluation of polygon contingency (eg., 1st, 2nd order)
 }
 }
-\note{
-Performs a spatial select of features based on an overlay of a polygon (x),
-which can represent multiple features, and a polygon, point or line feature
-classes (y). User can specify a partial or complete intersection, using within
-argument, or within a distance, using distance argument, predicated on the
-query polygon. This function is similar to ArcGIS/Pro spatial select. Please note
-that for point to point neighbor selections use the knn function.
-Valid spatial predicates include: intersect, touches, covers, contains, proximity
-and contingency. See DE-9IM topology model for detailed information on data predicates.
-}
 \examples{
+if(require(sp, quietly = TRUE)) {
 library(sf)
- if(require(sp, quietly = TRUE)) {
-   data(meuse, package = "sp")
-   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-                     agr = "constant")
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
+                    agr = "constant")
 
 spolys <- hexagons(meuse, res=100)
   spolys$ID <- 1:nrow(spolys)
@@ -85,7 +84,10 @@ plot( spolys <- sf::st_make_grid(sf::st_sfc(sf::st_point(c(0,0)),
 spatial.select(x=spolys, predicate = "contingency")
 spatial.select(spolys, predicate = "contingency", neighbors = "rook") 
 
+} else { 
+  cat("Please install sp package to run example", "\n")
 }
+
 }
 \seealso{
 \code{\link[sf]{st_intersection}} for details on intersection predicate

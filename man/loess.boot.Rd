@@ -42,7 +42,8 @@ list object containing
 }
 \description{
 Bootstrap of a Local Polynomial Regression (loess)
-
+}
+\details{
 The function fits a loess curve and then calculates a symmetric nonparametric
 bootstrap with a confidence region. Fitted curves are evaluated at a fixed number
 of equally-spaced x values, regardless of the number of x values in the data. Some

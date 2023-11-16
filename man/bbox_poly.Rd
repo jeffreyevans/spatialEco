@@ -15,7 +15,7 @@ A single feature sf class polygon object
 \description{
 Creates a polygon from a vector or raster extent
 }
-\note{
+\details{
 If not a spatial object, expected order of input for x is: xmin, ymin, 
 xmax, ymax. Where; xmin, ymin and the coordinates of top left corner of the 
 bounding box and xmax, ymax represent the bottom right corner. The maximum 
@@ -23,16 +23,25 @@ value of xmax is width of the extent while maximum value of ymax is the height
 of the extent.
 }
 \examples{
-p = c("sf", "sp", "terra")
-  if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
-    m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
-    message("Can't run examples, please install ", paste(p[m], collapse = " "))
-  } else {
-  invisible(lapply(p, require, character.only=TRUE))
-
+if(require(sp, quietly = TRUE)) {
+library(terra)
+library(sf)
   data(meuse, package = "sp")
   meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
                     agr = "constant")
+
+# raster (terra)
+r <- rast(ext(meuse))
+  r[] <- runif(ncell(r))
+ crs(r) <- "epsg:28992"
+e <- bbox_poly(r)
+
+plot(r)
+  plot(st_geometry(e), border="red", add=TRUE)
+
+# extent vector
+e <- bbox_poly(c(178605, 329714, 181390, 333611)) 
+  plot(e)
 
 # vector bounding box
 e <- bbox_poly(meuse)
@@ -40,19 +49,8 @@ e <- bbox_poly(meuse)
 plot(st_geometry(meuse), pch=20)
   plot(st_geometry(e), add=TRUE)
 
-# raster (terra)
-  r <- rast(ext(meuse))
-    r[] <- runif(ncell(r))
-   crs(r) <- "epsg:28992"
-  e <- bbox_poly(r)
-  
-  plot(r)
-    plot(st_geometry(e), border="red", add=TRUE)
-
-# extent vector
-e <- bbox_poly(c(178605, 329714, 181390, 333611)) 
-plot(e)
-
+} else { 
+  cat("Please install sp package to run this example", "\n")
 }
 
 }

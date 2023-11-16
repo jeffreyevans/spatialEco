@@ -8,12 +8,11 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' if(require(sf, quietly = TRUE)) {
+#' library(sf)
 #'   polys <- st_read(system.file("shape/nc.shp", package="sf"))
 #'     polys <- suppressWarnings(st_cast(polys[c(10,100),], "POLYGON"))
 #'  
 #'  polyPerimeter(polys)
-#' }
 #'
 #' @export
 polyPerimeter <- function(x) {

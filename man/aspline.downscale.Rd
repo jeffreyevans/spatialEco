@@ -44,7 +44,7 @@ A list object containing:
 Downscales a raster to a higher resolution raster multivariate adaptive
 regression splines (MARS).
 }
-\note{
+\details{
 This function uses Multivariate Adaptive Regression Splines, to downscale a raster based
 on higher-resolution or more detailed raster data specified as covariate(s). This is similar
 to the raster.downsample function which uses a robust regression and is a frequentest model for
@@ -54,16 +54,17 @@ Using add.coords adds spatial coordinates to the model, including creating the a
 rasters for prediction.
 }
 \examples{
-\dontrun{
-library(geodata)
+\donttest{
+if (require(geodata, quietly = TRUE)) {
 library(terra)
+library(geodata)
 
 # Download example data (requires geodata package)
-  elev <- geodata::elevation_30s(country="SWZ",  path=tempdir())
+  elev <- elevation_30s(country="SWZ",  path=tempdir())
     slp <- terrain(elev, v="slope")
 	  x <- c(elev,slp)
         names(x) <- c("elev","slope")
-  tmax <- geodata::worldclim_country(country="SWZ", var="tmax", 
+  tmax <- worldclim_country(country="SWZ", var="tmax", 
                                      path=tempdir())
     tmax <- crop(tmax[[1]], ext(elev))
 	  names(tmax) <- "tmax"
@@ -79,8 +80,12 @@ tmax.ds <- aspline.downscale(x, tmax, add.coords=TRUE, keep.model=TRUE)
       plot(x[[2]], main="slope")
       plot(tmax.ds$downscale, main="Downscaled Temp max")
   par(opar)
- 
+
+} else { 
+  cat("Please install geodata package to run example", "\n")
 }
+}
+
 }
 \references{
 Friedman (1991) Multivariate Adaptive Regression Splines (with discussion)

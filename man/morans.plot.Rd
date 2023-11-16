@@ -51,38 +51,42 @@ autocorrelation and the red line represents the trend in autocorrelation. The qu
 in the plot indicate the type of spatial association/interaction (Anselin 1996). 
 For example the upper-left quadrant represents negative associations of low values 
 surrounded by high and the lower-right quadrant represents negative associations of
-high values surrounded by low.
-}
-\note{
-if y is not specified the univariate statistic for x is returned. the coords argument 
+high values surrounded by low.  
+
+If y is not specified the univariate statistic for x is returned. the coords argument 
 is only used if k = NULL. Can also be an sp object with relevant x,y coordinate slot 
 (ie., points or polygons). If w = NULL, the default method for deriving spatial weights 
 matrix, options are: inverse power or negative exponent. If scale.xy = FALSE it is 
 assumed that they are already scaled following Chen (2015).
 }
 \examples{
- library(sp)
- library(spdep)
-  data(meuse)
-   coordinates(meuse) <- ~x+y  
+ p = c("sf", "sp", "spdep")
+ if(any(!unlist(lapply(p, requireNamespace, quietly=TRUE)))) { 
+   m = which(!unlist(lapply(p, requireNamespace, quietly=TRUE)))
+   message("Can't run examples, please install ", paste(p[m], collapse = " "))
+ } else {
+ invisible(lapply(p, require, character.only=TRUE))
+ 
+ data(meuse, package = "sp")
+ meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, agr = "constant") 
 
- # Autocorrelation (univariate)  
-   morans.plot(meuse$zinc, coords = coordinates(meuse))   
+# Autocorrelation (univariate)  
+morans.plot(meuse$zinc, coords = st_coordinates(meuse)[,1:2])   
 
- # Cross-correlation of: x influencing y and y influencing x
- opar <- par(no.readonly=TRUE)
-   par(mfrow=c(1,2)) 
-     morans.plot(x=meuse$zinc, y=meuse$copper, coords = coordinates(meuse), 
-                 scale.morans = TRUE)
-     morans.plot(x=meuse$zinc, y=meuse$copper, coords = coordinates(meuse),
-                 scale.morans = TRUE, type.ac="yx") 
- par(opar)
-                       
+# Cross-correlation of: x influencing y and y influencing x
+opar <- par(no.readonly=TRUE)
+  par(mfrow=c(1,2)) 
+    morans.plot(x=meuse$zinc, y=meuse$copper, coords = st_coordinates(meuse)[,1:2], 
+                scale.morans = TRUE)
+    morans.plot(x=meuse$zinc, y=meuse$copper, coords = st_coordinates(meuse)[,1:2],
+                scale.morans = TRUE, type.ac="yx") 
+par(opar)
+}                       
 }
 \references{
 Chen., Y. (2015) A New Methodology of Spatial Cross-Correlation Analysis. 
   PLoS One 10(5):e0126158. doi:10.1371/journal.pone.0126158
-
+ 
 Anselin, L. (1996) The Moran scatterplot as an ESDA tool to assess local instability 
   in spatial association. pp. 111-125 in M. M. Fischer, H. J. Scholten and D. Unwin (eds) 
   Spatial analytical perspectives on GIS, London, Taylor and Francis

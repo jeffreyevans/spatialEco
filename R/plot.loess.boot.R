@@ -4,16 +4,9 @@
 #' @param  x      A loess.boot object
 #' @param  ...    Additional arguments passed to plot
 #'
+#' @return plot of lowess bootstrap
+#' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
-#'
-#' @references
-#' Cleveland, WS, (1979) Robust Locally Weighted Regression and Smoothing Plots Journal of the American Statistical Association 74:829-836
-#' @references
-#' Efron, B., and R. Tibshirani (1993) An Introduction to the Bootstrap Chapman and Hall, New York
-#' @references
-#' Hardle, W., (1989) Applied Nonparametric Regression Cambridge University Press, NY.
-#' @references
-#' Tibshirani, R. (1988) Variance stabilization and the bootstrap. Biometrika 75(3):433-44.
 #'
 #' @examples 
 #'  n=1000
@@ -25,6 +18,8 @@
 #' @method plot loess.boot 
 #' @export    	                               
 plot.loess.boot <- function(x, ...) {
+  oops <- options() 
+    on.exit(options(oops))
   dots <- as.list(match.call(expand.dots = TRUE)[-1])
   dots[["x"]] <- x$data$x
   dots[["y"]] <- x$data$y

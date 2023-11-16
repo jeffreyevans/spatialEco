@@ -5,11 +5,6 @@
 #' @param s       Smoothing parameter () 
 #' @param smooth  (FALSE/TRUE) Smooth data, else only replace NA's
 #' 
-#' @return a vector the same length as x with NA values filled or the 
-#' data smoothed (or both)..
-#'
-#' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
-#'
 #' @details  
 #' Performs a local polynomial regression to smooth data or to 
 #' impute NA values. The minimal number of non-NA observations to reliably
@@ -18,6 +13,11 @@
 #' first or last position of the vector it will remain NA. Please note
 #' that smooth needs to be TRUE to return a smoothed vector, else only
 #' NA's will be imputed.   
+#'
+#' @return 
+#' A vector the same length as x with NA values filled or the data smoothed (or both).
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'
 #' @examples 
 #' data(cor.data)

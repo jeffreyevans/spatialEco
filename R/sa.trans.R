@@ -10,25 +10,24 @@
 #' @param asp.units   Units of aspect values, options are: 
 #'                   "degrees" or "radians"
 #'
-#' @return A vector of the modeled value
-#'
-#' @description 
+#' @details 
 #' An a priori assumption of a maximum in the NW quadrant (45 azimuth)
 #' and a minimum in the SW quadrant can be replaced by an empirically
 #' determined location of the optimum without repeated calculations of
 #' the regression fit. In addition it is argued that expressions for
 #' the effects of aspect should always be considered as terms involving
 #' an interaction with slope (Stage, 1976)
-#' @description
+#' 
 #' For slopes from 0% - 100%, The functions are linearized and
 #' bounded from -1 to 1. Greater than 100% slopes are treated
 #' out of the -1 to 1 range.
 #' 
-#' @description
 #' An alternative for slopes with values approaching infinity is
 #' to take the square root of slope/100 to reduce the range of
 #' values.By default this model test all values greater than 100%
 #' to 101% and flat areas (-1) to nodata.
+#'
+#' @return A vector of the modeled value
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
@@ -37,12 +36,11 @@
 #'   and Habitat Type on Tree Growth. Forest Science 22(3):457-460.
 #'  
 #' @examples 
-#'  sa.trans(slope = 48.146, aspect = 360.000)
-#'
 #' library(terra)
+#' sa.trans(slope = 48.146, aspect = 360.000)
+#'
+#' # Example of creating slope*cos(aspect) raster
 #' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
-#' 
-#' # Example of slope*cos(aspect)
 #' sa <- terra::terrain(elev, v=c("slope", "aspect"), unit="degrees")
 #' scosa <- terra::lapp(c(sa[[1]], sa[[2]]), fun = sa.trans)
 #'

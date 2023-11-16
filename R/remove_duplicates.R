@@ -5,13 +5,13 @@
 #' @param threshold   A distance threshold indicating fuzzy duplication,
 #'                    default i 0.00001
 #'
-#' @return sf object, of same feature class as x, with duplicate geometries removed
-#'
-#' @note 
+#' @details
 #' This function removes duplicate geometries based on order and not "non null" 
 #' attribution or other factors, the first feature gets to stay. If one needs to 
 #' know which points were removed sf::st_difference can be used between original 
 #' data and results of the function.  
+#'
+#' @return sf object, of same feature class as x, with duplicate geometries removed
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #' 

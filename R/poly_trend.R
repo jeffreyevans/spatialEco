@@ -8,17 +8,17 @@
 #' @param plot     Plot results (TRUE/FALSE)
 #' @param ...      Additional arguments passed to plot 
 #'
+#' @details 
+#' A fit using a lm(y ~ x + I(X^2) + I(X^3)) form will be correlated which,  
+#' can cause problems. The function avoids undue correlation using orthogonal 
+#' polynomials
+#'
 #' @return A poly.trend class (list) containing  
 #' * trend        data.frame of fit polynomial and upper/lower confidence intervals 
 #' * model        Class lm model object fit with poly term       
 #' * prameterCI   Intercept confidence intervals of Nth order polynomials    
 #' * order        Specified polynomial order
 #' @md
-#'
-#' @note 
-#' A fit using a lm(y ~ x + I(X^2) + I(X^3)) form will be correlated which,  
-#' can cause problems. The function avoids undue correlation using orthogonal 
-#' polynomials
 #' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
 #'

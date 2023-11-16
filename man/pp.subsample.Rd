@@ -39,7 +39,8 @@ sf class POINT geometry containing random subsamples
 \description{
 Generates random subsample based on density estimate
 of observations
-
+}
+\details{
 The window type creates a convex hull by default or, optionally, uses the maximum
 extent (envelope). The resulting bandwidth can vary widely by method. the 'diggle'
 method is intended for  bandwidth representing 2nd order spatial variation whereas
@@ -47,8 +48,7 @@ the 'scott' method will represent 1st order trend. the 'geometry' approach will 
 represent 1st order trend. for large datasets, caution should be used with the 2nd
 order 'likelihood' approach, as it is slow and computationally expensive. finally,
 the 'stoyan' method will produce very strong 2nd order results. '
-}
-\note{
+
 Available bandwidth selection methods are:
 \itemize{
 \item Scott - (Scott 1992), Scott's Rule for Bandwidth Selection (1st order)
@@ -63,7 +63,7 @@ validation (2nd order)
 \examples{
  
 library(sf) 
-library(spatstat.explore) 
+if(require(spatstat.explore, quietly = TRUE)) { 
 data(bei, package = "spatstat.data")
 
 trees <- st_as_sf(bei)
@@ -77,6 +77,10 @@ trees.wrs <- pp.subsample(trees, n=n, window='hull')
        title('10\% subsample')
     legend('bottomright', legend=c('Original sample', 'Subsample'), 
                  col=c('black','red'),pch=c(19,19))   
+
+} else { 
+  cat("Please install spatstat.explore package to run example", "\n")
+}
 
 }
 \references{

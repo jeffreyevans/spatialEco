@@ -21,7 +21,8 @@ A terra SpatRaster class object of specified transformation
 }
 \description{
 Transforms raster to a specified statistical transformation
-
+}
+\details{
 Transformation option details:
 \itemize{
 \item norm - (Normalization_ (0-1): if min(x) < 0 ( x - min(x) ) / ( max(x) - min(x) )

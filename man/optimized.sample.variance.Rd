@@ -19,14 +19,13 @@ A data.frame with "idx" representing the index of the original vector
 and "y" is the value of the sampled data
 }
 \description{
-Draws an optimal sample that minimizes or maximizes the 
-             sample variance
+Draws an optimal sample that minimizes or maximizes the sample variance
 }
 \examples{
 library(sf)
-data(meuse, package = "sp")
-meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, 
-                  agr = "constant")
+if (require(sp, quietly = TRUE)) {
+  data(meuse, package = "sp")
+  meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, agr = "constant")
 
  n = 15
  # Draw n samples that maximize the variance of y
@@ -45,6 +44,9 @@ meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992,
             "minimized variance"), col=c("grey","red","blue"),  
             pch=c(19,19,19))  
  
+} else { 
+  cat("Please install sp package to run example", "\n")
+}
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans@tnc.org>

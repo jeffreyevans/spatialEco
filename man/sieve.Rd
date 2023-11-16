@@ -14,14 +14,15 @@ sieve(x, a, unit = c("m", "km", "ha"))
 \item{unit}{The unit to use for area query options are c("m", "km", "ha")}
 }
 \value{
-A terra SpatRaster with < a set to NA
+A terra SpatRaster with cells < a set to NA
 }
 \description{
 Removes contiguous cells < specified query area
 }
-\note{
+\details{
 A sieve can be used to establish a minimal mapping unit where
-contiguous cells < specified query area are set to NA
+contiguous cells < specified query area are set to NA. These NA
+values can then be filled using focal (majority, median, mean)
 }
 \examples{
 \donttest{
@@ -35,4 +36,7 @@ m <- matrix(c(100,200,1,200,300,2,300,400,3,400,
 sv <- spatialEco::sieve(x, a = 60, unit = "km")
   plot(c(x, sv))
 } 
+}
+\author{
+Jeffrey S. Evans  <jeffrey_evans@tnc.org>
 }

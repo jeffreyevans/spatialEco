@@ -34,6 +34,9 @@ variable (must be same length as y)}
 
 \item{...}{Additional arguments passed to plot}
 }
+\value{
+Plot of grouped PDF's
+}
 \description{
 Creates a probability density plot of y for 
              each group of x
@@ -46,8 +49,7 @@ ylab='PDF', xlab='Y', lty=c(1,2,3))
 
 }
 \references{
-Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, 
-   New York.
+Simonoff, J. S. (1996). Smoothing Methods in Statistics. Springer-Verlag, New York.
 }
 \author{
 Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>

@@ -6,20 +6,20 @@
 #' @param value  Values to insert into x
 #' @param index  Index position(s) to insert y values into x
 #'
-#' @return 
-#' A vector with values of y inserted into x and the position(s) 
-#' defined by the index
-#'
-#' @description
+#' @details
 #' This function inserts new values at specified positions in a vector. It 
 #' does not replace existing values. If a single value is provided for y 
 #' and l represents multiple positions y will be replicated for the length 
 #' of l. In this way you can insert the same value at multiple locations.  
+#'
+#' @return 
+#' A vector with values of y inserted into x and the position(s) 
+#' defined by the index
 #'  
 #' @author Jeffrey S. Evans <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#'  (x=1:10)
+#' (x=1:10)
 #'
 #'  # Insert single value in one location
 #'  insert.values(x, 100, 2) 

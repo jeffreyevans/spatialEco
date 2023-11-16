@@ -7,15 +7,15 @@
 raster.invert(x)
 }
 \arguments{
-\item{x}{raster object}
+\item{x}{A terra SpatRaster object}
 }
 \value{
-raster class object with inverted (flipped) raster values
+A terra SpatRaster object with inverted (flipped) raster values
 }
 \description{
 Inverts (flip) the values of a raster
 }
-\note{
+\details{
 Inverts raster values using the formula: (((x - max(x)) * -1) + min(x)
 }
 \examples{

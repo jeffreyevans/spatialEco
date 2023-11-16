@@ -10,14 +10,14 @@
 #' @param ID         Unique ID vector to use as reference ID's (rownames). Must be 
 #'                   unique and same length as number of rows in x
 #' 
+#' @details 
+#' This function uses row-based imputation to identify k similar neighbors for each 
+#' observation. Has been used to identify offsets based on ecological similarity. 
+#' 
 #' @return 
 #' data.frame with k similar targets and associated distances. If frequency = TRUE  the 
 #' freq column represents the number of times a row (ID) was selected as a neighbor.
-#'
-#' @note 
-#' This function uses row-based imputation to identify k similar neighbors for each 
-#' observation. Has been used to identify offsets based on ecological similarity. 
-#'  
+#' 
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
@@ -51,7 +51,7 @@
 #' @export similarity
 similarity <- function(x, k=4, method="mahalanobis", frequency = TRUE, 
                       scale = TRUE, ID = NULL) {
-  if(!any(which(utils::installed.packages()[,1] %in% "yaImpute")))
+  if(length(find.package("yaImpute", quiet = TRUE)) == 0)
     stop("please install yaImpute package before running this function")
   if(!class(x)[1] == "data.frame") stop( "x is not a data.frame")
     if(!is.null(x)) {  

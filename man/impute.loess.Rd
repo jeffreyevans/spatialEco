@@ -14,8 +14,7 @@ impute.loess(y, s = 0.2, smooth = FALSE)
 \item{smooth}{(FALSE/TRUE) Smooth data, else only replace NA's}
 }
 \value{
-a vector the same length as x with NA values filled or the 
-data smoothed (or both)..
+A vector the same length as x with NA values filled or the data smoothed (or both).
 }
 \description{
 Imputes missing data or smooths using Loess regression

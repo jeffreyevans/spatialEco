@@ -8,9 +8,6 @@
 #' @param ...          Additional arguments passed to terra::app (for 
 #'                     writing results to disk)
 #' 
-#' @return 
-#' A terra SpatRaster containing imputed or smoothed data.  
-#'
 #' @details  
 #' This function uses a LOESS regression to smooth the time-series. If the data is 
 #' smoothed, (using the smooth.data = TRUE argument) it will be entirely replaced by  
@@ -20,10 +17,13 @@
 #' The results can dramatically be effected by the choice of the smoothing 
 #' parameter (f) so caution is warranted and the effect of this parameter tested.  
 #' 
+#' @return 
+#' A terra SpatRaster containing imputed or smoothed data.  
+#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(terra)
 #'   random.raster <- function(rows=50, cols=50, l=20, min=0, max=1){ 
 #'     do.call(c, replicate(l, rast(matrix(runif(rows * cols, min, max), 

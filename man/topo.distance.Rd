@@ -9,7 +9,7 @@ topo.distance(x, r, echo = FALSE)
 \arguments{
 \item{x}{sf LINESTRING object}
 
-\item{r}{terra or raster class elevation raster}
+\item{r}{terra SpatRaster class elevation raster}
 
 \item{echo}{(FALSE/TRUE) print progress to screen}
 }
@@ -17,12 +17,10 @@ topo.distance(x, r, echo = FALSE)
 Vector of corrected topographic distances same length as nrow(x)
 }
 \description{
-Calculates topographic corrected distance for a 
-             LINESTRING object
+Calculates topographic corrected distance for a line object
 }
-\note{
-This function corrects straight-line (euclidean) distances for 
-topographic-slope effect.
+\details{
+This function corrects straight-line (euclidean) distances for topographic-slope effect.
 }
 \examples{
  library(sf)

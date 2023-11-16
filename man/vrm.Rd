@@ -9,9 +9,8 @@ vrm(x, s = 3)
 \arguments{
 \item{x}{A terra SpatRaster class object}
 
-\item{s}{Scale of window. Must be odd number, can 
-represent 2 dimensions (eg., s=c(3,5) would 
-represent a 3 x 5 window)}
+\item{s}{Scale of window. Must be odd number, can represent 2 dimensions 
+(eg., s=c(3,5) would represent a 3 x 5 window)}
 }
 \value{
 A terra SpatRaster class object of the VRI
@@ -20,7 +19,7 @@ A terra SpatRaster class object of the VRI
 Implementation of the Sappington et al., (2007) vector 
              ruggedness measure
 }
-\note{
+\details{
 This function measures terrain ruggedness by calculating the vector 
 ruggedness measure
 }

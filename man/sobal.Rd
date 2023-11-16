@@ -20,7 +20,8 @@ A raster class object or raster written to disk
 }
 \description{
 An isotropic image gradient operator using a 3x3 window
-
+}
+\details{
 The Sobel-Feldmanh operator is a discrete differentiation operator, deriving an 
 approximation of the gradient of the intensity function. abrupt discontinuity 
 in the gradient function represents edges, making this a common approach for edge 

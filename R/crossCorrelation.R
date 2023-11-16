@@ -27,25 +27,6 @@
 #' @param clust           (FALSE/TRUE) Return approximated lisa clusters
 #' @param return.sims     (FALSE/TRUE) Return randomizations vector n = k
 #'
-#' @return When not simulated k=0, a list containing:
-#' * I - Global autocorrelation statistic
-#' * SCI - - A data.frame with two columns representing the xy and yx autocorrelation
-#' * nsim - value of NULL to represent p values were derived from observed data (k=0)
-#' * p - Probability based observations above/below confidence interval
-#' * t.test - Probability based on t-test
-#'   \item clusters - If "clust" argument TRUE, vector representing LISA clusters
-#' @md
-#'
-#' @return when simulated (k>0), a list containing: 
-#'  * I - Global autocorrelation statistic
-#'  * SCI - A data.frame with two columns representing the xy and yx autocorrelation
-#'  * nsim - value representing number of simulations
-#'  * global.p - p-value of global autocorrelation statistic
-#'  * local.p - Probability based simulated data using successful rejection of t-test
-#'  * range.p - Probability based on range of probabilities resulting from paired t-test
-#'  * clusters - If "clust" argument TRUE, vector representing lisa clusters
-#' @md
-#'
 #'
 #' @details
 #' In specifying a distance matrix, you can pass a coordinates matrix or spatial
@@ -64,8 +45,25 @@
 #'     one of the dist.function options 
 #' * IF cords=NULL, w=x, dist.function="none" 
 #'     It is assumed that the matrix passed to w already represents 
-#'     the spatial weights
-#' @md  
+#'     the spatial weights 
+#'
+#' @return 
+#' When not simulated k=0, a list containing:
+#' * I - Global autocorrelation statistic
+#' * SCI - - A data.frame with two columns representing the xy and yx autocorrelation
+#' * nsim - value of NULL to represent p values were derived from observed data (k=0)
+#' * p - Probability based observations above/below confidence interval
+#' * t.test - Probability based on t-test
+#'   \item clusters - If "clust" argument TRUE, vector representing LISA clusters
+#'
+#' When simulated (k>0), a list containing: 
+#'  * I - Global autocorrelation statistic
+#'  * SCI - A data.frame with two columns representing the xy and yx autocorrelation
+#'  * nsim - value representing number of simulations
+#'  * global.p - p-value of global autocorrelation statistic
+#'  * local.p - Probability based simulated data using successful rejection of t-test
+#'  * range.p - Probability based on range of probabilities resulting from paired t-test
+#'  * clusters - If "clust" argument TRUE, vector representing lisa clusters
 #'
 #' @references
 #' Chen, Y.G. (2012) On the four types of weight functions for spatial contiguity 
@@ -85,32 +83,36 @@
 #'                         dist.function = "inv.power") ) 
 #'
 #' \donttest{
-#'   library(sp)
-#'   library(spdep)
-#'    
-#'   data(meuse)
-#'     coordinates(meuse) <- ~x+y  
-#'
-#'   #### Using a default spatial weights matrix method (inverse power function)
-#'   ( I <- crossCorrelation(meuse$zinc, meuse$copper, 
-#'                coords = coordinates(meuse), k=99) )
-#'     meuse$lisa <- I$SCI[,"lsci.xy"]
-#'       spplot(meuse, "lisa")
+#' library(sf)
+#' library(spdep)
 #'  
-#'   #### Providing a distance matrix
-#'    Wij <- spDists(meuse) 	
-#'    ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, k=99) )
-#'
-#'   #### Providing an inverse power function weights matrix
-#'    Wij <- spDists(meuse)
-#'      Wij <- 1 / Wij
-#'            diag(Wij) <- 0 
-#'          Wij <- Wij / sum(Wij) 
-#'    diag(Wij) <- 0
-#'    ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
-#'                           dist.function = "none", k=99) )
+#'   if (require(sp, quietly = TRUE)) {
+#'    data(meuse, package = "sp")
+#'    meuse <- st_as_sf(meuse, coords = c("x", "y"), crs = 28992, agr = "constant")
+#'   } 
+#' 
+#' #### Using a default spatial weights matrix method (inverse power function)
+#' ( I <- crossCorrelation(meuse$zinc, meuse$copper, 
+#'              coords = st_coordinates(meuse)[,1:2], k=99) )
+#'   meuse$lisa <- I$SCI[,"lsci.xy"]
+#'     plot(meuse["lisa"], pch=20)
+#' 
+#' #### Providing a distance matrix
+#' if (require(units, quietly = TRUE)) {
+#'   Wij <- units::drop_units(st_distance(meuse))
+#'  ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, k=99) )
+#' 
+#' #### Providing an inverse power function weights matrix
+#'   Wij <- 1 / Wij
+#'     diag(Wij) <- 0 
+#'       Wij <- Wij / sum(Wij) 
+#'         diag(Wij) <- 0
+#'  ( I <- crossCorrelation(meuse$zinc, meuse$copper, w = Wij, 
+#'                          dist.function = "none", k=99) )
+#' }
 #' } 
 #' 
+#' @md 
 #' @export crossCorrelation
 crossCorrelation <- function(x, y = NULL, coords = NULL, w = NULL, type = c("LSCI", "GSCI"), 
                              k = 999, dist.function = c("inv.power", "neg.exponent", "none"), 

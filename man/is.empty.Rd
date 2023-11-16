@@ -21,12 +21,13 @@ a TRUE/FALSE value will be returned for each element in the vector
 }
 \description{
 evaluates empty elements in a vector
-
-This function evaluates if an element in a vector is empty
-the na.empty argument allows for evaluating NA values (TRUE if NA) and
-all.na returns a TRUE if all elements are NA. The trim argument trims
-a character string to account for the fact that c(" ") is not empty but,
-a vector with c("") is empty. Using trim = TRUE will force both to return TRUE
+}
+\details{
+This function evaluates if an element in a vector is empty the na.empty argument 
+allows for evaluating NA values (TRUE if NA) and all.na returns a TRUE if all elements 
+are NA. The trim argument trims a character string to account for the fact that c(" ") 
+is not empty but, a vector with c("") is empty. Using trim = TRUE will force both 
+to return TRUE
 }
 \examples{
 is.empty( c("") )

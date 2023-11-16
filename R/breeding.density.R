@@ -10,6 +10,13 @@
 #' @param self     (TRUE/FALSE) Should source observations be included in 
 #'                 density (default TRUE)
 #'
+#' @details
+#' The breeding density areas model identifies the Nth-percent population exhibiting 
+#' the highest spatial density and counts/frequency. It then buffers these points by 
+#' a specified distance to produce breeding area polygons. If you would like to recreate 
+#' the results in Doherty et al., (2010), then define bw = 6400m and b[if p < 0.75 
+#' b = 6400m, | p >= 0.75 b = 8500m]  
+#'
 #' @return A list object with:
 #' \itemize{ 
 #' \item pop.pts   sf POINT object with points identified within the specified p
@@ -19,13 +26,6 @@
 #' \item p         Specified population percent
 #' }
 #'
-#' @note 
-#' The breeding density areas model identifies the Nth-percent population exhibiting 
-#' the highest spatial density and counts/frequency. It then buffers these points by 
-#' a specified distance to produce breeding area polygons. If you would like to recreate 
-#' the results in Doherty et al., (2010), then define bw = 6400m and b[if p < 0.75 
-#' b = 6400m, | p >= 0.75 b = 8500m]  
-#'
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @references
@@ -34,7 +34,7 @@
 #'   Bureau of Land Management. Number L10PG00911
 #'                                                              
 #' @examples 
-#' if(require(sf, quietly = TRUE)) { 
+#' library(sf)
 #' 
 #' n=1500
 #' bb <- rbind(c(-1281299,-761876.5),c(1915337,2566433.5))
@@ -53,8 +53,6 @@
 #'          plot(st_geometry(bd75$pop.pts), pch=20, col='red', add=TRUE)
 #'       legend("bottomright", legend=c("selected areas","selected sites", "all sites"),
 #'              bg="white", fill=c("grey","red", "black"), pt.cex = 2) 
-#' 
-#' }
 #'
 #' @export
 breeding.density <- function(x, pop, p = 0.75, bw = 6400, 

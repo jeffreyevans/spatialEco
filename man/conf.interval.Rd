@@ -16,21 +16,19 @@ conf.interval(x, cl = 0.95, stat = "mean", std.error = TRUE)
 \item{std.error}{Return standard error (TRUE/FALSE)}
 }
 \value{
-lci          Lower confidence interval value
-
-uci          Upper confidence interval value
-
-mean         If stat = "mean", mean value of distribution
-
-mean         Value of the mean or median
-
-conf.level   Confidence level used for confidence interval
-
-std.error    If std.error = TRUE standard error of distribution
+data.frame contaning:
+\itemize{
+\item lci - Lower confidence interval value
+\item uci - Upper confidence interval value
+\item mean - If stat = "mean", mean value of distribution
+\item mean - Value of the mean or median
+\item conf.level - Confidence level used for confidence interval
+\item std.error - If std.error = TRUE standard error of distribution
+}
 }
 \description{
-Calculates confidence interval for the mean or median of a distribution with 
-             unknown population variance
+Calculates confidence interval for the mean or median of a distribution with
+unknown population variance
 }
 \examples{
  x <- runif(100)
@@ -49,5 +47,5 @@ Calculates confidence interval for the mean or median of a distribution with
 
 }
 \author{
-Jeffrey S. Evans  <jeffrey_evans@tnc.org>
+Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
 }
