@@ -22,10 +22,13 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'         
 #' @examples
-#' \donttest{
-#' ( d <- daymet.point(lat = 36.0133, long = -84.2625, start.year = 2013, 
-#'                     end.year=2014, site = "1", files = FALSE, echo = FALSE) )
-#' }
+# \donttest{
+#' d <- tryCatch(daymet.point(lat = 36.0133, long = -84.2625, start.year = 2013, 
+#'               end.year=2014, site = "1", files = FALSE, echo = FALSE), 
+#' 		      error=function(e){})
+#' if(is.null(d)) 
+#'   message("Apparently the ORNL Daymet site is currently down, try again later")
+# }
 #'
 #' @export
 daymet.point <- function (lat, long, start.year, end.year, site=NULL, 
@@ -44,8 +47,8 @@ daymet.point <- function (lat, long, start.year, end.year, site=NULL,
 	if (echo == TRUE) {
       message(paste("Downloading DAYMET data for: ", site, " at ", 
           lat, "/", long, " latitude/longitude !\n", sep = ""))
-    }	
-    x <- try( RCurl::getURL(download.url, ssl.verifypeer = FALSE) )
+    }
+    x <- try( RCurl::getURL(download.url, ssl.verifypeer = FALSE), silent=TRUE)
 	  if (!inherits(x, "try-error")) {
         dat <- utils::read.csv(textConnection(x), skip = 7)
 		  names(dat) <- c("year", "julian", "dayl", "prcp", "srad", "swe", 
@@ -53,12 +56,17 @@ daymet.point <- function (lat, long, start.year, end.year, site=NULL,
 		if(!is.null(site)) dat <- data.frame(site = site, dat)
       } else {
 	    stop("There was an error downloading this file")
-	  }  
+	  }
+    dat <- utils::read.csv(textConnection(x), skip = 7)
+	  names(dat) <- c("year", "julian", "dayl", "prcp", "srad", "swe", 
+		              "tmax", "tmin", "vp")
+	    if(!is.null(site)) dat <- data.frame(site = site, dat)
+      
 	if( files == TRUE ) {
 	  if(is.null(site)) site = paste( paste("lat", lat, sep="."), 
 	                                  paste("long", long, sep="."), sep=".") 
       utils::write.csv( paste(site, "_", start.year, "_", end.year, ".csv", sep = ""),
 	             row.names = FALSE)
-    }	
+    }
   return(dat)
- }
+}
