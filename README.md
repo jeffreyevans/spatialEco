@@ -17,6 +17,49 @@ been corrected and a new version subbmited to CRAN on 2023/13/11 however, they a
 as a new submission so it may take up to three weeks for it to be back up on the CRAN repository.
 In the meantime, you can install the GitHub development version of from R-Universe (see instructions below) 
 
+# News 
+
+As of version 2.0-2 I completley depreciated several functions (they no longer have aliasis) and cleaned 
+up documentation. Other changes are;
+
+	Added suggest for the lwgeom package after sf dropped as dependency
+
+	Added function to derive LAI (leaf area index) from NDVI
+
+	Fixed bug in sf.de where bandwidth was not being reconized as argument
+
+	Reverted sf.kde to use modification of MASS 2dkde as, ks methods are somewhat
+	questionable with spatial data. 
+
+In version 2.0-1
+
+	Fixed bug in sf.kde (thanks to Dirk Pflugmacher for pointing out rotation issue)  
+
+	Added function sf_dissolve for dissolving polygon features
+
+	Added function squareBuffer for creating square buffers
+
+	Fixed bug in raster.downsample where plot returned error when scatter=TRUE with one covariate  
+
+	Added function aspline.downscale for downscaling rasters using multivariate adaptive 
+	regression splines (thanks to discussion with Felipe Benavides)
+
+	Fixed a bug in breeding.density (thanks to Eric Newkirk) where st_distance was resulting 
+	in a units class object and crashing the function. 
+  
+	Feature request (Alessandro Mondanaro), added an argument/option in sf_kde for using ks or the modified MASS kde2d function that
+	facilitates weights. The MASS kde2d was the KDE function in the sp.kde function.   
+  
+	Fixed a bug in curvature (thanks to Rachel Wright) where type="mcnab" was returning source raster values 
+
+	Updated knn function to use sf class objects  
+
+	Fixed bug in wt.centroid when sf object is tibble (thanks to Andrew Gustar for drawing my attention to the bug) 
+	
+	Fixed bug in stratified.random where if there are no replicates with replace = FALSE no results returned
+
+* Enhancement added support for prewhiting of autocorrelated time-series in kendall function
+ 
 I jumped to a major release and pushed the version to 2.0-0. All spatial functions are now using the 
 `sf` and `terra` packages due to `sp`, `rgeos`, `rgdal`, `maptools` and `raster` being retired. Sorry 
 but, for the most part I removed backwards compatibility with these depreciated object classes so, you 
@@ -24,6 +67,7 @@ will need to make sure that you are using modern spatial object classes. In terr
 one class type for multi or single band raster objects "SpatRaster" which can be read or coerced using 
 `terra::rast`. For coercing sp class vector objects to sf you can use `sf::st_as:sf` or `as(x, "sf")` 
 and, going from sf to sp you use `as(x, "Spatial")` 
+
    
  
 ## Available functions in development version of spatialEco 2.0-2
