@@ -58,7 +58,7 @@ In version 2.0-1
 	
 	Fixed bug in stratified.random where if there are no replicates with replace = FALSE no results returned
 
-* Enhancement added support for prewhiting of autocorrelated time-series in kendall function
+	Enhancement added support for prewhiting of autocorrelated time-series in kendall function
  
 I jumped to a major release and pushed the version to 2.0-0. All spatial functions are now using the 
 `sf` and `terra` packages due to `sp`, `rgeos`, `rgdal`, `maptools` and `raster` being retired. Sorry 
