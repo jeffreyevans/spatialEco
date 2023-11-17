@@ -22,7 +22,7 @@ In the meantime, you can install the GitHub development version of from R-Univer
 As of version 2.0-2 I completley depreciated several functions (they no longer have aliasis) and cleaned 
 up documentation. Other changes are;
 
-	Added suggest for the lwgeom package after sf dropped as dependency
+	Added suggest for the lwgeom package after sf dropped as Imports dependency
 
 	Added function to derive LAI (leaf area index) from NDVI
 
