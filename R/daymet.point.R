@@ -22,13 +22,10 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'         
 #' @examples
-# \donttest{
-#' d <- tryCatch(daymet.point(lat = 36.0133, long = -84.2625, start.year = 2013, 
-#'               end.year=2014, site = "1", files = FALSE, echo = FALSE), 
-#' 		      error=function(e){})
-#' if(is.null(d)) 
-#'   message("Apparently the ORNL Daymet site is currently down, try again later")
-# }
+#' \donttest{
+#' ( d <- daymet.point(lat = 36.0133, long = -84.2625, start.year = 2013, 
+#'                     end.year=2014, site = "1", files = FALSE, echo = FALSE) )
+#'}
 #'
 #' @export
 daymet.point <- function (lat, long, start.year, end.year, site=NULL, 
