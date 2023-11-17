@@ -41,31 +41,29 @@
 #' \donttest{
 #' # Create date string for query
 #' d <- seq(as.Date("2020/05/01"), as.Date("2020-09-01"), by="day")
-#'
-#' # Search for 300m (333m) LAI within specified date range 
-#' all.urls <- cgls_urls(dates = d, resolution = 300, 
-#'                         product = "lai")
-#'						 
-#' ## Search for 1000m LAI within specified date range  
-#' # all.urls <- cgls_urls(dates = d, resolution = 1000, 
-#' #                       product = "lai")		
-#'
-#' ## Return all 300m LAI 
-#' # lai <- cgls_urls(resolution = 300, product = "lai")
-#' #   head( basename(lai) )
 #' 
-#' ## Example of downloading URL's
-#' ## You need to define your login credentials to download data
-#' # username = "xxxx"  
-#' # password = "xxxx" 
-#' # 	  
-#' #   for(i in 1:length(all.urls)){
-#' #     if(i > 1){ Sys.sleep(3) }
-#' #     file.url <- paste0("https://", paste(username, password, sep=":"), "@", 
-#' #                        sub(".*//", "", all.urls[i]))  
-#' #     download.file(file.url, file.path(getwd(), 
-#' # 	              basename(all.urls[i])), mode = 'wb') 
-#' #   }
+#' # Search for 300m (333m) LAI within specified date range 
+#' ( dates.lai <- cgls_urls(dates = d, resolution = 300, 
+#'                         product = "lai") )
+#' 
+#' # Return all 300m LAI 
+#' all.lai <- cgls_urls(resolution = 300, product = "lai")
+#'   nrow(all.lai)
+#' }
+#'
+#' \dontrun{						 
+#' # Example for downloading URL's
+#' # You need to define your login credentials to download data
+#' #   username = "xxxx"  
+#' #   password = "xxxx" 
+#'	  
+#'   for(i in 1:length(dates.lai)){
+#'     if(i > 1){ Sys.sleep(3) }
+#'     file.url <- paste0("https://", paste(username, password, sep=":"), "@", 
+#'                        sub(".*//", "", dates.lai[i]))  
+#'       download.file(file.url, file.path(tempdir(), 
+#'                     basename(dates.lai[i])), mode = 'wb') 
+#'   }
 #' }
 #'
 #' @md
