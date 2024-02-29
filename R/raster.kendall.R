@@ -45,18 +45,18 @@
 #'
 #' @examples
 #' \donttest{
-  library(terra)
-
-  # note; nonsense example with n=9
-  r <- c(rast(system.file("ex/logo.tif", package="terra")),
-         rast(system.file("ex/logo.tif", package="terra")),
-         rast(system.file("ex/logo.tif", package="terra"))) 
-  
-  # Calculate trend slope with p-value and confidence level(s)
-  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
-    k <- raster.kendall(r, method="none")
-    plot(k)
- }
+#'  library(terra)
+#'
+#'  # note; nonsense example with n=9
+#'  r <- c(rast(system.file("ex/logo.tif", package="terra")),
+#'         rast(system.file("ex/logo.tif", package="terra")),
+#'         rast(system.file("ex/logo.tif", package="terra"))) 
+#'  
+#'  # Calculate trend slope with p-value and confidence level(s)
+#'  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
+#'    k <- raster.kendall(r, method="none")
+#'    plot(k)
+#' }
 #'
 #' @seealso \code{\link[zyp]{zyp.trend.vector}} for model details
 #' @seealso \code{\link[terra]{app}} for available ... arguments
