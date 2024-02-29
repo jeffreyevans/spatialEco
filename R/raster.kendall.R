@@ -45,18 +45,18 @@
 #'
 #' @examples
 #' \donttest{
-#'  library(terra)
-#'
-#'  # note; nonsense example with n=9
-#'  r <- c(rast(system.file("ex/logo.tif", package="terra")),
-#'         rast(system.file("ex/logo.tif", package="terra")),
-#'         rast(system.file("ex/logo.tif", package="terra"))) 
-#'  
-#'  # Calculate trend slope with p-value and confidence level(s)
-#'  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
-#'    k <- raster.kendall(r, method="none")
-#'    plot(k)
-#' }
+  library(terra)
+
+  # note; nonsense example with n=9
+  r <- c(rast(system.file("ex/logo.tif", package="terra")),
+         rast(system.file("ex/logo.tif", package="terra")),
+         rast(system.file("ex/logo.tif", package="terra"))) 
+  
+  # Calculate trend slope with p-value and confidence level(s)
+  # ("slope","intercept", "p.value","z.value", "LCI","UCI","tau")
+    k <- raster.kendall(r, method="none")
+    plot(k)
+ }
 #'
 #' @seealso \code{\link[zyp]{zyp.trend.vector}} for model details
 #' @seealso \code{\link[terra]{app}} for available ... arguments
@@ -76,8 +76,8 @@ raster.kendall <- function(x, intercept = TRUE, p.value = TRUE,
     stop("Too few layers to calculate a trend")
   idx <- which(c(TRUE, tau, intercept, p.value, rep(confidence,2)))	
   out.names <- c("slope", "tau", "intercept", "p-value", "limits.LCL", "limits.UCL")[idx]
-    trend.slope <- function(y, metrics=idx, method=method[1]) {
-      kendall(y, method = method, threshold = min.obs)[metrics]
+    trend.slope <- function(y, metrics=idx, m=method[1]) {
+      kendall(y, method = m, threshold = min.obs)[metrics]
     }
   k <- terra::app(x, fun=trend.slope, ...)
     names(k) <- out.names
