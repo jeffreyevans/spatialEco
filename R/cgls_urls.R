@@ -118,7 +118,7 @@ cgls_urls <- function(dates = NULL, resolution = c(1000, 300),
        } 
        if(!is.null(dates)){
          file.url <- file.url[grep(paste(paste0(gsub("-", "", dates),"0000"), 
-	                          collapse="|"), file.url)]
+	                          collapse=" | "), file.url)]
 	     if(length(file.url) < 1)
            stop("There are no data in this date range")	
 	   }

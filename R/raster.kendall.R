@@ -77,7 +77,7 @@ raster.kendall <- function(x, intercept = TRUE, p.value = TRUE,
   idx <- which(c(TRUE, tau, intercept, p.value, rep(confidence,2)))	
   out.names <- c("slope", "tau", "intercept", "p-value", "limits.LCL", "limits.UCL")[idx]
     trend.slope <- function(y, metrics=idx, method=method[1]) {
-      kendall(y)[metrics]
+      kendall(y, method = method, threshold = min.obs)[metrics]
     }
   k <- terra::app(x, fun=trend.slope, ...)
     names(k) <- out.names
