@@ -12,16 +12,13 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     auto-logistic model, sampling models, cluster optimization and statistical
     exploratory tools.
 
-The spatialEco package was archived on CRAN due to a dependency change of lwgeom in sf. This has
-been corrected and a new version subbmited to CRAN on 2023/13/11 however, they are treating it
-as a new submission so it may take up to three weeks for it to be back up on the CRAN repository.
-In the meantime, you can install the GitHub development version of from R-Universe (see instructions below) 
-
 # News 
 
 As of version 2.0-2 I completley depreciated several functions (they no longer have aliasis) and cleaned 
 up documentation. Other changes are;
 
+	Fixed bug in raster.kendall where, other than the default, the method argument was not being reconized
+	
 	Added suggest for the lwgeom package after sf dropped as Imports dependency
 
 	Added function to derive LAI (leaf area index) from NDVI
@@ -82,7 +79,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `bearing.distance`           | Calculate new point based on bearing/distance                                     
 | `breeding.density`           | Calculates n-th percent breeding density areas base on a kernel density estimate of population counts. |
 | `built.index`                | remote sensing built-up index |      
-| `cgls_urls`                  | Based on query, provide URL's for Copernicus Global Land Service datasets         
+| `cgls_urls`                  | *Depreciated* Based on query, provide URL's for Copernicus Global Land Service datasets         
 | `chae`                       | The Canine-Human Age Equivalent (for fun)                                         
 | `class.comparison`           | Depreciated, with migration to terra, I collapsed into raster.change                                                      
 | `classBreaks`                | for finding class breaks in a distribution                                        
@@ -139,7 +136,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `morans.plot`                | Autocorrelation plot                                                              
 | `nni`                        | Calculates the nearest neighbor index (NNI) measure of clustering or dispersal    
 | `nth.vlaue`                  | Returns the Nth (smallest/largest) values in a numeric vector                     
-| `oli.aws`                    | Download Landsat 8 OLI from AWS.                                                  
+| `oli.aws`                    | *Depreciated* Download Landsat 8 OLI from AWS.                                                  
 | `o.ring`                     | Calculates inhomogeneous O-ring point pattern statistic (Wiegand & Maloney 2004)  
 | `optimal.k`                  | Find optimal k of k-Medoid partitions using silhouette widths                     
 | `optimized.sample.variance`  | Draws an optimal sample that minimizes or maximizes the sample variance           

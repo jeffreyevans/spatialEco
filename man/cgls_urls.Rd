@@ -4,87 +4,16 @@
 \alias{cgls_urls}
 \title{Provide URL's for Copernicus Global Land Service datasets}
 \usage{
-cgls_urls(
-  dates = NULL,
-  resolution = c(1000, 300),
-  product = c("fapar", "fcover", "lai", "ndvi"),
-  ver = c("newest", "v1", "v2", "v3")
-)
+cgls_urls(...)
 }
 \arguments{
-\item{dates}{Dates to subset default is NULL, returns all products}
-
-\item{resolution}{The product resolution c("1km", "300m"),}
-
-\item{product}{Which product to query options are "fapar",}
-
-\item{ver}{Product version options are "newest", "v1", "v2", "v3"}
-}
-\value{
-A vector of download URL's for the products
+\item{...}{not used}
 }
 \description{
 Returns URL's of a product/version/resolution
 }
 \details{
-Provides a query of the ESA's Copernicus Global Land Service global
-The query is performed on the manifest files and return URL's
-however, to download data you will need login credentials which,
-can be acquired from: http://land.copernicus.eu
-
-If provided, dates need to be in a "YYYY-MM-DD" format. The dates
-are an explicit search string and can contain dates that are not in
-the imagery. As such, the user should generate a daily date string
-representing the range of the desired download as not to have to
-guess the available dates. Also note that multiple processing versions
-of a given image are retained in the manifest. This means that if you
-download a previous processing version, it could be an invalid image.
-It is highly recommended that you do not change the default
-ver="newest" argument unless there is a specific reason to.
-
-Available products
-\itemize{
-\item fapar    Fraction of photosynthetically active radiation
-absorbed by the vegetation
-\item fcover   Fraction of green vegetation cover
-\item lai      Leaf Area index
-\item ndvi     Normalized Difference Vegetation Index
-}
-
-Not yet implemented; Soil Water Index, Surface Soil Moisture, and Land Surface Temperature.
-}
-\examples{
-\donttest{
-# Create date string for query
-d <- seq(as.Date("2020/05/01"), as.Date("2020-09-01"), by="day")
-
-# Search for 300m (333m) LAI within specified date range 
-all.urls <- cgls_urls(dates = d, resolution = 300, 
-                        product = "lai")
-					 
-## Search for 1000m LAI within specified date range  
-# all.urls <- cgls_urls(dates = d, resolution = 1000, 
-#                       product = "lai")		
-
-## Return all 300m LAI 
-# lai <- cgls_urls(resolution = 300, product = "lai")
-#   head( basename(lai) )
-
-## Example of downloading URL's
-## You need to define your login credentials to download data
-# username = "xxxx"  
-# password = "xxxx" 
-# 	  
-#   for(i in 1:length(all.urls)){
-#     if(i > 1){ Sys.sleep(3) }
-#     file.url <- paste0("https://", paste(username, password, sep=":"), "@", 
-#                        sub(".*//", "", all.urls[i]))  
-#     download.file(file.url, file.path(getwd(), 
-# 	              basename(all.urls[i])), mode = 'wb') 
-#   }
-}
-
-}
-\author{
-Jeffrey S. Evans  \href{mailto:jeffrey_evans@tnc.org}{jeffrey_evans@tnc.org}
+Given the changes to ESA-Copenricus data distribution, using digests is
+no longer reliable. Plese use the Sentinel Hub or a STAC API for data 
+acccess
 }
