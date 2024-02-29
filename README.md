@@ -14,10 +14,16 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
 # News 
 
-As of version 2.0-2 I completley depreciated several functions (they no longer have aliasis) and cleaned 
-up documentation. Other changes are;
+In version 2.0-3
 
 	Fixed bug in raster.kendall where, other than the default, the method argument was not being reconized
+
+	Depreciated cgls.url due to digest files no longer reliable
+
+	Depreciated oli.aws due to AWS Registry of Open Data changing to the AWS Data Exchange 
+
+As of version 2.0-2 I completley depreciated several functions (they no longer have aliasis) and cleaned 
+up documentation. Other changes are;
 	
 	Added suggest for the lwgeom package after sf dropped as Imports dependency
 
