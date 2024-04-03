@@ -109,14 +109,14 @@ aspline.downscale <- function(x, y, add.coords = TRUE, keep.model = FALSE,
       if(length(find.package("caret", quiet = TRUE)) == 0)
         stop("please install caret package to implement grid search")
       hyper_grid <- expand.grid(
-      degree = 1:3, 
-      nprune = floor(seq(2, 100, length.out = 10))
+        degree = 1:3, 
+        nprune = floor(seq(2, 100, length.out = 10))
       )
 	  message("Running hyper parameter grid search with ", nrow(hyper_grid), 
 	          " parameter sets, this may take awhile")
       tuned_mars <- caret::train(
-        x <- subset(sub.samp, select = -y),
-        y <- sub.samp$y,
+        x = subset(sub.samp, select = -y),
+        y = sub.samp$y,
         method = "earth",
         metric = "RMSE",
         trControl = caret::trainControl(method = "cv", number = 10),
@@ -126,8 +126,9 @@ aspline.downscale <- function(x, y, add.coords = TRUE, keep.model = FALSE,
     } else {
       ds.fit <- earth::earth( y ~ ., data = sub.samp, ...)  
     }
-  parms <- earth::evimp(ds.fit) 
-    p <- terra::predict(x[[which(names(x) %in% rownames(parms))]], ds.fit)
+  parms <- earth::evimp(ds.fit)
+    pidx <- which(names(x) %in% rownames(parms))  
+      p <- terra::predict(x[[pidx]], ds.fit)
     results <- list(downscale = p, 
                     GCV = ds.fit$gcv, 
                     RSS = ds.fit$rss, 

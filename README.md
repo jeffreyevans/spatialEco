@@ -16,6 +16,10 @@ spatialEco R package with utilities to support spatial data manipulation, query,
 
 In version 2.0-3
 
+	Fixed bug in aspline.downscale where, grid.search = TRUE option was producing an error
+
+	Fixed bug in sf.kde where error was returned when specifying ref argument
+
 	Fixed bug in raster.kendall where, other than the default, the method argument was not being reconized
 
 	Depreciated cgls.url due to digest files no longer reliable
@@ -29,7 +33,7 @@ up documentation. Other changes are;
 
 	Added function to derive LAI (leaf area index) from NDVI
 
-	Fixed bug in sf.de where bandwidth was not being reconized as argument
+	Fixed bug in sf.kde where bandwidth was not being reconized as argument
 
 	Reverted sf.kde to use modification of MASS 2dkde as, ks methods are somewhat
 	questionable with spatial data. 

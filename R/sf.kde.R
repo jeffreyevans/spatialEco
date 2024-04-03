@@ -90,7 +90,7 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   } else {
     if(!inherits(ref, "SpatRaster"))
       stop(deparse(substitute(ref)), " must be a terra SpatRast object")
-	if(terra::res(ref)[1] != res)
+	if(terra::res(ref)[1] != res[1])
 	  message("reference raster defined, res argument is being ignored")
   }
 

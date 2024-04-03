@@ -87,15 +87,15 @@ hli.pt <- function(alpha, theta, latitude, direct = FALSE, scaled = TRUE,
 	}	
 	  if(!direct) {
 	    h <- -1.467 + 1.582 * cos(latitude) * cos(theta) -
-                 1.5 * cos(folded.alpha) * sin(theta) * sin(latitude) -
-                 0.262 * sin(latitude) * sin(theta) + 0.607 *
-                 sin(folded.alpha) * sin(theta)
+              1.5 * cos(folded.alpha) * sin(theta) * sin(latitude) -
+              0.262 * sin(latitude) * sin(theta) + 0.607 *
+              sin(folded.alpha) * sin(theta)
       } else {
         h <- -1.467 + 1.582 * cos(latitude) * cos(theta) - 1.5 * 
 		     cos(folded.alpha) * sin(theta) * sin(latitude) - 0.262 * 
 			 sin(latitude) * sin(theta) + 0.607 * sin(folded.alpha) * 
 			 sin(theta)
 		}				 	 
-      if(scaled) h <- exp(h)			 
+      if(scaled) h <- exp(h)
   return( ifelse(h > 1, 1, h) )
  } 
