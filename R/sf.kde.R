@@ -108,8 +108,8 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
       }	
     if (any(h <= 0)) stop("bandwidths must be strictly positive")
       if (missing(w)) { w <- numeric(nx) + 1 }
-    gx <- seq(lims[1], lims[2], length = n[1])
-    gy <- seq(lims[3], lims[4], length = n[2])
+      gx <- seq(lims[1], lims[2], length = n[1])
+      gy <- seq(lims[3], lims[4], length = n[2])
           h <- h/4
         ax <- outer(gx, x, "-") / h[1]
       ay <- outer(gy, y, "-") / h[2]
@@ -118,7 +118,6 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
             ( sum(w) * h[1] * h[2] )
     return(list(x = gx, y = gy, z = z))
   }
-  
   if(is.null(bw)){ 
     bwf <- function(x){
       r <- stats::quantile(x, c(0.25, 0.75))
@@ -131,7 +130,6 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   } else {
     bw <- c(bw,bw)
   }
-  
   n <- c(terra::nrow(ref), terra::ncol(ref)) 
     if(!is.null(y)) {
       message("\n","calculating weighted kde","\n")
@@ -144,88 +142,19 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
     }
   k$z <- k$z * scale.factor	
   if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }
-    pts <- data.frame(expand.grid(x=k$x, y=k$y), 
-                         z=round(as.vector(array(k$z,length(k$z))) *
-                         scale.factor, 10))
-    kde.est <- terra::rast(pts, type="xyz", extent = terra::ext(ref) )
+    kde.est <- flip(terra::rast(k[[3]], crs=terra::crs(x), extent=terra::ext(ref)) )
+    # pts <- data.frame(expand.grid(x=k$x, y=k$y), 
+    #                      z=round(as.vector(array(k$z,length(k$z))) *
+    #                      scale.factor, 10))
+    # kde.est <- terra::rast(pts, type="xyz", extent = terra::ext(ref), resolution = res[1] )
    if(mask == TRUE) {
-     kde.est <- terra::mask(kde.est, ref) 
+     if(terra::hasValues(ref)) {
+       kde.est <- terra::mask(kde.est, ref) 
+	 } else {
+       warning("ref has no values so, cannot perform mask")
+     }	 
 	}
     terra::crs(kde.est) <- terra::crs(x)  
   return( kde.est )  
 }  
 sp.kde = sf.kde
-
-# sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,   
-#                    standardize = FALSE, scale.factor = NULL, 
-# 				   mask = FALSE) {
-#   if(missing(x))
-#     stop("x argument must be provided")
-#   ref.flag = inherits(ref, "SpatRaster")
-#   if(!inherits(x, c("sf", "sfc") ))	
-#     stop(deparse(substitute(x)), " must be a sf, or sfc object")
-#   if(unique(as.character(sf::st_geometry_type(x))) != "POINT")
-#       stop(deparse(substitute(x)), " must be single-part POINT geometry") 
-#   if(is.null(ref)) {
-#     if(!is.null(res)) {
-#       ref <- terra::rast(terra::ext(x), resolution =  res)
-#     } else {
-#       ref <- terra::rast(terra::ext(x))
-#        message("defaulting to ", terra::res(ref)[1], "x", terra::res(ref)[2], " cell resolution")
-#     }	
-#   }
-#   if(inherits(ref, "numeric")) {
-#     if(length(ref) != 4) 
-#       stop("Need xmin, xmax, ymin, ymax bounding coordinates")
-#       if(!is.null(res)) {
-#         ref <- terra::rast(terra::ext(ref), resolution =  res)
-#       } else {
-#         ref <- terra::rast(terra::ext(ref))
-#         message("defaulting to ", terra::res(ref)[1], "x", terra::res(ref)[2], " cell resolution")
-#       }	
-#   } else {
-#     if(!inherits(ref, "SpatRaster"))
-#       stop(deparse(substitute(ref)), " must be a terra SpatRast object")
-#   }
-#   n <- c(terra::nrow(ref), terra::ncol(ref)) 
-#   if(!is.null(bw)) {
-#     message("Using specified bandwidth: "); print(bw)
-#   } else {	
-#     if(is.null(y)) {
-# 	  bw = suppressWarnings(ks::hpi(sf::st_coordinates(x)[,1:2]))
-# 	    message("Unweighted automatic bandwidth: "); print(bw)
-# 	} else {
-# 	  bw = suppressWarnings(ks::Hscv.diag(cbind(sf::st_coordinates(x)[,1:2],y)))
-# 	    message("Weighted automatic CV bandwidth: "); print(bw)
-# 	} 
-#   } 
-#   if(!is.null(y)) {
-#     message("\n","calculating weighted kde","\n")	
-# 	kde.est <- suppressWarnings( 
-# 	  terra::rast(matrix(ks::kde(sf::st_coordinates(x)[,1:2], 
-#         h=bw, eval.points=terra::xyFromCell(ref, 1:terra::ncell(ref)), 
-#         gridsize=n, w = y, density=TRUE)$estimate,
-# 		nrow=n[1], ncol=n[2], byrow=TRUE),
-#         extent=terra::ext(ref)) )				
-#   } else {
-# 	message("\n","calculating unweighted kde","\n")
-# 	kde.est <- suppressWarnings( 
-# 	  terra::rast(matrix(ks::kde(sf::st_coordinates(x)[,1:2], 
-#         h=bw, eval.points=terra::xyFromCell(ref, 1:terra::ncell(ref)), 
-#         gridsize=n, density=TRUE)$estimate,
-# 		nrow=n[1], ncol=n[2], byrow=TRUE),
-#         extent=terra::ext(ref)) )		
-#   }
-#   if(!is.null(scale.factor)) kde.est <- kde.est * scale.factor	
-# 	if( standardize == TRUE ) { kde.est <- kde.est / 
-# 	    terra::global(kde.est, "max", na.rm=TRUE)[,1] }	
-#       if(mask) {
-# 	    if(!ref.flag) {
-# 		  message("Since a raster was not used as ref, there is nothing to mask")
-# 		} else {  
-# 	      kde.est <- terra::mask(kde.est, ref) 
-# 		}
-# 	  }  
-#     terra::crs(kde.est) <- terra::crs(x)
-#   return( kde.est )  
-# }
