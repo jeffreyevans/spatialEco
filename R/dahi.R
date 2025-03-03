@@ -10,7 +10,8 @@
 #' The Diurnal Anisotropic Heat Index is based on this equation.  
 #' Ha = cos(amax - a) * arctan(b)
 #'   Where; amax defines the aspect with the maximum total heat  
-#'   surplus, a is the aspect and b is the slope angle. 
+#'   surplus, a is the aspect and b is the slope angle. Please
+#'   note that all parameters are converted to radians.  
 #'
 #' @return terra SpatRaster class object Diurnal Anisotropic Heat Index
 #'
@@ -26,12 +27,13 @@
 #' library(terra)
 #' elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 #' Ha <- dahi(elev)
-#'   plot(Ha)
+#'   plot(Ha, col=grey(0:100/100), smooth=TRUE)
 #'
 #' @export dahi
 dahi <- function(x, amax = 202.500) {
   if(!inherits(x, "SpatRaster"))
     stop(deparse(substitute(x)), " must be a terra SpatRaster object")
-    tr <- terra::terrain(x, v=c("slope", "aspect"), unit="degrees")
+	amax = amax * (pi/180)
+    tr <- terra::terrain(x, v=c("slope", "aspect"), unit="radians")
   return( cos(amax - tr[[2]]) * atan(tr[[1]]) )
 }

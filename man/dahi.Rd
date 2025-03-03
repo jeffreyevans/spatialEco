@@ -22,13 +22,14 @@ Simple approximation of the anisotropic diurnal heat (Ha) distribution
 The Diurnal Anisotropic Heat Index is based on this equation.  
 Ha = cos(amax - a) * arctan(b)
   Where; amax defines the aspect with the maximum total heat  
-  surplus, a is the aspect and b is the slope angle.
+  surplus, a is the aspect and b is the slope angle. Please
+  note that all parameters are converted to radians.
 }
 \examples{
 library(terra)
 elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 Ha <- dahi(elev)
-  plot(Ha)
+  plot(Ha, col=grey(0:100/100), smooth=TRUE)
 
 }
 \references{

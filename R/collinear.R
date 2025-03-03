@@ -1,19 +1,20 @@
 #' @title Collinearity test
-#' @description Test for linear or nonlinear collinearity/correlation in data 
+#' @description Test for linear or nonlinear collinearity or correlation in data 
 #'
 #' @param x            A data.frame or matrix containing continuous data     
 #' @param p            The correlation cutoff (default is 0.85)
 #' @param nonlinear    A boolean flag for calculating nonlinear correlations 
-#'                     (FALSE/TRUE)
+#'                     (FALSE or TRUE)
 #' @param p.value      If nonlinear is TRUE, the p value to accept as the 
 #'                     significance of the correlation
+#' @param print.cor    A boolean flag for printing results (FALSE or TRUE)
 #'
 #' @author Jeffrey S. Evans  <jeffrey_evans<at>tnc.org>
 #'
 #' @details  
 #' Evaluation of the pairwise linear correlated variables to remove is 
 #' accomplished through calculating the mean correlations of each variable 
-#' and selecting the variable with higher mean. If nonlinear = TRUE, pairwise
+#' and selecting the variable with higher mean. If nonlinear is TRUE, pairwise
 #' nonlinear correlations are evaluated by fitting y as a semi-parametrically 
 #' estimated function of x using a generalized additive model and testing 
 #' whether or not that functional estimate is constant, which would indicate 
@@ -43,7 +44,7 @@
 #' }	       
 #'
 #' @export collinear
-collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
+collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001, print.cor = FALSE) {
   if(!class(x)[1] == "matrix" && !class(x)[1] == "data.frame")
     stop("x does not appear to be a matrix or data.frame object") 
   if(any(sapply(x, is.numeric) == FALSE)) 
@@ -55,7 +56,7 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
     sd.check <- which(sd.check == 0)
     if(length(sd.check) > 0) {
 	  cn <- names(sd.check)
-	  warning("removing columns: ", paste(cn, collapse=", "), 
+	  message("Warning; removing columns: ", paste(cn, collapse=", "), 
 	          ", due to zero variance") 
 	  x <- x[,-which(names(x) %in% cn)] 
 	}
@@ -80,20 +81,22 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
       for (i in 1:nrow(perm)) {
         x.name = as.vector(perm[,1])[i]
 		y.name = as.vector(perm[,2])[i]
-		message("evaluating ", x.name, " and ", y.name, "\n") 
+		if(print.cor) message("evaluating ", x.name, " and ", y.name, "\n") 
         nl.cor <- nlcor(x[,grep(paste0("^", y.name, "$"), colnames(x))], 
 		                x[,grep(paste0("^", x.name, "$"), colnames(x))], 
 						pv = p.value )
 		  if(nl.cor > p) {
             deletecol[grep(y.name, names(deletecol))] <- TRUE
-            message("Nonlinear correlation between ", x.name, " and ", y.name,
-                 " = ", nl.cor, "\n")
-            message("   recommend dropping ", y.name, "\n", "\n")
+			if(print.cor) {
+              message("Nonlinear correlation between ", x.name, " and ", y.name,
+                   " = ", nl.cor, "\n")
+              message("   recommend dropping ", y.name, "\n", "\n")
+			}
           } 
         }
     deletecol <- unique(names(deletecol[deletecol==TRUE]))
       if( length(deletecol) < 1 )
-        message("No nonlinear correlations found")	 
+	  if(print.cor) message("No nonlinear correlations found")	 
   } else if(nonlinear == FALSE) {
     x <- stats::cor(x)  
       diag(x) <- 0
@@ -133,10 +136,12 @@ collinear <- function (x, p = 0.85, nonlinear = FALSE, p.value = 0.001) {
               rc1 <- mean(x2[i, ], na.rm = TRUE)
               cc2 <- mean(x2[-j, ], na.rm = TRUE)
       	      deletecol[grep(idx.names[which.max(c(rc1,cc2))], names(deletecol))] <- TRUE
-                message("Collinearity between ", idx.names[1], " and ", 
-                  idx.names[2], " correlation = ", round(x2[i,j], 4), "\n")
-                message("  Correlation means: ", round(rc1, 3), " vs ", round(cc2, 3), "\n")	
-                message("   recommend dropping ", idx.names[which.max(c(rc1,cc2))], "\n", "\n")			
+                if(print.cor) {
+				  message("Collinearity between ", idx.names[1], " and ", 
+                    idx.names[2], " correlation = ", round(x2[i,j], 4), "\n")
+                  message("  Correlation means: ", round(rc1, 3), " vs ", round(cc2, 3), "\n")	
+                  message("   recommend dropping ", idx.names[which.max(c(rc1,cc2))], "\n", "\n")	
+                }				
               } 
           } 
       }

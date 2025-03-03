@@ -4,7 +4,7 @@
 \alias{lai}
 \title{Leaf Area Index}
 \usage{
-lai(ndvi, method = c("Jonckheere", "Chen"))
+lai(ndvi, method = c("jonckheere", "chen"))
 }
 \arguments{
 \item{ndvi}{NDVI in floating point standard scale range (-1 to 1)}

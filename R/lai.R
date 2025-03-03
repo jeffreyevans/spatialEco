@@ -43,7 +43,7 @@
 #' }
 #' 
 #' @export lai
-lai <- function(ndvi, method = c("Jonckheere", "Chen")) { 
+lai <- function(ndvi, method = c("jonckheere", "chen")) { 
   if(missing(ndvi))
     stop("must specify NDVI")
   if(terra::nlyr(ndvi) > 1)

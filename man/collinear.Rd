@@ -4,7 +4,7 @@
 \alias{collinear}
 \title{Collinearity test}
 \usage{
-collinear(x, p = 0.85, nonlinear = FALSE, p.value = 0.001)
+collinear(x, p = 0.85, nonlinear = FALSE, p.value = 0.001, print.cor = FALSE)
 }
 \arguments{
 \item{x}{A data.frame or matrix containing continuous data}
@@ -12,21 +12,23 @@ collinear(x, p = 0.85, nonlinear = FALSE, p.value = 0.001)
 \item{p}{The correlation cutoff (default is 0.85)}
 
 \item{nonlinear}{A boolean flag for calculating nonlinear correlations 
-(FALSE/TRUE)}
+(FALSE or TRUE)}
 
 \item{p.value}{If nonlinear is TRUE, the p value to accept as the 
 significance of the correlation}
+
+\item{print.cor}{A boolean flag for printing results (FALSE or TRUE)}
 }
 \value{
 Messages and a vector of correlated variables
 }
 \description{
-Test for linear or nonlinear collinearity/correlation in data
+Test for linear or nonlinear collinearity or correlation in data
 }
 \details{
 Evaluation of the pairwise linear correlated variables to remove is 
 accomplished through calculating the mean correlations of each variable 
-and selecting the variable with higher mean. If nonlinear = TRUE, pairwise
+and selecting the variable with higher mean. If nonlinear is TRUE, pairwise
 nonlinear correlations are evaluated by fitting y as a semi-parametrically 
 estimated function of x using a generalized additive model and testing 
 whether or not that functional estimate is constant, which would indicate 

@@ -9,27 +9,35 @@ hli.pt(
   theta,
   latitude,
   direct = FALSE,
-  scaled = TRUE,
-  force.hemisphere = c("none", "southern", "northern")
+  scaled = FALSE,
+  units = c("degrees", "radians"),
+  hemisphere = c("northern", "southern"),
+  force.hemisphere = TRUE,
+  equation = c(1, 2, 3)
 )
 }
 \arguments{
-\item{alpha}{Aspect in degrees}
+\item{alpha}{numeric vector of aspect (degrees or radians)}
 
-\item{theta}{Slope in degrees}
+\item{theta}{numeric vector of slope (degrees or radians)}
 
-\item{latitude}{A latitude representing the centrality of the data}
+\item{latitude}{Numeric vector of center latitude}
 
-\item{direct}{Boolean (FALSE/TRUE) Return direct incident radiation 
-else HLI (default)}
+\item{direct}{(FALSE/TRUE) default is "heatload", alternative is "direct radiation"}
 
-\item{scaled}{Boolean (TRUE/FALSE) Apply arithmetic scale using EXP(h)}
+\item{scaled}{(FALSE/TRUE) scale metric to arithmetic scale}
 
-\item{force.hemisphere}{If country is split at the equator, force southern 
-or northern hemisphere equation c("southern", "northern")}
+\item{units}{What units are slope and aspect in "degrees" or "radians"}
+
+\item{hemisphere}{Define if in "southern" or "northern" hemisphere, default is northern}
+
+\item{force.hemisphere}{Force hemisphere to southern or northern (defined in hemisphere arg_}
+
+\item{equation}{Which equation to use (1,2,3), default is 1 covering all slopes <= 90
+and latitudes 0-60N}
 }
 \value{
-Vector of McCune & Keon (2002) Heat Load Index
+numeric vector of of McCune & Keon (2002) Heat Load Index
 }
 \description{
 Calculates the McCune & Keon (2002) Heat Load Index
@@ -39,30 +47,47 @@ Describes A southwest facing slope should have warmer temperatures than a
 southeast facing slope, even though the amount of solar radiation they receive 
 is equivalent. The McCune and Keon (2002) method accounts for this by "folding" 
 the aspect so that the highest values are southwest and the lowest values are  
-northeast. Additionally, this method account for steepness of slope, which is 
-not addressed in most other aspect rescaling equations. HLI values range 
-from 0 (coolest) to 1 (hottest). 
+northeast. Additionally, this method accounts for steepness of slope, which is 
+not addressed in most other aspect rescaling equations. 
 
 The equations follow McCune (2007) and support northern and southern hemisphere 
-calculations. The folded aspect for northern hemispheres use (180 - (Aspect – 225) ) 
-and for Southern hemisphere  ( 180 - ( Aspect – 315) ). If a country is split at the 
-equator you can use the force.hemisphere argument to choose which equation to use. 
-Valid values for this argument are "southern" and "northern" with the default "none".
+calculations. The . If a country is split at the McCune (2007) folded aspect corrections 
+for northern and southern latitudes are included. If you are bounding the equator you can 
+use the force.hemisphere argument to choose which equation to use. Valid values for this 
+argument are "southern" and "northern" with the default "none". Metic values are returned 
+in a log scale ln(Rad, MJ  cm–2 yr–1) however, if scale is TRUE they are returned in an 
+arithmetic scale.     
+
+Equations - the equation number (1, 2 or 3); default is 1 (the most general one). The three 
+equations have slightly different uses. Eq. 1 (default in the function below) is broadest in 
+the application, covering all slopes <= 90 degrees in steepness at latitudes 0-60N, but has the 
+lowest precision. Eq. 2 increases the precision by excluding slopes steeper than 60, an 
+inconsequential omission for almost all data sets. Eq. 3 uses only three parameters to 
+produce a slightly stronger model but is applicable only to latitudes 30-60N (ie., not for the 
+tropical and subtropical region). Note that Eq is on an arithmetic scale
 }
 \examples{
 
-# Single point input
-hli.pt(theta=180, alpha=30, latitude=40) 
+# Single input
+hli.pt(alpha=30, theta=180, latitude=40) 
 
-# Multiple input, returns results from 
-#   McCune, B., and D. Keon (2002)
-# Raw -0.2551 -0.6280 0.0538 -0.6760 -1.1401 -0.2215
-# arithmetic scale 0.7748 0.5337 1.0553 0.5086 0.3198 0.8013
+# Results from McCune, B., and D. Keon (2002)
+# Equation 1
+# ln(Rad, MJ  cm–2 yr–1) -0.2551  -0.6280  0.0538  -0.6760  -1.1401  -0.2215
+# arithmetic scale        0.7748   0.5337  1.0553   0.5086   0.3198   0.8013
 
 slp = c(0, 30, 30, 0, 30, 30)
-asp =c(0, 0, 180, 0, 0, 180)
-lat =c(40, 40, 40, 60, 60, 60)
-hli.pt(theta = slp, alpha = asp, latitude = lat)
+asp = c(0, 0, 180, 0, 0, 180)
+lat = c(40, 40, 40, 60, 60, 60)
+hli.pt(alpha = asp, theta = slp, latitude = lat)
+hli.pt(alpha = asp, theta = slp, latitude = lat, scaled=TRUE)
+# Equation 2
+# arithmetic scale  0.8172   0.5304   0.5291   0.5706   0.3354   0.3344
+hli.pt(alpha = asp, theta = slp, latitude = lat, equation = 2, scaled=TRUE)
+
+# Equation 3
+# arithmetic scale  0.9580  0.6416  0.9825  0.7430  0.4336  0.7744
+hli.pt(alpha = asp, theta = slp, latitude = lat, equation = 3)
   
 }
 \references{

@@ -30,7 +30,6 @@
 #' 
 #'  # All polygon proximity index 1000 radius	
 #'  ( pidx <- proximity.index(meuse, min.dist = 1) )
-#'    pidx[pidx > 1000] <- 1000
 #'  
 #'  # Class-level proximity index 1000 radius
 #'  ( pidx.class <- proximity.index(meuse, y = "LU", min.dist = 1) )
@@ -79,12 +78,12 @@ proximity.index <- function(x, y = NULL, min.dist = 0, max.dist = 1000,
 		rownames(dmat) <- rownames(xx)
 	    #diag(dmat) <- NA
         dmat[dmat <= min.dist | dmat > max.dist] <- NA
-      a <- sf::st_area(xx)
+      a <- units::drop_units(sf::st_area(xx))
         names(a) <- rownames(xx)	  
 	  pidx <- vector()
         for(i in 1:nrow(dmat)) {
-	      idx <- colnames(dmat)[which(!is.na(as.numeric(dmat[,i])))]
-		  pidx[i] <- sum(a[which(names(a) %in% idx)] * dmat[,i][idx]^-2)
+	      #idx <- colnames(dmat)[which(!is.na(as.numeric(dmat[,i])))]
+		  pidx[i] <- sum(a * dmat[,i]^-2, na.rm=TRUE)
         }
       class.pidx <- append(class.pidx, pidx)
  	}
@@ -94,12 +93,12 @@ proximity.index <- function(x, y = NULL, min.dist = 0, max.dist = 1000,
 	  colnames(dmat) <- rownames(x)
 	  rownames(dmat) <- rownames(x)	
     dmat[dmat <= min.dist | dmat > max.dist] <- NA
-	a <- sf::st_area(x)
+	a <- units::drop_units(sf::st_area(x))
 	  names(a) <- rownames(x)
 	pidx <- vector()
       for(i in 1:nrow(dmat)) {
-	    idx <- colnames(dmat)[which(!is.na(as.numeric(dmat[,i])))]
-		pidx[i] <- sum(a[which(names(a) %in% idx)] * dmat[,i][idx]^-2)
+	    #idx <- colnames(dmat)[which(!is.na(as.numeric(dmat[,i])))]
+		pidx[i] <- sum(a * dmat[,i]^-2, na.rm=TRUE)
       }
 	}
     if(!is.null(background)) {

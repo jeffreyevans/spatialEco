@@ -4,17 +4,37 @@
 \alias{hli}
 \title{Heat Load Index}
 \usage{
-hli(x, check = TRUE, force.hemisphere = c("none", "southern", "northern"))
+hli(
+  aspect,
+  slope,
+  latitude = NULL,
+  direct = FALSE,
+  scaled = FALSE,
+  units = c("degrees", "radians"),
+  hemisphere = c("northern", "southern"),
+  force.hemisphere = TRUE,
+  equation = c(1, 2, 3)
+)
 }
 \arguments{
-\item{x}{terra SpatRaster class object}
+\item{aspect}{terra SpatRaster class object of aspect}
 
-\item{check}{(TRUE/FALSE) check for projection integrity and
-calculate central latitude for non-geographic
-projections}
+\item{slope}{terra SpatRaster class object of slope}
 
-\item{force.hemisphere}{If country is split at the equator, force southern 
-or northern hemisphere equation c("southern", "northern")}
+\item{latitude}{Vector of center latitude of raster, if NULL automatical calculated}
+
+\item{direct}{(FALSE/TRUE) default is "heatload", alternative is "radiation"}
+
+\item{scaled}{(FALSE/TRUE) default is "heatload", alternative is "radiation"}
+
+\item{units}{Default is in "degrees", alternative is "radians"}
+
+\item{hemisphere}{Define if in "southern" or "northern" hemisphere, default is northern}
+
+\item{force.hemisphere}{Force hemisphere to southern or northern}
+
+\item{equation}{Which equation to use (1,2,3), default is 1 covering all slopes <= 90
+and latitudes 0-60N}
 }
 \value{
 terra SpatRaster class object of McCune & Keon (2002) Heat Load Index
@@ -27,22 +47,34 @@ Describes A southwest facing slope should have warmer temperatures than a
 southeast facing slope, even though the amount of solar radiation they receive 
 is equivalent. The McCune and Keon (2002) method accounts for this by "folding" 
 the aspect so that the highest values are southwest and the lowest values are  
-northeast. Additionally, this method account for steepness of slope, which is 
-not addressed in most other aspect rescaling equations. HLI values range 
-from 0 (coolest) to 1 (hottest). 
+northeast. Additionally, this method accounts for steepness of slope, which is 
+not addressed in most other aspect rescaling equations. 
 
 The equations follow McCune (2007) and support northern and southern hemisphere 
-calculations. The folded aspect for northern hemispheres use (180 - (Aspect – 225) ) 
-and for Southern hemisphere  ( 180 - ( Aspect – 315) ). If a country is split at the 
-equator you can use the force.hemisphere argument to choose which equation to use. 
-Valid values for this argument are "southern" and "northern" with the default "none".
+calculations. The . If a country is split at the McCune (2007) folded aspect corrections 
+for northern and southern latitudes are included. If you are bounding the equator you can 
+use the force.hemisphere argument to choose which equation to use. Valid values for this 
+argument are "southern" and "northern" with the default "none". Metic values are returned 
+in ln(Rad, MJ  cm–2 yr–1) however, if scale is TRUE they are returned in an arithmetic scale.     
+
+Equations - the equation number (1, 2 or 3); default is 1 (the most general one). The three 
+equations have slightly different uses. Eq. 1 (default in the function below) is broadest in 
+the application, covering all slopes <= 90 degrees in steepness at latitudes 0-60N, but has the 
+lowest precision. Eq. 2 increases the precision by excluding slopes steeper than 60, an 
+inconsequential omission for almost all data sets. Eq. 3 uses only three parameters to 
+produce a slightly stronger model but is applicable only to latitudes 30-60N (ie., not for the 
+tropical and subtropical region).
 }
 \examples{
   library(terra)
   elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
-  heat.load <- hli(elev)
-    plot(heat.load, main="Heat Load Index") 
+  sa <- terrain(elev, v = c("slope", "aspect")) 
+  heat.load <- hli(sa[[2]], sa[[1]])
+    plot(heat.load, main="Heat Load Index", smooth=TRUE) 
    
+  heat.load2 <- hli(sa[[2]], sa[[1]], equation = 2)
+    plot(heat.load2, main="Heat Load Index eq 2", smooth=TRUE) 
+
 }
 \references{
 McCune, B., and D. Keon (2002) Equations for potential annual direct 

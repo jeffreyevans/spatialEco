@@ -37,7 +37,6 @@ Calculates proximity index for a set of polygons
 
  # All polygon proximity index 1000 radius	
  ( pidx <- proximity.index(meuse, min.dist = 1) )
-   pidx[pidx > 1000] <- 1000
  
  # Class-level proximity index 1000 radius
  ( pidx.class <- proximity.index(meuse, y = "LU", min.dist = 1) )
