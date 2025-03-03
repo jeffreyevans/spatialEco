@@ -69,7 +69,7 @@ In version 2.0-1
  
 I jumped to a major release and pushed the version to 2.0-0. All spatial functions are now using the 
 `sf` and `terra` packages due to `sp`, `rgeos`, `rgdal`, `maptools` and `raster` being retired. Sorry 
-but, for the most part I removed backwards compatibility with these depreciated object classes so, you 
+but, for the most part I removed backwards compatibility with these deprecated object classes so, you 
 will need to make sure that you are using modern spatial object classes. In terra, there is now only 
 one class type for multi or single band raster objects "SpatRaster" which can be read or coerced using 
 `terra::rast`. For coercing sp class vector objects to sf you can use `sf::st_as:sf` or `as(x, "sf")` 
@@ -89,9 +89,9 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `bearing.distance`           | Calculate new point based on bearing/distance                                     
 | `breeding.density`           | Calculates n-th percent breeding density areas base on a kernel density estimate of population counts. |
 | `built.index`                | remote sensing built-up index |      
-| `cgls_urls`                  | *Depreciated* Based on query, provide URL's for Copernicus Global Land Service datasets         
+| `cgls_urls`                  | *Deprecated* Based on query, provide URL's for Copernicus Global Land Service datasets         
 | `chae`                       | The Canine-Human Age Equivalent (for fun)                                         
-| `class.comparison`           | Depreciated, with migration to terra, I collapsed into raster.change                                                      
+| `class.comparison`           | Deprecated, with migration to terra, I collapsed into raster.change                                                      
 | `classBreaks`                | for finding class breaks in a distribution                                        
 | `collinear`                  | Test for linear or nonlinear collinearity/correlation in data                     
 | `combine`                    | Combines multiple rasters into an "all possible combinations" raster emulation the ESRI combine function
@@ -110,12 +110,12 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `dispersion`                 | Calculates the dispersion ("rarity") of targets associated with planning units    
 | `dissection`                 | Evans (1972) Martonne's modified dissection                                       
 | `divergence`                 | Kullback-Leibler Divergence (Cross-entropy)                                       
-| `download.daymet`            | Depreciated                             
-| `download.hansen`            | Depreciated                                 
-| `download.prism`             | Depreciated                             
+| `download.daymet`            | Deprecated                             
+| `download.hansen`            | Deprecated                                 
+| `download.prism`             | Deprecated                             
 | `effect.size`                | Cohen's-d effect size with pooled sd for a control and experimental group         
 | `erase.points`               | Erases points inside or outside a polygon feature class                           
-| `explode`                    | Depreciated due to redundancy with sf::st_cast                              
+| `explode`                    | Deprecated due to redundancy with sf::st_cast                              
 | `extract.vertices`           | extracts (x,y) vertices coordinates from polygons and linesa                      
 | `fuzzySum`                   | Calculates the fuzzy sum of a vector                                              
 | `gaussian.kernel`            | Creates a Gaussian Kernel of specified size and sigma                             
@@ -131,7 +131,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `insert`                     | Inserts a row or column into a data.frame                                         
 | `insert.values`              | Inserts new values into a vector at specified positions                           
 | `is.empty`                   | Method, evaluates if vector is empty                                              
-| `is.whole`                   | Depreciated after R release of base::is.whole in 4.1.0                             
+| `is.whole`                   | Deprecated after R release of base::is.whole in 4.1.0                             
 | `kendall`                    | Kendall tau trend with continuity correction for time-series                      
 | `kl.divergence`              | Calculates the Kullback-Leibler divergence (relative entropy) between unweighted theoretical component distributions. Divergence is calculated as: int[f(x) (log f(x) |log g(x)) dx] for distributions with densities f() and g().
 | `knn`                        | returns ids, rownames and distance of nearest neighbors in two (or single) spatial objects. Optional radius distance constraint. Added optional covariates (weights)
@@ -146,7 +146,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `morans.plot`                | Autocorrelation plot                                                              
 | `nni`                        | Calculates the nearest neighbor index (NNI) measure of clustering or dispersal    
 | `nth.vlaue`                  | Returns the Nth (smallest/largest) values in a numeric vector                     
-| `oli.aws`                    | *Depreciated* Download Landsat 8 OLI from AWS.                                                  
+| `oli.aws`                    | *Deprecated* Download Landsat 8 OLI from AWS.                                                  
 | `o.ring`                     | Calculates inhomogeneous O-ring point pattern statistic (Wiegand & Maloney 2004)  
 | `optimal.k`                  | Find optimal k of k-Medoid partitions using silhouette widths                     
 | `optimized.sample.variance`  | Draws an optimal sample that minimizes or maximizes the sample variance           
@@ -157,8 +157,8 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `parial.cor`                 | Partial and Semi-partial correlation                                              
 | `plot.effect.size`           | Plot generic for effect size                                                      
 | `plot.loess.boot`            | Plot generic for loess boot                                                       
-| `point.in.poly`              | Depreciated because function is redundant with sf::st_intersection
-| `polygon_extract`            | Depreciated because of migration to terra. Required package only supports raster class                               
+| `point.in.poly`              | Deprecated because function is redundant with sf::st_intersection
+| `polygon_extract`            | Deprecated because of migration to terra. Required package only supports raster class                               
 | `polyPerimeter`              | Calculates the perimeter length(s) for a polygon object                           
 | `poly.regression`            | smoothing data in time-series and imputing missing (NA) values using polynomial regression
 | `poly_trend`                 | Derives Nth order polynomial trend with confidence intervals                        
@@ -188,8 +188,8 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `rotate.polygon`             | Rotates a polygon by specified angle                                              
 | `sa.trans`                   | Trigonometric transformation of a slope and aspect interaction                    
 | `sample.annulus`             | Creates sample points based on annulus with defined inner and outer radius        
-| `sample.line`                | Depreciated because sf::st_sample can aggregate samples by feature
-| `sample.poly`                | Depreciated because sf::st_sample can aggregate samples by feature       
+| `sample.line`                | Deprecated because sf::st_sample can aggregate samples by feature
+| `sample.poly`                | Deprecated because sf::st_sample can aggregate samples by feature       
 | `sampleTransect`             | Creates random transects from points, generates sample points along each transect 
 | `separability`               | Calculates variety of univariate separability metrics for nominal class samples   
 | `sf_dissolve`                | Dissolves polygon geometry using attribute, globally or overlap 
@@ -203,7 +203,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `spatial.select`             | Performs a spatial select (feature subset) similar to ArcGIS                      
 | `spectral.separability`      | Calculates class-wise multivariate spectral separability                          
 | `sf.kde`                     | A weighted or un-weighted kernel density estimate (previously sp.kde now as alias)                                 
-| `sp.na.omit `                | Depreciated as only relevant to sp class objects, for sf use base na.omit 
+| `sp.na.omit `                | Deprecated as only relevant to sp class objects, for sf use base na.omit 
 | `squareBuffer`               | Creates a square buffer of feature class
 | `srr`                        | Surface Relief Ratio                                                              
 | `stratified.random`          | Creates a stratified random sample of an sp class object using a factor.          
@@ -218,7 +218,7 @@ and, going from sf to sp you use `as(x, "Spatial")`
 | `vrm`                        | Implementation of the Sappington et al., (2007) vector ruggedness measure         
 | `winsorize`                  | Removes extreme outliers using a winsorization transformation                     
 | `wt.centroid`                | Creates centroid of [x,y] coordinates, of a random field, based on a weights field in a point sample.
-| `zonal.stats`                | Depreciated in leu of exactextractr library
+| `zonal.stats`                | Deprecated in leu of exactextractr library
 
 **Bugs**: Users are encouraged to report bugs here. Go to [issues](https://github.com/jeffreyevans/spatialEco/issues) in the menu above, and press new issue to start a new bug report, documentation correction or feature request. You can direct questions to <jeffrey_evans@tnc.org>.
 

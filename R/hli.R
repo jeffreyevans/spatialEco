@@ -5,7 +5,7 @@
 #' @param slope                terra SpatRaster class object of slope 
 #' @param latitude             Vector of center latitude of raster, if NULL automatical calculated
 #' @param direct               (FALSE/TRUE) default is "heatload", alternative is "radiation"
-#' @param scaled                (FALSE/TRUE) default is "heatload", alternative is "radiation"
+#' @param scaled               (FALSE/TRUE) default is "heatload", alternative is "radiation"
 #' @param units                Default is in "degrees", alternative is "radians"
 #' @param hemisphere           Define if in "southern" or "northern" hemisphere, default is northern
 #' @param force.hemisphere     Force hemisphere to southern or northern
@@ -74,7 +74,7 @@ hli <- function(aspect, slope, latitude = NULL, direct = FALSE,
   if(is.na(sf::st_crs(terra::crs(slope))))	
     stop("Projection is not defined for slope")
   if(terra::ext(slope) != terra::ext(aspect))	
-    stop("Raster extends do not match")	
+    stop("Raster extents do not match")	
   if(!equation[1] %in% c(1,2,3))
     stop("Not a valid option for equation, must be 1, 2, or 3")	  
   if(is.null(latitude)) {
@@ -131,7 +131,7 @@ hli <- function(aspect, slope, latitude = NULL, direct = FALSE,
     res <- 0.339 + 0.808 * cos(L) * cos(S) - 0.196 * sin(L) * sin(S) - 0.482 * 
 	       cos(A) * sin(S)
   }
-  if(scaled) res <- exp(res)
+    if(scaled) res <- exp(res)
   return (res)
 }
 
