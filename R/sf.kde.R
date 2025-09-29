@@ -99,7 +99,9 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   } else if(inherits(ref, "SpatRaster")) {
     message("Using ", deparse(substitute(ref)), " as reference raster")  
     if(!terra::crs(x) == terra::crs(ref) )
-      stop("CRS do not match")	
+      stop("CRS do not match")
+	  if(mask == TRUE) { m <- ref }
+        ref[] <- NA	  
   } else if(inherits(ref, "sf")) {
     message("Using extent from ", deparse(substitute(ref)), " as reference raster")  
     if(!terra::crs(x) == terra::crs(ref))
@@ -121,7 +123,10 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
     ref <- terra::rast(ref, resolution =  res, 
 		               crs=terra::crs(x))  
   }
-
+   if(mask == TRUE & !exists("m")) {
+     m <- ref 
+      if(!terra::hasValues(m)) { m[] <- 1 } 
+    }
   # check if points are contained within refrence raster
   rext <- sf::st_as_sf(terra::as.polygons(terra::ext(ref)))
   xext <- sf::st_as_sf(terra::as.polygons(terra::ext(x)))
@@ -190,7 +195,7 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
      if(terra::hasValues(ref)) {
        kde.est <- terra::mask(kde.est, ref) 
 	 } else {
-       warning("ref has no values so, cannot perform mask")
+       warning("ref mask has no values so, cannot perform mask")
      }	 
 	}
     terra::crs(kde.est) <- terra::crs(x)  
