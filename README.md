@@ -1,4 +1,4 @@
-# spatialEco (dev 2.0-3) <img src="man/figures/logo.png" align="right" height="132" />
+# spatialEco (dev 2.0-4) <img src="man/figures/logo.png" align="right" height="132" />
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -18,13 +18,23 @@ In version 2.0-3
 
 	Fixed bug in aspline.downscale where, grid.search = TRUE option was producing an error
 
-	Fixed bug in sf.kde where error was returned when specifying ref argument
+	Added function "z_normalization" that Z-normalizes a time series by subtracting its mean and dividing by the standard deviation meadian or MAD
+
+	Fixed bug in sf.kde where error was returned when specifying res and ref argument. Changed how the resoultion (res) and reference (ref) raster is checked and created
+
+	Fixed bug in aspline.downscale where, grid.search = TRUE option was producing an error
 
 	Fixed bug in raster.kendall where, other than the default, the method argument was not being reconized
 
 	Depreciated cgls.url due to digest files no longer reliable
 
 	Depreciated oli.aws due to AWS Registry of Open Data changing to the AWS Data Exchange 
+
+	Addressed terra focal issue in raster.gaussian.smooth so that convolution now works. 
+
+	Fixed bug in hil.pt and hil (thanks to Martin Macek)
+
+	Enhancement to hil.pt and hil that implements optional equations from original paper
 
 As of version 2.0-2 I completley depreciated several functions (they no longer have aliasis) and cleaned 
 up documentation. Other changes are;

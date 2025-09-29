@@ -8,8 +8,8 @@ spatialEco.ref <- c(
 	    person(c("Jeffrey", "S."), "Evans", role = c("aut", "cre")),
  	    person(c("Melanie", "A."), "Murphy", role = c("aut"))
      ),
-     year = "2023",
-     note = "R package version 2.0-2",
+     year = "2025",
+     note = "R package version 2.0-3",
      url = "https://github.com/jeffreyevans/spatialEco",
      keywords = "spatialEco-package"
    )
