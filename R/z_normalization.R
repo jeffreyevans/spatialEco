@@ -1,10 +1,10 @@
 #' @title z normalization 
 #' @description Z-normalizes a time series by subtracting its mean and dividing by the standard deviation or meadian and MAD
 #'
-#' @param
-#' x
-#' method    Use the standard z normalization or modified version
-#' na        Behavior of NA values, keep or remove
+
+#' @param x         Timeseries vector to normalize
+#' @param method    ("original", "modified") Use the standard z normalization or modified version
+#' @param na        Behavior of NA values, keep or remove
 #'
 #' @note 
 #' The original method is to subtract x rom the mean then divide by sd whereas, modified uses the median and mad. 
