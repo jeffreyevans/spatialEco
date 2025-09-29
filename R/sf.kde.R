@@ -100,7 +100,10 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
     message("Using ", deparse(substitute(ref)), " as reference raster")  
     if(!terra::crs(x) == terra::crs(ref) )
       stop("CRS do not match")
-	  if(mask == TRUE) { m <- ref }
+	  if(mask == TRUE) { 
+	    m <- ref 
+		if(!terra::hasValues(m)) { m[] <- 1 } 
+	  }
         ref[] <- NA	  
   } else if(inherits(ref, "sf")) {
     message("Using extent from ", deparse(substitute(ref)), " as reference raster")  
@@ -191,13 +194,7 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
     #                      z=round(as.vector(array(k$z,length(k$z))) *
     #                      scale.factor, 10))
     # kde.est <- terra::rast(pts, type="xyz", extent = terra::ext(ref), resolution = res[1] )
-   if(mask == TRUE) {
-     if(terra::hasValues(ref)) {
-       kde.est <- terra::mask(kde.est, ref) 
-	 } else {
-       warning("ref mask has no values so, cannot perform mask")
-     }	 
-	}
+      if(mask == TRUE) { kde.est <- terra::mask(kde.est, m) }
     terra::crs(kde.est) <- terra::crs(x)  
   return( kde.est )  
 }  
