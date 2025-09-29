@@ -314,7 +314,11 @@ spatialEco_2.0-2
 spatialEco_2.0-3
 =================   
 
-* Fixed bug in sf.kde where error was returned when specifying ref argument
+* Added function "z_normalization" that Z-normalizes a time series by subtracting its mean and dividing by 
+    the standard deviation meadian or MAD
+
+* Fixed bug in sf.kde where error was returned when specifying res and ref argument
+    Changed how the resoultion (res) and reference (ref) raster is checked and created
 
 * Fixed bug in aspline.downscale where, grid.search = TRUE option was producing an error
 
@@ -323,3 +327,9 @@ spatialEco_2.0-3
 * Depreciated cgls.url due to digest files no longer reliable
 
 * Depreciated oli.aws due to AWS Registry of Open Data changing to the AWS Data Exchange 
+
+* Addressed terra focal issue in raster.gaussian.smooth so that convolution now works. 
+
+* Fixed bug in hil.pt and hil (thanks to Martin Macek)
+
+* Enhancement to hil.pt and hil that implements optional equations from original paper

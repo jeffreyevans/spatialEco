@@ -7,7 +7,7 @@
 #'                      to be used as weights
 #' @param bw            Distance bandwidth of Gaussian Kernel, must be units 
 #'                      of projection
-#' @param ref           A terra SpatRaster, sf class object or c[xmin,xmax,ymin,ymax] 
+#' @param ref           A terra SpatRaster, vect, ext or sf vector, bbox 
 #'                      vector to estimate the kde extent
 #' @param res           Resolution of raster when ref not SpatRaster           
 #' @param standardize   Standardize results to 0-1 (FALSE/TRUE)
@@ -56,7 +56,12 @@
 #' cadmium.kde.1000 <- sf.kde(x = meuse, y = meuse$cadmium, res=40, 
 #'                           bw = 1000, standardize = TRUE)						  
 #'   plot(c(cadmium.kde.500, cadmium.kde.1000))
-#'   			  			
+#' 
+#' # Using defined raster
+#' r <- terra::rast(terra::ext(meuse), resolution =  40, 
+#' 		               crs=terra::crs(meuse))   
+#'   pt.kde <- sf.kde(x = meuse, bw = 1000, standardize = TRUE,  ref = r) 
+#'  
 #' }
 #' 
 #' @export sp.kde sf.kde
@@ -71,28 +76,62 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   if(unique(as.character(sf::st_geometry_type(x))) != "POINT")
     stop(deparse(substitute(x)), " must be single-part POINT geometry") 
   if(is.null(scale.factor)) scale.factor = 1     
-  ref.flag = inherits(ref, "SpatRaster")
-  if(is.null(res) &&  ref.flag == TRUE) {
+  if(is.null(res) && inherits(ref, "SpatRaster")) {
     res <- terra::res(ref)
   }
-  if(is.null(res) &&  ref.flag == FALSE) {
+  if(is.null(res) && !inherits(ref, "SpatRaster")) {
     res <- 100
 	message("resoultion not defined, defaulting to 100")
   }
+  if(!any(c(inherits(ref, "sf"), inherits(ref, "SpatVector"), inherits(ref, "SpatRaster"),  
+     inherits(ref, "bbox"), inherits(ref, "SpatExtent"), inherits(ref, "NULL"))) ) 
+       stop("Reference must be sf (vector, bbox) or terra (SpatRaster, SpatVector, SpatExtent). 
+	         If not defined, will be extent of points (x)") 
+  if(any(c(inherits(ref, "sf"), inherits(ref, "SpatVector"), inherits(ref, "SpatRaster"),     
+       inherits(ref, "bbox"), inherits(ref, "SpatExtent"))) ) {
+    if(sf::st_is_longlat(ref))
+      stop("Coordinate Reference System must be projected coordinates (not lat/long)")
+  }	 
   if(is.null(ref)) {
+    message("Creating reference raster from extent of points (x)")
     ref <- terra::rast(terra::ext(x), resolution =  res, 
-		               crs=terra::crs(x))
-  } else if(inherits(ref, "numeric")) {
-    if(length(ref) != 4) 
-      stop("Need xmin, xmax, ymin, ymax bounding coordinates")
+		               crs=terra::crs(x))  
+  } else if(inherits(ref, "SpatRaster")) {
+    message("Using ", deparse(substitute(ref)), " as reference raster")  
+    if(!terra::crs(x) == terra::crs(ref) )
+      stop("CRS do not match")	
+  } else if(inherits(ref, "sf")) {
+    message("Using extent from ", deparse(substitute(ref)), " as reference raster")  
+    if(!terra::crs(x) == terra::crs(ref))
+      stop("CRS do not match")	
     ref <- terra::rast(terra::ext(ref), resolution =  res, 
-		               crs=terra::crs(x))
-  } else {
-    if(!inherits(ref, "SpatRaster"))
-      stop(deparse(substitute(ref)), " must be a terra SpatRast object")
-	if(terra::res(ref)[1] != res[1])
-	  message("reference raster defined, res argument is being ignored")
+		               crs=terra::crs(x))      
+  } else if(inherits(ref, "SpatVector")) { 
+    message("Using extent from ", deparse(substitute(ref)), " as reference raster")    
+    sf::st_is_longlat(ref)
+	  stop("Coordinate Reference System be projected coordinates (not lat/long)")
+    ref <- terra::rast(terra::ext(ref), resolution =  res, 
+		               crs=terra::crs(x))  
+  } else if(inherits(ref, "bbox")) {
+    message("Using defined extent ", deparse(substitute(ref)), " as reference raster")    
+    ref <- terra::rast(terra::ext(as.numeric(ref)[c(1,3,2,4)]), resolution =  res, 
+		               crs=terra::crs(x))  
+  } else if(inherits(ref, "SpatExtent")) {
+    message("Using defined extent ", deparse(substitute(ref)), " as reference raster")  
+    ref <- terra::rast(ref, resolution =  res, 
+		               crs=terra::crs(x))  
   }
+
+  # check if points are contained within refrence raster
+  rext <- sf::st_as_sf(terra::as.polygons(terra::ext(ref)))
+  xext <- sf::st_as_sf(terra::as.polygons(terra::ext(x)))
+  inside <- sf::st_within(sf::st_buffer(xext, -res), rext, sparse=FALSE)
+  if(!inside[,1][1]) 
+    stop("Points are not inside the reference raster")
+
+  # check if the crs match
+  if(terra::crs(x) != terra::crs(x))
+    stop("CRS do not match")
 
   # weighted kde function, modification of MASS::kde2d 
   fhat <- function (x, y, h, w, n = 25, lims = c(range(x), range(y))) {
