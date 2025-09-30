@@ -18,5 +18,5 @@
 #'   \item{proj4string}{+proj=longlat +ellps=WGS84}
 #' }
 #'
-#' @source \url{http://www.diva-gis.org/Data}
+#' @source \url{https://diva-gis.org/data.html}
 NULL

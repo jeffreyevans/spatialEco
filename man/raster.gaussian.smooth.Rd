@@ -43,9 +43,11 @@ as weights for the given statistic.
 library(terra)
 elev <- rast(system.file("extdata/elev.tif", package="spatialEco"))
 
-# Calculate Gaussian smoothing with sigma = 2 and 7x7 window
-g1 <- raster.gaussian.smooth(elev, s=2, n=7)
+# Gaussian smoothing with sigma = 2 and 7x7 window
+g1 <- raster.gaussian.smooth(elev, s = 2, n = 7)
     plot(c(elev,g1))
+
+# g1 <- raster.gaussian.smooth(elev, s = 2, n = 7, type = "convolution")
 
 }
 \author{

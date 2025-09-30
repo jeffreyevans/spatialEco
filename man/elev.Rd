@@ -19,7 +19,7 @@ A raster RasterLayer class object:
 }
 }
 \source{
-\url{http://www.diva-gis.org/Data}
+\url{https://diva-gis.org/data.html}
 }
 \description{
 elevation raster of Switzerland

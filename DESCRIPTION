@@ -1,7 +1,7 @@
 Package: spatialEco
 Type: Package
 Title: Spatial Analysis and Modelling Utilities
-Version: 2.0-3
+Version: 2.0-4
 Date: 2025-09-29
 Authors@R: c(
     person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
@@ -54,4 +54,4 @@ NeedsCompilation: no
 Repository: CRAN
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

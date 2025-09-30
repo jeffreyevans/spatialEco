@@ -25,7 +25,7 @@ to be used as weights}
 \item{bw}{Distance bandwidth of Gaussian Kernel, must be units 
 of projection}
 
-\item{ref}{A terra SpatRaster, sf class object or c[xmin,xmax,ymin,ymax] 
+\item{ref}{A terra SpatRaster, vect, ext or sf vector, bbox 
 vector to estimate the kde extent}
 
 \item{res}{Resolution of raster when ref not SpatRaster}
@@ -71,7 +71,12 @@ cadmium.kde.500 <- sf.kde(x = meuse, y = meuse$cadmium, res=40,
 cadmium.kde.1000 <- sf.kde(x = meuse, y = meuse$cadmium, res=40, 
                           bw = 1000, standardize = TRUE)						  
   plot(c(cadmium.kde.500, cadmium.kde.1000))
-  			  			
+
+# Using defined raster
+r <- terra::rast(terra::ext(meuse), resolution =  40, 
+		               crs=terra::crs(meuse))   
+  pt.kde <- sf.kde(x = meuse, bw = 1000, standardize = TRUE,  ref = r) 
+ 
 }
 
 }

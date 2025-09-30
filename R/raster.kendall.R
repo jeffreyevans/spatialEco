@@ -69,6 +69,8 @@ raster.kendall <- function(x, intercept = TRUE, p.value = TRUE,
     stop("please install zyp package before running this function")
   if (!inherits(x, "SpatRaster")) 
     stop(deparse(substitute(x)), " must be a terra SpatRaster object")
+  if(terra::nlyr(x) > 150)
+    warning("The Kendall Tau can become numerically unstable with large numbers of observations")   
   if(min.obs < 6)
     warning("Setting the time-series threshold (n) to fewer than 6 obs may invalidate 
 	  the statistic and <= 4 will result in NA's") 
@@ -76,8 +78,8 @@ raster.kendall <- function(x, intercept = TRUE, p.value = TRUE,
     stop("Too few layers to calculate a trend")
   idx <- which(c(TRUE, tau, intercept, p.value, rep(confidence,2)))	
   out.names <- c("slope", "tau", "intercept", "p-value", "limits.LCL", "limits.UCL")[idx]
-    trend.slope <- function(y, metrics=idx, m=method[1]) {
-      kendall(y, method = m, threshold = min.obs)[metrics]
+    trend.slope <- function(y, metrics=idx, method=method[1]) {
+      kendall(y)[metrics]
     }
   k <- terra::app(x, fun=trend.slope, ...)
     names(k) <- out.names
