@@ -4,7 +4,7 @@ Title: Spatial Analysis and Modelling Utilities
 Version: 2.0-4
 Date: 2025-09-29
 Authors@R: c(
-    person(family="Evans", given="Jeffrey S.", email = "jeffrey_evans@tnc.org", 
+    person(family="Evans", given="Jeffrey S.", email = "sage_insights@outlook.com", 
          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5533-7044")),
   person(family="Murphy", given="Melanie A.", role = "ctb"),			 
   person(family="Ram", given="Karthik", role = "ctb") )
