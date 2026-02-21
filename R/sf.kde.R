@@ -177,7 +177,7 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
   } else {
     bw <- c(bw,bw)
   }
-  n <- c(terra::nrow(ref), terra::ncol(ref)) 
+  n <- c(terra::ncol(ref), terra::nrow(ref)) 
     if(!is.null(y)) {
       message("\n","calculating weighted kde","\n")
       k  <- fhat(sf::st_coordinates(x)[,1], sf::st_coordinates(x)[,2], w = y, 
@@ -189,7 +189,8 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
     }
   k$z <- k$z * scale.factor	
   if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }
-    kde.est <- flip(terra::rast(k[[3]], crs=terra::crs(x), extent=terra::ext(ref)) )
+    kde.est <- terra::rast(t(k$z), extent = terra::ext(ref), crs = terra::crs(x))
+  	kde.est <- terra::flip(kde.est, direction = "vertical")
     # pts <- data.frame(expand.grid(x=k$x, y=k$y), 
     #                      z=round(as.vector(array(k$z,length(k$z))) *
     #                      scale.factor, 10))
