@@ -188,12 +188,8 @@ sf.kde <- function(x, y = NULL, bw = NULL, ref = NULL, res = NULL,
  	                   n = n, lims = as.vector(terra::ext(ref)) )
     }
   k$z <- k$z * scale.factor	
-  if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }
-    kde.est <- flip(terra::rast(k[[3]], crs=terra::crs(x), extent=terra::ext(ref)) )
-    # pts <- data.frame(expand.grid(x=k$x, y=k$y), 
-    #                      z=round(as.vector(array(k$z,length(k$z))) *
-    #                      scale.factor, 10))
-    # kde.est <- terra::rast(pts, type="xyz", extent = terra::ext(ref), resolution = res[1] )
+    if( standardize == TRUE ) { k$z <- (k$z - min(k$z)) / (max(k$z) - min(k$z)) }
+        kde.est <- flip(terra::rast(t(k[[3]]), crs=terra::crs(x), extent=terra::ext(ref)), direction="vertical")
       if(mask == TRUE) { kde.est <- terra::mask(kde.est, m) }
     terra::crs(kde.est) <- terra::crs(x)  
   return( kde.est )  
