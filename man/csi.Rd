@@ -4,12 +4,14 @@
 \alias{csi}
 \title{Cosine Similarity Index}
 \usage{
-csi(x, y = NULL)
+csi(x, y = NULL, angular = TRUE)
 }
 \arguments{
 \item{x}{A vector or matrix object}
 
 \item{y}{If x is a vector, then a vector object}
+
+\item{angular}{Booliean (TRUE/FALSE) return angular similarity}
 }
 \value{
 If x is a matrix, a list object with: similarity and angular.similarity matrices or,  

@@ -1,4 +1,4 @@
-# spatialEco (dev 2.0-4) <img src="man/figures/logo.png" align="right" height="132" />
+# spatialEco (dev 2.0-5) <img src="man/figures/logo.png" align="right" height="132" />
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jeffreyevans/spatialEco/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](http://www.r-pkg.org/badges/version/spatialEco)](https://cran.r-project.org/package=spatialEco)
@@ -13,6 +13,16 @@ spatialEco R package with utilities to support spatial data manipulation, query,
     exploratory tools.
 
 # News 
+
+In version 2.0-5
+
+	Fixed bug in sf.kde where raster was not transposing correctly (thanks to @hsofaer)
+	
+	Added optional angular similarity to csi function output
+
+In version 2.0-4
+
+	Changed maintainers email to sage_insights@outlook.com
 
 In version 2.0-3
 

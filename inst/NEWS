@@ -333,3 +333,15 @@ spatialEco_2.0-3
 * Fixed bug in hil.pt and hil (thanks to Martin Macek)
 
 * Enhancement to hil.pt and hil that implements optional equations from original paper
+
+spatialEco_2.0-4
+=================   
+
+* Changed Maintainer email
+
+spatialEco_2.0-5
+=================   
+
+* Fixed raster transposition bug in sf.kde (thanks to Helen Sofaer)
+
+* Added optional angular similarity to csi function output

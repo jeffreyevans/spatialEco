@@ -2,8 +2,9 @@
 #' @description Calculates the cosine similarity and angular similarity on  
 #'              two vectors or a matrix
 #' 
-#' @param x A vector or matrix object 
-#' @param y If x is a vector, then a vector object 
+#' @param x          A vector or matrix object 
+#' @param y          If x is a vector, then a vector object 
+#' @param angular    Booliean (TRUE/FALSE) return angular similarity
 #'
 #' @details 
 #' The cosine similarity index is a measure of similarity between two 
@@ -55,7 +56,7 @@ csi <- function (x, y = NULL, angular = TRUE) {
 	  diag(s) = 1
       diag(acs) = 1
 	  if(angular) {
-        return(list(similarity=s, angular.similarity=acs))
+        return(list(similarity = s, angular.similarity = acs))
       } else {
         return(list(similarity=s))
 	  }      
