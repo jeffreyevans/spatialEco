@@ -47,13 +47,15 @@
 #' @export
 sa.trans <- function(slope, aspect, type = "cos", slp.units = "degrees", 
                        asp.units = "degrees") {			  
-  if(slp.units == "degrees") { slope <- ( slope / 0.572957795786 ) * 0.01 }
-  if(slp.units == "radians") { slope <- ( (slope * (180 / pi)) / 0.572957795786 ) * 0.01 } 
-  if(slp.units == "percent") { slope <- slope * 0.01 } 
-  if(asp.units == "degrees") aspect * (pi / 180)
-    slope[slope > 1] <- 1.001
+  switch(slp.units, 
+    degrees = { slope <- ( slope / 0.572957795786 ) * 0.01 },
+    radians = { slope <- ((slope * (180 / pi)) / 0.572957795786 ) * 0.01 },
+    percent = { slope <- slope * 0.01 })
+  if(asp.units == "degrees") { aspect <- aspect * (pi / 180) }
+	slope[slope > 1] <- 1.001
     slope[slope <= 0] <- NA
     trans <- as.vector(t(apply(data.frame(slope, aspect), 1, 
 	           function (x){ return ( x[1] * cos(x[2]) ) } )))
     return(trans)
   }
+
