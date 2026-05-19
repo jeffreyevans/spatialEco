@@ -35,7 +35,7 @@
 #' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org>
 #'
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' if (require(geodata, quietly = TRUE)) {
 #' library(terra)
 #' library(geodata)
